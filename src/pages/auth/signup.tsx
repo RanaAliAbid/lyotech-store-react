@@ -1,26 +1,28 @@
 import * as React from 'react';
 import Head from 'next/head';
-import Header from './common/header';
+import Header from '../../common/header';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
+import Link from '@mui/material/Link';
 import Email from '../img/emailIcon.svg';
+import Password from '../img/passwordIcon.svg';
 import styles from '@/styles/Home.module.css';
 
 import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider } from '@mui/material';
-export default function login () {
+export default function createAccount () {
     const theme = createTheme({
         typography: {
             fontFamily: [
             'Work Sans',            
             ].join(','),
         },
-    });   
+    });    
 
 return (
     <>
@@ -38,28 +40,44 @@ return (
             <div className={styles.loginBoxCenter}>                
                 <Container className={styles.containerBox}>
                     <Grid container justifyContent="center" spacing={3}>                           
-                        <Grid item md={5} sm={8} xs={12}>
+                        <Grid item sm={8} md={5} xs={12}>
                             <div className={styles.loginBox}>                                
                                 <Typography variant="h2">
-                                    Forgot your Password?
+                                    Create an account
                                 </Typography>
 
                                 <Typography variant="body1">
-                                    Please provide your account's email, and we'll send password reset link to that address.
+                                    To better serve you, we encourage our Clients to register for an account.
                                 </Typography>
                                 
                             
                                 <div className={styles.formControl}>    
-                                    <label className={styles.formLabel}> Email </label>     
+                                    <label className={styles.formLabel}> Email </label>    
                                     <Email className={styles.formIcon} />                                            
                                     <Input  className={styles.formInput} placeholder="Email" />
                                 </div>
 
-                                <div className={styles.inline}>
-                                <Button variant="outlined" href="signIn" className={`${styles["btn"]} ${styles["btn_secondary"]}`} > Back to sign in </Button>
-                                <Button variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`} > Reset Password </Button>                                    
-                                
+                                <div className={styles.formControl}>    
+                                    <label className={styles.formLabel}> Password </label> 
+                                    <Password className={styles.formIcon} />
+                                    <Input  className={styles.formInput} placeholder="Password" /> 
                                 </div>
+
+                                <div className={styles.formControl}>    
+                                    <label className={styles.formLabel}> Password </label> 
+                                    <Password className={styles.formIcon} />
+                                    <Input  className={styles.formInput} placeholder="Password" /> 
+                                </div>                                
+
+                                <Button variant="contained" fullWidth className={`${styles["btn"]} ${styles["btn_primary"]}`} >Create Account</Button>
+
+
+                                <Typography variant="body1">
+                                Already have an account?  <Link href='signIn'> Sign In </Link>
+                                </Typography>
+                                
+                                    
+                                
                             </div> 
                         </Grid> 
                     </Grid>

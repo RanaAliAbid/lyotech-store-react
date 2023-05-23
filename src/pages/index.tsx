@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, useInView, useAnimation } from "framer-motion"
 import Head from 'next/head';
-import Header from '../pages/common/header';
-import Footer from '../pages/common/footer';
+
+import Header from '../common/header';
+import Footer from '../common/footer';
+
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -59,7 +61,7 @@ export default function Home() {
 
             <div>
 
-                <ThemeProvider theme={theme} >
+                <ThemeProvider theme={theme}>
                     <main className={styles.main} >
                         <Header />
                         {/* Banner Section Start */}
@@ -71,7 +73,7 @@ export default function Home() {
                                             <motion.div
                                                 initial={{
                                                     opacity: 0,
-                                                    x: "-100%",
+                                                    x: "100%",
                                                     visibility: 'hidden'
                                                 }}
                                                 whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}

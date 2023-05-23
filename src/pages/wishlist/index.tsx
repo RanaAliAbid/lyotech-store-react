@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Head from 'next/head';
-import Header from './common/header';
-import Footer from './common/footer';
-import Sidebar from './common/sidebar';
+import Header from '../../common/header';
+import Footer from '../../common/footer';
+import Sidebar from '../../common/sidebar';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -11,7 +11,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Button from '@mui/material/Button';
 
-import productImg from '../img/thumImg.png';
+import productImg from '../../img/thumImg.png';
 import StarRateIcon from '@mui/icons-material/StarRate';
 
 import styles from '@/styles/Home.module.css';

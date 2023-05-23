@@ -1,11 +1,14 @@
 import * as React from 'react';
 import Head from 'next/head';
-import Header from './common/header';
+import Header from '../../common/header';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Email from '../img/emailIcon.svg';
 import Password from '../img/passwordIcon.svg';
@@ -15,14 +18,14 @@ import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider } from '@mui/material';
-export default function createAccount () {
+export default function signIn () {
     const theme = createTheme({
         typography: {
             fontFamily: [
             'Work Sans',            
             ].join(','),
         },
-    });    
+    });   
 
 return (
     <>
@@ -43,7 +46,7 @@ return (
                         <Grid item sm={8} md={5} xs={12}>
                             <div className={styles.loginBox}>                                
                                 <Typography variant="h2">
-                                    Create an account
+                                    Sign in to your account
                                 </Typography>
 
                                 <Typography variant="body1">
@@ -52,8 +55,8 @@ return (
                                 
                             
                                 <div className={styles.formControl}>    
-                                    <label className={styles.formLabel}> Email </label>    
-                                    <Email className={styles.formIcon} />                                            
+                                    <label className={styles.formLabel}> Email </label>     
+                                    <Email className={styles.formIcon} />
                                     <Input  className={styles.formInput} placeholder="Email" />
                                 </div>
 
@@ -63,17 +66,21 @@ return (
                                     <Input  className={styles.formInput} placeholder="Password" /> 
                                 </div>
 
-                                <div className={styles.formControl}>    
-                                    <label className={styles.formLabel}> Password </label> 
-                                    <Password className={styles.formIcon} />
-                                    <Input  className={styles.formInput} placeholder="Password" /> 
-                                </div>                                
+                                <div className={styles.inline}> 
+                                <FormGroup>
+                                    <FormControlLabel control={<Checkbox size="small" />} label="Remember me" />      
+                                </FormGroup>
 
-                                <Button variant="contained" fullWidth className={`${styles["btn"]} ${styles["btn_primary"]}`} >Create Account</Button>
+                                <Link href="forgotPassword">
+                                    Forgot Password?
+                                </Link>
+                                </div>
+
+                                <Button variant="contained" fullWidth className={`${styles["btn"]} ${styles["btn_primary"]}`} >Sign in</Button>
 
 
                                 <Typography variant="body1">
-                                Already have an account?  <Link href='signIn'> Sign In </Link>
+                                Not yet registered? <Link href='createAccount'> Create an account </Link>
                                 </Typography>
                                 
                                     

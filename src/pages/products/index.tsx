@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Head from 'next/head';
-import Header from './common/header';
-import Footer from './common/footer';
+import Header from '../../common/header';
+import Footer from '../../common/footer';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -22,13 +22,14 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import StarRateIcon from '@mui/icons-material/StarRate';
-import truck from '../img/truck.png';
 
-import productImage01 from '../img/productImg/mobBigImg01.png';
-import productImage02 from '../img/productImg/mobBigImg02.png';
-import productImage03 from '../img/productImg/mobBigImg03.png';
-import productImage04 from '../img/productImg/mobBigImg04.png';
-import productImage05 from '../img/productImg/mobBigImg05.png';
+import truck from '../../img/truck.png';
+
+import productImage02 from '../../img/productImg/mobBigImg02.png';
+import productImage03 from '../../img/productImg/mobBigImg03.png';
+import productImage01 from '../../img/productImg/mobBigImg01.png';
+import productImage04 from '../../img/productImg/mobBigImg04.png';
+import productImage05 from '../../img/productImg/mobBigImg05.png';
 
 
 import Zoom from 'react-img-zoom';

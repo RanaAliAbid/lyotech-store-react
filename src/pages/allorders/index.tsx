@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Head from 'next/head';
 
-import Header from './common/header';
-import Footer from './common/footer';
-import Sidebar from './common/sidebar';
+import Header from '../../common/header';
+import Footer from '../../common/footer';
+import Sidebar from '../../common/sidebar';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -14,7 +14,7 @@ import Button from '@mui/material/Button';
 import Image from 'next/image';
 import Link from '@mui/material/Link';
 
-import productImg from '../img/productImg.png';
+import productImg from '../../img/productImg.png';
 
 import styles from '@/styles/Home.module.css';
 
