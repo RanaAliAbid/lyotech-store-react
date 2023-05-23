@@ -31,7 +31,7 @@ import styles from '@/styles/Home.module.css'
 
 export default function Header() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const accountOpen = Boolean(anchorEl);   
+    const accountOpen = Boolean(anchorEl);
 
     const handleAccountClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -42,7 +42,7 @@ export default function Header() {
 
 
     const [anchorCart, setAnchorCart] = React.useState<null | HTMLElement>(null);
-    const cartOpen = Boolean(anchorCart); 
+    const cartOpen = Boolean(anchorCart);
 
     const handleCartClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorCart(event.currentTarget);
@@ -53,186 +53,186 @@ export default function Header() {
     };
 
 
-    
-  return (
-    <>    
-        <AppBar position="static" className={styles.header}>
-            <Container maxWidth="lg">
-                <Toolbar disableGutters>                 
 
-                <img src={logo.src} alt="logo" />
+    return (
+        <>
+            <AppBar position="static" className={styles.header}>
+                <Container maxWidth="lg">
+                    <Toolbar disableGutters>
 
-                <List className={styles.headMenu}>
-                    <ListItem>  
-                        <Link variant="h5"> Services </Link>
-                    </ListItem>  
-                    <ListItem>  
-                        <Link variant="h5"> Devices </Link>
-                    </ListItem>  
-                    <ListItem>  
-                        <Link variant="h5"> Co-Products </Link>
-                    </ListItem>  
-                </List>
+                        <img src={logo.src} alt="logo" />
 
-                <div>
+                        <List className={styles.headMenu}>
+                            <ListItem>
+                                <Link variant="h5"> Services </Link>
+                            </ListItem>
+                            <ListItem>
+                                <Link variant="h5"> Devices </Link>
+                            </ListItem>
+                            <ListItem>
+                                <Link variant="h5"> Co-Products </Link>
+                            </ListItem>
+                        </List>
 
-                
-
-                <Button
-                    id="basic-button"
-                    aria-controls={accountOpen ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={accountOpen ? 'true' : undefined}
-                    onClick={handleAccountClick}
-                    variant="text"
-                    className={styles.myAccount}
-                >   
-                    <AccountIcon/>
-                    My Account
-                </Button>
-                <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={accountOpen}
-                    onClose={handleAccountClose}
-                    MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                    }}
-                    className={styles.myAccountMenu}
-                >                        
-                    <MenuItem onClick={handleAccountClose}>                     
-                        <Link href='allOrder'> <OrderIcon/> All Orders </Link>
-                    </MenuItem>
-                    <MenuItem onClick={handleAccountClose}> 
-                        <Link href='wishList'> <WishlistIcon/>  Wishlist </Link>
-                    </MenuItem>
-                    <MenuItem onClick={handleAccountClose}> 
-                        <Link href='trackOrder'> <TrackOrderIcon/> Track Order </Link>
-                    </MenuItem>
-                    <MenuItem onClick={handleAccountClose}> 
-                        <Link href='addresses'> <MapIcon/> Addresses </Link>
-                    </MenuItem>
-                    <MenuItem onClick={handleAccountClose}> 
-                        <Link href='profile'> <UserIcon/> Profile </Link>
-                    </MenuItem>
-
-                    <MenuItem onClick={handleAccountClose}> 
-                        <Link href='preferences'> <PreferencesIcon/> Preferences </Link>
-                    </MenuItem>
-                    
-                    
-                </Menu>
-
-                </div>
+                        <div>
 
 
 
-<div>
+                            <Button
+                                id="basic-button"
+                                aria-controls={accountOpen ? 'basic-menu' : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={accountOpen ? 'true' : undefined}
+                                onClick={handleAccountClick}
+                                variant="text"
+                                className={styles.myAccount}
+                            >
+                                <AccountIcon />
+                                My Account
+                            </Button>
+                            <Menu
+                                id="basic-menu"
+                                anchorEl={anchorEl}
+                                open={accountOpen}
+                                onClose={handleAccountClose}
+                                MenuListProps={{
+                                    'aria-labelledby': 'basic-button',
+                                }}
+                                className={styles.myAccountMenu}
+                            >
+                                <MenuItem onClick={handleAccountClose}>
+                                    <Link href='allOrder'> <OrderIcon /> All Orders </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleAccountClose}>
+                                    <Link href='wishList'> <WishlistIcon />  Wishlist </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleAccountClose}>
+                                    <Link href='trackOrder'> <TrackOrderIcon /> Track Order </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleAccountClose}>
+                                    <Link href='addresses'> <MapIcon /> Addresses </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleAccountClose}>
+                                    <Link href='profile'> <UserIcon /> Profile </Link>
+                                </MenuItem>
+
+                                <MenuItem onClick={handleAccountClose}>
+                                    <Link href='preferences'> <PreferencesIcon /> Preferences </Link>
+                                </MenuItem>
 
 
-                <Button
-                    id="basic-button"
-                    aria-controls={cartOpen ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={cartOpen ? 'true' : undefined}
-                    onClick={handleCartClick}
-                    variant="text"
-                    className={styles.myAccount}
-                >   
-                    <CartIcon/>
-                    Cart
-                    <span className={styles.badge}>9</span>
-                </Button>
-                <Menu
-                    id="basic-menu"
-                    anchorEl={anchorCart}
-                    open={cartOpen}
-                    onClose={handleCartClose}
-                    MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                    }}
-                    className={styles.myCartMenu}
-                >            
+                            </Menu>
 
-                <div>
-                    <List className={styles.productsList}>
-                        <ListItem className={styles.productItem}>
-                            <div className={styles.productImg}>
-                                <img src={productImg.src} alt="logo" />
-                            </div>
-                            <div className={styles.productHead}>                                                                                        
-                                <Typography variant="h5" className={styles.productitle}>
-                                LFi ONE Smart phone LFi ONE Smartphone
-                                </Typography>
-                                                                      
-                                <Typography variant="h6" className={styles.productPrice}>
-                                    $160.00 
-                                </Typography>                                                                                                                
-                            </div>
-                            <CloseIcon/>
-                        </ListItem>    
+                        </div>
 
-                        <ListItem className={styles.productItem}>
-                            <div className={styles.productImg}>
-                                <img src={productImg.src} alt="logo" />
-                            </div>
-                            <div className={styles.productHead}>                                                                                        
-                                <Typography variant="h5" className={styles.productitle}>
-                                    LFi ONE Smartphone
-                                </Typography>
-                                                                      
-                                <Typography variant="h6" className={styles.productPrice}>
-                                    $160.00 
-                                </Typography>                                                                                                                
-                            </div>
-                            <CloseIcon/>
-                        </ListItem>    
 
-                        <ListItem className={styles.productItem}>
-                            <div className={styles.productImg}>
-                                <img src={productImg.src} alt="logo" />
-                            </div>
-                            <div className={styles.productHead}>                                                                                        
-                                <Typography variant="h5" className={styles.productitle}>
-                                    LFi ONE Smartphone
-                                </Typography>
-                                                                      
-                                <Typography variant="h6" className={styles.productPrice}>
-                                    $160.00 
-                                </Typography>                                                                                                                
-                            </div>
-                            <CloseIcon/>
-                        </ListItem>    
-                    </List>
-                </div> 
 
-                <div className={styles.productSubTotal}>
-                    <Typography variant="h5" className={styles.productitle}>
-                        SubTotal
-                    </Typography>
-                                                            
-                    <Typography variant="h6" className={styles.productPrice}>
-                        $480.00 
-                    </Typography>
-                </div>   
+                        <div>
 
-                <Button variant="outlined" href="cart" className={`${styles["btn"]} ${styles["btn_secondary"]}`} > 
-                    View Cart 
-                </Button>
-                <Button variant="contained" href="checkout" className={`${styles["btn"]} ${styles["btn_primary"]}`} > 
-                    Checkout Now
-                </Button>  
-                    
-                </Menu>
-                </div>
-              
-                
 
-                </Toolbar>
-            </Container>
-        </AppBar>
-    </>
-  )
+                            <Button
+                                id="basic-button"
+                                aria-controls={cartOpen ? 'basic-menu' : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={cartOpen ? 'true' : undefined}
+                                onClick={handleCartClick}
+                                variant="text"
+                                className={styles.myAccount}
+                            >
+                                <CartIcon />
+                                Cart
+                                <span className={styles.badge}>9</span>
+                            </Button>
+                            <Menu
+                                id="basic-menu"
+                                anchorEl={anchorCart}
+                                open={cartOpen}
+                                onClose={handleCartClose}
+                                MenuListProps={{
+                                    'aria-labelledby': 'basic-button',
+                                }}
+                                className={styles.myCartMenu}
+                            >
+
+                                <div>
+                                    <List className={styles.productsList}>
+                                        <ListItem className={styles.productItem}>
+                                            <div className={styles.productImg}>
+                                                <img src={productImg.src} alt="logo" />
+                                            </div>
+                                            <div className={styles.productHead}>
+                                                <Typography variant="h5" className={styles.productitle}>
+                                                    LFi ONE Smart phone LFi ONE Smartphone
+                                                </Typography>
+
+                                                <Typography variant="h6" className={styles.productPrice}>
+                                                    $160.00
+                                                </Typography>
+                                            </div>
+                                            <CloseIcon />
+                                        </ListItem>
+
+                                        <ListItem className={styles.productItem}>
+                                            <div className={styles.productImg}>
+                                                <img src={productImg.src} alt="logo" />
+                                            </div>
+                                            <div className={styles.productHead}>
+                                                <Typography variant="h5" className={styles.productitle}>
+                                                    LFi ONE Smartphone
+                                                </Typography>
+
+                                                <Typography variant="h6" className={styles.productPrice}>
+                                                    $160.00
+                                                </Typography>
+                                            </div>
+                                            <CloseIcon />
+                                        </ListItem>
+
+                                        <ListItem className={styles.productItem}>
+                                            <div className={styles.productImg}>
+                                                <img src={productImg.src} alt="logo" />
+                                            </div>
+                                            <div className={styles.productHead}>
+                                                <Typography variant="h5" className={styles.productitle}>
+                                                    LFi ONE Smartphone
+                                                </Typography>
+
+                                                <Typography variant="h6" className={styles.productPrice}>
+                                                    $160.00
+                                                </Typography>
+                                            </div>
+                                            <CloseIcon />
+                                        </ListItem>
+                                    </List>
+                                </div>
+
+                                <div className={styles.productSubTotal}>
+                                    <Typography variant="h5" className={styles.productitle}>
+                                        SubTotal
+                                    </Typography>
+
+                                    <Typography variant="h6" className={styles.productPrice}>
+                                        $480.00
+                                    </Typography>
+                                </div>
+
+                                <Button variant="outlined" href="cart" className={`${styles["btn"]} ${styles["btn_secondary"]}`} >
+                                    View Cart
+                                </Button>
+                                <Button variant="contained" href="checkout" className={`${styles["btn"]} ${styles["btn_primary"]}`} >
+                                    Checkout Now
+                                </Button>
+
+                            </Menu>
+                        </div>
+
+
+
+                    </Toolbar>
+                </Container>
+            </AppBar>
+        </>
+    )
 
 
 }
