@@ -495,6 +495,286 @@ box-shadow: 0px 1px 6px rgba(133, 133, 133, 0.25);
 
 
 
+/* home page css  */
+
+
+
+/* Home Page Styling */
+
+.mainBanner{
+    background: url(../img/mainBanner.png) no-repeat top center;
+    background-size: cover;
+    min-height: 500px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+.bannerHD{
+    font-weight: 700;
+}
+.bannerTxt{
+    margin: 6px 0 20px;
+}
+.bannerImg img{
+  width: 100%;
+  max-width: 800px;  
+}
+.bannerWrap{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+.homeServicesWrap{
+    background: url(../img/bgImageTop.png) no-repeat top left;
+    padding: 100px 0 0px;
+    background-size: 320px;
+}
+.servicesItem{
+    text-align: center;
+    margin: 20px 0 30px;
+    min-height: 205px;
+}
+.servicesIcon{
+    background: var(--primary);
+    width: 100%;
+    max-width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin: -54px auto 20px;
+    border-radius: 100%;
+}
+.servicesIcon img{
+    max-width: 40px;
+    width: 100%;
+}
+.servicesItem h5{
+    font-weight: 600;
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+.serverWrap{
+    background: url(../img/bgImageBtm.png) no-repeat right bottom;
+    background-size: 250px;
+    padding-bottom: 100px;
+}
+.sectionHeading{
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.sectionHeading h2{
+    font-weight: 700;
+}
+.sectionHeading h6{
+    margin: 10px 0 40px;
+}
+.serverItem{
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
+    display: flex;
+    align-items:end;
+    justify-content:last baseline;
+    background-size:cover ;
+}
+.rootAccessImg{
+    background: url(../img/rootAccess.png) no-repeat top center;
+}
+.ssdServerImg{
+    background: url(../img/ssdServer.png) no-repeat top center;
+}
+.ultSpeedImgImg{
+    background: url(../img/unlimitedSpeed.png) no-repeat top center;
+}
+.optimizeVPSImg{
+    background: url(../img/optimizeVPS.png) no-repeat top center;
+}
+.serverItemOverlay{
+    background: linear-gradient(180deg, rgba(4, 4, 4, 0) 59.37%, #202020 100%);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.serverItem h4{
+    z-index: 2;
+    padding: 20px;
+    color: #fff;
+    font-weight: 600;
+    max-width: 320px;
+    width: 100%;
+    line-height: 24px;
+}
+
+.productsWrap{
+    padding-bottom: 60px;
+}
+.productItemWrap{
+    padding: 100px 0;
+}
+.bgShape01{
+    clip-path: polygon(100% 0, 100% 90%, 0 100%, 0 10%);
+    background: #f0f2f9;
+}
+.productItemImg{
+    display: flex;
+    justify-content: center;
+}
+.productItemImg img{
+    width: 100%;
+    max-width: 500px;
+}
+.bgShape02 .productItemImg img{
+    width: 100%;
+    max-width: 300px;
+}
+.productItemWrap h2{
+    font-weight: 700;
+}
+.productItemWrap .watchHeading h2{
+text-align: center;
+}
+.productItemWrap .watchHeading h6{
+    text-align: center;
+    margin:0 auto 40px;
+    display: block;
+    max-width: 500px;
+}
+.productItemWrap h2 span{
+    color: var(--primary);
+}
+.productItemWrap h4{
+    font-weight: 600;
+    margin-top: 15px;
+    line-height: 24px;
+}
+.productItemWrap .productSpec span{
+    display: flex;
+    margin: 20px 0 0;
+    justify-content: flex-start;
+    align-items: center;
+}
+.productItemWrap .productSpec span img{
+    background: #fff;
+    padding: 10px;
+    border-radius: 100%;
+    width: 48px;
+    height: 48px;
+    margin-right: 15px;
+}
+.productItemWrap.bgShape02 .productSpec span img{
+    background: #f0f2f9;
+}
+.productItemWrap button{
+    margin-top: 40px;
+}
+.partersWrap{
+    /* background: url(../img/partnerBg.png) no-repeat center center; */
+    text-align: center;
+    padding: 40px 0 100px;
+    background-size: cover;
+}
+.partnersImg img{
+    width: 100%;
+    max-width: 130px;
+    padding: 1px;
+    margin: 10px;
+    border: 1px solid #f0f2f9;
+}
+
+.productDetails{
+    position: relative;
+}
+.productImageZoom{
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    left: 0px;
+    background: #fff;
+    width: 100%;
+    padding: 10px;
+}
+.productImageZoom div{
+    width: 100% !important;
+}
+.productImageZoom img{
+    width: 100%;
+    min-width: 110%;
+    height: 100%;
+    min-height: 110%;
+}
+.thumbnails{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+.thumbnails img {
+    width: 100px;
+    /* border: 1px solid #e5e5e5; */
+    margin: 0 8px 10px;
+    height: 100%;
+    background: #F5F7F9;
+    padding: 10px;
+}
+.productImgDetail{
+    margin-bottom: 20px;
+}
+.productImgDetail img{
+    padding: 26px;
+    width: 100%;
+    max-width: 500px;
+}
+.productGallaryWrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+}
+.largeTest {
+    display: none !important;
+}
+.mainDetailProduct {
+    background: #F5F7F9;
+    padding: 40px;
+}
+
+
+/* With Arrow start */
+/* .productGallaryWrap div{
+    margin: 0 auto;
+}
+.productGallaryWrap img{
+width: 73% !important;
+height: auto !important;
+display: block;
+margin: 0 auto 20px;
+} */
+/* With Arrow End */
+
+.menuToggle{
+    padding: 10px;
+    top: 4px;
+    position: relative;
+    display: none;
+}
+
+
+
+/*=========  Home page css =======*/
+
+
+
+
+
+
 
 .productDetails {
     padding: 15px;
