@@ -7,14 +7,14 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Link from '@mui/material/Link';
 
-import OrderIcon from '../../img/orderIcon.svg';
-import WishlistIcon from '../../img/wishlistIcon.svg';
-import MapIcon from '../../img/mapIcon.svg';
-import PreferencesIcon from '../../img/preferencesIcon.svg';
-import TrackOrderIcon from '../../img/trackOrderIcon.svg';
-import UserIcon from '../../img/userIcon.svg';
+import OrderIcon from '../img/orderIcon.svg';
+import WishlistIcon from '../img/wishlistIcon.svg';
+import MapIcon from '../img/mapIcon.svg';
+import PreferencesIcon from '../img/preferencesIcon.svg';
+import TrackOrderIcon from '../img/trackOrderIcon.svg';
+import UserIcon from '../img/userIcon.svg';
 
-import Payments from '../../img/digitalpayments.svg';
+import Payments from '../img/digitalpayments.svg';
 
 import styles from '@/styles/Home.module.css';
 
@@ -56,8 +56,8 @@ export default function Sidebar () {
             </Typography>
 
             <List className={styles.sideBarList}>
-                <ListItem className={router.pathname == "/allOrders" ? styles.active : ""}>
-                    <Link href='allOrders'>
+                <ListItem className={router.pathname == "/allorders" ? styles.active : ""}>
+                    <Link href='allorders'>
                         <OrderIcon/>                                                
                         All Orders
                     </Link>
@@ -68,8 +68,8 @@ export default function Sidebar () {
                         Wishlist
                     </Link>
                 </ListItem>
-                <ListItem className={router.pathname == "/trackOrder" ? styles.active : ""}>
-                    <Link href='trackOrder'>
+                <ListItem className={router.pathname == "/trackorder" ? styles.active : ""}>
+                    <Link href='trackorder'>
                         <TrackOrderIcon/>                                                
                         Track Order
                     </Link>

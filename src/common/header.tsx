@@ -13,18 +13,19 @@ import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
 import CloseIcon from '@mui/icons-material/Close';
 
-import logo from '../../img/lyotech-logo.png';
+import logo from '../img/lyotech-logo.png';
 
-import OrderIcon from '../../img/orderIcon.svg';
-import WishlistIcon from '../../img/wishlistIcon.svg';
-import MapIcon from '../../img/mapIcon.svg';
-import PreferencesIcon from '../../img/preferencesIcon.svg';
-import TrackOrderIcon from '../../img/trackOrderIcon.svg';
-import UserIcon from '../../img/userIcon.svg';
-import AccountIcon from '../../img/accountIcon.svg';
-import CartIcon from '../../img/cartIcon.svg';
+import OrderIcon from '../img/orderIcon.svg';
+import WishlistIcon from '../img/wishlistIcon.svg';
+import MapIcon from '../img/mapIcon.svg';
+import PreferencesIcon from '../img/preferencesIcon.svg';
+import TrackOrderIcon from '../img/trackOrderIcon.svg';
+import UserIcon from '../img/userIcon.svg';
+import AccountIcon from '../img/accountIcon.svg';
+import CartIcon from '../img/cartIcon.svg';
+import Payments from '../img/digitalpayments.svg';
 
-import productImg from '../../img/productImg.png';
+import productImg from '../img/productImg.png';
 
 
 import styles from '@/styles/Home.module.css'
@@ -59,8 +60,7 @@ export default function Header() {
         <AppBar position="static" className={styles.header}>
             <Container maxWidth="lg">
                 <Toolbar disableGutters>                 
-
-                <img src={logo.src} alt="logo" />
+                <Link href='/' className={styles.logo}> <img src={logo.src} alt="logo" /> </Link>               
 
                 <List className={styles.headMenu}>
                     <ListItem>  
@@ -101,17 +101,23 @@ export default function Header() {
                     className={styles.myAccountMenu}
                 >                        
                     <MenuItem onClick={handleAccountClose}>                     
-                        <Link href='allOrder'> <OrderIcon/> All Orders </Link>
+                        <Link href='allorders'> <OrderIcon/> All Orders </Link>
                     </MenuItem>
                     <MenuItem onClick={handleAccountClose}> 
-                        <Link href='wishList'> <WishlistIcon/>  Wishlist </Link>
+                        <Link href='wishlist'> <WishlistIcon/>  Wishlist </Link>
                     </MenuItem>
                     <MenuItem onClick={handleAccountClose}> 
-                        <Link href='trackOrder'> <TrackOrderIcon/> Track Order </Link>
+                        <Link href='trackorder'> <TrackOrderIcon/> Track Order </Link>
                     </MenuItem>
                     <MenuItem onClick={handleAccountClose}> 
                         <Link href='addresses'> <MapIcon/> Addresses </Link>
                     </MenuItem>
+                    
+                    
+                    <MenuItem onClick={handleAccountClose}> 
+                        <Link href='payments'> <Payments/> Payments </Link>
+                    </MenuItem>
+
                     <MenuItem onClick={handleAccountClose}> 
                         <Link href='profile'> <UserIcon/> Profile </Link>
                     </MenuItem>

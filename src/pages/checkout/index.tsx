@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Head from 'next/head';
-import Header from './common/header';
-import Footer from './common/footer';
+import Header from '../../common/header';
+import Footer from '../../common/footer';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -17,9 +17,9 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import Link from '@mui/material/Link';
 
-import lyoMC from '../img/lyomerchant.png';
-import usdtCoin from '../img/theter_trc.png';
-import creditCard from '../img/creaditCard.png';
+import lyoMC from '../../img/lyomerchant.png';
+import usdtCoin from '../../img/theter_trc.png';
+import creditCard from '../../img/creaditCard.png';
 
 import styles from '@/styles/Home.module.css';
 

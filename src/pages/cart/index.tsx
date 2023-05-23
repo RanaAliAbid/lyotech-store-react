@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Head from 'next/head';
-import Header from './common/header';
-import Footer from './common/footer';
+import Header from '../../common/header';
+import Footer from '../../common/footer';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -23,7 +23,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import Link from '@mui/material/Link';
 
 
-import productImg from '../img/productImg.png';
+import productImg from '../../img/productImg.png';
 
 import styles from '@/styles/Home.module.css';
 

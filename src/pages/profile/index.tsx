@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Head from 'next/head';
-import Header from './common/header';
-import Footer from './common/footer';
-import Sidebar from './common/sidebar';
+import Header from '../../common/header';
+import Footer from '../../common/footer';
+import Sidebar from '../../common/sidebar';
 
 
 

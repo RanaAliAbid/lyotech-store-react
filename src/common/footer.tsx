@@ -10,7 +10,7 @@ import ListItem from '@mui/material/ListItem';
 
 import Link from '@mui/material/Link';
 
-import darkLogo from '../../img/dark-logo.png';
+import darkLogo from '../img/dark-logo.png';
 
 
 import styles from '@/styles/Home.module.css'
