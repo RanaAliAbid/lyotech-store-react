@@ -8,7 +8,7 @@ export default async function handler(
     res: NextApiResponse<ApiData | ApiError>
 ) {
 
-    let method = req.query.method;
+    const method = req.query.method;
 
     switch (method) {
         case "signin":
@@ -17,6 +17,10 @@ export default async function handler(
 
         case "signup":
             UsersController.signIn(req, res)
+            break;
+
+        case "checktoken":
+            UsersController.checkToken(req, res)
             break;
 
         default:

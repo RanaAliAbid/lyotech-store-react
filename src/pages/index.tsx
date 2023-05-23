@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, useInView, useAnimation } from "framer-motion"
 import Head from 'next/head';
-import Header from '../pages/common/header';
-import Footer from '../pages/common/footer';
+
+import Header from '../common/header';
+import Footer from '../common/footer';
+
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -49,19 +51,11 @@ export default function Home() {
 
     return (
         <>
-            <Head>
-                <title>Home - LYOTECH Labs</title>
-                <meta name="description" content="LYOTECH LABS is an R&D company that works on the development of software and hardware products including mobile phones, tablets, laptops and smart watches. Our goal is giving best our customers in technologys" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-
             <div>
 
-                <ThemeProvider theme={theme} >
+                <ThemeProvider theme={theme}>
                     <main className={styles.main} >
-                        <Header />
+                        <Header title='Home'/>
                         {/* Banner Section Start */}
                         <div className={styles.paddingT0} >
                             <div className={`${styles["mainBanner"]}`}>
@@ -71,7 +65,7 @@ export default function Home() {
                                             <motion.div
                                                 initial={{
                                                     opacity: 0,
-                                                    x: "-100%",
+                                                    x: "100%",
                                                     visibility: 'hidden'
                                                 }}
                                                 whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}

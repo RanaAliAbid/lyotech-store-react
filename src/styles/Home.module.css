@@ -423,6 +423,10 @@ box-shadow: 0px 1px 6px rgba(133, 133, 133, 0.25);
     color: var(--white);
 }
 
+.header .logo img {
+    display: inherit;
+}
+
 
 
 .myCartMenu div:nth-child(3) {

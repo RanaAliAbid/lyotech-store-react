@@ -1,24 +1,19 @@
 import * as React from 'react';
 import Head from 'next/head';
-import Header from './common/header';
+import Header from '../../common/header';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Email from '../img/emailIcon.svg';
-import Password from '../img/passwordIcon.svg';
 import styles from '@/styles/Home.module.css';
 
 import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider } from '@mui/material';
-export default function signIn () {
+export default function login () {
     const theme = createTheme({
         typography: {
             fontFamily: [
@@ -43,48 +38,28 @@ return (
             <div className={styles.loginBoxCenter}>                
                 <Container className={styles.containerBox}>
                     <Grid container justifyContent="center" spacing={3}>                           
-                        <Grid item sm={8} md={5} xs={12}>
+                        <Grid item md={5} sm={8} xs={12}>
                             <div className={styles.loginBox}>                                
                                 <Typography variant="h2">
-                                    Sign in to your account
+                                    Forgot your Password?
                                 </Typography>
 
                                 <Typography variant="body1">
-                                    To better serve you, we encourage our Clients to register for an account.
+                                    Please provide your account's email, and we'll send password reset link to that address.
                                 </Typography>
                                 
                             
                                 <div className={styles.formControl}>    
                                     <label className={styles.formLabel}> Email </label>     
-                                    <Email className={styles.formIcon} />
+                                    <Email className={styles.formIcon} />                                            
                                     <Input  className={styles.formInput} placeholder="Email" />
                                 </div>
 
-                                <div className={styles.formControl}>    
-                                    <label className={styles.formLabel}> Password </label> 
-                                    <Password className={styles.formIcon} />
-                                    <Input  className={styles.formInput} placeholder="Password" /> 
-                                </div>
-
-                                <div className={styles.inline}> 
-                                <FormGroup>
-                                    <FormControlLabel control={<Checkbox size="small" />} label="Remember me" />      
-                                </FormGroup>
-
-                                <Link href="forgotPassword">
-                                    Forgot Password?
-                                </Link>
-                                </div>
-
-                                <Button variant="contained" fullWidth className={`${styles["btn"]} ${styles["btn_primary"]}`} >Sign in</Button>
-
-
-                                <Typography variant="body1">
-                                Not yet registered? <Link href='createAccount'> Create an account </Link>
-                                </Typography>
+                                <div className={styles.inline}>
+                                <Button variant="outlined" href="signIn" className={`${styles["btn"]} ${styles["btn_secondary"]}`} > Back to sign in </Button>
+                                <Button variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`} > Reset Password </Button>                                    
                                 
-                                    
-                                
+                                </div>
                             </div> 
                         </Grid> 
                     </Grid>
