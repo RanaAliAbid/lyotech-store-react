@@ -3,12 +3,22 @@ import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
 import { API_KEY } from "../../app.config";
 
-const signIn = async (req: NextApiRequest, res: NextApiResponse<ApiData | ApiError>) => {
+declare module "iron-session" {
+    interface IronSessionData {
+        user?: {
+            id: number;
+            isAdmin?: boolean;
+            authToken?: string;
+        };
+    }
+}
+
+export const signIn = async (req: NextApiRequest, res: NextApiResponse<ApiData | ApiError>) => {
 
     res.setHeader('Allow', "POST");
 
     try {
-        let data = req.body
+        let data = req?.body
 
         const config = {
             method: 'POST',
@@ -21,14 +31,23 @@ const signIn = async (req: NextApiRequest, res: NextApiResponse<ApiData | ApiErr
         };
         const result = await axios(config);
 
+        if (result.status == 200) {
+            req.session.user = {
+                id: 1,
+                isAdmin: false,
+                authToken: ""
+            }
+            await req.session.save();
+        }
+
         res.status(200).json({ message: "Sucessfull login", status: true })
     } catch (error) {
+        console.log(error)
         res.status(400).json({ message: "An internal error occured", status: false })
     }
 }
 
-
-const checkToken = async (req: NextApiRequest, res: NextApiResponse<ApiData | ApiError>) => {
+export const checkUserToken = async (req: NextApiRequest, res: NextApiResponse<ApiData | ApiError>) => {
 
     res.setHeader('Allow', "POST");
 
@@ -51,10 +70,3 @@ const checkToken = async (req: NextApiRequest, res: NextApiResponse<ApiData | Ap
         res.status(400).json({ message: "An internal error occured", status: false })
     }
 }
-
-const UsersController = {
-    signIn,
-    checkToken
-}
-
-export default UsersController
