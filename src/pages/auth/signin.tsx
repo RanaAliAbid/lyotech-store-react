@@ -10,15 +10,15 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Email from '../img/emailIcon.svg';
-import Password from '../img/passwordIcon.svg';
+import Email from '../../img/emailIcon.svg';
+import Password from '../../img/passwordIcon.svg';
 import styles from '@/styles/Home.module.css';
 
 import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider } from '@mui/material';
-export default function signIn () {
+export default function signin () {
     const theme = createTheme({
         typography: {
             fontFamily: [
@@ -71,7 +71,7 @@ return (
                                     <FormControlLabel control={<Checkbox size="small" />} label="Remember me" />      
                                 </FormGroup>
 
-                                <Link href="forgotPassword">
+                                <Link href="forgot-password">
                                     Forgot Password?
                                 </Link>
                                 </div>
@@ -80,7 +80,7 @@ return (
 
 
                                 <Typography variant="body1">
-                                Not yet registered? <Link href='createAccount'> Create an account </Link>
+                                Not yet registered? <Link href='signup'> Create an account </Link>
                                 </Typography>
                                 
                                     

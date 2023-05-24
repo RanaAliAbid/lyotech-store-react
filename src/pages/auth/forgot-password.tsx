@@ -6,14 +6,14 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
-import Email from '../img/emailIcon.svg';
+import Email from '../../img/emailIcon.svg';
 import styles from '@/styles/Home.module.css';
 
 import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider } from '@mui/material';
-export default function login () {
+export default function forgotpassword () {
     const theme = createTheme({
         typography: {
             fontFamily: [
@@ -56,7 +56,7 @@ return (
                                 </div>
 
                                 <div className={styles.inline}>
-                                <Button variant="outlined" href="signIn" className={`${styles["btn"]} ${styles["btn_secondary"]}`} > Back to sign in </Button>
+                                <Button variant="outlined" href="signin" className={`${styles["btn"]} ${styles["btn_secondary"]}`} > Back to sign in </Button>
                                 <Button variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`} > Reset Password </Button>                                    
                                 
                                 </div>

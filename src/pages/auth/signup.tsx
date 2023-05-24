@@ -7,15 +7,17 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
 import Link from '@mui/material/Link';
-import Email from '../img/emailIcon.svg';
-import Password from '../img/passwordIcon.svg';
+import Email from '../../img/emailIcon.svg';
+import Password from '../../img/passwordIcon.svg';
 import styles from '@/styles/Home.module.css';
 
 import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider } from '@mui/material';
-export default function createAccount () {
+
+
+export default function signup () {
     const theme = createTheme({
         typography: {
             fontFamily: [
@@ -73,7 +75,7 @@ return (
 
 
                                 <Typography variant="body1">
-                                Already have an account?  <Link href='signIn'> Sign In </Link>
+                                Already have an account?  <Link href='signin'> Sign In </Link>
                                 </Typography>
                                 
                                     

@@ -1,9 +1,12 @@
 import * as React from 'react';
 import Head from 'next/head'
 import Image from 'next/image'
+import { useRouter } from 'next/router';
+
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
+import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -12,6 +15,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
 import CloseIcon from '@mui/icons-material/Close';
+import MenuIcon from '@mui/icons-material/Menu';
 
 import logo from '../img/lyotech-logo.png';
 
@@ -29,11 +33,11 @@ import productImg from '../img/productImg.png';
 
 
 import styles from '@/styles/Home.module.css'
+import Sidebar from './sidebar';
 
 export default function Header() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const accountOpen = Boolean(anchorEl);   
-
+    const accountOpen = Boolean(anchorEl);
     const handleAccountClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -44,22 +48,119 @@ export default function Header() {
 
     const [anchorCart, setAnchorCart] = React.useState<null | HTMLElement>(null);
     const cartOpen = Boolean(anchorCart); 
-
     const handleCartClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorCart(event.currentTarget);
     };
-
     const handleCartClose = () => {
         setAnchorCart(null);
     };
 
+
+    const [toggledrawerEl, setToggleDrawerEl] = React.useState<null | HTMLElement>(null);  
+    const tdOpen = Boolean(toggledrawerEl);   
+    const handleToggleDrawer = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setToggleDrawerEl(event.currentTarget);        
+    };
+
+    const toggleDrawerClose = () => {
+        setToggleDrawerEl(null);
+    };
+
+    const router = useRouter();
 
     
   return (
     <>    
         <AppBar position="static" className={styles.header}>
             <Container maxWidth="lg">
-                <Toolbar disableGutters>                 
+                <Toolbar disableGutters>  
+
+                <Button className={styles.drawerMenu} onClick={handleToggleDrawer}><MenuIcon/></Button>
+
+
+                <Drawer
+                    variant="temporary"
+                    toggledrawerEl={toggledrawerEl}                    
+                    open={tdOpen}
+                    onClose={toggleDrawerClose}
+                    className={styles.drawerSideBar}
+                >
+                   
+                    <div className={styles.sideBar}>
+                        <div className={styles.userName}>
+                            <Typography variant="h6">
+                                Hi! Welcome 
+                            </Typography>
+
+                            <Typography variant="h4">
+                                Keanu Reeves
+                            </Typography>
+
+                            <Link variant="h6">
+                                keanureeves@gmail.com
+                            </Link>           
+                        </div>
+
+                        <Typography variant="h5" className={styles.listTitle}>
+                            Navigation
+                        </Typography>
+
+                        <List className={styles.sideBarList}>
+                            <ListItem className={router.pathname == "/allorders" ? styles.active : ""}>
+                                <Link href='allorders'>
+                                    <OrderIcon/>                                                
+                                    All Orders
+                                </Link>
+                            </ListItem>
+                            <ListItem className={router.pathname == "/wishlist" ? styles.active : ""}>
+                                <Link href='wishlist'>
+                                    <WishlistIcon/>
+                                    Wishlist
+                                </Link>
+                            </ListItem>
+                            <ListItem className={router.pathname == "/trackorder" ? styles.active : ""}>
+                                <Link href='trackorder'>
+                                    <TrackOrderIcon/>                                                
+                                    Track Order
+                                </Link>
+                            </ListItem>
+                            <ListItem className={router.pathname == "/addresses" ? styles.active : ""}>
+                                <Link href='addresses'>
+                                    <MapIcon/>
+                                    Addresses
+                                </Link>
+                            </ListItem>
+
+                            <ListItem className={router.pathname == "/payments" ? styles.active : ""}>
+                                <Link href='payments'>
+                                    <Payments/>
+                                    Payments
+                                </Link>
+                            </ListItem>
+                        </List>
+
+                        <Typography variant="h5" className={styles.listTitle}>
+                            Settings
+                        </Typography>
+
+                        <List>
+                            <ListItem className={router.pathname == "/profile" ? styles.active : ""}>
+                                <Link href='profile'>
+                                    <UserIcon/>                                                
+                                    Profile
+                                </Link>
+                            </ListItem>
+                            <ListItem className={router.pathname == "/preferences" ? styles.active : ""}>
+                                <Link  href='preferences'>
+                                    <PreferencesIcon/>                                                
+                                    Preferences
+                                </Link>
+                            </ListItem>
+                        </List>
+                    </div>
+                   
+                </Drawer>
+
                 <Link href='/' className={styles.logo}> <img src={logo.src} alt="logo" /> </Link>               
 
                 <List className={styles.headMenu}>
@@ -72,11 +173,8 @@ export default function Header() {
                     <ListItem>  
                         <Link variant="h5"> Co-Products </Link>
                     </ListItem>  
-                </List>
-
-                <div>
-
-                
+                </List>     
+                        
 
                 <Button
                     id="basic-button"
@@ -88,8 +186,12 @@ export default function Header() {
                     className={styles.myAccount}
                 >   
                     <AccountIcon/>
-                    My Account
+                    <Typography variant='h5'>
+                        My Account
+                    </Typography>
+                    
                 </Button>
+
                 <Menu
                     id="basic-menu"
                     anchorEl={anchorEl}
@@ -111,9 +213,7 @@ export default function Header() {
                     </MenuItem>
                     <MenuItem onClick={handleAccountClose}> 
                         <Link href='addresses'> <MapIcon/> Addresses </Link>
-                    </MenuItem>
-                    
-                    
+                    </MenuItem>                    
                     <MenuItem onClick={handleAccountClose}> 
                         <Link href='payments'> <Payments/> Payments </Link>
                     </MenuItem>
@@ -124,17 +224,9 @@ export default function Header() {
 
                     <MenuItem onClick={handleAccountClose}> 
                         <Link href='preferences'> <PreferencesIcon/> Preferences </Link>
-                    </MenuItem>
-                    
+                    </MenuItem>                   
                     
                 </Menu>
-
-                </div>
-
-
-
-<div>
-
 
                 <Button
                     id="basic-button"
@@ -146,7 +238,9 @@ export default function Header() {
                     className={styles.myAccount}
                 >   
                     <CartIcon/>
-                    Cart
+                    <Typography variant='h5'>
+                        Cart
+                    </Typography>
                     <span className={styles.badge}>9</span>
                 </Button>
                 <Menu
@@ -230,13 +324,14 @@ export default function Header() {
                 </Button>  
                     
                 </Menu>
-                </div>
-              
+                
                 
 
                 </Toolbar>
             </Container>
         </AppBar>
+
+       
     </>
   )
 
