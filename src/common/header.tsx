@@ -30,13 +30,27 @@ import productImg from '../img/productImg.png';
 
 import styles from '@/styles/Home.module.css'
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useAuthContext } from '@/contexts/AuthContext';
+import useTranslation from 'next-translate/useTranslation';
 
-export default function Header({ title = "Home" }: { title: string }) {
+export default function Header({ title = "Home"}: { title: string}) {
+
+    const authContext = useAuthContext();
+
+    const { t } = useTranslation('common');
+
+    const router = useRouter()
+    const { locale, locales, defaultLocale } = router
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const accountOpen = Boolean(anchorEl);
 
     const handleAccountClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        if(authContext.id == 0 || authContext.authToken == "") {
+            router.push(`/${locale}/auth/signin`)
+            return;
+        }
         setAnchorEl(event.currentTarget);
     };
     const handleAccountClose = () => {
@@ -54,7 +68,20 @@ export default function Header({ title = "Home" }: { title: string }) {
         setAnchorCart(null);
     };
 
+    const [anchorLang, setAnchorLang] = React.useState<null | HTMLElement>(null);
+    const langOpen = Boolean(anchorLang);
+
+    const handleLangClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorLang(event.currentTarget);
+    };
+
+    const handleLangClose = () => {
+        setAnchorLang(null);
+    };
+
     const siteDescription = "LYOTECH LABS is an R&D company that works on the development of software and hardware products including mobile phones, tablets, laptops and smart watches. Our goal is giving best our customers in technologys"
+
+    const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(false)
 
     return (
         <>
@@ -78,24 +105,23 @@ export default function Header({ title = "Home" }: { title: string }) {
                 <meta name="twitter:site" content="LYOTECH LABS" />
                 <meta name="twitter:description" content={siteDescription} />
                 <meta name="twitter:image" content={bannerProduct.src} />
-
             </Head>
 
             <AppBar position="static" className={styles.header}>
                 <Container maxWidth="lg">
                     <Toolbar disableGutters>
 
-                        <Link href='/' className={styles.logo}> <img src={logo.src} alt="logo" /> </Link>
+                        <Link href={`/${locale}`} className={styles.logo}> <img src={logo.src} alt="logo" /> </Link>
 
                         <List className={styles.headMenu}>
                             <ListItem>
-                                <Link href={"#"} > Services </Link>
+                                <Link href={"#"} > {t("Services")} </Link>
                             </ListItem>
                             <ListItem>
-                                <Link href={"#"}> Devices </Link>
+                                <Link href={"#"}> {t("Devices")} </Link>
                             </ListItem>
                             <ListItem>
-                                <Link href={"#"} > Co-Products </Link>
+                                <Link href={"#"} > {t("Co-Products")} </Link>
                             </ListItem>
                         </List>
 
@@ -110,7 +136,7 @@ export default function Header({ title = "Home" }: { title: string }) {
                                 className={styles.myAccount}
                             >
                                 <AccountIcon />
-                                My Account
+                                 {t("MyAccount")}
                             </Button>
                             <Menu
                                 id="basic-menu"
@@ -123,23 +149,23 @@ export default function Header({ title = "Home" }: { title: string }) {
                                 className={styles.myAccountMenu}
                             >
                                 <MenuItem onClick={handleAccountClose}>
-                                    <Link href='allOrder'> <><OrderIcon /> All Orders</> </Link>
+                                    <Link href={`/${locale}/orders`}> <><OrderIcon /> All Orders</> </Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleAccountClose}>
-                                    <Link href='wishList'> <><WishlistIcon />  Wishlist</> </Link>
+                                    <Link href={`/${locale}/wishlist`}> <><WishlistIcon />  Wishlist</> </Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleAccountClose}>
-                                    <Link href='trackOrder'> <><TrackOrderIcon /> Track Order</> </Link>
+                                    <Link href={`/${locale}/trackorder`}> <><TrackOrderIcon /> Track Order</> </Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleAccountClose}>
-                                    <Link href='addresses'> <><MapIcon /> Addresses</> </Link>
+                                    <Link href={`/${locale}/addresses`}> <><MapIcon /> Addresses</> </Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleAccountClose}>
-                                    <Link href='profile'> <><UserIcon /> Profile</> </Link>
+                                    <Link href={`/${locale}/profile`}> <><UserIcon /> Profile</> </Link>
                                 </MenuItem>
 
                                 <MenuItem onClick={handleAccountClose}>
-                                    <Link href='preferences'> <><PreferencesIcon /> Preferences</> </Link>
+                                    <Link href={`/${locale}/preferences`}> <><PreferencesIcon /> Preferences</> </Link>
                                 </MenuItem>
                             </Menu>
                         </div>
@@ -155,7 +181,7 @@ export default function Header({ title = "Home" }: { title: string }) {
                                 className={styles.myAccount}
                             >
                                 <CartIcon />
-                                Cart
+                                {t("Cart")}
                                 <span className={styles.badge}>9</span>
                             </Button>
                             <Menu
@@ -231,13 +257,46 @@ export default function Header({ title = "Home" }: { title: string }) {
                                     </Typography>
                                 </div>
 
-                                <Button variant="outlined" href="cart" className={`${styles["btn"]} ${styles["btn_secondary"]}`} >
+                                <Button variant="outlined" href={`/${locale}/cart`} className={`${styles["btn"]} ${styles["btn_secondary"]}`} >
                                     View Cart
                                 </Button>
-                                <Button variant="contained" href="checkout" className={`${styles["btn"]} ${styles["btn_primary"]}`} >
+                                <Button variant="contained" href={`/${locale}/checkout`} className={`${styles["btn"]} ${styles["btn_primary"]}`} >
                                     Checkout Now
                                 </Button>
 
+                            </Menu>
+                        </div>
+
+
+                        <div>
+                            <Button
+                                id="basic-button"
+                                aria-controls={langOpen ? 'basic-menu' : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={langOpen ? 'true' : undefined}
+                                onClick={handleLangClick}
+                                variant="text"
+                                className={styles.myAccount}
+                            >
+                                <span className='flag-img-main'><Image alt='' src={`/flags/${locale}.png`} width={20} height={20}/></span>
+                                {locale}
+                            </Button>
+                            <Menu
+                                id="basic-menu"
+                                anchorEl={anchorLang}
+                                open={langOpen}
+                                onClose={handleLangClose}
+                                MenuListProps={{
+                                    'aria-labelledby': 'basic-button',
+                                }}
+                                className={styles.myAccountMenu}
+                            >
+                                <MenuItem onClick={handleLangClose}>
+                                    <Link href={``} locale="en"> <><span className='flag-img'><Image alt='' src={`/flags/en.png`} width={20} height={20}/></span> English</> </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleLangClose}>
+                                    <Link href={``} locale="it"> <><span className='flag-img'><Image alt='' src={`/flags/it.png`} width={20} height={20}/></span>  Italian</> </Link>
+                                </MenuItem>
                             </Menu>
                         </div>
 

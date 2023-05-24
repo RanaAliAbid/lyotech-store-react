@@ -26,8 +26,6 @@ const workSans = Work_Sans({ subsets: ['latin'] });
 export default function Sidebar () {   
     const router = useRouter();
     
-
-
   return (
     <>
         <div className={styles.wrapTitle}>
