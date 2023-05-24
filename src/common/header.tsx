@@ -16,7 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Link from '@mui/material/Link';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
-
+import TranslateIcon from '@mui/icons-material/Translate';
 import logo from '../img/lyotech-logo.png';
 
 import OrderIcon from '../img/orderIcon.svg';
@@ -54,7 +54,6 @@ export default function Header() {
     const handleCartClose = () => {
         setAnchorCart(null);
     };
-
 
     const [toggledrawerEl, setToggleDrawerEl] = React.useState<null | HTMLElement>(null);  
     const tdOpen = Boolean(toggledrawerEl);   
@@ -324,8 +323,7 @@ export default function Header() {
                 </Button>  
                     
                 </Menu>
-                
-                
+                               
 
                 </Toolbar>
             </Container>
