@@ -51,19 +51,11 @@ export default function Home() {
 
     return (
         <>
-            <Head>
-                <title>Home - LYOTECH Labs</title>
-                <meta name="description" content="LYOTECH LABS is an R&D company that works on the development of software and hardware products including mobile phones, tablets, laptops and smart watches. Our goal is giving best our customers in technologys" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-
             <div>
 
                 <ThemeProvider theme={theme}>
                     <main className={styles.main} >
-                        <Header />
+                        <Header title='Home'/>
                         {/* Banner Section Start */}
                         <div className={styles.paddingT0} >
                             <div className={`${styles["mainBanner"]}`}>
