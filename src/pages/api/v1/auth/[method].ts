@@ -1,13 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { checkUserToken, signIn } from '@/controllers/UserController'
+import { checkUserToken, signIn, getUserSession, forgotPassword, signUp } from '@/controllers/UserController'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { ApiData, ApiError } from '../../types';
-import { ironOptions } from "../../../../../app.config";
-import { withIronSessionApiRoute } from "iron-session/next";
+import { AuthUser } from '@/contexts/auth.types';
 
-export async function handler(
+export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<ApiData | ApiError>
+    res: NextApiResponse<ApiData | ApiError | AuthUser>
 ) {
 
     const method = req.query.method;
@@ -17,13 +16,23 @@ export async function handler(
             signIn(req, res)
             break;
 
+        case "signup":
+            signUp(req, res)
+            break;
+
+        case "user_session":
+            getUserSession(req, res)
+            break;
+
         case "checktoken":
             checkUserToken(req, res)
+            break;
+
+        case "forgot_password":
+            forgotPassword(req, res)
             break;
 
         default:
             res.status(400).json({ status: false, message: 'Unauthorized Request' })
     }
 }
-
-export default withIronSessionApiRoute(handler, ironOptions);

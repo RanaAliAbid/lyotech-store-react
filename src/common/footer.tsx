@@ -6,8 +6,6 @@ import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 
-
-
 import Link from '@mui/material/Link';
 
 import darkLogo from '../img/dark-logo.png';
@@ -17,8 +15,6 @@ import styles from '@/styles/Home.module.css'
 
 export default function Footer() {
     
-
-
   return (
     <>    
     <div className={styles.footer}>    

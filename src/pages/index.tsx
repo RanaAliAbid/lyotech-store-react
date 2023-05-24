@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, useInView, useAnimation } from "framer-motion"
-import Head from 'next/head';
 
 import Header from '../common/header';
 import Footer from '../common/footer';

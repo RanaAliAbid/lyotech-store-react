@@ -70,11 +70,7 @@ return (
                             </Grid> 
                         </Grid>
                     </Container>
-
                 </div>
-
-          
-
             
             <Footer/>
         </main>

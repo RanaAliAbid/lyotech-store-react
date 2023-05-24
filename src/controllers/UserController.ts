@@ -1,20 +1,20 @@
 import { ApiData, ApiError } from "@/pages/api/types";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
-import { API_KEY } from "../../app.config";
+import { API_KEY, ironOptions } from "../../app.config";
+import { AuthUser } from "@/contexts/auth.types";
+import jwt from 'jsonwebtoken';
 
-declare module "iron-session" {
-    interface IronSessionData {
-        user?: {
-            id: number;
-            isAdmin?: boolean;
-            authToken?: string;
-        };
-    }
+export const getUserSession = async (req: NextApiRequest, res: NextApiResponse<AuthUser | ApiError>) => {
+    // try {
+    //     const user = req.session?.user ?? {id: 0, authToken: "", isAdmin: false}
+    //     res.status(200).json(user)
+    // } catch (error) {
+    //     res.status(400).json({ message: "An internal error occured.", status: false })
+    // }
 }
 
 export const signIn = async (req: NextApiRequest, res: NextApiResponse<ApiData | ApiError>) => {
-
     res.setHeader('Allow', "POST");
 
     try {
@@ -26,29 +26,51 @@ export const signIn = async (req: NextApiRequest, res: NextApiResponse<ApiData |
             data: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
-                'X-APIKEY': process.env.API_KEY
+                'X-API-KEY': process.env.API_KEY
             },
         };
         const result = await axios(config);
 
         if (result.status == 200) {
-            req.session.user = {
-                id: 1,
-                isAdmin: false,
-                authToken: ""
-            }
-            await req.session.save();
+
+            // const token = jwt.sign({test: "frank"}, ironOptions.password);
+            
         }
 
         res.status(200).json({ message: "Sucessfull login", status: true })
     } catch (error) {
-        console.log(error)
+        res.status(400).json({ message: "An internal error occured", status: false })
+    }
+}
+
+export const signUp = async (req: NextApiRequest, res: NextApiResponse<ApiData | ApiError>) => {
+    res.setHeader('Allow', "POST");
+
+    try {
+        let data = req?.body
+
+        const config = {
+            method: 'POST',
+            url: process.env.API_URL + "users/signup",
+            data: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-API-KEY': process.env.API_KEY
+            },
+        };
+        const result = await axios(config);
+
+        if (result.status == 200) {
+            // const token = jwt.sign({test: "frank"}, ironOptions.password);
+        }
+
+        res.status(200).json({ message: "Sucessfull register", status: true })
+    } catch (error) {
         res.status(400).json({ message: "An internal error occured", status: false })
     }
 }
 
 export const checkUserToken = async (req: NextApiRequest, res: NextApiResponse<ApiData | ApiError>) => {
-
     res.setHeader('Allow', "POST");
 
     try {
@@ -60,12 +82,35 @@ export const checkUserToken = async (req: NextApiRequest, res: NextApiResponse<A
             data: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
-                'X-APIKEY': API_KEY
+                'X-API-KEY': API_KEY
             },
         };
         const result = await axios(config);
 
         res.status(200).json({ message: "Cart data", status: true })
+    } catch (error) {
+        res.status(400).json({ message: "An internal error occured", status: false })
+    }
+}
+
+export const forgotPassword = async (req: NextApiRequest, res: NextApiResponse<ApiData | ApiError>) => {
+    res.setHeader('Allow', "POST");
+
+    try {
+        let data = req.body
+
+        const config = {
+            method: 'POST',
+            url: process.env.API_URL + "users/forgot_password",
+            data: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-API-KEY': API_KEY
+            },
+        };
+        const result = await axios(config);
+
+        res.status(200).json({ message: "data", status: true })
     } catch (error) {
         res.status(400).json({ message: "An internal error occured", status: false })
     }
