@@ -31,24 +31,21 @@ const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider } from '@mui/material';
 
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { verifyUserHandover } from '@/components/auth/auth.service';
 
-type Repo = {
-    name: string;
-    stargazers_count: number;
-};
+// export const getServerSideProps: GetServerSideProps<{
+//     data: AuthUser;
+// }> = async () => {
+//     const result = await getUserSession();
 
-export const getServerSideProps: GetServerSideProps<{
-    data: Repo;
-}> = async () => {
-    const res = await fetch('https://api.github.com/repos/vercel/next.js');
-    const data = await res.json();
-    return { props: { data } };
-};
+//     console.log(result, "saaaaaa xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+
+//     const data = result?.data ?? null;
+//     return { props: { data } };
+// };
 
 
-export default function cart({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function cart({ }) {
     const theme = createTheme({
         typography: {
             fontFamily: [

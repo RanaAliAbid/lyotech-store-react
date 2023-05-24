@@ -1,0 +1,10 @@
+{
+    "locales": ["en", "it", "fr"],
+    "defaultLocale": "en",
+    "pages": {
+      "*": ["common"],
+      "/auth/signin": ["signin"],
+      "/auth/signup": ["signup"],
+      "/auth/forgot-password": ["forgotpassword"]
+    }
+  }

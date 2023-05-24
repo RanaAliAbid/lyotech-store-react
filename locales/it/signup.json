@@ -1,0 +1,15 @@
+{
+    "header1": "Creare un account",
+    "subHeader1": "Per offrirti un servizio migliore, incoraggiamo i nostri clienti a registrarsi per un account.",
+    "email": "E-mail",
+    "email-error": "Per favore inserisci un'email valida",
+    "password": "Parola d'ordine",
+    "password-error1": "Si prega di fornire una password valida",
+    "password-error2": "La password deve essere lunga almeno 8 caratteri e contenere almeno una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale.",
+    "confirm-password": "Conferma password",
+    "confirm-password-error": "La password di conferma deve essere uguale alla password",
+    "sign-in": "Registrazione",
+    "already-account": "Hai già un account?",
+    "create-account": "Creare un account",
+    "remember-me": "Ricordati di me"
+}
