@@ -1,15 +1,13 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { AuthUser } from "./auth.types";
-import Cookies from "js-cookie";
 
-const AuthContext = createContext<AuthUser>({ id: 0, authToken: "", isAdmin: false });
+const AuthContext = createContext<any>({});
 
 export function AuthWrapper({ children }: { children: JSX.Element | JSX.Element[]}) {
 
     const [userData, setUserData] = useState<AuthUser>({id:0, isAdmin: false, authToken: ""})
     
     const authUserData = {
-        id: 0,
         userData,
         setUserData
     }

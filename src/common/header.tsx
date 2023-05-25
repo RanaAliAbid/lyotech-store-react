@@ -49,7 +49,7 @@ export default function Header({ title = "Home"}: { title: string}) {
     const accountOpen = Boolean(anchorEl);
 
     const handleAccountClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        if(authContext.id == 0 || authContext.authToken == "") {
+        if(authContext.userData.id == 0 || authContext.userData.authToken == "") {
             router.push(`/${locale}/auth/signin`)
             return;
         }
@@ -155,23 +155,23 @@ export default function Header({ title = "Home"}: { title: string}) {
                                 className={styles.myAccountMenu}
                             >
                                 <MenuItem onClick={handleAccountClose}>
-                                    <Link href={`/${locale}/orders`}> <><OrderIcon /> All Orders</> </Link>
+                                    <Link href={`/${locale}/orders`}> <><OrderIcon /> {t("All-Orders")} </> </Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleAccountClose}>
-                                    <Link href={`/${locale}/wishlist`}> <><WishlistIcon />  Wishlist</> </Link>
+                                    <Link href={`/${locale}/wishlist`}> <><WishlistIcon />  {t("Wishlist")} </> </Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleAccountClose}>
-                                    <Link href={`/${locale}/trackorder`}> <><TrackOrderIcon /> Track Order</> </Link>
+                                    <Link href={`/${locale}/trackorder`}> <><TrackOrderIcon /> {t("Track-Order")} </> </Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleAccountClose}>
-                                    <Link href={`/${locale}/addresses`}> <><MapIcon /> Addresses</> </Link>
+                                    <Link href={`/${locale}/addresses`}> <><MapIcon /> {t("Addresses")} </> </Link>
                                 </MenuItem>
                                 <MenuItem onClick={handleAccountClose}>
-                                    <Link href={`/${locale}/profile`}> <><UserIcon /> Profile</> </Link>
+                                    <Link href={`/${locale}/profile`}> <><UserIcon /> {t("Profile")} </> </Link>
                                 </MenuItem>
 
                                 <MenuItem onClick={handleAccountClose}>
-                                    <Link href={`/${locale}/preferences`}> <><PreferencesIcon /> Preferences</> </Link>
+                                    <Link href={`/${locale}`}> <><PreferencesIcon /> {t("Preferences")}</> </Link>
                                 </MenuItem>
                             </Menu>
                         </div>

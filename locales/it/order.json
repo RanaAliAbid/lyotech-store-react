@@ -1,0 +1,16 @@
+{
+    "trackorder-header": "Ordine dei brani",
+    "trackorder-desc": "Per tracciare il tuo ordine inserisci il tuo ID ordine nella casella sottostante e premi il pulsante 'Traccia'. Questo ti è stato dato sulla ricevuta e nell'e-mail di conferma che avresti dovuto ricevere.",
+    "trackorder-order-id": "ID ordine",
+    "trackorder-order-email": "Indirizzo e-mail",
+    "trackorder-now-btn": "Traccia ora",
+
+    "order-header": "I miei ordini",
+    "order-id": "ID ordine",
+    "order-Status": "Stato",
+    "order-Total": "Totale",
+    "order-view-details": "Visualizza i dettagli dell'ordine",
+    "write-review": "Scrivere una recensione",
+
+    "":""
+}
