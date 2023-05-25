@@ -10,132 +10,134 @@ import Link from '@mui/material/Link';
 
 import darkLogo from '../img/dark-logo.png';
 
-
 import styles from '@/styles/Home.module.css'
 
+import useTranslation from 'next-translate/useTranslation';
+
 export default function Footer() {
+
+    const { t } = useTranslation('common');
     
-  return (
-    <>    
-    <div className={styles.footer}>    
-        <Container className={styles.containerBox} maxWidth="lg">
-            <Grid container spacing={3}>
-                <Grid item md={3} xs={12}>
-                    <div className={styles.footBox}>
-                        <img src={darkLogo.src} alt="logo" />
-                        <Typography variant="h5" >
-                            Lyotech labs electronics trading l.L.C    
-                        </Typography>
-                    </div>                   
-                </Grid>
+    const YEAR = new Date().getFullYear();
 
-                <Grid item md={3} xs={12}>
-                    <div className={styles.footBox}>
-                        <Typography variant="h4" >
-                            Products    
-                        </Typography>
+    return (
+        <>
+            <div className={styles.footer}>
+                <Container className={styles.containerBox} maxWidth="lg">
+                    <Grid container spacing={3}>
+                        <Grid item md={3} xs={12}>
+                            <div className={styles.footBox}>
+                                <img src={darkLogo.src} alt="logo" />
+                                <Typography variant="h5" >
+                                    Lyotech labs electronics trading l.L.C
+                                </Typography>
+                            </div>
+                        </Grid>
 
-                        <List>
-                            <ListItem className={styles.item}>
-                                <Link href="#">
-                                    Privacy & Cookies Policy
-                                </Link> 
-                            </ListItem>
+                        <Grid item md={3} xs={12}>
+                            <div className={styles.footBox}>
+                                <Typography variant="h4" >
+                                    {t("footer-section2-header")}
+                                </Typography>
 
-                            <ListItem className={styles.item}>
-                                <Link href="#">
-                                    Terms
-                                </Link> 
-                            </ListItem>
+                                <List>
+                                    <ListItem className={styles.item}>
+                                        <Link href="#">
+                                            {t("footer-section2-item1")}
+                                        </Link>
+                                    </ListItem>
 
-                            <ListItem className={styles.item}>
-                                <Link href="#">
-                                    Legal
-                                </Link> 
-                            </ListItem>
+                                    <ListItem className={styles.item}>
+                                        <Link href="#">
+                                            {t("footer-section2-item2")}
+                                        </Link>
+                                    </ListItem>
 
-                            <ListItem className={styles.item}>
-                                <Link href="#">
-                                    Customer Support
-                                </Link> 
-                            </ListItem>
-                        </List>
-                    </div>
-                </Grid>
+                                    <ListItem className={styles.item}>
+                                        <Link href="#">
+                                            {t("footer-section2-item3")}
+                                        </Link>
+                                    </ListItem>
 
-                <Grid item md={3} xs={12}>
-                <div className={styles.footBox}>
-                        <Typography variant="h4" >
-                        Information
-                        </Typography>
+                                    <ListItem className={styles.item}>
+                                        <Link href="#">
+                                            {t("footer-section2-item4")}
+                                        </Link>
+                                    </ListItem>
+                                </List>
+                            </div>
+                        </Grid>
 
-                        <List>
-                            <ListItem className={styles.item}>
-                                <Link href="#">
-                                    Privacy & Cookies Policy
-                                </Link> 
-                            </ListItem>
+                        <Grid item md={3} xs={12}>
+                            <div className={styles.footBox}>
+                                <Typography variant="h4" >
+                                    {t("footer-section3-header")}
+                                </Typography>
 
-                            <ListItem className={styles.item}>
-                                <Link href="#">
-                                    Terms
-                                </Link> 
-                            </ListItem>
+                                <List>
+                                    <ListItem className={styles.item}>
+                                        <Link href="#">
+                                            {t("footer-section3-item1")}
+                                        </Link>
+                                    </ListItem>
 
-                            <ListItem className={styles.item}>
-                                <Link href="#">
-                                    Legal
-                                </Link> 
-                            </ListItem>
+                                    <ListItem className={styles.item}>
+                                        <Link href="#">
+                                            {t("footer-section3-item2")}
+                                        </Link>
+                                    </ListItem>
 
-                            <ListItem className={styles.item}>
-                                <Link href="#">
-                                    Customer Support
-                                </Link> 
-                            </ListItem>
-                        </List>
-                    </div>
-                </Grid>
+                                    <ListItem className={styles.item}>
+                                        <Link href="#">
+                                            {t("footer-section3-item3")}
+                                        </Link>
+                                    </ListItem>
 
-                <Grid item md={3} xs={12}>
-                    <div className={styles.footBox}>
-                        <Typography variant="h4" >
-                            Talk To Us    
-                        </Typography>
+                                    <ListItem className={styles.item}>
+                                        <Link href="#">
+                                            {t("footer-section3-item4")}
+                                        </Link>
+                                    </ListItem>
+                                </List>
+                            </div>
+                        </Grid>
 
-                        <Typography variant="h5" >
-                            If you have any question. please contact us  <Link href="#"> demo@example.com  </Link>  
-                        </Typography>
-                    </div>
+                        <Grid item md={3} xs={12}>
+                            <div className={styles.footBox}>
+                                <Typography variant="h4" >
+                                    {t("footer-section4-header1")}
+                                </Typography>
 
-                    <div className={styles.footBox}>                    
-                        <Typography variant="h4" >
-                            Address   
-                        </Typography>
+                                <Typography variant="h5" >
+                                    {t("footer-section4-desc1")}  <Link href="#"> demo@example.com  </Link>
+                                </Typography>
+                            </div>
 
-                        <Typography variant="h5" >
-                            WHP2-BLOCK-T, 
-                            Commercial Area: Saih Shuaib 3,
-                            Dubai, UAE
-                        </Typography>
+                            <div className={styles.footBox}>
+                                <Typography variant="h4" >
+                                    {t("footer-section4-header2")}
+                                </Typography>
 
-                    </div>
-                </Grid>
-            </Grid>
-        </Container>
+                                <Typography variant="h5" >
+                                    {t("footer-section4-desc2")}
+                                </Typography>
+                            </div>
+                        </Grid>
+                    </Grid>
+                </Container>
 
-        <Container className={styles.containerBox} maxWidth="lg">
-            <Grid container>
-                <Grid item xs={12} className={styles.copyright}>
-                    <Typography variant="h5">
-                        © Copyright 2023. All Rights Reserved by LYOTECH
-                    </Typography>
-                </Grid>
-            </Grid>
-        </Container>
-    </div>
-    </>
-  )
+                <Container className={styles.containerBox} maxWidth="lg">
+                    <Grid container>
+                        <Grid item xs={12} className={styles.copyright}>
+                            <Typography variant="h5">
+                                © Copyright {YEAR}. All Rights Reserved by LYOTECH
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                </Container>
+            </div>
+        </>
+    )
 
 
 }

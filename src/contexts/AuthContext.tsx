@@ -7,16 +7,12 @@ const AuthContext = createContext<AuthUser>({ id: 0, authToken: "", isAdmin: fal
 export function AuthWrapper({ children }: { children: JSX.Element | JSX.Element[]}) {
 
     const [userData, setUserData] = useState<AuthUser>({id:0, isAdmin: false, authToken: ""})
-
+    
     const authUserData = {
         id: 0,
         userData,
         setUserData
     }
-
-    useEffect(() => {
-        
-    })
 
     return (
         <AuthContext.Provider value={authUserData}>

@@ -33,6 +33,8 @@ import { createTheme, ThemeProvider } from '@mui/material';
 
 import { verifyUserHandover } from '@/components/auth/auth.service';
 
+import useTranslation from 'next-translate/useTranslation';
+
 // export const getServerSideProps: GetServerSideProps<{
 //     data: AuthUser;
 // }> = async () => {
@@ -46,6 +48,9 @@ import { verifyUserHandover } from '@/components/auth/auth.service';
 
 
 export default function cart({ }) {
+
+    const { t } = useTranslation('cart');
+
     const theme = createTheme({
         typography: {
             fontFamily: [
@@ -59,8 +64,8 @@ export default function cart({ }) {
     React.useEffect(() => {
         const urlParams = router.query
 
-        if(urlParams && urlParams.product_id && urlParams.user_handover) {
-            
+        if (urlParams && urlParams.product_id && urlParams.user_handover) {
+
             const user_handover = urlParams.user_handover.toString()
             const product_id = urlParams.product_id.toString()
 
@@ -75,7 +80,7 @@ export default function cart({ }) {
     };
 
     const getUserCart = async (user_handover: string, product_id: number) => {
-        const result = await verifyUserHandover({user_handover: user_handover, product_id: product_id})
+        const result = await verifyUserHandover({ user_handover: user_handover, product_id: product_id })
         console.log(result)
     }
 
@@ -90,11 +95,11 @@ export default function cart({ }) {
                                 <Grid item md={8} xs={12}>
                                     <div className={styles.wrapTitle}>
                                         <Typography variant="h4" >
-                                            Cart
+                                            {t("header1")}
                                         </Typography>
 
                                         <Typography variant="h6" >
-                                            (3 items)
+                                            (3 {t("items")})
                                         </Typography>
                                     </div>
                                     <List className={styles.productsList}>
@@ -115,7 +120,7 @@ export default function cart({ }) {
                                                             </Typography>
 
                                                             <Typography variant="body1">
-                                                                Model Name: LFI ONE
+                                                                {t("Model-Name")}: LFI ONE
                                                             </Typography>
                                                         </div>
                                                         <div>
@@ -130,13 +135,13 @@ export default function cart({ }) {
                                                 </Typography>
                                                 <Typography variant="h6">
                                                     <strong>
-                                                        2-day Delivery Speedy and reliable parcel delivery!
+                                                        {t("product-delivery")}
                                                     </strong>
                                                 </Typography>
                                                 <List className={styles.productWrapSec}>
                                                     <ListItem className={styles.item}>
                                                         <Typography variant="h5">
-                                                            Quantity
+                                                            {t("Quantity")}
                                                         </Typography>
                                                         <div className={styles.productQty}>
                                                             <div className={styles.qtyBtn}> <RemoveIcon /> </div>
@@ -149,7 +154,7 @@ export default function cart({ }) {
                                                         <Link href='#' className={styles.wishlist}>
                                                             <FavoriteBorderIcon />
                                                             <Typography variant="h6">
-                                                                Move to Wishlist
+                                                                {t("Move-to-Wishlist")}
                                                             </Typography>
                                                         </Link>
                                                     </ListItem>
@@ -158,150 +163,13 @@ export default function cart({ }) {
                                                         <Link href='#' className={styles.remove}>
                                                             <DeleteOutlineIcon />
                                                             <Typography variant="h6">
-                                                                Remove
+                                                                {t("Remove")}
                                                             </Typography>
                                                         </Link>
                                                     </ListItem>
                                                 </List>
                                             </div>
                                         </ListItem>
-                                        <ListItem className={`${styles["wrapBox"]} ${styles["productItem"]}`}>
-                                            <div className={`${styles["productImg"]} ${styles["forDesktop"]}`}>
-                                                <img src={productImg.src} alt="logo" />
-                                            </div>
-
-                                            <div className={styles.productDetails}>
-
-                                                <div className={styles.productName}>
-                                                    <div className={`${styles["productImg"]} ${styles["forMobile"]}`}>
-                                                        <img src={productImg.src} alt="logo" />
-                                                    </div>
-                                                    <div className={styles.productHead}>
-                                                        <div>
-                                                            <Typography variant="h4" className={styles.productitle}>
-                                                                LFi ONE Smartphone
-                                                            </Typography>
-
-                                                            <Typography variant="body1">
-                                                                Model Name: LFI ONE
-                                                            </Typography>
-                                                        </div>
-                                                        <div>
-                                                            <Typography variant="h3" className={styles.productPrice}>
-                                                                $160.00
-                                                            </Typography>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <Typography variant="h6" className={styles.productSummary}>
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                                </Typography>
-                                                <Typography variant="h6">
-                                                    <strong>
-                                                        2-day Delivery Speedy and reliable parcel delivery!
-                                                    </strong>
-                                                </Typography>
-                                                <List className={styles.productWrapSec}>
-                                                    <ListItem className={styles.item}>
-                                                        <Typography variant="h5">
-                                                            Quantity
-                                                        </Typography>
-                                                        <div className={styles.productQty}>
-                                                            <div className={styles.qtyBtn}> <RemoveIcon /> </div>
-                                                            <Input placeholder='0' className={styles.formControl} defaultValue="0" />
-                                                            <div className={styles.qtyBtn}> <AddIcon /> </div>
-                                                        </div>
-                                                    </ListItem>
-
-                                                    <ListItem className={styles.item}>
-                                                        <Link href='#' className={styles.wishlist}>
-                                                            <FavoriteBorderIcon />
-                                                            <Typography variant="h6">
-                                                                Move to Wishlist
-                                                            </Typography>
-                                                        </Link>
-                                                    </ListItem>
-
-                                                    <ListItem className={styles.item}>
-                                                        <Link href='#' className={styles.remove}>
-                                                            <DeleteOutlineIcon />
-                                                            <Typography variant="h6">
-                                                                Remove
-                                                            </Typography>
-                                                        </Link>
-                                                    </ListItem>
-                                                </List>
-                                            </div>
-                                        </ListItem>
-                                        <ListItem className={`${styles["wrapBox"]} ${styles["productItem"]}`}>
-                                            <div className={`${styles["productImg"]} ${styles["forDesktop"]}`}>
-                                                <img src={productImg.src} alt="logo" />
-                                            </div>
-
-                                            <div className={styles.productDetails}>
-
-                                                <div className={styles.productName}>
-                                                    <div className={`${styles["productImg"]} ${styles["forMobile"]}`}>
-                                                        <img src={productImg.src} alt="logo" />
-                                                    </div>
-                                                    <div className={styles.productHead}>
-                                                        <div>
-                                                            <Typography variant="h4" className={styles.productitle}>
-                                                                LFi ONE Smartphone
-                                                            </Typography>
-
-                                                            <Typography variant="body1">
-                                                                Model Name: LFI ONE
-                                                            </Typography>
-                                                        </div>
-                                                        <div>
-                                                            <Typography variant="h3" className={styles.productPrice}>
-                                                                $160.00
-                                                            </Typography>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <Typography variant="h6" className={styles.productSummary}>
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                                </Typography>
-                                                <Typography variant="h6">
-                                                    <strong>
-                                                        2-day Delivery Speedy and reliable parcel delivery!
-                                                    </strong>
-                                                </Typography>
-                                                <List className={styles.productWrapSec}>
-                                                    <ListItem className={styles.item}>
-                                                        <Typography variant="h5">
-                                                            Quantity
-                                                        </Typography>
-                                                        <div className={styles.productQty}>
-                                                            <div className={styles.qtyBtn}> <RemoveIcon /> </div>
-                                                            <Input placeholder='0' className={styles.formControl} defaultValue="0" />
-                                                            <div className={styles.qtyBtn}> <AddIcon /> </div>
-                                                        </div>
-                                                    </ListItem>
-
-                                                    <ListItem className={styles.item}>
-                                                        <Link href='#' className={styles.wishlist}>
-                                                            <FavoriteBorderIcon />
-                                                            <Typography variant="h6">
-                                                                Move to Wishlist
-                                                            </Typography>
-                                                        </Link>
-                                                    </ListItem>
-
-                                                    <ListItem className={styles.item}>
-                                                        <Link href='#' className={styles.remove}>
-                                                            <DeleteOutlineIcon />
-                                                            <Typography variant="h6">
-                                                                Remove
-                                                            </Typography>
-                                                        </Link>
-                                                    </ListItem>
-                                                </List>
-                                            </div>
-                                        </ListItem>
-
 
                                     </List>
 
@@ -310,7 +178,7 @@ export default function cart({ }) {
                                 <Grid item md={4} xs={12}>
                                     <div className={`${styles["wrapTitle"]} ${styles["orderSum"]}`}>
                                         <Typography variant="h4" >
-                                            Order Summary
+                                            {t("header-summary")}
                                         </Typography>
 
                                         <Typography variant="h6" >
@@ -323,7 +191,7 @@ export default function cart({ }) {
                                             <List>
                                                 <ListItem className={styles.subTotal}>
                                                     <Typography variant="h6" >
-                                                        Subtotal (3 items)
+                                                        {t("Subtotal")} (3 {t("items")})
                                                     </Typography>
                                                     <Typography variant="h6" >
                                                         $480.00
@@ -332,7 +200,7 @@ export default function cart({ }) {
 
                                                 <ListItem>
                                                     <Typography variant="h6" >
-                                                        Shipping
+                                                        {t("Shipping")}
                                                     </Typography>
                                                     <Typography variant="h6" >
                                                         <Link>
@@ -350,16 +218,16 @@ export default function cart({ }) {
                                                     onChange={handleChangeShippingType}
                                                 >
                                                     <ListItem className={`${shippingType === "express" ? styles.active : ""}`}>
-                                                        <FormControlLabel value="express" control={<Radio size="small" checked={shippingType === "express"} />} label="Express Saver" />
+                                                        <FormControlLabel value="express" control={<Radio size="small" checked={shippingType === "express"} />} label={t("Express-Saver")} />
                                                         <Typography variant="h6" >
                                                             102.35 €
                                                         </Typography>
                                                     </ListItem>
 
                                                     <ListItem className={`${shippingType === "local" ? styles.active : ""}`} >
-                                                        <FormControlLabel value="local" control={<Radio size="small" checked={shippingType === "local"} />} label="Local pickup " />
+                                                        <FormControlLabel value="local" control={<Radio size="small" checked={shippingType === "local"} />} label={t("Local-pickup")} />
                                                         <Typography variant="h6">
-                                                            20.00
+                                                            20.00 €
                                                         </Typography>
                                                     </ListItem>
                                                 </RadioGroup>
@@ -371,7 +239,7 @@ export default function cart({ }) {
                                             <List>
                                                 <ListItem>
                                                     <Typography variant="h6" >
-                                                        Membership Fee
+                                                        {t("Membership-Fee")}
                                                     </Typography>
                                                     <Typography variant="h6" >
                                                         49.00 €
@@ -380,7 +248,7 @@ export default function cart({ }) {
 
                                                 <ListItem>
                                                     <Typography variant="h6" >
-                                                        VAT 5%
+                                                        {t("VAT")} 5%
                                                     </Typography>
                                                     <Typography variant="h6" >
                                                         16.43 €
@@ -389,7 +257,7 @@ export default function cart({ }) {
 
                                                 <ListItem>
                                                     <Typography variant="h6" >
-                                                        Activation Fee
+                                                        {t("Activation-Fee")}
                                                     </Typography>
                                                     <Typography variant="h6" >
                                                         13.50  €
@@ -400,10 +268,10 @@ export default function cart({ }) {
                                             <List>
                                                 <ListItem>
                                                     <Typography variant="h6" >
-                                                        Payment Processing Fee
+                                                        {t("Payment-Processing-Fee")}
                                                     </Typography>
                                                     <Typography variant="h6" >
-                                                        04.00 €
+                                                        104.00 €
                                                     </Typography>
                                                 </ListItem>
                                             </List>
@@ -413,7 +281,7 @@ export default function cart({ }) {
                                                     <div className={styles.allCenter}>
                                                         <Checkbox size="small" defaultChecked />
                                                         <Typography variant="h5" >
-                                                            One Care Policy
+                                                            {t("One-Care-Policy")}
                                                         </Typography>
                                                     </div>
                                                     <Typography variant="h6" >
@@ -425,7 +293,7 @@ export default function cart({ }) {
                                             <List>
                                                 <ListItem className={styles.summaryfoot}>
                                                     <Typography variant="h5" >
-                                                        Total
+                                                        {t("Total")}
                                                     </Typography>
                                                     <Typography variant="h5" >
                                                         579.18 €
@@ -433,16 +301,13 @@ export default function cart({ }) {
                                                 </ListItem>
                                             </List>
                                         </div>
-                                        <Button variant="contained" fullWidth className={`${styles["btn"]} ${styles["btn_primary"]}`} >Checkout</Button>
+                                        <Button variant="contained" fullWidth className={`${styles["btn"]} ${styles["btn_primary"]}`} >{t("Checkout-btn")}</Button>
                                     </div>
                                 </Grid>
                             </Grid>
                         </Container>
 
                     </div>
-
-
-
 
                     <Footer />
                 </main>
