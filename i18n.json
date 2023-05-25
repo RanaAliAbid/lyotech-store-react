@@ -1,12 +1,43 @@
 {
-    "locales": ["en", "it", "fr"],
-    "defaultLocale": "en",
-    "pages": {
-      "*": ["common"],
-      "/": ["home"],
-      "/cart": ["cart"],
-      "/auth/signin": ["signin"],
-      "/auth/signup": ["signup"],
-      "/auth/forgot-password": ["forgotpassword"]
-    }
+  "locales": [
+    "en",
+    "it",
+    "fr"
+  ],
+  "defaultLocale": "en",
+  "pages": {
+    "*": [
+      "common"
+    ],
+    "/": [
+      "home"
+    ],
+    "/cart": [
+      "cart"
+    ],
+    "/profile": [
+      "profile"
+    ],
+    "/trackorder": [
+      "order"
+    ],
+    "/orders": [
+      "order"
+    ],
+    "/addresses": [
+      "address"
+    ],
+    "/payments": [
+      "payments"
+    ],
+    "/auth/signin": [
+      "signin"
+    ],
+    "/auth/signup": [
+      "signup"
+    ],
+    "/auth/forgot-password": [
+      "forgotpassword"
+    ]
   }
+}

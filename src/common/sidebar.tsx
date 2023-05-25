@@ -1,11 +1,11 @@
 import * as React from 'react';
-import Head from 'next/head';
+// import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 
 import OrderIcon from '../img/orderIcon.svg';
 import WishlistIcon from '../img/wishlistIcon.svg';
@@ -18,89 +18,95 @@ import Payments from '../img/digitalpayments.svg';
 
 import styles from '@/styles/Home.module.css';
 
-import { Work_Sans } from 'next/font/google';
-const workSans = Work_Sans({ subsets: ['latin'] });
+// import { Work_Sans } from 'next/font/google';
+// const workSans = Work_Sans({ subsets: ['latin'] });
+
+import useTranslation from 'next-translate/useTranslation';
+import Link from 'next/link';
 
 
 export default function Sidebar () {   
+
     const router = useRouter();
     
+    const { t } = useTranslation('common');
+
   return (
     <>
         <div className={styles.wrapTitle}>
             <Typography variant="h4" >
-                My Account
+                {t("My-Account")}
             </Typography>
         </div>
 
         <div className={styles.sideBar}>
             <div className={styles.userName}>
                 <Typography variant="h6">
-                    Hi! Welcome 
+                    {t("Welcome")}
                 </Typography>
 
                 <Typography variant="h4">
                     Keanu Reeves
                 </Typography>
 
-                <Link variant="h6">
+                <Link href={"#"}>
                     keanureeves@gmail.com
                 </Link>           
             </div>
 
             <Typography variant="h5" className={styles.listTitle}>
-                Navigation
+                {t("Navigation")}
             </Typography>
 
             <List className={styles.sideBarList}>
                 <ListItem className={router.pathname == "/orders" ? styles.active : ""}>
-                    <Link href='allorders'>
-                        <OrderIcon/>                                                
-                        All Orders
+                    <Link href='/orders'>
+                        <><OrderIcon/>                                                
+                        {t("All-Orders")}</>
                     </Link>
                 </ListItem>
                 <ListItem className={router.pathname == "/wishlist" ? styles.active : ""}>
-                    <Link href='wishlist'>
-                        <WishlistIcon/>
-                        Wishlist
+                    <Link href='/wishlist'>
+                        <><WishlistIcon/>
+                        {t("Wishlist")}</>
                     </Link>
                 </ListItem>
                 <ListItem className={router.pathname == "/trackorder" ? styles.active : ""}>
-                    <Link href='trackorder'>
-                        <TrackOrderIcon/>                                                
-                        Track Order
+                    <Link href='/trackorder'>
+                        <><TrackOrderIcon/>                                                
+                        {t("Track-Order")}</>
                     </Link>
                 </ListItem>
                 <ListItem className={router.pathname == "/addresses" ? styles.active : ""}>
-                    <Link href='addresses'>
-                        <MapIcon/>
-                        Addresses
+                    <Link href='/addresses'>
+                        <><MapIcon/>
+                        {t("Addresses")}</>
                     </Link>
                 </ListItem>
 
                 <ListItem className={router.pathname == "/payments" ? styles.active : ""}>
-                    <Link href='payments'>
-                        <Payments/>
-                        Payments
+                    <Link href='/payments'>
+                        <><Payments/>
+                        {t("Payments")}</>
                     </Link>
                 </ListItem>
             </List>
 
             <Typography variant="h5" className={styles.listTitle}>
-                Settings
+                {t("Settings")}
             </Typography>
 
             <List>
                 <ListItem className={router.pathname == "/profile" ? styles.active : ""}>
-                    <Link href='profile'>
-                        <UserIcon/>                                                
-                        Profile
+                    <Link href='/profile'>
+                        <><UserIcon/>                                                
+                        {t("Profile")}</>
                     </Link>
                 </ListItem>
                 <ListItem className={router.pathname == "/preferences" ? styles.active : ""}>
-                    <Link  href='preferences'>
-                        <PreferencesIcon/>                                                
-                        Preferences
+                    <Link  href='#'>
+                        <><PreferencesIcon/>                                                
+                        {t("Preferences")}</>
                     </Link>
                 </ListItem>
             </List>

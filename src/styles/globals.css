@@ -83,3 +83,11 @@ body > div,
 	margin-top: 6px;
 	margin-right: 5px;
 }
+
+.alert-field .MuiAlert-icon {
+	width: auto !important;
+}
+
+.text-danger {
+	color: red;
+}

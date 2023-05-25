@@ -23,403 +23,166 @@ const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider } from '@mui/material';
 
-export default function allOrders () {
+import useTranslation from 'next-translate/useTranslation';
+
+export default function allOrders() {
+
+    const { t } = useTranslation('order');
+
     const theme = createTheme({
         typography: {
-          fontFamily: [
-            'Work Sans',            
-          ].join(','),
-        },});
+            fontFamily: [
+                'Work Sans',
+            ].join(','),
+        },
+    });
 
     return (
-    <>
-    <ThemeProvider theme={theme}>
-        <main className={styles.main}>
-           <Header title='Orders'/>
-                <div className={styles.paddingTB60}>                
-                    <Container className={styles.containerBox}>
-                        <Grid container spacing={3}>
-                            <Grid item md={3} xs={12} className={styles.sidebarGrid}>
-                                <Sidebar/>
+        <>
+            <ThemeProvider theme={theme}>
+                <main className={styles.main}>
+                    <Header title={t("order-header")} />
+                    <div className={styles.paddingTB60}>
+                        <Container className={styles.containerBox}>
+                            <Grid container spacing={3}>
+                                <Grid item md={3} xs={12} className={styles.sidebarGrid}>
+                                    <Sidebar />
+                                </Grid>
+                                <Grid item md={9} xs={12}>
+                                    <div className={styles.wrapTitle}>
+                                        <Typography variant="h4" >
+                                            {t("order-header")}
+                                        </Typography>
+                                    </div>
+                                    <div className={`${styles["wrapBox"]}`}>
+                                        <List>
+                                            <ListItem className={styles.ordersList}>
+                                                <div className={styles.orderHead}>
+                                                    <div>
+                                                        <Typography variant="h5">
+                                                            {t("order-id")} :
+                                                        </Typography>
+                                                        <Typography variant="h6">
+                                                            403-1732169-5273
+                                                        </Typography>
+                                                    </div>
+
+                                                    <div>
+                                                        <Typography variant="h5">
+                                                            {t("order-Status")}:
+                                                        </Typography>
+                                                        <Typography variant="h6" className={styles.textgreen}>
+                                                            Delivered
+                                                        </Typography>
+                                                    </div>
+
+                                                    <div>
+                                                        <Typography variant="h5">
+                                                            {t("order-Total")}:
+                                                        </Typography>
+                                                        <Typography variant="h6" className={styles.textBlue}>
+                                                            $811.00
+                                                        </Typography>
+                                                    </div>
+                                                </div>
+
+                                                <div className={styles.orderBody}>
+                                                    <List>
+                                                        <ListItem className={styles.productItem}>
+                                                            <div className={styles.productImg}>
+                                                                <img src={productImg.src} alt="logo" />
+                                                            </div>
+                                                            <div className={styles.productDetails}>
+                                                                <div className={styles.productName}>
+                                                                    <div>
+                                                                        <Typography variant="h4" className={styles.productitle}>
+                                                                            LFi ONE Smartphone
+                                                                        </Typography>
+
+                                                                        <Typography variant="body1">
+                                                                            Model Name: LFI ONE
+                                                                        </Typography>
+                                                                    </div>
+                                                                </div>
+
+                                                                <Link href='#' variant="h6">
+                                                                    {t("write-review")}
+                                                                </Link>
+
+                                                            </div>
+                                                        </ListItem>
+
+                                                        <ListItem className={styles.productItem}>
+                                                            <div className={styles.productImg}>
+                                                                <img src={productImg.src} alt="logo" />
+                                                            </div>
+                                                            <div className={styles.productDetails}>
+                                                                <div className={styles.productName}>
+                                                                    <div>
+                                                                        <Typography variant="h4" className={styles.productitle}>
+                                                                            LFi ONE Smartphone
+                                                                        </Typography>
+
+                                                                        <Typography variant="body1">
+                                                                            Model Name: LFI ONE
+                                                                        </Typography>
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <Link href='#' variant="h6">
+                                                                    {t("write-review")}
+                                                                </Link>
+
+                                                            </div>
+                                                        </ListItem>
+
+                                                        <ListItem className={styles.productItem}>
+                                                            <div className={styles.productImg}>
+                                                                <img src={productImg.src} alt="logo" />
+                                                            </div>
+                                                            <div className={styles.productDetails}>
+                                                                <div className={styles.productName}>
+                                                                    <div>
+                                                                        <Typography variant="h4" className={styles.productitle}>
+                                                                            LFi ONE Smartphone
+                                                                        </Typography>
+
+                                                                        <Typography variant="body1">
+                                                                            Model Name: LFI ONE
+                                                                        </Typography>
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <Link href='#' variant="h6">
+                                                                    {t("write-review")}
+                                                                </Link>
+
+                                                            </div>
+                                                        </ListItem>
+
+                                                    </List>
+                                                </div>
+
+                                                <div className={styles.foot}>
+                                                    <Link href='#' variant="h6">
+                                                        {t("order-view-details")}
+                                                    </Link>
+                                                </div>
+                                            </ListItem>
+
+
+                                        </List>
+
+                                    </div>
+                                </Grid>
                             </Grid>
-                            <Grid item md={9} xs={12}>
-                                <div className={styles.wrapTitle}>
-                                    <Typography variant="h4" >
-                                        My Orders
-                                    </Typography>
-                                </div>     
-                                <div className={`${styles["wrapBox"]}`}>
-                                    <List>
-                                        <ListItem className={styles.ordersList}>
-                                            <div className={styles.orderHead}>
-                                                <div>
-                                                    <Typography variant="h5">
-                                                        Order id :
-                                                    </Typography>
-                                                    <Typography variant="h6">
-                                                        403-1732169-5273
-                                                    </Typography>
-                                                </div>
-
-                                                <div>
-                                                    <Typography variant="h5">
-                                                        Status:
-                                                    </Typography>
-                                                    <Typography variant="h6" className={styles.textgreen}>
-                                                        Delivered
-                                                    </Typography>
-                                                </div>
-
-                                                <div>
-                                                    <Typography variant="h5">
-                                                        Total:
-                                                    </Typography>
-                                                    <Typography variant="h6" className={styles.textBlue}>
-                                                        $811.00
-                                                    </Typography>
-                                                </div>                                            
-                                            </div>
-
-                                            <div className={styles.orderBody}>
-                                                <List>
-                                                    <ListItem className={styles.productItem}>
-                                                        <div className={styles.productImg}>
-                                                            <img src={productImg.src} alt="logo" />
-                                                        </div>
-                                                        <div className={styles.productDetails}>
-                                                            <div className={styles.productName}>
-                                                                <div>
-                                                                    <Typography variant="h4" className={styles.productitle}>
-                                                                        LFi ONE Smartphone
-                                                                    </Typography>
-
-                                                                    <Typography variant="body1">
-                                                                        Model Name: LFI ONE
-                                                                    </Typography>                                            
-                                                                </div>
-                                                            </div>
-
-                                                            <Link href='#' variant="h6">
-                                                                Write a review
-                                                            </Link>
-                                                                                                      
-                                                        </div>
-                                                    </ListItem>
-
-                                                    <ListItem className={styles.productItem}>
-                                                        <div className={styles.productImg}>
-                                                            <img src={productImg.src} alt="logo" />
-                                                        </div>
-                                                        <div className={styles.productDetails}>
-                                                            <div className={styles.productName}>
-                                                                <div>
-                                                                    <Typography variant="h4" className={styles.productitle}>
-                                                                        LFi ONE Smartphone
-                                                                    </Typography>
-
-                                                                    <Typography variant="body1">
-                                                                        Model Name: LFI ONE
-                                                                    </Typography>                                            
-                                                                </div>
-                                                               
-                                                            </div>
-
-                                                            <Link href='#' variant="h6">
-                                                                Write a review
-                                                            </Link>
-                                                                                                      
-                                                        </div>
-                                                    </ListItem>
-
-
-                                                    <ListItem className={styles.productItem}>
-                                                        <div className={styles.productImg}>
-                                                            <img src={productImg.src} alt="logo" />
-                                                        </div>
-                                                        <div className={styles.productDetails}>
-                                                            <div className={styles.productName}>
-                                                                <div>
-                                                                    <Typography variant="h4" className={styles.productitle}>
-                                                                        LFi ONE Smartphone
-                                                                    </Typography>
-
-                                                                    <Typography variant="body1">
-                                                                        Model Name: LFI ONE
-                                                                    </Typography>                                            
-                                                                </div>
-                                                               
-                                                            </div>
-
-                                                            <Link href='#' variant="h6">
-                                                                Write a review
-                                                            </Link>
-                                                                                                      
-                                                        </div>
-                                                    </ListItem>
-                                                    
-                                                </List>
-                                            </div>
-
-                                            <div className={styles.foot}>
-                                                <Link href='#' variant="h6">
-                                                    View order details
-                                                </Link>
-                                            </div>
-                                        </ListItem>
-
-
-
-                                        <ListItem className={styles.ordersList}>
-                                            <div className={styles.orderHead}>
-                                                <div>
-                                                    <Typography variant="h5">
-                                                        Order id :
-                                                    </Typography>
-                                                    <Typography variant="h6">
-                                                        403-1732169-5273
-                                                    </Typography>
-                                                </div>
-
-                                                <div>
-                                                    <Typography variant="h5">
-                                                        Status:
-                                                    </Typography>
-                                                    <Typography variant="h6" className={styles.textred}>
-                                                        Cancled
-                                                    </Typography>
-                                                </div>
-
-                                                <div>
-                                                    <Typography variant="h5">
-                                                        Total:
-                                                    </Typography>
-                                                    <Typography variant="h6" className={styles.textBlue}>
-                                                        $811.00
-                                                    </Typography>
-                                                </div>                                            
-                                            </div>
-
-                                            <div className={styles.orderBody}>
-                                                <List>
-                                                    <ListItem className={styles.productItem}>
-                                                        <div className={styles.productImg}>
-                                                            <img src={productImg.src} alt="logo" />
-                                                        </div>
-                                                        <div className={styles.productDetails}>
-                                                            <div className={styles.productName}>
-                                                                <div>
-                                                                    <Typography variant="h4" className={styles.productitle}>
-                                                                        LFi ONE Smartphone
-                                                                    </Typography>
-
-                                                                    <Typography variant="body1">
-                                                                        Model Name: LFI ONE
-                                                                    </Typography>                                            
-                                                                </div>
-                                                            </div>
-
-                                                            <Link href='#' variant="h6">
-                                                                Write a review
-                                                            </Link>
-                                                                                                      
-                                                        </div>
-                                                    </ListItem>
-
-                                                    <ListItem className={styles.productItem}>
-                                                        <div className={styles.productImg}>
-                                                            <img src={productImg.src} alt="logo" />
-                                                        </div>
-                                                        <div className={styles.productDetails}>
-                                                            <div className={styles.productName}>
-                                                                <div>
-                                                                    <Typography variant="h4" className={styles.productitle}>
-                                                                        LFi ONE Smartphone
-                                                                    </Typography>
-
-                                                                    <Typography variant="body1">
-                                                                        Model Name: LFI ONE
-                                                                    </Typography>                                            
-                                                                </div>
-                                                               
-                                                            </div>
-
-                                                            <Link href='#' variant="h6">
-                                                                Write a review
-                                                            </Link>
-                                                                                                      
-                                                        </div>
-                                                    </ListItem>
-
-
-                                                    <ListItem className={styles.productItem}>
-                                                        <div className={styles.productImg}>
-                                                            <img src={productImg.src} alt="logo" />
-                                                        </div>
-                                                        <div className={styles.productDetails}>
-                                                            <div className={styles.productName}>
-                                                                <div>
-                                                                    <Typography variant="h4" className={styles.productitle}>
-                                                                        LFi ONE Smartphone
-                                                                    </Typography>
-
-                                                                    <Typography variant="body1">
-                                                                        Model Name: LFI ONE
-                                                                    </Typography>                                            
-                                                                </div>
-                                                               
-                                                            </div>
-
-                                                            <Link href='#' variant="h6">
-                                                                Write a review
-                                                            </Link>
-                                                                                                      
-                                                        </div>
-                                                    </ListItem>
-                                                    
-                                                </List>
-                                            </div>
-
-                                            <div className={styles.foot}>
-                                                <Link href='#' variant="h6">
-                                                    View order details
-                                                </Link>
-                                            </div>
-                                        </ListItem>
-
-
-
-                                        <ListItem className={styles.ordersList}>
-                                            <div className={styles.orderHead}>
-                                                <div>
-                                                    <Typography variant="h5">
-                                                        Order id :
-                                                    </Typography>
-                                                    <Typography variant="h6">
-                                                        403-1732169-5273
-                                                    </Typography>
-                                                </div>
-
-                                                <div>
-                                                    <Typography variant="h5">
-                                                        Status:
-                                                    </Typography>
-                                                    <Typography variant="h6" className={styles.textyellow}>
-                                                        Panding
-                                                    </Typography>
-                                                </div>
-
-                                                <div>
-                                                    <Typography variant="h5">
-                                                        Total:
-                                                    </Typography>
-                                                    <Typography variant="h6" className={styles.textBlue}>
-                                                        $811.00
-                                                    </Typography>
-                                                </div>                                            
-                                            </div>
-
-                                            <div className={styles.orderBody}>
-                                                <List>
-                                                    <ListItem className={styles.productItem}>
-                                                        <div className={styles.productImg}>
-                                                            <img src={productImg.src} alt="logo" />
-                                                        </div>
-                                                        <div className={styles.productDetails}>
-                                                            <div className={styles.productName}>
-                                                                <div>
-                                                                    <Typography variant="h4" className={styles.productitle}>
-                                                                        LFi ONE Smartphone
-                                                                    </Typography>
-
-                                                                    <Typography variant="body1">
-                                                                        Model Name: LFI ONE
-                                                                    </Typography>                                            
-                                                                </div>
-                                                            </div>
-
-                                                            <Link href='#' variant="h6">
-                                                                Write a review
-                                                            </Link>
-                                                                                                      
-                                                        </div>
-                                                    </ListItem>
-
-                                                    <ListItem className={styles.productItem}>
-                                                        <div className={styles.productImg}>
-                                                            <img src={productImg.src} alt="logo" />
-                                                        </div>
-                                                        <div className={styles.productDetails}>
-                                                            <div className={styles.productName}>
-                                                                <div>
-                                                                    <Typography variant="h4" className={styles.productitle}>
-                                                                        LFi ONE Smartphone
-                                                                    </Typography>
-
-                                                                    <Typography variant="body1">
-                                                                        Model Name: LFI ONE
-                                                                    </Typography>                                            
-                                                                </div>
-                                                               
-                                                            </div>
-
-                                                            <Link href='#' variant="h6">
-                                                                Write a review
-                                                            </Link>
-                                                                                                      
-                                                        </div>
-                                                    </ListItem>
-
-
-                                                    <ListItem className={styles.productItem}>
-                                                        <div className={styles.productImg}>
-                                                            <img src={productImg.src} alt="logo" />
-                                                        </div>
-                                                        <div className={styles.productDetails}>
-                                                            <div className={styles.productName}>
-                                                                <div>
-                                                                    <Typography variant="h4" className={styles.productitle}>
-                                                                        LFi ONE Smartphone
-                                                                    </Typography>
-
-                                                                    <Typography variant="body1">
-                                                                        Model Name: LFI ONE
-                                                                    </Typography>                                            
-                                                                </div>
-                                                               
-                                                            </div>
-
-                                                            <Link href='#' variant="h6">
-                                                                Write a review
-                                                            </Link>
-                                                                                                      
-                                                        </div>
-                                                    </ListItem>
-                                                    
-                                                </List>
-                                            </div>
-
-                                            <div className={styles.foot}>
-                                                <Link href='#' variant="h6">
-                                                    View order details
-                                                </Link>
-                                            </div>
-                                        </ListItem>
-
-
-                                       
-
-
-                                    </List>
-
-                                    
-                                </div>            
-                            </Grid> 
-                        </Grid>
-                    </Container>
-                </div>            
-            <Footer/>
-        </main>
-    </ThemeProvider>
-    </>
-  )
+                        </Container>
+                    </div>
+                    <Footer />
+                </main>
+            </ThemeProvider>
+        </>
+    )
 }
