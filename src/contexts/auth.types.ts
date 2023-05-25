@@ -1,5 +1,5 @@
 export type AuthUser = {
-    id: number,
+    id?: number,
     authToken?: string,
     isAdmin?: boolean
 }

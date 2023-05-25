@@ -3,6 +3,8 @@
     "defaultLocale": "en",
     "pages": {
       "*": ["common"],
+      "/": ["home"],
+      "/cart": ["cart"],
       "/auth/signin": ["signin"],
       "/auth/signup": ["signup"],
       "/auth/forgot-password": ["forgotpassword"]

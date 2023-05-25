@@ -27,12 +27,18 @@ export async function middleware(request: NextRequest) {
         );
     }
 
-    console.log("request", request, request.cookies.get("test2-")?.value)
+    // console.log("request", request, request.cookies.get("test2-")?.value)
 
-    return NextResponse.redirect(new URL('/', request.url));
+    const locale = request.cookies.get("lang")?.value ?? "en"
+
+    return NextResponse.redirect(new URL(`/${locale}`, request.url));
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-    matcher: ['/profile/:path*', '/checkout/:path*', '/wishlist/:path*'],
+    matcher: [
+        '/profile/:path*', 
+        // '/checkout/:path*', 
+        '/wishlist/:path*'
+    ],
 };

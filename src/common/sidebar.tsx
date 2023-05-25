@@ -22,7 +22,6 @@ import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
 
-
 export default function Sidebar () {   
     const router = useRouter();
     
@@ -54,7 +53,7 @@ export default function Sidebar () {
             </Typography>
 
             <List className={styles.sideBarList}>
-                <ListItem className={router.pathname == "/allorders" ? styles.active : ""}>
+                <ListItem className={router.pathname == "/orders" ? styles.active : ""}>
                     <Link href='allorders'>
                         <OrderIcon/>                                                
                         All Orders

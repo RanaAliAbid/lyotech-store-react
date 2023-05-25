@@ -34,11 +34,14 @@ import pclogo03 from '../img/partners-logo/pclogo03.jpg';
 import pclogo04 from '../img/partners-logo/pclogo04.jpg';
 import pclogo05 from '../img/partners-logo/pclogo05.jpg';
 import styles from '@/styles/Home.module.css';
-
-
 import { Work_Sans } from 'next/font/google';
+
+
 const workSans = Work_Sans({ subsets: ['latin'] });
 import { createTheme, ThemeProvider } from '@mui/material';
+import useTranslation from 'next-translate/useTranslation';
+
+
 export default function Home() {
     const theme = createTheme({
         typography: {
@@ -48,13 +51,15 @@ export default function Home() {
         },
     });
 
+    const { t } = useTranslation('home');
+
     return (
         <>
             <div>
 
                 <ThemeProvider theme={theme}>
                     <main className={styles.main} >
-                        <Header title='Home'/>
+                        <Header title='Home' />
                         {/* Banner Section Start */}
                         <div className={styles.paddingT0} >
                             <div className={`${styles["mainBanner"]}`}>
@@ -72,14 +77,14 @@ export default function Home() {
                                                 viewport={{ once: true }}
                                             >
                                                 <Typography variant="h1" className={styles.bannerHD}>
-                                                    LYOTECH LABS
+                                                    {t("header1")}
                                                 </Typography>
 
                                                 <Typography variant="h6" className={styles.bannerTxt}>
-                                                    LYOTECH LABS is an R&D company that works on the
-                                                    development of software and hardware products including mobile phones, tablets, laptops and smart watches.
+                                                    {t("subheader1")}
                                                 </Typography>
-                                                <Button variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`}>Shop Now</Button>
+
+                                                <Button variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`}>{t("banner-btn-title")}</Button>
                                             </motion.div>
                                         </Grid>
 
@@ -123,10 +128,10 @@ export default function Home() {
                                                     <img src={supportIcon.src} alt='Icon' />
                                                 </div>
                                                 <Typography variant='h5'>
-                                                    Technical support 24/7
+                                                    {t("service-header1")}
                                                 </Typography>
                                                 <Typography variant='h6'>
-                                                    Our technical teams are available 24 hours a  day, 7 days a week.
+                                                    {t("service-desc1")}
                                                 </Typography>
                                             </div>
                                         </motion.div>
@@ -147,10 +152,10 @@ export default function Home() {
                                                     <img src={serversIcon.src} alt='Icon' />
                                                 </div>
                                                 <Typography variant='h5'>
-                                                    Fully managed servers
+                                                    {t("service-header2")}
                                                 </Typography>
                                                 <Typography variant='h6'>
-                                                    Don’t worry about your servers,  our technical team will take care of them.
+                                                    {t("service-desc2")}
                                                 </Typography>
                                             </div>
                                         </motion.div>
@@ -171,10 +176,10 @@ export default function Home() {
                                                     <img src={testedIcon.src} alt='Icon' />
                                                 </div>
                                                 <Typography variant='h5'>
-                                                    Hardware & components tested and certified
+                                                    {t("service-header3")}
                                                 </Typography>
                                                 <Typography variant='h6'>
-                                                    All our devices have been tested and approved by our experts.
+                                                    {t("service-desc3")}
                                                 </Typography>
                                             </div>
                                         </motion.div>
@@ -196,10 +201,10 @@ export default function Home() {
                                                     <img src={securityIcon.src} alt='Icon' />
                                                 </div>
                                                 <Typography variant='h5'>
-                                                    Technical security & redundancy
+                                                    {t("service-header4")}
                                                 </Typography>
                                                 <Typography variant='h6'>
-                                                    Our datacentres are ISO 27001-certified, PCI DDS3, GPDR Data Protection and Storage protected.
+                                                    {t("service-desc4")}
                                                 </Typography>
                                             </div>
                                         </motion.div>
@@ -216,11 +221,10 @@ export default function Home() {
                                     <Grid item md={12} xs={12}>
                                         <div className={styles.sectionHeading}>
                                             <Typography variant='h2'>
-                                                Linux Virtual Private Servers
+                                                {t("server-header")}
                                             </Typography>
                                             <Typography variant='h6'>
-                                                Our Linux VPS solutions are designed to suit all of your needs, and scale up as your business grows.
-                                                We guarantee a high performance and a range of distributions for the Linux VPS.
+                                                {t("server-desc")}
                                             </Typography>
                                         </div>
                                     </Grid>
@@ -241,7 +245,7 @@ export default function Home() {
                                                 transition={{ duration: 0.5, delay: 0.3 }}
                                                 viewport={{ once: true }}>
                                                 <Typography variant='h4'>
-                                                    Full Root Access in VPS Hosting
+                                                    {t("server-item1-header")}
                                                 </Typography>
                                             </motion.div>
                                         </div>
@@ -261,8 +265,7 @@ export default function Home() {
                                                 transition={{ duration: 0.5, delay: 0.3 }}
                                                 viewport={{ once: true }}>
                                                 <Typography variant='h4'>
-                                                    SSD Dedicated Server
-                                                    Hosting
+                                                    {t("server-item2-header")}
                                                 </Typography>
                                             </motion.div>
                                         </div>
@@ -282,8 +285,7 @@ export default function Home() {
                                                 transition={{ duration: 0.5, delay: 0.3 }}
                                                 viewport={{ once: true }}>
                                                 <Typography variant='h4'>
-                                                    1Gbps Unlimited
-                                                    Bandwidth
+                                                    {t("server-item3-header")}
                                                 </Typography>
                                             </motion.div>
                                         </div>
@@ -303,7 +305,7 @@ export default function Home() {
                                                 transition={{ duration: 0.5, delay: 0.3 }}
                                                 viewport={{ once: true }}>
                                                 <Typography variant='h4'>
-                                                    100% Optimize VPS
+                                                    {t("server-item4-header")}
                                                 </Typography>
                                             </motion.div>
                                         </div>
@@ -333,16 +335,15 @@ export default function Home() {
                                         </Grid>
                                         <Grid item md={6} sm={12}>
                                             <Typography variant='h2'>
-                                                <span>LFi</span> ONE Smartphone
+                                                <span>LFi</span> ONE {t("product-item1-header")}
                                             </Typography>
 
                                             <Typography variant='h6'>
-                                                Mint while you use your LFi One. The LFi One is a unique smartphone: not only can you
-                                                enjoy high-level features, but you can also mint LFi tokens.
+                                                {t("product-item1-desc")}
                                             </Typography>
 
                                             <Typography variant='h4'>
-                                                Versatile Use
+                                                {t("product-item1-subheader")}
                                             </Typography>
 
                                             <Grid container spacing={3} className={styles.productSpec} >
@@ -356,8 +357,8 @@ export default function Home() {
                                                         whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
                                                         transition={{ duration: 0.2, delay: 0.15 }}
                                                         viewport={{ once: true }}>
-                                                        <span>                                                            
-															<OctaCoreIcon/>
+                                                        <span>
+                                                            <OctaCoreIcon /> &nbsp; 
                                                             <Typography variant='h6'>
                                                                 OctaCore MTK 2.4 Ghz
                                                             </Typography>
@@ -374,8 +375,8 @@ export default function Home() {
                                                         whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
                                                         transition={{ duration: 0.4, delay: 0.30 }}
                                                         viewport={{ once: true }}>
-                                                        <span>                                                            
-															<ZoomIcon/>
+                                                        <span>
+                                                            <ZoomIcon /> &nbsp; 
                                                             <Typography variant='h6'>
                                                                 Sony 64MPX Main Camera with Macro and Zoom
                                                             </Typography>
@@ -395,8 +396,8 @@ export default function Home() {
                                                         whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
                                                         transition={{ duration: 0.2, delay: 0.15 }}
                                                         viewport={{ once: true }}>
-                                                        <span>                                                            
-															<RamIcon/>
+                                                        <span>
+                                                            <RamIcon /> &nbsp; 
                                                             <Typography variant='h6'>
                                                                 12GB RAM
                                                             </Typography>
@@ -415,8 +416,8 @@ export default function Home() {
                                                         whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
                                                         transition={{ duration: 0.4, delay: 0.30 }}
                                                         viewport={{ once: true }}>
-                                                        <span>                                                            
-															<BatteryIcon/>
+                                                        <span>
+                                                            <BatteryIcon />
                                                             <Typography variant='h6'>
                                                                 6100 mAh Battery Power
                                                             </Typography>
@@ -436,8 +437,8 @@ export default function Home() {
                                                         whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
                                                         transition={{ duration: 0.2, delay: 0.15 }}
                                                         viewport={{ once: true }}>
-                                                        <span>                                                            
-															<DpiIcon/>
+                                                        <span>
+                                                            <DpiIcon /> &nbsp; 
                                                             <Typography variant='h6'>
                                                                 IPS 6.78” FHD+
                                                                 @ 120Hz 396 DPI
@@ -457,8 +458,8 @@ export default function Home() {
                                                         whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
                                                         transition={{ duration: 0.4, delay: 0.30 }}
                                                         viewport={{ once: true }}>
-                                                        <span>                                                            
-															<MintingIcon/>
+                                                        <span>
+                                                            <MintingIcon />
                                                             <Typography variant='h6'>
                                                                 Mobile Minting App Native
                                                             </Typography>
@@ -477,7 +478,7 @@ export default function Home() {
                                                 transition={{ duration: 0.2, delay: 0.25 }}
                                                 viewport={{ once: true }}>
 
-                                                <Button variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`}>Shop Now</Button>
+                                                <Button variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`}>{t("product-btn1-shop")}</Button>
                                             </motion.div>
                                         </Grid>
 
@@ -496,8 +497,7 @@ export default function Home() {
                                             </Typography>
 
                                             <Typography variant='h6'>
-                                                Smartwatch to stay connected always. Two screen options are available
-                                                to match your personal style.
+                                                {t("product-item2-desc")}
                                             </Typography>
                                         </Grid>
 
@@ -514,33 +514,31 @@ export default function Home() {
                                                 transition={{ duration: 0.3, delay: 0.25 }}
                                                 viewport={{ once: true }}>
                                                 <Typography variant='h4'>
-                                                    Super-long Battery Life &
-                                                    Health Data Tracker
+                                                    {t("product-item2-subheader1")}
                                                 </Typography>
 
                                                 <Grid container spacing={3} className={styles.productSpec} >
                                                     <Grid item md={12}>
-                                                        <span>                                                            
-															<OctaCoreIcon/>
+                                                        <span>
+                                                            <OctaCoreIcon /> &nbsp; 
                                                             <Typography variant='h6'>
-                                                                Up to 3 days in Smart  Mode.
+                                                                {t("product-item2-carac1")}
                                                             </Typography>
                                                         </span>
                                                     </Grid>
                                                     <Grid item md={12}>
-                                                        <span>                                                            
-															<CalenderIcon/>
+                                                        <span>
+                                                            <CalenderIcon /> &nbsp; 
                                                             <Typography variant='h6'>
-                                                                Up to 45 days in Essential Mode.
+                                                                {t("product-item2-carac2")}
                                                             </Typography>
                                                         </span>
                                                     </Grid>
                                                     <Grid item md={12}>
-                                                        <span>                                                            
-															<HealthIcon/>
+                                                        <span>
+                                                            <HealthIcon /> &nbsp; 
                                                             <Typography variant='h6'>
-                                                                Track your physical and mental
-                                                                health with in-built LYO apps.
+                                                                {t("product-item2-carac3")}
                                                             </Typography>
                                                         </span>
                                                     </Grid>
@@ -577,17 +575,16 @@ export default function Home() {
                                                 transition={{ duration: 0.3, delay: 0.25 }}
                                                 viewport={{ once: true }}>
                                                 <Typography variant='h4'>
-                                                    Integrated with Crypto Apps
+                                                    {t("product-item2-subheader2")}
                                                 </Typography>
 
                                                 <Grid container spacing={3} className={styles.productSpec} >
                                                     <Grid item md={12} xs={12}>
-                                                       
-                                                            <Typography variant='h6'>
-                                                                Check real-time prices of LYO BTC, ETH,
-                                                                Altcoins on your watch.
-                                                            </Typography>
-                                                       
+
+                                                        <Typography variant='h6'>
+                                                            {t("product-item2-carac4")}
+                                                        </Typography>
+
                                                     </Grid>
                                                 </Grid>
 
@@ -600,7 +597,7 @@ export default function Home() {
                                                     whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
                                                     transition={{ duration: 0.4, delay: 0.30 }}
                                                     viewport={{ once: true }}>
-                                                    <Button variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`} >Shop Now</Button>
+                                                    <Button variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`} >{t("product-btn2-shop")}</Button>
                                                 </motion.div>
 
                                             </motion.div>
@@ -613,7 +610,7 @@ export default function Home() {
                             </div>
 
                             <div className={`${styles["productItemWrap"]} ${styles["bgShape01"]}`}>
-                                <Container  className={styles.containerBox}>
+                                <Container className={styles.containerBox}>
                                     <Grid container spacing={3} className={styles.lyoTabMain} >
 
                                         <Grid item md={6} sm={12}>
@@ -622,8 +619,7 @@ export default function Home() {
                                             </Typography>
 
                                             <Typography variant='h6'>
-                                                Versatile design with keyboard and touchscreen to fit  every occasion.
-                                                To take with you everywhere.
+                                                {t("product-item3-desc")}
                                             </Typography>
 
                                             <Typography variant='h4'>
@@ -641,8 +637,8 @@ export default function Home() {
                                                         whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
                                                         transition={{ duration: 0.2, delay: 0.15 }}
                                                         viewport={{ once: true }}>
-                                                        <span>                                                            
-															<OctaCoreIcon/>
+                                                        <span>
+                                                            <OctaCoreIcon />
                                                             <Typography variant='h6'>
                                                                 OctaCore MTK 2.4 Ghz
                                                             </Typography>
@@ -659,8 +655,8 @@ export default function Home() {
                                                         whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
                                                         transition={{ duration: 0.4, delay: 0.30 }}
                                                         viewport={{ once: true }}>
-                                                        <span>                                                            
-															<ZoomIcon/>
+                                                        <span>
+                                                            <ZoomIcon />
                                                             <Typography variant='h6'>
                                                                 Sony 64MPX Main Camera with Macro and Zoom
                                                             </Typography>
@@ -680,8 +676,8 @@ export default function Home() {
                                                         whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
                                                         transition={{ duration: 0.2, delay: 0.15 }}
                                                         viewport={{ once: true }}>
-                                                        <span>                                                            
-															<RamIcon/>
+                                                        <span>
+                                                            <RamIcon />
                                                             <Typography variant='h6'>
                                                                 12GB RAM
                                                             </Typography>
@@ -700,8 +696,8 @@ export default function Home() {
                                                         whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
                                                         transition={{ duration: 0.4, delay: 0.30 }}
                                                         viewport={{ once: true }}>
-                                                        <span>                                                            
-															<BatteryIcon/>
+                                                        <span>
+                                                            <BatteryIcon />
                                                             <Typography variant='h6'>
                                                                 6100 mAh Battery Power
                                                             </Typography>
@@ -721,8 +717,8 @@ export default function Home() {
                                                         whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
                                                         transition={{ duration: 0.2, delay: 0.15 }}
                                                         viewport={{ once: true }}>
-                                                        <span>                                                            
-															<DpiIcon/>
+                                                        <span>
+                                                            <DpiIcon />
                                                             <Typography variant='h6'>
                                                                 10.1″ Full-HD Display
                                                             </Typography>
@@ -741,8 +737,8 @@ export default function Home() {
                                                         whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
                                                         transition={{ duration: 0.4, delay: 0.30 }}
                                                         viewport={{ once: true }}>
-                                                        <span>                                                            
-															<MintingIcon/>
+                                                        <span>
+                                                            <MintingIcon />
                                                             <Typography variant='h6'>
                                                                 Minting App Native
                                                             </Typography>
@@ -760,7 +756,7 @@ export default function Home() {
                                                 whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
                                                 transition={{ duration: 0.4, delay: 0.30 }}
                                                 viewport={{ once: true }}>
-                                                <Button variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`} >Shop Now</Button>
+                                                <Button variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`} >{t("product-btn3-shop")}</Button>
                                             </motion.div>
                                         </Grid>
 
@@ -796,10 +792,10 @@ export default function Home() {
                             <Container className={styles.containerBox}>
                                 <Grid container spacing={3}>
                                     <Grid item md={6} sm={12}>
-                                    <div className={styles.sectionHeading}>
-                                        <Typography variant='h2'>
-                                            We Are
-                                        </Typography>
+                                        <div className={styles.sectionHeading}>
+                                            <Typography variant='h2'>
+                                                {t("partners-header1")}
+                                            </Typography>
                                         </div>
 
                                         <br></br>
@@ -825,10 +821,10 @@ export default function Home() {
                                     </Grid>
 
                                     <Grid item md={6} sm={12}>
-                                    <div className={styles.sectionHeading}>
-                                        <Typography variant='h2'>
-                                            Product Certifications
-                                        </Typography>
+                                        <div className={styles.sectionHeading}>
+                                            <Typography variant='h2'>
+                                                {t("partners-header2")}
+                                            </Typography>
                                         </div>
                                         <br></br>
                                         <motion.div

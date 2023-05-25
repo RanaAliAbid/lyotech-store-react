@@ -31,12 +31,14 @@ import productImg from '../img/productImg.png';
 import styles from '@/styles/Home.module.css'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useAuthContext } from '@/contexts/AuthContext';
+import { useAuthContext } from '../contexts/AuthContext';
+import { useGlobalContext } from '../contexts/GlobalContext';
 import useTranslation from 'next-translate/useTranslation';
 
 export default function Header({ title = "Home"}: { title: string}) {
 
     const authContext = useAuthContext();
+    const globalContext = useGlobalContext();
 
     const { t } = useTranslation('common');
 
@@ -78,6 +80,10 @@ export default function Header({ title = "Home"}: { title: string}) {
     const handleLangClose = () => {
         setAnchorLang(null);
     };
+    
+    React.useEffect(() => {
+        globalContext.updateLocale(locale)
+    }, [locale])
 
     const siteDescription = "LYOTECH LABS is an R&D company that works on the development of software and hardware products including mobile phones, tablets, laptops and smart watches. Our goal is giving best our customers in technologys"
 
@@ -197,6 +203,7 @@ export default function Header({ title = "Home"}: { title: string}) {
 
                                 <div>
                                     <List className={styles.productsList}>
+
                                         <ListItem className={styles.productItem}>
                                             <div className={styles.productImg}>
                                                 <img src={productImg.src} alt="logo" />
@@ -207,61 +214,30 @@ export default function Header({ title = "Home"}: { title: string}) {
                                                 </Typography>
 
                                                 <Typography variant="h6" className={styles.productPrice}>
-                                                    $160.00
+                                                    160.00 €
                                                 </Typography>
                                             </div>
                                             <CloseIcon />
                                         </ListItem>
 
-                                        <ListItem className={styles.productItem}>
-                                            <div className={styles.productImg}>
-                                                <img src={productImg.src} alt="logo" />
-                                            </div>
-                                            <div className={styles.productHead}>
-                                                <Typography variant="h5" className={styles.productitle}>
-                                                    LFi ONE Smartphone
-                                                </Typography>
-
-                                                <Typography variant="h6" className={styles.productPrice}>
-                                                    $160.00
-                                                </Typography>
-                                            </div>
-                                            <CloseIcon />
-                                        </ListItem>
-
-                                        <ListItem className={styles.productItem}>
-                                            <div className={styles.productImg}>
-                                                <img src={productImg.src} alt="logo" />
-                                            </div>
-                                            <div className={styles.productHead}>
-                                                <Typography variant="h5" className={styles.productitle}>
-                                                    LFi ONE Smartphone
-                                                </Typography>
-
-                                                <Typography variant="h6" className={styles.productPrice}>
-                                                    $160.00
-                                                </Typography>
-                                            </div>
-                                            <CloseIcon />
-                                        </ListItem>
                                     </List>
                                 </div>
 
                                 <div className={styles.productSubTotal}>
                                     <Typography variant="h5" className={styles.productitle}>
-                                        SubTotal
+                                        {t("SubTotal")}
                                     </Typography>
 
                                     <Typography variant="h6" className={styles.productPrice}>
-                                        $480.00
+                                        160.00 €
                                     </Typography>
                                 </div>
 
                                 <Button variant="outlined" href={`/${locale}/cart`} className={`${styles["btn"]} ${styles["btn_secondary"]}`} >
-                                    View Cart
+                                    {t("view-cart-btn")}
                                 </Button>
                                 <Button variant="contained" href={`/${locale}/checkout`} className={`${styles["btn"]} ${styles["btn_primary"]}`} >
-                                    Checkout Now
+                                    {t("checkout-btn")}
                                 </Button>
 
                             </Menu>
