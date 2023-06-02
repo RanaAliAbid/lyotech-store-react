@@ -1,6 +1,7 @@
 {
     "header1": "Create an account",
     "subHeader1": "To better serve you, we encourage our Clients to register for an account.",
+    "username-error": "This field is required",
     "email": "Email",
     "email-error": "Please provide a valid email",
     "password": "Password",
@@ -11,5 +12,8 @@
     "sign-in": "Sign in",
     "already-account": "Already have an account?",
     "create-account": "Create Account",
-    "remember-me": "Remember me"
+    "remember-me": "Remember me",
+    "username": "Username",
+    "firstname": "Firstname",
+    "lastname": "Lastname"
 }

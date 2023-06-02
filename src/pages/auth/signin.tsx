@@ -20,9 +20,9 @@ const workSans = Work_Sans({ subsets: ['latin'] });
 import { Alert, Backdrop, CircularProgress, createTheme, ThemeProvider } from '@mui/material';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { SignInDataValidator } from '@/components/auth/auth.types';
+import { SignInData, SignInDataValidator } from '@/components/auth/auth.types';
 import { signInUser } from '@/components/auth/auth.service';
-import { validatePassword } from '@/validators/auth.validator';
+import { signInCheckEmptyFields, validatePassword } from '@/validators/auth.validator';
 import useTranslation from 'next-translate/useTranslation';
 
 
@@ -36,26 +36,38 @@ export default function signIn() {
     });
 
     const { t } = useTranslation('signin');
-    
+
     const router = useRouter()
     const { locale, locales, defaultLocale } = router
     const [validator, setValidator] = React.useState<SignInDataValidator>()
     const [loading, setLoading] = React.useState<boolean>(false)
+    const [reReqresponse, setReqResponse] = React.useState<string>("")
 
     const proceedSignIn = async (e: any) => {
         e.preventDefault()
         const postData = e.target;
-        const dataValidate: SignInDataValidator = { email: true, password: true }
-        dataValidate.email = (postData[0].value == "") ? false : true
-        dataValidate.password = (postData[1].value == "") ? false : true
-        dataValidate.password = (!validatePassword(postData[1].value)) ? false : true
+        const signInData: SignInData = { email: postData[0].value, password: postData[1].value }
+
+        const dataValidate = signInCheckEmptyFields(signInData)
 
         setValidator(dataValidate)
 
         if (!dataValidate.email || !dataValidate.password) return false;
 
         setLoading(true)
-        const result = await signInUser({ email: postData[0].value, password: postData[1].value })
+
+        try {
+            const result = await signInUser({ email: postData[0].value, password: postData[1].value })
+            
+            if (result?.status == 200) {
+                setReqResponse("")
+            }
+
+        } catch (error: any) {
+            setReqResponse(error?.response?.data?.message);
+        }
+
+        setLoading(false);
     }
 
     return (
@@ -86,7 +98,7 @@ export default function signIn() {
 
                                         <form method='post' onSubmit={(e) => proceedSignIn(e)}>
                                             <div className={styles.formControl}>
-                                                <label className={styles.formLabel}> {t("email")} </label>
+                                                <label className={styles.formLabel}> {t("email")} <span className='text-danger'>*</span> </label>
                                                 <Email className={styles.formIcon} />
                                                 <Input onKeyDown={(e) => setValidator({ email: true, password: true })} type='email' className={styles.formInput} placeholder={t("email")} />
                                             </div>
@@ -95,13 +107,13 @@ export default function signIn() {
                                             }
 
                                             <div className={styles.formControl}>
-                                                <label className={styles.formLabel}> {t("password")} </label>
+                                                <label className={styles.formLabel}> {t("password")} <span className='text-danger'>*</span> </label>
                                                 <Password className={styles.formIcon} />
                                                 <Input onKeyDown={(e) => setValidator({ email: true, password: true })} type='password' className={styles.formInput} placeholder={t("password")} />
                                             </div>
                                             {
                                                 (validator && !validator.password) && <Alert severity="error">
-                                                     {t("password-error1")}<br />{t("password-error2")}
+                                                    {t("password-error1")}<br />{t("password-error2")}
                                                 </Alert>
                                             }
 
@@ -114,6 +126,12 @@ export default function signIn() {
                                                     {t("forgot-password")}
                                                 </Link>
                                             </div>
+
+                                            {
+                                                (reReqresponse && reReqresponse != "") && <Alert severity="error">
+                                                    {reReqresponse}
+                                                </Alert>
+                                            }
 
                                             <Button type='submit' variant="contained" fullWidth className={`${styles["btn"]} ${styles["btn_primary"]}`} >{t("sign-in")}</Button>
                                         </form>

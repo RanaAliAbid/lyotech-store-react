@@ -1,6 +1,7 @@
 {
     "header1": "Creare un account",
     "subHeader1": "Per offrirti un servizio migliore, incoraggiamo i nostri clienti a registrarsi per un account.",
+    "username-error": "Questo campo è obbligatorio",
     "email": "E-mail",
     "email-error": "Per favore inserisci un'email valida",
     "password": "Parola d'ordine",
@@ -11,5 +12,8 @@
     "sign-in": "Registrazione",
     "already-account": "Hai già un account?",
     "create-account": "Creare un account",
-    "remember-me": "Ricordati di me"
+    "remember-me": "Ricordati di me",
+    "username": "Nome utente",
+    "firstname": "Nome di battesimo",
+    "lastname": "Cognome"
 }
