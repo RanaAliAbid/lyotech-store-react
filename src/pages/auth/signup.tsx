@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
 // import Link from '@mui/material/Link';
 import Email from '../../img/emailIcon.svg';
+import UserIcon from '../../img/userIcon.svg';
 import Password from '../../img/passwordIcon.svg';
 import styles from '@/styles/Home.module.css';
 
@@ -17,9 +18,9 @@ const workSans = Work_Sans({ subsets: ['latin'] });
 import { Alert, Backdrop, CircularProgress, createTheme, ThemeProvider } from '@mui/material';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { SignUpDataValidator } from '@/components/auth/auth.types';
+import { SignUpData, SignUpDataValidator } from '@/components/auth/auth.types';
 import { signUpUser } from '@/components/auth/auth.service';
-import { validatePassword } from '@/validators/auth.validator';
+import { replaceSpecialChar, signUpCheckEmptyFields, validatePassword } from '@/validators/auth.validator';
 import useTranslation from 'next-translate/useTranslation';
 
 export default function createAccount() {
@@ -37,23 +38,40 @@ export default function createAccount() {
     const { locale, locales, defaultLocale } = router
     const [validator, setValidator] = React.useState<SignUpDataValidator>()
     const [loading, setLoading] = React.useState<boolean>(false)
+    const [reReqresponse, setReqResponse] = React.useState<string>("")
 
     const proceedSignUp = async (e: any) => {
         e.preventDefault()
-        const postData = e.target;
-        const dataValidate: SignUpDataValidator = { email: true, password: true, password_confirm: true }
-        dataValidate.email = (postData[0].value == "") ? false : true
-        dataValidate.password = (postData[1].value == "") ? false : true
-        dataValidate.password = (!validatePassword(postData[1].value)) ? false : true
-        dataValidate.password_confirm = (postData[2].value == "") ? false : true
-        dataValidate.password_confirm = (postData[2].value != postData[1].value) ? false : true
 
+        const postData = e.target;
+
+        const signUpData: SignUpData = {
+            firstName: replaceSpecialChar(postData[0].value),
+            lastName: replaceSpecialChar(postData[1].value),
+            email: postData[2].value,
+            password: postData[3].value,
+            password_confirm: postData[4].value
+        }
+
+        const dataValidate = signUpCheckEmptyFields(signUpData)
         setValidator(dataValidate)
 
         if (!dataValidate.email || !dataValidate.password || !dataValidate.password_confirm) return false;
 
         setLoading(true)
-        const result = await signUpUser({ email: postData[0].value, password: postData[1].value, password_confirm: postData[2].value })
+
+        try {
+            const result = await signUpUser(signUpData)
+
+            if (result?.status == 200) {
+                setReqResponse("")
+            }
+
+        } catch (error: any) {
+            setReqResponse(error?.response?.data?.message);
+        }
+
+        setLoading(false);
     }
 
     return (
@@ -71,7 +89,7 @@ export default function createAccount() {
                     <div className={styles.loginBoxCenter}>
                         <Container className={styles.containerBox}>
                             <Grid container justifyContent="center" spacing={3}>
-                                <Grid item sm={8} md={5} xs={12}>
+                                <Grid item sm={8} md={5} xs={12} style={{marginTop: "50px", marginBottom: "50px"}}>
                                     <div className={styles.loginBox}>
                                         <Typography variant="h2">
                                             {t("header1")}
@@ -83,8 +101,28 @@ export default function createAccount() {
 
 
                                         <form method='post' onSubmit={(e) => proceedSignUp(e)}>
+
                                             <div className={styles.formControl}>
-                                                <label className={styles.formLabel}> {t("email")} </label>
+                                                <label className={styles.formLabel}> {t("firstname")} <span className='text-danger'>*</span> </label>
+                                                <UserIcon className={styles.formIcon} />
+                                                <Input type='text' className={styles.formInput} placeholder={t("firstname")} />
+                                            </div>
+                                            {
+                                                (validator && !validator.firstName) && <Alert severity="error">{t("username-error")}</Alert>
+                                            }
+
+                                            <div className={styles.formControl}>
+                                                <label className={styles.formLabel}> {t("lastname")} <span className='text-danger'>*</span> </label>
+                                                <UserIcon className={styles.formIcon} />
+                                                <Input type='text' className={styles.formInput} placeholder={t("lastname")} />
+                                            </div>
+                                            {
+                                                (validator && !validator.lastName) && <Alert severity="error">{t("username-error")}</Alert>
+                                            }
+
+
+                                            <div className={styles.formControl}>
+                                                <label className={styles.formLabel}> {t("email")} <span className='text-danger'>*</span> </label>
                                                 <Email className={styles.formIcon} />
                                                 <Input type='email' className={styles.formInput} placeholder={t("email")} />
                                             </div>
@@ -93,7 +131,7 @@ export default function createAccount() {
                                             }
 
                                             <div className={styles.formControl}>
-                                                <label className={styles.formLabel}> {t("password")} </label>
+                                                <label className={styles.formLabel}> {t("password")} <span className='text-danger'>*</span> </label>
                                                 <Password className={styles.formIcon} />
                                                 <Input type='password' className={styles.formInput} placeholder={t("password")} />
                                             </div>
@@ -104,13 +142,19 @@ export default function createAccount() {
                                             }
 
                                             <div className={styles.formControl}>
-                                                <label className={styles.formLabel}> {t("confirm-password")} </label>
+                                                <label className={styles.formLabel}> {t("confirm-password")} <span className='text-danger'>*</span> </label>
                                                 <Password className={styles.formIcon} />
                                                 <Input type='password' className={styles.formInput} placeholder={t("confirm-password")} />
                                             </div>
                                             {
                                                 (validator && !validator.password_confirm) && <Alert severity="error">
                                                     {t("confirm-password-error")}
+                                                </Alert>
+                                            }
+
+                                            {
+                                                (reReqresponse && reReqresponse != "") && <Alert severity="error">
+                                                    {reReqresponse}
                                                 </Alert>
                                             }
 

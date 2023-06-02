@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextTranslate = require('next-translate-plugin')
+require('dotenv').config()
+const webpack = require('webpack')
 
 const nextConfig = nextTranslate({
 
@@ -11,6 +13,10 @@ const nextConfig = nextTranslate({
             issuer: /\.[jt]sx?$/,
             use: ['@svgr/webpack'],
         });
+
+        config.plugins.push(
+            new webpack.EnvironmentPlugin(process.env)
+        )
 
         return config;
     },

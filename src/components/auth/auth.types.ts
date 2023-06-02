@@ -11,6 +11,8 @@ export type SignInData = {
 }
 
 export type SignUpData = {
+    firstName: string,
+    lastName: string,
     email: string,
     password: string,
     password_confirm: string
@@ -18,6 +20,11 @@ export type SignUpData = {
 
 export type ForgotPasswordData = {
     email: string
+}
+
+export type EmailOtpData = {
+    otp: number,
+    accesstoken: string
 }
 
 /////// Validators Types
@@ -28,7 +35,20 @@ export type SignInDataValidator = {
 }
 
 export type SignUpDataValidator = {
+    firstName: boolean,
+    lastName: boolean
     email: boolean,
     password: boolean,
     password_confirm: boolean
+}
+
+export type EmailOtpDataValidaor = {
+    otp: {
+        required: boolean,
+        regex: string
+    },
+    accesstoken: {
+        required: boolean,
+        regex: string
+    }
 }

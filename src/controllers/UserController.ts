@@ -1,7 +1,7 @@
 import { ApiData, ApiError } from "@/pages/api/types";
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
-import { API_KEY, ironOptions } from "../../app.config";
+import { API_HOST, API_KEY, ironOptions } from "../../app.config";
 import { AuthUser } from "@/contexts/auth.types";
 import jwt from 'jsonwebtoken';
 
@@ -22,24 +22,30 @@ export const signIn = async (req: NextApiRequest, res: NextApiResponse<ApiData |
 
         const config = {
             method: 'POST',
-            url: process.env.API_URL + "users/login",
+            url: API_HOST + "/v1/users/login",
             data: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
-                'X-API-KEY': process.env.API_KEY
+                // 'X-API-KEY': process.env.API_KEY
             },
         };
         const result = await axios(config);
 
         if (result.status == 200) {
+            if(result.data.code == 200){
 
-            // const token = jwt.sign({test: "frank"}, ironOptions.password);
-            
+                // const token = jwt.sign({test: "frank"}, ironOptions.password);
+
+                res.status(200).json({ message: "Sucessfull login", status: true })
+
+            }else{
+                res.status(400).json({ message: result.data?.errors?.mssg, status: false })
+            }
         }
 
-        res.status(200).json({ message: "Sucessfull login", status: true })
-    } catch (error) {
-        res.status(400).json({ message: "An internal error occured", status: false })
+    } catch (error: any) {
+        console.log("Catch error login ", error?.response?.data)
+        res.status(400).json({ message: error?.response?.data?.errors?.msg, status: false })
     }
 }
 
@@ -51,22 +57,25 @@ export const signUp = async (req: NextApiRequest, res: NextApiResponse<ApiData |
 
         const config = {
             method: 'POST',
-            url: process.env.API_URL + "users/signup",
+            url: API_HOST + "/v1/users/signup",
             data: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
-                'X-API-KEY': process.env.API_KEY
+                // 'X-API-KEY': process.env.API_KEY
             },
         };
         const result = await axios(config);
 
         if (result.status == 200) {
-            // const token = jwt.sign({test: "frank"}, ironOptions.password);
+            if(result.data?.code == 200) {
+
+                res.status(200).json({ message: "Sucessfull register", status: true })
+            }
         }
 
-        res.status(200).json({ message: "Sucessfull register", status: true })
-    } catch (error) {
-        res.status(400).json({ message: "An internal error occured", status: false })
+    } catch (error: any) {
+        console.log("Catch error register ", error)
+        res.status(400).json({ message: error?.response?.data?.msg ?? "" +" "+ error?.response?.data?.errors?.msg ?? "", status: false })
     }
 }
 
@@ -78,7 +87,7 @@ export const checkUserToken = async (req: NextApiRequest, res: NextApiResponse<A
 
         const config = {
             method: 'POST',
-            url: process.env.API_URL + "users/login",
+            url: API_HOST + "/v1/users/login",
             data: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
@@ -101,7 +110,7 @@ export const forgotPassword = async (req: NextApiRequest, res: NextApiResponse<A
 
         const config = {
             method: 'POST',
-            url: process.env.API_URL + "users/forgot_password",
+            url: API_HOST + "/v1/users/forgot_password",
             data: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
