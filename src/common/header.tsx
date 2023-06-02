@@ -1,9 +1,11 @@
 import * as React from 'react';
-import Head from 'next/head'
-import Image from 'next/image'
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+import Image from 'next/image';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
+import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -12,9 +14,10 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 // import Link from '@mui/material/Link';
 import CloseIcon from '@mui/icons-material/Close';
+import MenuIcon from '@mui/icons-material/Menu';
+import TranslateIcon from '@mui/icons-material/Translate';
 
 import logo from '../img/lyotech-logo.png';
-
 import OrderIcon from '../img/orderIcon.svg';
 import WishlistIcon from '../img/wishlistIcon.svg';
 import MapIcon from '../img/mapIcon.svg';
@@ -28,21 +31,23 @@ import bannerProduct from '../img/bannerProduct.png';
 
 import productImg from '../img/productImg.png';
 
-import styles from '@/styles/Home.module.css'
+import Sidebar from './sidebar';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useAuthContext } from '../contexts/AuthContext';
 import { useGlobalContext } from '../contexts/GlobalContext';
 import useTranslation from 'next-translate/useTranslation';
 
+import styles from '@/styles/Home.module.css'
+
 export default function Header({ title = "Home"}: { title: string}) {
+
+    const router = useRouter()
 
     const authContext = useAuthContext();
     const globalContext = useGlobalContext();
 
     const { t } = useTranslation('common');
 
-    const router = useRouter()
     const { locale, locales, defaultLocale } = router
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -60,15 +65,26 @@ export default function Header({ title = "Home"}: { title: string}) {
     };
 
     const [anchorCart, setAnchorCart] = React.useState<null | HTMLElement>(null);
-    const cartOpen = Boolean(anchorCart);
+    const cartOpen = Boolean(anchorCart);     
 
     const handleCartClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorCart(event.currentTarget);
     };
-
     const handleCartClose = () => {
         setAnchorCart(null);
     };
+
+    const [toggledrawerEl, setToggleDrawerEl] = React.useState<null | HTMLElement>(null);  
+    const tdOpen = Boolean(toggledrawerEl);   
+    const handleToggleDrawer = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setToggleDrawerEl(event.currentTarget);        
+    };
+
+    const toggleDrawerClose = () => {
+        setToggleDrawerEl(null);
+    };
+
+    
 
     const [anchorLang, setAnchorLang] = React.useState<null | HTMLElement>(null);
     const langOpen = Boolean(anchorLang);

@@ -1,6 +1,11 @@
 import * as React from 'react';
 // import Head from 'next/head';
 import Header from '../../common/header';
+import { Alert, Backdrop, CircularProgress } from '@mui/material';
+import { SignInDataValidator } from '@/components/auth/auth.types';
+import { useRouter } from 'next/router';
+import { fogotPasswordUser } from '@/components/auth/auth.service';
+import useTranslation from 'next-translate/useTranslation';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -12,11 +17,8 @@ import styles from '@/styles/Home.module.css';
 import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
-import { Alert, Backdrop, CircularProgress, createTheme, ThemeProvider } from '@mui/material';
-import { SignInDataValidator } from '@/components/auth/auth.types';
-import { useRouter } from 'next/router';
-import { fogotPasswordUser } from '@/components/auth/auth.service';
-import useTranslation from 'next-translate/useTranslation';
+import { createTheme, ThemeProvider } from '@mui/material';
+export default function forgotpassword () {
 
 export default function login() {
     const theme = createTheme({
