@@ -71,6 +71,7 @@ export default function Sidebar () {
                         {t("Wishlist")}</>
                     </Link>
                 </ListItem>
+                
                 <ListItem className={router.pathname == "/trackorder" ? styles.active : ""}>
                     <Link href='/trackorder'>
                         <><TrackOrderIcon/>                                                
