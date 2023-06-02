@@ -72,3 +72,22 @@ body > div,
 .carousel .thumb:hover {
 	border: 2px solid var(--secondary) !important;
 }
+
+.flag-img, 
+.flag-img-main {
+	float: left;
+	margin-right: 10px;
+}
+
+.flag-img-main {
+	margin-top: 6px;
+	margin-right: 5px;
+}
+
+.alert-field .MuiAlert-icon {
+	width: auto !important;
+}
+
+.text-danger {
+	color: red;
+}
