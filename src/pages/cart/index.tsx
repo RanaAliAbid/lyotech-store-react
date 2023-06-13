@@ -31,23 +31,39 @@ const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider } from '@mui/material';
 
-import { verifyUserHandover } from '@/components/auth/auth.service';
+import { verifyUserHandover } from '@/services/auth/auth.service';
 
 import useTranslation from 'next-translate/useTranslation';
 
-// export const getServerSideProps: GetServerSideProps<{
-//     data: AuthUser;
-// }> = async () => {
-//     const result = await getUserSession();
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 
-//     console.log(result, "saaaaaa xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+import { IncomingMessage, ServerResponse } from 'http';
+import { APP_HOST } from '../../../app.config';
 
-//     const data = result?.data ?? null;
-//     return { props: { data } };
-// };
+// import { UrlWithStringQuery } from 'url';
 
 
-export default function cart({ }) {
+export const getServerSideProps: GetServerSideProps<{ data: any }> = async ({ req, res }: { req: IncomingMessage, res: ServerResponse }) => {
+
+    let currentUrl = req.url?.split("?")[1] ?? ""
+
+    if (currentUrl) {
+        const urlParams = new URLSearchParams(currentUrl)
+        const product_id = urlParams.get('product_id') ?? ""
+        const user_handover = urlParams.get('user_handover') ?? ""
+        console.log("params", urlParams)
+
+        const result = verifyUserHandover({ handoverToken: user_handover, productId: parseInt(product_id) })
+    }
+    // console.log(result, "saaaaaa xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+
+    // const data = result?.data ?? null;
+    const data = ""
+    return { props: { data } };
+};
+
+
+export default function cart({ data }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
     const { t } = useTranslation('cart');
 
@@ -62,15 +78,16 @@ export default function cart({ }) {
     const router = useRouter()
 
     React.useEffect(() => {
-        const urlParams = router.query
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
 
-        if (urlParams && urlParams.product_id && urlParams.user_handover) {
+            const user_handover = urlParams.get('user_handover')?.toString() ?? ""
+            const product_id = urlParams.get('product_id')?.toString() ?? ""
 
-            const user_handover = urlParams.user_handover.toString()
-            const product_id = urlParams.product_id.toString()
-
-            getUserCart(user_handover, parseInt(product_id))
-        }
+            if (user_handover && product_id) {
+                // getUserCart(user_handover, parseInt(product_id))
+            }
+        } catch (error) { }
     }, [])
 
     const [shippingType, setShippingType] = React.useState<string>('express');
@@ -80,9 +97,15 @@ export default function cart({ }) {
     };
 
     const getUserCart = async (user_handover: string, product_id: number) => {
-        const result = await verifyUserHandover({ user_handover: user_handover, product_id: product_id })
+        const result = await verifyUserHandover({ handoverToken: user_handover, productId: product_id })
         console.log(result)
     }
+
+    if (!data)
+        return (
+            <></>
+        )
+
 
     return (
         <>

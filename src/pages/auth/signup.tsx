@@ -18,12 +18,13 @@ const workSans = Work_Sans({ subsets: ['latin'] });
 import { Alert, Backdrop, CircularProgress, createTheme, ThemeProvider } from '@mui/material';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { SignUpData, SignUpDataValidator } from '@/components/auth/auth.types';
-import { signUpUser } from '@/components/auth/auth.service';
+import { SignUpData, SignUpDataValidator } from '@/services/auth/auth.types';
+import { signUpUser } from '@/services/auth/auth.service';
 import { replaceSpecialChar, signUpCheckEmptyFields, validatePassword } from '@/validators/auth.validator';
 import useTranslation from 'next-translate/useTranslation';
 
-export default function createAccount() {
+
+export default function CreateAccount() {
     const theme = createTheme({
         typography: {
             fontFamily: [
@@ -64,7 +65,14 @@ export default function createAccount() {
             const result = await signUpUser(signUpData)
 
             if (result?.status == 200) {
-                setReqResponse("")
+                setReqResponse(result?.data?.message)
+
+                if(result?.data?.data?.userVerified == false) {
+                    router.push(`/${locale}/auth/verify-email?token=${result?.data?.data?.accessToken}&key=${window.btoa(result?.data?.data?.jwtToken)}`)
+                    return;
+                }
+            }else{
+                setReqResponse(result?.data?.message)
             }
 
         } catch (error: any) {

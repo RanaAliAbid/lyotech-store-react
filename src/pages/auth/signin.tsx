@@ -20,13 +20,13 @@ const workSans = Work_Sans({ subsets: ['latin'] });
 import { Alert, Backdrop, CircularProgress, createTheme, ThemeProvider } from '@mui/material';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { SignInData, SignInDataValidator } from '@/components/auth/auth.types';
-import { signInUser } from '@/components/auth/auth.service';
+import { SignInData, SignInDataValidator } from '@/services/auth/auth.types';
+import { signInUser } from '@/services/auth/auth.service';
 import { signInCheckEmptyFields, validatePassword } from '@/validators/auth.validator';
 import useTranslation from 'next-translate/useTranslation';
 
 
-export default function signIn() {
+export default function SignIn() {
     const theme = createTheme({
         typography: {
             fontFamily: [
@@ -45,6 +45,7 @@ export default function signIn() {
 
     const proceedSignIn = async (e: any) => {
         e.preventDefault()
+        
         const postData = e.target;
         const signInData: SignInData = { email: postData[0].value, password: postData[1].value }
 
@@ -58,9 +59,14 @@ export default function signIn() {
 
         try {
             const result = await signInUser({ email: postData[0].value, password: postData[1].value })
-            
+
             if (result?.status == 200) {
-                setReqResponse("")
+                setReqResponse(result?.data?.message)
+
+                if (result?.data?.data?.userVerified == false) {
+                    router.push(`/${locale}/auth/verify-email?token=${result?.data?.data?.accessToken}&key=${window.btoa(result?.data?.data?.jwtToken)}`)
+                    return;
+                }
             }
 
         } catch (error: any) {
@@ -151,3 +157,20 @@ export default function signIn() {
         </>
     )
 }
+
+export async function getServerSideProps(context: any) {
+    const serverData = 'Some data from the server';
+
+    console.log("serverData", serverData);
+
+    return {
+        props: {
+            serverData,
+        },
+    };
+}
+
+const MySignInButton = ({ handleClick }: { handleClick: VoidFunction }) => {
+    const { t } = useTranslation('signin');
+    return <button onClick={handleClick}>{t("sign-in")}</button>;
+};

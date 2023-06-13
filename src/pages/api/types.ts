@@ -1,8 +1,11 @@
 export type ApiData = {
-    name: string
+    data?: any,
+    message: string,
+    status: boolean
 }
 
 export type ApiError = {
     message: string,
-    status: boolean
+    status: boolean,
+    data?: any
 }

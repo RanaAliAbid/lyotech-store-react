@@ -1,8 +1,8 @@
 /////// Post data types
 
 export type PartnerLinkData = {
-    product_id: number,
-    user_handover: string
+    productId: number,
+    handoverToken: string
 }
 
 export type SignInData = {

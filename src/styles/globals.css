@@ -91,3 +91,12 @@ body > div,
 .text-danger {
 	color: red;
 }
+
+.input-otp-code {
+	max-width: 80%;
+	margin: auto;
+}
+
+.input-otp-code input {
+	margin: auto !important;
+}
