@@ -27,8 +27,6 @@ export async function middleware(request: NextRequest) {
         );
     }
 
-    // console.log("request", request, request.cookies.get("test2-")?.value)
-
     const locale = request.cookies.get("lang")?.value ?? "en"
 
     return NextResponse.redirect(new URL(`/${locale}`, request.url));

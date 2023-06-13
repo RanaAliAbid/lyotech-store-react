@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { checkUserToken, signIn, getUserSession, forgotPassword, signUp } from '@/controllers/UserController'
+import { checkUserToken, signIn, getUserSession, forgotPassword, signUp, verifyEmailOtp, changePassword } from '@/controllers/UserController'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { ApiData, ApiError } from '../../types';
 import { AuthUser } from '@/contexts/auth.types';
@@ -20,7 +20,7 @@ export default async function handler(
             signUp(req, res)
             break;
 
-        case "user_session":
+        case "user-session":
             getUserSession(req, res)
             break;
 
@@ -28,8 +28,16 @@ export default async function handler(
             checkUserToken(req, res)
             break;
 
-        case "forgot_password":
+        case "verify-email-otp":
+            verifyEmailOtp(req, res)
+            break;
+
+        case "forgot-password":
             forgotPassword(req, res)
+            break;
+
+        case "change-password":
+            changePassword(req, res)
             break;
 
         default:

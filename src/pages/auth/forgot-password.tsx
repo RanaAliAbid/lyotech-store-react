@@ -2,9 +2,9 @@ import * as React from 'react';
 // import Head from 'next/head';
 import Header from '../../common/header';
 import { Alert, Backdrop, CircularProgress } from '@mui/material';
-import { SignInDataValidator } from '@/components/auth/auth.types';
+import { SignInDataValidator } from '@/services/auth/auth.types';
 import { useRouter } from 'next/router';
-import { fogotPasswordUser } from '@/components/auth/auth.service';
+import { fogotPasswordUser } from '@/services/auth/auth.service';
 import useTranslation from 'next-translate/useTranslation';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -18,9 +18,9 @@ import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider } from '@mui/material';
-export default function forgotpassword () {
 
-export default function login() {
+export default function ForgotPassword() {
+
     const theme = createTheme({
         typography: {
             fontFamily: [
@@ -35,6 +35,7 @@ export default function login() {
     const { locale, locales, defaultLocale } = router
     const [validator, setValidator] = React.useState<SignInDataValidator>()
     const [loading, setLoading] = React.useState<boolean>(false)
+    const [reReqresponse, setReqResponse] = React.useState<string>("")
 
     const proceedForgotPassword = async (e: any) => {
         e.preventDefault()
@@ -42,12 +43,26 @@ export default function login() {
         const dataValidate: SignInDataValidator = { email: true, password: true }
         dataValidate.email = (postData[0].value == "") ? false : true
 
-        setValidator(dataValidate)
+        try {
+            setReqResponse("")
+            setValidator(dataValidate)
 
-        if (!dataValidate.email) return false;
+            if (!dataValidate.email) return false;
 
-        setLoading(true)
-        const result = await fogotPasswordUser({ email: postData[0].value })
+            setLoading(true)
+            const result = await fogotPasswordUser({ email: postData[0].value })
+
+            if (result?.status == 200) {
+                if (result?.data?.data?.userVerified == false) {
+                    router.push(`/${locale}/auth/verify-email?token=${result?.data?.data?.accessToken}&reset-password=true&key=${window.btoa(result?.data?.data?.jwtToken)}`)
+                    return;
+                }
+            }
+        } catch (error: any) {
+            setReqResponse(error?.response?.data?.message)
+        }
+
+        setLoading(false)
     }
 
     return (
@@ -68,7 +83,7 @@ export default function login() {
                                 <Grid item md={5} sm={8} xs={12}>
                                     <div className={styles.loginBox}>
                                         <Typography variant="h2">
-                                             {t("header1")}
+                                            {t("header1")}
                                         </Typography>
 
                                         <Typography variant="body1">
@@ -86,8 +101,14 @@ export default function login() {
                                                 (validator && !validator.email) && <Alert severity="error">{t("email-error")}</Alert>
                                             }
 
+                                            {
+                                                (reReqresponse && reReqresponse != "") && <Alert severity="error">
+                                                    {reReqresponse}
+                                                </Alert>
+                                            }
+
                                             <div className={styles.inline}>
-                                                <Button variant="outlined" href="signin" className={`${styles["btn"]} ${styles["btn_secondary"]}`} >  {t("sign-in")}</Button>
+                                                <Button variant="outlined" onClick={(e) => router.push("signin")} href="#" className={`${styles["btn"]} ${styles["btn_secondary"]}`} >  {t("sign-in")}</Button>
                                                 <Button type='submit' variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`} > {t("reset-password")} </Button>
                                             </div>
                                         </form>
