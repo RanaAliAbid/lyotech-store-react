@@ -1,14 +1,14 @@
 {
-    "header1": "Accedi al tuo account",
-    "subHeader1": "Per offrirti un servizio migliore, incoraggiamo i nostri clienti a registrarsi per un account.",
-    "email": "E-mail",
-    "email-error": "Per favore inserisci un'email valida",
-    "password": "Parola d'ordine",
-    "password-error1": "Si prega di fornire una password valida",
-    "password-error2": "La password deve essere lunga almeno 8 caratteri e contenere almeno una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale.",
-    "forgot-password": "Ha dimenticato la password?",
-    "sign-in": "Registrazione",
-    "not-registered": "Non ancora registrato?",
-    "create-account": "Create an account",
-    "remember-me": "Ricordati di me"
+  "header1": "Accedi al tuo account",
+  "subHeader1": "Per offrirti un servizio migliore, incoraggiamo i nostri clienti a registrarsi per un account.",
+  "email": "E-mail",
+  "email-error": "Per favore inserisci un'email valida",
+  "password": "Parola d'ordine",
+  "password-error1": "Si prega di fornire una password valida",
+  "password-error2": "La password deve essere lunga almeno 8 caratteri e contenere almeno una lettera minuscola, una lettera maiuscola, un numero e un carattere speciale.",
+  "forgot-password": "Ha dimenticato la password?",
+  "sign-in": "Registrazione",
+  "not-registered": "Non ancora registrato?",
+  "create-account": "Create an account",
+  "remember-me": "Ricordati di me"
 }

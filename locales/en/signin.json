@@ -1,14 +1,14 @@
 {
-    "header1": "Sign in to your account",
-    "subHeader1": "To better serve you, we encourage our Clients to register for an account.",
-    "email": "Email",
-    "email-error": "Please provide a valid email",
-    "password": "Password",
-    "password-error1": "Please provide a valid password",
-    "password-error2": "Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character.",
-    "forgot-password": "Forgot Password?",
-    "sign-in": "Sign in",
-    "not-registered": "Not yet registered?",
-    "create-account": "Create an account",
-    "remember-me": "Remember me"
+  "header1": "Sign in to your account",
+  "subHeader1": "To better serve you, we encourage our Clients to register for an account.",
+  "email": "Email",
+  "email-error": "Please provide a valid email",
+  "password": "Password",
+  "password-error1": "Please provide a valid password",
+  "password-error2": "Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character.",
+  "forgot-password": "Forgot Password?",
+  "sign-in": "Sign in",
+  "not-registered": "Not yet registered?",
+  "create-account": "Create an account",
+  "remember-me": "Remember me"
 }

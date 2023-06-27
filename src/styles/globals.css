@@ -1,31 +1,30 @@
-
 :root {
-	--primary: #0063EF;
-	--secondary: #2B3992;
-	--TurquoiseBlue: #01FEF5;
-	--white: #fff;
-	--black100: #1B1B1B;
-	--black200: #4D4D4F;
-	--gray100: #91969A;
-	--gray200: #BFC1C2;
-	--gray300: #E6E6E6;
-	--border-radius: 8px; 
-	--border-color: #e4e8eb;
+  --primary: #0063ef;
+  --secondary: #2b3992;
+  --TurquoiseBlue: #01fef5;
+  --white: #fff;
+  --black100: #1b1b1b;
+  --black200: #4d4d4f;
+  --gray100: #91969a;
+  --gray200: #bfc1c2;
+  --gray300: #e6e6e6;
+  --border-radius: 8px;
+  --border-color: #e4e8eb;
 }
 
 * {
-	box-sizing: border-box;
-	padding: 0;
-	margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 body {
-	color: var(--black200);  
+  color: var(--black200);
 }
 
 ul {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 /* html,
@@ -36,15 +35,13 @@ body > div,
 }
 	 */
 
-
-
-
 .carousel .slide img {
-	display: none;
+  display: none;
 }
 
-.carousel .thumb.selected, .carousel .thumb:hover {
-	border: 2px solid #333;
+.carousel .thumb.selected,
+.carousel .thumb:hover {
+  border: 2px solid #333;
 }
 /* 
 .carousel li:hover div img {
@@ -53,50 +50,49 @@ body > div,
 } */
 
 .carousel .thumbs-wrapper {
-	margin: 15px 0 !important;
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    align-items: center;
+  margin: 15px 0 !important;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  align-items: center;
 }
 
 .carousel .thumbs-wrapper ul li {
-	margin-right: 0px;
+  margin-right: 0px;
 }
 .carousel .thumbs-wrapper ul li + li {
-	margin-left: 10px;
+  margin-left: 10px;
 }
 
-
-.carousel .thumb.selected, 
+.carousel .thumb.selected,
 .carousel .thumb:hover {
-	border: 2px solid var(--secondary) !important;
+  border: 2px solid var(--secondary) !important;
 }
 
-.flag-img, 
+.flag-img,
 .flag-img-main {
-	float: left;
-	margin-right: 10px;
+  float: left;
+  margin-right: 10px;
 }
 
 .flag-img-main {
-	margin-top: 6px;
-	margin-right: 5px;
+  margin-top: 6px;
+  margin-right: 5px;
 }
 
 .alert-field .MuiAlert-icon {
-	width: auto !important;
+  width: auto !important;
 }
 
 .text-danger {
-	color: red;
+  color: red;
 }
 
 .input-otp-code {
-	max-width: 80%;
-	margin: auto;
+  max-width: 80%;
+  margin: auto;
 }
 
 .input-otp-code input {
-	margin: auto !important;
+  margin: auto !important;
 }

@@ -20,106 +20,128 @@ const workSans = Work_Sans({ subsets: ['latin'] });
 import { createTheme, ThemeProvider } from '@mui/material';
 
 export default function ForgotPassword() {
+  const theme = createTheme({
+    typography: {
+      fontFamily: ['Work Sans'].join(','),
+    },
+  });
 
-    const theme = createTheme({
-        typography: {
-            fontFamily: [
-                'Work Sans',
-            ].join(','),
-        },
-    });
+  const { t } = useTranslation('forgotpassword');
 
-    const { t } = useTranslation('forgotpassword');
+  const router = useRouter();
+  const { locale, locales, defaultLocale } = router;
+  const [validator, setValidator] = React.useState<SignInDataValidator>();
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [reReqresponse, setReqResponse] = React.useState<string>('');
 
-    const router = useRouter()
-    const { locale, locales, defaultLocale } = router
-    const [validator, setValidator] = React.useState<SignInDataValidator>()
-    const [loading, setLoading] = React.useState<boolean>(false)
-    const [reReqresponse, setReqResponse] = React.useState<string>("")
+  const proceedForgotPassword = async (e: any) => {
+    e.preventDefault();
+    const postData = e.target;
+    const dataValidate: SignInDataValidator = { email: true, password: true };
+    dataValidate.email = postData[0].value == '' ? false : true;
 
-    const proceedForgotPassword = async (e: any) => {
-        e.preventDefault()
-        const postData = e.target;
-        const dataValidate: SignInDataValidator = { email: true, password: true }
-        dataValidate.email = (postData[0].value == "") ? false : true
+    try {
+      setReqResponse('');
+      setValidator(dataValidate);
 
-        try {
-            setReqResponse("")
-            setValidator(dataValidate)
+      if (!dataValidate.email) return false;
 
-            if (!dataValidate.email) return false;
+      setLoading(true);
+      const result = await fogotPasswordUser({ email: postData[0].value });
 
-            setLoading(true)
-            const result = await fogotPasswordUser({ email: postData[0].value })
+      if (result?.status == 200) {
+        console.log(result.data);
 
-            if (result?.status == 200) {
-                if (result?.data?.data?.userVerified == false) {
-                    router.push(`/${locale}/auth/verify-email?token=${result?.data?.data?.accessToken}&reset-password=true&key=${window.btoa(result?.data?.data?.jwtToken)}`)
-                    return;
-                }
-            }
-        } catch (error: any) {
-            setReqResponse(error?.response?.data?.message)
+        if (result?.data?.data?.userVerified == false) {
+          router.push(
+            `/${locale}/auth/verify-email?token=${
+              result?.data?.data?.accessToken
+            }&reset-password=true&key=${window.btoa(
+              result?.data?.data?.jwtToken
+            )}`
+          );
+          return;
         }
-
-        setLoading(false)
+      }
+    } catch (error: any) {
+      setReqResponse(error?.response?.data?.message);
     }
 
-    return (
-        <>
-            <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 5 }}
-                open={loading}
-            >
-                <CircularProgress color="inherit" />
-            </Backdrop>
+    setLoading(false);
+  };
 
-            <ThemeProvider theme={theme}>
-                <main className={`${styles["main"]} ${styles["loginBG"]}`}>
-                    <Header title={t("header1")} />
-                    <div className={styles.loginBoxCenter}>
-                        <Container className={styles.containerBox}>
-                            <Grid container justifyContent="center" spacing={3}>
-                                <Grid item md={5} sm={8} xs={12}>
-                                    <div className={styles.loginBox}>
-                                        <Typography variant="h2">
-                                            {t("header1")}
-                                        </Typography>
+  return (
+    <>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 5 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
 
-                                        <Typography variant="body1">
-                                            {t("subHeader1")}
-                                        </Typography>
+      <ThemeProvider theme={theme}>
+        <main className={`${styles['main']} ${styles['loginBG']}`}>
+          <Header title={t('header1')} />
+          <div className={styles.loginBoxCenter}>
+            <Container className={styles.containerBox}>
+              <Grid container justifyContent="center" spacing={3}>
+                <Grid item md={5} sm={8} xs={12}>
+                  <div className={styles.loginBox}>
+                    <Typography variant="h2">{t('header1')}</Typography>
 
+                    <Typography variant="body1">{t('subHeader1')}</Typography>
 
-                                        <form method='post' onSubmit={(e) => proceedForgotPassword(e)}>
-                                            <div className={styles.formControl}>
-                                                <label className={styles.formLabel}> {t("email")} </label>
-                                                <Email className={styles.formIcon} />
-                                                <Input type='email' className={styles.formInput} placeholder={t("email")} />
-                                            </div>
-                                            {
-                                                (validator && !validator.email) && <Alert severity="error">{t("email-error")}</Alert>
-                                            }
+                    <form
+                      method="post"
+                      onSubmit={(e) => proceedForgotPassword(e)}
+                    >
+                      <div className={styles.formControl}>
+                        <label className={styles.formLabel}>
+                          {' '}
+                          {t('email')}{' '}
+                        </label>
+                        <Email className={styles.formIcon} />
+                        <Input
+                          type="email"
+                          className={styles.formInput}
+                          placeholder={t('email')}
+                        />
+                      </div>
+                      {validator && !validator.email && (
+                        <Alert severity="error">{t('email-error')}</Alert>
+                      )}
 
-                                            {
-                                                (reReqresponse && reReqresponse != "") && <Alert severity="error">
-                                                    {reReqresponse}
-                                                </Alert>
-                                            }
+                      {reReqresponse && reReqresponse != '' && (
+                        <Alert severity="error">{reReqresponse}</Alert>
+                      )}
 
-                                            <div className={styles.inline}>
-                                                <Button variant="outlined" onClick={(e) => router.push("signin")} href="#" className={`${styles["btn"]} ${styles["btn_secondary"]}`} >  {t("sign-in")}</Button>
-                                                <Button type='submit' variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`} > {t("reset-password")} </Button>
-                                            </div>
-                                        </form>
-
-                                    </div>
-                                </Grid>
-                            </Grid>
-                        </Container>
-                    </div>
-                </main>
-            </ThemeProvider>
-        </>
-    )
+                      <div className={styles.inline}>
+                        <Button
+                          variant="outlined"
+                          onClick={(e) => router.push('signin')}
+                          href="#"
+                          className={`${styles['btn']} ${styles['btn_secondary']}`}
+                        >
+                          {' '}
+                          {t('sign-in')}
+                        </Button>
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          className={`${styles['btn']} ${styles['btn_primary']}`}
+                        >
+                          {' '}
+                          {t('reset-password')}{' '}
+                        </Button>
+                      </div>
+                    </form>
+                  </div>
+                </Grid>
+              </Grid>
+            </Container>
+          </div>
+        </main>
+      </ThemeProvider>
+    </>
+  );
 }

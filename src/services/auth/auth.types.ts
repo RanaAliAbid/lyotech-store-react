@@ -1,54 +1,54 @@
 /////// Post data types
 
 export type PartnerLinkData = {
-    productId: number,
-    handoverToken: string
-}
+  productId: number;
+  handoverToken: string;
+};
 
 export type SignInData = {
-    email: string,
-    password: string
-}
+  email: string;
+  password: string;
+};
 
 export type SignUpData = {
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string,
-    password_confirm: string
-}
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  password_confirm: string;
+};
 
 export type ForgotPasswordData = {
-    email: string
-}
+  email: string;
+};
 
 export type EmailOtpData = {
-    otp: number,
-    accesstoken: string
-}
+  otp: number;
+  accesstoken: string;
+};
 
 /////// Validators Types
 
 export type SignInDataValidator = {
-    email: boolean,
-    password: boolean
-}
+  email: boolean;
+  password: boolean;
+};
 
 export type SignUpDataValidator = {
-    firstName: boolean,
-    lastName: boolean
-    email: boolean,
-    password: boolean,
-    password_confirm: boolean
-}
+  firstName: boolean;
+  lastName: boolean;
+  email: boolean;
+  password: boolean;
+  password_confirm: boolean;
+};
 
 export type EmailOtpDataValidaor = {
-    otp: {
-        required: boolean,
-        regex: string
-    },
-    accesstoken: {
-        required: boolean,
-        regex: string
-    }
-}
+  otp: {
+    required: boolean;
+    regex: string;
+  };
+  accesstoken: {
+    required: boolean;
+    regex: string;
+  };
+};
