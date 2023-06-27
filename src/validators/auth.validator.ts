@@ -3,7 +3,7 @@ import {
   SignInDataValidator,
   SignUpData,
   SignUpDataValidator,
-} from '@/components/auth/auth.types';
+} from '@/services/auth/auth.types';
 
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+-={}|;:'",.<>?]).{8,}$/;
