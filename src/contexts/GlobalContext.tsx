@@ -1,26 +1,28 @@
-import { createContext, useContext } from "react";
-import Cookies from "js-cookie";
+import { createContext, useContext } from 'react';
+import Cookies from 'js-cookie';
 
 const GlobalContext = createContext<any>({});
 
-export function GlobalWrapper({ children }: { children: JSX.Element | JSX.Element[]}) {
+export function GlobalWrapper({
+  children,
+}: {
+  children: JSX.Element | JSX.Element[];
+}) {
+  const updateLocale = (current = 'en') => {
+    Cookies.set('lang', current);
+  };
 
-    const updateLocale = (current = "en") => {
-        Cookies.set("lang", current)
-    }
+  const globalData = {
+    updateLocale,
+  };
 
-    const globalData = {
-        updateLocale
-    }
-
-    return (
-        <GlobalContext.Provider value={globalData}>
-            {children}
-        </GlobalContext.Provider>
-    );
-
+  return (
+    <GlobalContext.Provider value={globalData}>
+      {children}
+    </GlobalContext.Provider>
+  );
 }
 
 export function useGlobalContext() {
-    return useContext(GlobalContext);
+  return useContext(GlobalContext);
 }

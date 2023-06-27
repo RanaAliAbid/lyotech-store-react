@@ -15,172 +15,232 @@ import styles from '@/styles/Home.module.css';
 import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
-import { Alert, Backdrop, CircularProgress, createTheme, ThemeProvider } from '@mui/material';
+import {
+  Alert,
+  Backdrop,
+  CircularProgress,
+  createTheme,
+  ThemeProvider,
+} from '@mui/material';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { SignUpData, SignUpDataValidator } from '@/services/auth/auth.types';
 import { signUpUser } from '@/services/auth/auth.service';
-import { replaceSpecialChar, signUpCheckEmptyFields, validatePassword } from '@/validators/auth.validator';
+import {
+  replaceSpecialChar,
+  signUpCheckEmptyFields,
+  validatePassword,
+} from '@/validators/auth.validator';
 import useTranslation from 'next-translate/useTranslation';
 
-
 export default function CreateAccount() {
-    const theme = createTheme({
-        typography: {
-            fontFamily: [
-                'Work Sans',
-            ].join(','),
-        },
-    });
+  const theme = createTheme({
+    typography: {
+      fontFamily: ['Work Sans'].join(','),
+    },
+  });
 
-    const { t } = useTranslation('signup');
+  const { t } = useTranslation('signup');
 
-    const router = useRouter()
-    const { locale, locales, defaultLocale } = router
-    const [validator, setValidator] = React.useState<SignUpDataValidator>()
-    const [loading, setLoading] = React.useState<boolean>(false)
-    const [reReqresponse, setReqResponse] = React.useState<string>("")
+  const router = useRouter();
+  const { locale, locales, defaultLocale } = router;
+  const [validator, setValidator] = React.useState<SignUpDataValidator>();
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [reReqresponse, setReqResponse] = React.useState<string>('');
 
-    const proceedSignUp = async (e: any) => {
-        e.preventDefault()
+  const proceedSignUp = async (e: any) => {
+    e.preventDefault();
 
-        const postData = e.target;
+    const postData = e.target;
 
-        const signUpData: SignUpData = {
-            firstName: replaceSpecialChar(postData[0].value),
-            lastName: replaceSpecialChar(postData[1].value),
-            email: postData[2].value,
-            password: postData[3].value,
-            password_confirm: postData[4].value
+    const signUpData: SignUpData = {
+      firstName: replaceSpecialChar(postData[0].value),
+      lastName: replaceSpecialChar(postData[1].value),
+      email: postData[2].value,
+      password: postData[3].value,
+      password_confirm: postData[4].value,
+    };
+
+    const dataValidate = signUpCheckEmptyFields(signUpData);
+    setValidator(dataValidate);
+
+    if (
+      !dataValidate.email ||
+      !dataValidate.password ||
+      !dataValidate.password_confirm
+    )
+      return false;
+
+    setLoading(true);
+
+    try {
+      const result = await signUpUser(signUpData);
+
+      if (result?.status == 200) {
+        setReqResponse(result?.data?.message);
+
+        if (result?.data?.data?.userVerified == false) {
+          router.push(
+            `/${locale}/auth/verify-email?token=${
+              result?.data?.data?.accessToken
+            }&key=${window.btoa(result?.data?.data?.jwtToken)}`
+          );
+          return;
         }
-
-        const dataValidate = signUpCheckEmptyFields(signUpData)
-        setValidator(dataValidate)
-
-        if (!dataValidate.email || !dataValidate.password || !dataValidate.password_confirm) return false;
-
-        setLoading(true)
-
-        try {
-            const result = await signUpUser(signUpData)
-
-            if (result?.status == 200) {
-                setReqResponse(result?.data?.message)
-
-                if(result?.data?.data?.userVerified == false) {
-                    router.push(`/${locale}/auth/verify-email?token=${result?.data?.data?.accessToken}&key=${window.btoa(result?.data?.data?.jwtToken)}`)
-                    return;
-                }
-            }else{
-                setReqResponse(result?.data?.message)
-            }
-
-        } catch (error: any) {
-            setReqResponse(error?.response?.data?.message);
-        }
-
-        setLoading(false);
+      } else {
+        setReqResponse(result?.data?.message);
+      }
+    } catch (error: any) {
+      setReqResponse(error?.response?.data?.message);
     }
 
-    return (
-        <>
-            <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 5 }}
-                open={loading}
-            >
-                <CircularProgress color="inherit" />
-            </Backdrop>
+    setLoading(false);
+  };
 
-            <ThemeProvider theme={theme}>
-                <main className={`${styles["main"]} ${styles["loginBG"]}`}>
-                    <Header title={t("header1")} />
-                    <div className={styles.loginBoxCenter}>
-                        <Container className={styles.containerBox}>
-                            <Grid container justifyContent="center" spacing={3}>
-                                <Grid item sm={8} md={5} xs={12} style={{marginTop: "50px", marginBottom: "50px"}}>
-                                    <div className={styles.loginBox}>
-                                        <Typography variant="h2">
-                                            {t("header1")}
-                                        </Typography>
+  return (
+    <>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 5 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
 
-                                        <Typography variant="body1">
-                                            {t("subHeader1")}
-                                        </Typography>
+      <ThemeProvider theme={theme}>
+        <main className={`${styles['main']} ${styles['loginBG']}`}>
+          <Header title={t('header1')} />
+          <div className={styles.loginBoxCenter}>
+            <Container className={styles.containerBox}>
+              <Grid container justifyContent="center" spacing={3}>
+                <Grid
+                  item
+                  sm={8}
+                  md={5}
+                  xs={12}
+                  style={{ marginTop: '50px', marginBottom: '50px' }}
+                >
+                  <div className={styles.loginBox}>
+                    <Typography variant="h2">{t('header1')}</Typography>
 
+                    <Typography variant="body1">{t('subHeader1')}</Typography>
 
-                                        <form method='post' onSubmit={(e) => proceedSignUp(e)}>
+                    <form method="post" onSubmit={(e) => proceedSignUp(e)}>
+                      <div className={styles.formControl}>
+                        <label className={styles.formLabel}>
+                          {' '}
+                          {t('firstname')}{' '}
+                          <span className="text-danger">*</span>{' '}
+                        </label>
+                        <UserIcon className={styles.formIcon} />
+                        <Input
+                          type="text"
+                          className={styles.formInput}
+                          placeholder={t('firstname')}
+                        />
+                      </div>
+                      {validator && !validator.firstName && (
+                        <Alert severity="error">{t('username-error')}</Alert>
+                      )}
 
-                                            <div className={styles.formControl}>
-                                                <label className={styles.formLabel}> {t("firstname")} <span className='text-danger'>*</span> </label>
-                                                <UserIcon className={styles.formIcon} />
-                                                <Input type='text' className={styles.formInput} placeholder={t("firstname")} />
-                                            </div>
-                                            {
-                                                (validator && !validator.firstName) && <Alert severity="error">{t("username-error")}</Alert>
-                                            }
+                      <div className={styles.formControl}>
+                        <label className={styles.formLabel}>
+                          {' '}
+                          {t('lastname')} <span className="text-danger">*</span>{' '}
+                        </label>
+                        <UserIcon className={styles.formIcon} />
+                        <Input
+                          type="text"
+                          className={styles.formInput}
+                          placeholder={t('lastname')}
+                        />
+                      </div>
+                      {validator && !validator.lastName && (
+                        <Alert severity="error">{t('username-error')}</Alert>
+                      )}
 
-                                            <div className={styles.formControl}>
-                                                <label className={styles.formLabel}> {t("lastname")} <span className='text-danger'>*</span> </label>
-                                                <UserIcon className={styles.formIcon} />
-                                                <Input type='text' className={styles.formInput} placeholder={t("lastname")} />
-                                            </div>
-                                            {
-                                                (validator && !validator.lastName) && <Alert severity="error">{t("username-error")}</Alert>
-                                            }
+                      <div className={styles.formControl}>
+                        <label className={styles.formLabel}>
+                          {' '}
+                          {t('email')} <span className="text-danger">*</span>{' '}
+                        </label>
+                        <Email className={styles.formIcon} />
+                        <Input
+                          type="email"
+                          className={styles.formInput}
+                          placeholder={t('email')}
+                        />
+                      </div>
+                      {validator && !validator.email && (
+                        <Alert severity="error">{t('email-error')}</Alert>
+                      )}
 
+                      <div className={styles.formControl}>
+                        <label className={styles.formLabel}>
+                          {' '}
+                          {t('password')} <span className="text-danger">*</span>{' '}
+                        </label>
+                        <Password className={styles.formIcon} />
+                        <Input
+                          type="password"
+                          className={styles.formInput}
+                          placeholder={t('password')}
+                        />
+                      </div>
+                      {validator && !validator.password && (
+                        <Alert severity="error">
+                          {t('password-error1')}
+                          <br />
+                          {t('password-error2')}
+                        </Alert>
+                      )}
 
-                                            <div className={styles.formControl}>
-                                                <label className={styles.formLabel}> {t("email")} <span className='text-danger'>*</span> </label>
-                                                <Email className={styles.formIcon} />
-                                                <Input type='email' className={styles.formInput} placeholder={t("email")} />
-                                            </div>
-                                            {
-                                                (validator && !validator.email) && <Alert severity="error">{t("email-error")}</Alert>
-                                            }
+                      <div className={styles.formControl}>
+                        <label className={styles.formLabel}>
+                          {' '}
+                          {t('confirm-password')}{' '}
+                          <span className="text-danger">*</span>{' '}
+                        </label>
+                        <Password className={styles.formIcon} />
+                        <Input
+                          type="password"
+                          className={styles.formInput}
+                          placeholder={t('confirm-password')}
+                        />
+                      </div>
+                      {validator && !validator.password_confirm && (
+                        <Alert severity="error">
+                          {t('confirm-password-error')}
+                        </Alert>
+                      )}
 
-                                            <div className={styles.formControl}>
-                                                <label className={styles.formLabel}> {t("password")} <span className='text-danger'>*</span> </label>
-                                                <Password className={styles.formIcon} />
-                                                <Input type='password' className={styles.formInput} placeholder={t("password")} />
-                                            </div>
-                                            {
-                                                (validator && !validator.password) && <Alert severity="error">
-                                                    {t("password-error1")}<br />{t("password-error2")}
-                                                </Alert>
-                                            }
+                      {reReqresponse && reReqresponse != '' && (
+                        <Alert severity="error">{reReqresponse}</Alert>
+                      )}
 
-                                            <div className={styles.formControl}>
-                                                <label className={styles.formLabel}> {t("confirm-password")} <span className='text-danger'>*</span> </label>
-                                                <Password className={styles.formIcon} />
-                                                <Input type='password' className={styles.formInput} placeholder={t("confirm-password")} />
-                                            </div>
-                                            {
-                                                (validator && !validator.password_confirm) && <Alert severity="error">
-                                                    {t("confirm-password-error")}
-                                                </Alert>
-                                            }
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        fullWidth
+                        className={`${styles['btn']} ${styles['btn_primary']}`}
+                      >
+                        {t('create-account')}
+                      </Button>
+                    </form>
 
-                                            {
-                                                (reReqresponse && reReqresponse != "") && <Alert severity="error">
-                                                    {reReqresponse}
-                                                </Alert>
-                                            }
-
-                                            <Button type='submit' variant="contained" fullWidth className={`${styles["btn"]} ${styles["btn_primary"]}`} >{t("create-account")}</Button>
-                                        </form>
-
-
-                                        <Typography variant="body1">
-                                            {t("already-account")}  <Link href={`/${locale}/auth/signin`}> {t("sign-in")} </Link>
-                                        </Typography>
-
-                                    </div>
-                                </Grid>
-                            </Grid>
-                        </Container>
-                    </div>
-                </main>
-            </ThemeProvider>
-        </>
-    )
+                    <Typography variant="body1">
+                      {t('already-account')}{' '}
+                      <Link href={`/${locale}/auth/signin`}>
+                        {' '}
+                        {t('sign-in')}{' '}
+                      </Link>
+                    </Typography>
+                  </div>
+                </Grid>
+              </Grid>
+            </Container>
+          </div>
+        </main>
+      </ThemeProvider>
+    </>
+  );
 }

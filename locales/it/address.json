@@ -1,10 +1,10 @@
 {
-    "header1": "Indirizzi",
-    "Default-address": "Indirizzo predefinito",
-    "Home-address": "Casa",
-    "Other-address": "Altri indirizzi",
-    "edit-btn": "Modificare",
-    "delete-btn": "Eliminare",
-    "Work-address": "Lavoro",
-    "set-as-default": "Imposta come predefinito"
+  "header1": "Indirizzi",
+  "Default-address": "Indirizzo predefinito",
+  "Home-address": "Casa",
+  "Other-address": "Altri indirizzi",
+  "edit-btn": "Modificare",
+  "delete-btn": "Eliminare",
+  "Work-address": "Lavoro",
+  "set-as-default": "Imposta come predefinito"
 }
