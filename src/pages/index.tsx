@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { motion, useInView, useAnimation } from "framer-motion"
+import { motion, useInView, useAnimation } from 'framer-motion';
+import Image from 'next/image';
 
 import Header from '../common/header';
 import Footer from '../common/footer';
@@ -36,827 +37,975 @@ import pclogo05 from '../img/partners-logo/pclogo05.jpg';
 import styles from '@/styles/Home.module.css';
 import { Work_Sans } from 'next/font/google';
 
-
 const workSans = Work_Sans({ subsets: ['latin'] });
 import { createTheme, ThemeProvider } from '@mui/material';
 import useTranslation from 'next-translate/useTranslation';
 
-
 export default function Home() {
-    const theme = createTheme({
-        typography: {
-            fontFamily: [
-                'Work Sans',
-            ].join(','),
-        },
-    });
+  const theme = createTheme({
+    typography: {
+      fontFamily: ['Work Sans'].join(','),
+    },
+  });
 
-    const { t } = useTranslation('home');
+  const { t } = useTranslation('home');
 
-    return (
-        <>
-            <div>
+  return (
+    <>
+      <div>
+        <ThemeProvider theme={theme}>
+          <main className={styles.main}>
+            <Header title="Home" />
+            {/* Banner Section Start */}
+            <div className={styles.paddingT0}>
+              <div className={`${styles['mainBanner']}`}>
+                <Container className={styles.containerBox}>
+                  <Grid container spacing={3} className={styles.bannerWrap}>
+                    <Grid item md={6} xs={12}>
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          x: '100%',
+                          visibility: 'hidden',
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          x: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 1, delay: 0.25 }}
+                        viewport={{ once: true }}
+                      >
+                        <Typography variant="h1" className={styles.bannerHD}>
+                          {t('header1')}
+                        </Typography>
 
-                <ThemeProvider theme={theme}>
-                    <main className={styles.main} >
-                        <Header title='Home' />
-                        {/* Banner Section Start */}
-                        <div className={styles.paddingT0} >
-                            <div className={`${styles["mainBanner"]}`}>
-                                <Container className={styles.containerBox} >
-                                    <Grid container spacing={3} className={styles.bannerWrap}>
-                                        <Grid item md={6} xs={12}>
-                                            <motion.div
-                                                initial={{
-                                                    opacity: 0,
-                                                    x: "100%",
-                                                    visibility: 'hidden'
-                                                }}
-                                                whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                transition={{ duration: 1, delay: 0.25 }}
-                                                viewport={{ once: true }}
-                                            >
-                                                <Typography variant="h1" className={styles.bannerHD}>
-                                                    {t("header1")}
-                                                </Typography>
+                        <Typography variant="h6" className={styles.bannerTxt}>
+                          {t('subheader1')}
+                        </Typography>
 
-                                                <Typography variant="h6" className={styles.bannerTxt}>
-                                                    {t("subheader1")}
-                                                </Typography>
+                        <Button
+                          variant="contained"
+                          className={`${styles['btn']} ${styles['btn_primary']}`}
+                        >
+                          {t('banner-btn-title')}
+                        </Button>
+                      </motion.div>
+                    </Grid>
 
-                                                <Button variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`}>{t("banner-btn-title")}</Button>
-                                            </motion.div>
-                                        </Grid>
+                    <Grid item md={6} xs={12}>
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          x: '100%',
+                          visibility: 'hidden',
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          x: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 1, delay: 0.25 }}
+                        viewport={{ once: true }}
+                      >
+                      <div className={styles.bannerImg}>
+                        <Image
+                          width={'640'}
+                          height={'523'}
+                          style={{ width: '100%', height: 'auto' }}
+                          src={bannerProduct.src}
+                          alt="logo"
+                        />
+                      </div>
+                      </motion.div>
+                    </Grid>
+                  </Grid>
+                </Container>
+              </div>
+            </div>
+            {/* Banner Section End */}
 
-                                        <Grid item md={6} xs={12}>
-                                            <motion.div
-                                                initial={{
-                                                    opacity: 0,
-                                                    x: "100%",
-                                                    visibility: 'hidden'
-                                                }}
-                                                whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                transition={{ duration: 1, delay: 0.25 }}
-                                                viewport={{ once: true }}>
-                                                <div className={styles.bannerImg}>
-                                                    <img src={bannerProduct.src} alt="logo" />
-                                                </div>
-                                            </motion.div>
-                                        </Grid>
-                                    </Grid>
-                                </Container>
-                            </div>
+            {/* Services Section Start */}
+            <div className={styles.homeServicesWrap}>
+              <Container className={styles.containerBox}>
+                <Grid container spacing={3}>
+                  <Grid item md={3} sm={6} xs={12}>
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                        y: '100%',
+                        visibility: 'hidden',
+                      }}
+                      whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
+                      transition={{ duration: 0.2, delay: 0.5 }}
+                      viewport={{ once: true }}
+                    >
+                      <div
+                        className={`${styles['wrapBox']} ${styles['servicesItem']}`}
+                      >
+                        <div className={`${styles['servicesIcon']}`}>
+                          <img src={supportIcon.src} alt="Icon" />
                         </div>
-                        {/* Banner Section End */}
+                        <Typography variant="h5">
+                          {t('service-header1')}
+                        </Typography>
+                        <Typography variant="h6">
+                          {t('service-desc1')}
+                        </Typography>
+                      </div>
+                    </motion.div>
+                  </Grid>
 
-                        {/* Services Section Start */}
-                        <div className={styles.homeServicesWrap}>
-                            <Container className={styles.containerBox}>
-                                <Grid container spacing={3}>
-                                    <Grid item md={3} sm={6} xs={12}>
-                                        <motion.div
-                                            initial={{
-                                                opacity: 0,
-                                                y: "100%",
-                                                visibility: 'hidden'
-                                            }}
-                                            whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
-                                            transition={{ duration: 0.2, delay: 0.5 }}
-                                            viewport={{ once: true }}>
-                                            <div className={`${styles["wrapBox"]} ${styles["servicesItem"]}`}>
-                                                <div className={`${styles["servicesIcon"]}`}>
-                                                    <img src={supportIcon.src} alt='Icon' />
-                                                </div>
-                                                <Typography variant='h5'>
-                                                    {t("service-header1")}
-                                                </Typography>
-                                                <Typography variant='h6'>
-                                                    {t("service-desc1")}
-                                                </Typography>
-                                            </div>
-                                        </motion.div>
-                                    </Grid>
-
-                                    <Grid item md={3} sm={6} xs={12}>
-                                        <motion.div
-                                            initial={{
-                                                opacity: 0,
-                                                y: "100%",
-                                                visibility: 'hidden'
-                                            }}
-                                            whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
-                                            transition={{ duration: 0.3, delay: 0.6 }}
-                                            viewport={{ once: true }}>
-                                            <div className={`${styles["wrapBox"]} ${styles["servicesItem"]}`}>
-                                                <div className={styles.servicesIcon}>
-                                                    <img src={serversIcon.src} alt='Icon' />
-                                                </div>
-                                                <Typography variant='h5'>
-                                                    {t("service-header2")}
-                                                </Typography>
-                                                <Typography variant='h6'>
-                                                    {t("service-desc2")}
-                                                </Typography>
-                                            </div>
-                                        </motion.div>
-                                    </Grid>
-
-                                    <Grid item md={3} sm={6} xs={12}>
-                                        <motion.div
-                                            initial={{
-                                                opacity: 0,
-                                                y: "100%",
-                                                visibility: 'hidden'
-                                            }}
-                                            whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
-                                            transition={{ duration: 0.4, delay: 0.7 }}
-                                            viewport={{ once: true }}>
-                                            <div className={`${styles["wrapBox"]} ${styles["servicesItem"]}`}>
-                                                <div className={`${styles["servicesIcon"]}`}>
-                                                    <img src={testedIcon.src} alt='Icon' />
-                                                </div>
-                                                <Typography variant='h5'>
-                                                    {t("service-header3")}
-                                                </Typography>
-                                                <Typography variant='h6'>
-                                                    {t("service-desc3")}
-                                                </Typography>
-                                            </div>
-                                        </motion.div>
-                                    </Grid>
-
-                                    <Grid item md={3} sm={6} xs={12}>
-                                        <motion.div
-                                            initial={{
-                                                opacity: 0,
-                                                y: "100%",
-                                                visibility: 'hidden'
-                                            }}
-                                            whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
-                                            transition={{ duration: 0.5, delay: 0.8 }}
-                                            viewport={{ once: true }}>
-
-                                            <div className={`${styles["wrapBox"]} ${styles["servicesItem"]}`}>
-                                                <div className={`${styles["servicesIcon"]}`}>
-                                                    <img src={securityIcon.src} alt='Icon' />
-                                                </div>
-                                                <Typography variant='h5'>
-                                                    {t("service-header4")}
-                                                </Typography>
-                                                <Typography variant='h6'>
-                                                    {t("service-desc4")}
-                                                </Typography>
-                                            </div>
-                                        </motion.div>
-                                    </Grid>
-                                </Grid>
-                            </Container>
+                  <Grid item md={3} sm={6} xs={12}>
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                        y: '100%',
+                        visibility: 'hidden',
+                      }}
+                      whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
+                      transition={{ duration: 0.3, delay: 0.6 }}
+                      viewport={{ once: true }}
+                    >
+                      <div
+                        className={`${styles['wrapBox']} ${styles['servicesItem']}`}
+                      >
+                        <div className={styles.servicesIcon}>
+                          <img src={serversIcon.src} alt="Icon" />
                         </div>
-                        {/* Services Section End */}
+                        <Typography variant="h5">
+                          {t('service-header2')}
+                        </Typography>
+                        <Typography variant="h6">
+                          {t('service-desc2')}
+                        </Typography>
+                      </div>
+                    </motion.div>
+                  </Grid>
 
-                        {/* Servers Section Start */}
-                        <div className={`${styles["paddingTB60"]} ${styles["serverWrap"]}`}>
-                            <Container className={styles.containerBox}>
-                                <Grid container spacing={3}>
-                                    <Grid item md={12} xs={12}>
-                                        <div className={styles.sectionHeading}>
-                                            <Typography variant='h2'>
-                                                {t("server-header")}
-                                            </Typography>
-                                            <Typography variant='h6'>
-                                                {t("server-desc")}
-                                            </Typography>
-                                        </div>
-                                    </Grid>
-                                </Grid>
-
-                                <Grid container spacing={3}>
-                                    <Grid item md={8} sm={6} xs={12}>
-                                        <div className={`${styles["serverItem"]} ${styles["rootAccessImg"]}`}>
-                                            <div className={styles.serverItemOverlay}></div>
-                                            <motion.div
-                                                initial={{
-                                                    opacity: 0,
-                                                    y: "100%",
-                                                    visibility: 'hidden',
-                                                    zIndex: 2
-                                                }}
-                                                whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
-                                                transition={{ duration: 0.5, delay: 0.3 }}
-                                                viewport={{ once: true }}>
-                                                <Typography variant='h4'>
-                                                    {t("server-item1-header")}
-                                                </Typography>
-                                            </motion.div>
-                                        </div>
-                                    </Grid>
-
-                                    <Grid item md={4} sm={6} xs={12}>
-                                        <div className={`${styles["serverItem"]} ${styles["ssdServerImg"]}`}>
-                                            <div className={styles.serverItemOverlay}></div>
-                                            <motion.div
-                                                initial={{
-                                                    opacity: 0,
-                                                    y: "100%",
-                                                    visibility: 'hidden',
-                                                    zIndex: 2
-                                                }}
-                                                whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
-                                                transition={{ duration: 0.5, delay: 0.3 }}
-                                                viewport={{ once: true }}>
-                                                <Typography variant='h4'>
-                                                    {t("server-item2-header")}
-                                                </Typography>
-                                            </motion.div>
-                                        </div>
-                                    </Grid>
-
-                                    <Grid item md={4} sm={6} xs={12}>
-                                        <div className={`${styles["serverItem"]} ${styles["ultSpeedImgImg"]}`}>
-                                            <div className={styles.serverItemOverlay}></div>
-                                            <motion.div
-                                                initial={{
-                                                    opacity: 0,
-                                                    y: "100%",
-                                                    visibility: 'hidden',
-                                                    zIndex: 2
-                                                }}
-                                                whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
-                                                transition={{ duration: 0.5, delay: 0.3 }}
-                                                viewport={{ once: true }}>
-                                                <Typography variant='h4'>
-                                                    {t("server-item3-header")}
-                                                </Typography>
-                                            </motion.div>
-                                        </div>
-                                    </Grid>
-
-                                    <Grid item md={8} sm={6} xs={12}>
-                                        <div className={`${styles["serverItem"]} ${styles["optimizeVPSImg"]}`}>
-                                            <div className={styles.serverItemOverlay}></div>
-                                            <motion.div
-                                                initial={{
-                                                    opacity: 0,
-                                                    y: "100%",
-                                                    visibility: 'hidden',
-                                                    zIndex: 2
-                                                }}
-                                                whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
-                                                transition={{ duration: 0.5, delay: 0.3 }}
-                                                viewport={{ once: true }}>
-                                                <Typography variant='h4'>
-                                                    {t("server-item4-header")}
-                                                </Typography>
-                                            </motion.div>
-                                        </div>
-                                    </Grid>
-                                </Grid>
-                            </Container>
+                  <Grid item md={3} sm={6} xs={12}>
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                        y: '100%',
+                        visibility: 'hidden',
+                      }}
+                      whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
+                      transition={{ duration: 0.4, delay: 0.7 }}
+                      viewport={{ once: true }}
+                    >
+                      <div
+                        className={`${styles['wrapBox']} ${styles['servicesItem']}`}
+                      >
+                        <div className={`${styles['servicesIcon']}`}>
+                          <img src={testedIcon.src} alt="Icon" />
                         </div>
+                        <Typography variant="h5">
+                          {t('service-header3')}
+                        </Typography>
+                        <Typography variant="h6">
+                          {t('service-desc3')}
+                        </Typography>
+                      </div>
+                    </motion.div>
+                  </Grid>
 
-                        <div className={styles.productsWrap}>
-                            <div className={`${styles["productItemWrap"]} ${styles["bgShape01"]}`}>
-                                <Container className={styles.containerBox}>
-                                    <Grid container spacing={3} >
-                                        <Grid item md={6} sm={12}>
-                                            <div className={styles.productItemImg}>
-                                                <motion.div
-                                                    initial={{
-                                                        opacity: 0,
-                                                        x: "-100%",
-                                                        visibility: 'hidden',
-                                                    }}
-                                                    whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                    transition={{ duration: 0.5, delay: 0.25 }}
-                                                    viewport={{ once: true }}>
-                                                    <img src={lfiPhone.src} alt='LFi Smartphone' />
-                                                </motion.div>
-                                            </div>
-                                        </Grid>
-                                        <Grid item md={6} sm={12}>
-                                            <Typography variant='h2'>
-                                                <span>LFi</span> ONE {t("product-item1-header")}
-                                            </Typography>
-
-                                            <Typography variant='h6'>
-                                                {t("product-item1-desc")}
-                                            </Typography>
-
-                                            <Typography variant='h4'>
-                                                {t("product-item1-subheader")}
-                                            </Typography>
-
-                                            <Grid container spacing={3} className={styles.productSpec} >
-                                                <Grid item md={6}>
-                                                    <motion.div
-                                                        initial={{
-                                                            opacity: 0,
-                                                            x: "100%",
-                                                            visibility: 'hidden',
-                                                        }}
-                                                        whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                        transition={{ duration: 0.2, delay: 0.15 }}
-                                                        viewport={{ once: true }}>
-                                                        <span>
-                                                            <OctaCoreIcon /> &nbsp; 
-                                                            <Typography variant='h6'>
-                                                                OctaCore MTK 2.4 Ghz
-                                                            </Typography>
-                                                        </span>
-                                                    </motion.div>
-                                                </Grid>
-                                                <Grid item md={6}>
-                                                    <motion.div
-                                                        initial={{
-                                                            opacity: 0,
-                                                            x: "100%",
-                                                            visibility: 'hidden',
-                                                        }}
-                                                        whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                        transition={{ duration: 0.4, delay: 0.30 }}
-                                                        viewport={{ once: true }}>
-                                                        <span>
-                                                            <ZoomIcon /> &nbsp; 
-                                                            <Typography variant='h6'>
-                                                                Sony 64MPX Main Camera with Macro and Zoom
-                                                            </Typography>
-                                                        </span>
-                                                    </motion.div>
-                                                </Grid>
-
-
-
-                                                <Grid item md={6}>
-                                                    <motion.div
-                                                        initial={{
-                                                            opacity: 0,
-                                                            x: "100%",
-                                                            visibility: 'hidden',
-                                                        }}
-                                                        whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                        transition={{ duration: 0.2, delay: 0.15 }}
-                                                        viewport={{ once: true }}>
-                                                        <span>
-                                                            <RamIcon /> &nbsp; 
-                                                            <Typography variant='h6'>
-                                                                12GB RAM
-                                                            </Typography>
-                                                        </span>
-                                                    </motion.div>
-                                                </Grid>
-
-
-                                                <Grid item md={6}>
-                                                    <motion.div
-                                                        initial={{
-                                                            opacity: 0,
-                                                            x: "100%",
-                                                            visibility: 'hidden',
-                                                        }}
-                                                        whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                        transition={{ duration: 0.4, delay: 0.30 }}
-                                                        viewport={{ once: true }}>
-                                                        <span>
-                                                            <BatteryIcon />
-                                                            <Typography variant='h6'>
-                                                                6100 mAh Battery Power
-                                                            </Typography>
-                                                        </span>
-                                                    </motion.div>
-                                                </Grid>
-
-
-
-                                                <Grid item md={6}>
-                                                    <motion.div
-                                                        initial={{
-                                                            opacity: 0,
-                                                            x: "100%",
-                                                            visibility: 'hidden',
-                                                        }}
-                                                        whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                        transition={{ duration: 0.2, delay: 0.15 }}
-                                                        viewport={{ once: true }}>
-                                                        <span>
-                                                            <DpiIcon /> &nbsp; 
-                                                            <Typography variant='h6'>
-                                                                IPS 6.78” FHD+
-                                                                @ 120Hz 396 DPI
-                                                            </Typography>
-                                                        </span>
-                                                    </motion.div>
-                                                </Grid>
-
-
-                                                <Grid item md={6}>
-                                                    <motion.div
-                                                        initial={{
-                                                            opacity: 0,
-                                                            x: "100%",
-                                                            visibility: 'hidden',
-                                                        }}
-                                                        whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                        transition={{ duration: 0.4, delay: 0.30 }}
-                                                        viewport={{ once: true }}>
-                                                        <span>
-                                                            <MintingIcon />
-                                                            <Typography variant='h6'>
-                                                                Mobile Minting App Native
-                                                            </Typography>
-                                                        </span>
-                                                    </motion.div>
-                                                </Grid>
-                                            </Grid>
-
-                                            <motion.div
-                                                initial={{
-                                                    opacity: 0,
-                                                    x: "100%",
-                                                    visibility: 'hidden',
-                                                }}
-                                                whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                transition={{ duration: 0.2, delay: 0.25 }}
-                                                viewport={{ once: true }}>
-
-                                                <Button variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`}>{t("product-btn1-shop")}</Button>
-                                            </motion.div>
-                                        </Grid>
-
-                                    </Grid>
-                                </Container>
-                            </div>
-
-
-                            <div className={`${styles["productItemWrap"]} ${styles["bgShape02"]}`}>
-                                <Container className={styles.containerBox}>
-                                    <Grid container spacing={3} >
-
-                                        <Grid item md={12} xs={12} className={styles.watchHeading}>
-                                            <Typography variant='h2'>
-                                                <span>LYO</span>  WATCH
-                                            </Typography>
-
-                                            <Typography variant='h6'>
-                                                {t("product-item2-desc")}
-                                            </Typography>
-                                        </Grid>
-
-
-
-                                        <Grid item md={4} sm={12}>
-                                            <motion.div
-                                                initial={{
-                                                    opacity: 0,
-                                                    x: "-100%",
-                                                    visibility: 'hidden',
-                                                }}
-                                                whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                transition={{ duration: 0.3, delay: 0.25 }}
-                                                viewport={{ once: true }}>
-                                                <Typography variant='h4'>
-                                                    {t("product-item2-subheader1")}
-                                                </Typography>
-
-                                                <Grid container spacing={3} className={styles.productSpec} >
-                                                    <Grid item md={12}>
-                                                        <span>
-                                                            <OctaCoreIcon /> &nbsp; 
-                                                            <Typography variant='h6'>
-                                                                {t("product-item2-carac1")}
-                                                            </Typography>
-                                                        </span>
-                                                    </Grid>
-                                                    <Grid item md={12}>
-                                                        <span>
-                                                            <CalenderIcon /> &nbsp; 
-                                                            <Typography variant='h6'>
-                                                                {t("product-item2-carac2")}
-                                                            </Typography>
-                                                        </span>
-                                                    </Grid>
-                                                    <Grid item md={12}>
-                                                        <span>
-                                                            <HealthIcon /> &nbsp; 
-                                                            <Typography variant='h6'>
-                                                                {t("product-item2-carac3")}
-                                                            </Typography>
-                                                        </span>
-                                                    </Grid>
-
-                                                </Grid>
-                                            </motion.div>
-                                        </Grid>
-
-                                        <Grid item md={4} sm={12}>
-                                            <motion.div
-                                                initial={{
-                                                    opacity: 0,
-                                                    y: "100%",
-                                                    visibility: 'hidden',
-                                                }}
-                                                whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
-                                                transition={{ duration: 0.2, delay: 0.15 }}
-                                                viewport={{ once: true }}>
-                                                <div className={styles.productItemImg}>
-                                                    <img src={lyoWatchImg.src} alt='LYO Watch' />
-                                                </div>
-                                            </motion.div>
-                                        </Grid>
-
-                                        <Grid item md={4} sm={12}>
-
-                                            <motion.div
-                                                initial={{
-                                                    opacity: 0,
-                                                    x: "100%",
-                                                    visibility: 'hidden',
-                                                }}
-                                                whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                transition={{ duration: 0.3, delay: 0.25 }}
-                                                viewport={{ once: true }}>
-                                                <Typography variant='h4'>
-                                                    {t("product-item2-subheader2")}
-                                                </Typography>
-
-                                                <Grid container spacing={3} className={styles.productSpec} >
-                                                    <Grid item md={12} xs={12}>
-
-                                                        <Typography variant='h6'>
-                                                            {t("product-item2-carac4")}
-                                                        </Typography>
-
-                                                    </Grid>
-                                                </Grid>
-
-                                                <motion.div
-                                                    initial={{
-                                                        opacity: 0,
-                                                        x: "100%",
-                                                        visibility: 'hidden',
-                                                    }}
-                                                    whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                    transition={{ duration: 0.4, delay: 0.30 }}
-                                                    viewport={{ once: true }}>
-                                                    <Button variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`} >{t("product-btn2-shop")}</Button>
-                                                </motion.div>
-
-                                            </motion.div>
-                                        </Grid>
-
-
-
-                                    </Grid>
-                                </Container>
-                            </div>
-
-                            <div className={`${styles["productItemWrap"]} ${styles["bgShape01"]}`}>
-                                <Container className={styles.containerBox}>
-                                    <Grid container spacing={3} className={styles.lyoTabMain} >
-
-                                        <Grid item md={6} sm={12}>
-                                            <Typography variant='h2'>
-                                                <span>LYO</span> TAB
-                                            </Typography>
-
-                                            <Typography variant='h6'>
-                                                {t("product-item3-desc")}
-                                            </Typography>
-
-                                            <Typography variant='h4'>
-                                                Versatile Use
-                                            </Typography>
-
-                                            <Grid container spacing={3} className={styles.productSpec} >
-                                                <Grid item md={6}>
-                                                    <motion.div
-                                                        initial={{
-                                                            opacity: 0,
-                                                            x: "-100%",
-                                                            visibility: 'hidden',
-                                                        }}
-                                                        whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                        transition={{ duration: 0.2, delay: 0.15 }}
-                                                        viewport={{ once: true }}>
-                                                        <span>
-                                                            <OctaCoreIcon />
-                                                            <Typography variant='h6'>
-                                                                OctaCore MTK 2.4 Ghz
-                                                            </Typography>
-                                                        </span>
-                                                    </motion.div>
-                                                </Grid>
-                                                <Grid item md={6}>
-                                                    <motion.div
-                                                        initial={{
-                                                            opacity: 0,
-                                                            x: "-100%",
-                                                            visibility: 'hidden',
-                                                        }}
-                                                        whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                        transition={{ duration: 0.4, delay: 0.30 }}
-                                                        viewport={{ once: true }}>
-                                                        <span>
-                                                            <ZoomIcon />
-                                                            <Typography variant='h6'>
-                                                                Sony 64MPX Main Camera with Macro and Zoom
-                                                            </Typography>
-                                                        </span>
-                                                    </motion.div>
-                                                </Grid>
-
-
-
-                                                <Grid item md={6}>
-                                                    <motion.div
-                                                        initial={{
-                                                            opacity: 0,
-                                                            x: "-100%",
-                                                            visibility: 'hidden',
-                                                        }}
-                                                        whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                        transition={{ duration: 0.2, delay: 0.15 }}
-                                                        viewport={{ once: true }}>
-                                                        <span>
-                                                            <RamIcon />
-                                                            <Typography variant='h6'>
-                                                                12GB RAM
-                                                            </Typography>
-                                                        </span>
-                                                    </motion.div>
-                                                </Grid>
-
-
-                                                <Grid item md={6}>
-                                                    <motion.div
-                                                        initial={{
-                                                            opacity: 0,
-                                                            x: "-100%",
-                                                            visibility: 'hidden',
-                                                        }}
-                                                        whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                        transition={{ duration: 0.4, delay: 0.30 }}
-                                                        viewport={{ once: true }}>
-                                                        <span>
-                                                            <BatteryIcon />
-                                                            <Typography variant='h6'>
-                                                                6100 mAh Battery Power
-                                                            </Typography>
-                                                        </span>
-                                                    </motion.div>
-                                                </Grid>
-
-
-
-                                                <Grid item md={6}>
-                                                    <motion.div
-                                                        initial={{
-                                                            opacity: 0,
-                                                            x: "-100%",
-                                                            visibility: 'hidden',
-                                                        }}
-                                                        whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                        transition={{ duration: 0.2, delay: 0.15 }}
-                                                        viewport={{ once: true }}>
-                                                        <span>
-                                                            <DpiIcon />
-                                                            <Typography variant='h6'>
-                                                                10.1″ Full-HD Display
-                                                            </Typography>
-                                                        </span>
-                                                    </motion.div>
-                                                </Grid>
-
-
-                                                <Grid item md={6}>
-                                                    <motion.div
-                                                        initial={{
-                                                            opacity: 0,
-                                                            x: "-100%",
-                                                            visibility: 'hidden',
-                                                        }}
-                                                        whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                        transition={{ duration: 0.4, delay: 0.30 }}
-                                                        viewport={{ once: true }}>
-                                                        <span>
-                                                            <MintingIcon />
-                                                            <Typography variant='h6'>
-                                                                Minting App Native
-                                                            </Typography>
-                                                        </span>
-                                                    </motion.div>
-                                                </Grid>
-                                            </Grid>
-
-                                            <motion.div
-                                                initial={{
-                                                    opacity: 0,
-                                                    x: "-100%",
-                                                    visibility: 'hidden',
-                                                }}
-                                                whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                transition={{ duration: 0.4, delay: 0.30 }}
-                                                viewport={{ once: true }}>
-                                                <Button variant="contained" className={`${styles["btn"]} ${styles["btn_primary"]}`} >{t("product-btn3-shop")}</Button>
-                                            </motion.div>
-                                        </Grid>
-
-                                        <Grid item md={6} sm={12}>
-
-                                            <motion.div
-                                                initial={{
-                                                    opacity: 0,
-                                                    x: "100%",
-                                                    visibility: 'hidden',
-                                                }}
-                                                whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                                transition={{ duration: 0.3, delay: 0.25 }}
-                                                viewport={{ once: true }}>
-
-                                                <div className={styles.productItemImg}>
-                                                    <img src={lyoTabImg.src} alt='LYO Tab' />
-                                                </div>
-                                            </motion.div>
-                                        </Grid>
-
-                                    </Grid>
-                                </Container>
-                            </div>
-
+                  <Grid item md={3} sm={6} xs={12}>
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                        y: '100%',
+                        visibility: 'hidden',
+                      }}
+                      whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
+                      transition={{ duration: 0.5, delay: 0.8 }}
+                      viewport={{ once: true }}
+                    >
+                      <div
+                        className={`${styles['wrapBox']} ${styles['servicesItem']}`}
+                      >
+                        <div className={`${styles['servicesIcon']}`}>
+                          <img src={securityIcon.src} alt="Icon" />
                         </div>
+                        <Typography variant="h5">
+                          {t('service-header4')}
+                        </Typography>
+                        <Typography variant="h6">
+                          {t('service-desc4')}
+                        </Typography>
+                      </div>
+                    </motion.div>
+                  </Grid>
+                </Grid>
+              </Container>
+            </div>
+            {/* Services Section End */}
 
-                        {/* Content Section End */}
+            {/* Servers Section Start */}
+            <div className={`${styles['paddingTB60']} ${styles['serverWrap']}`}>
+              <Container className={styles.containerBox}>
+                <Grid container spacing={3}>
+                  <Grid item md={12} xs={12}>
+                    <div className={styles.sectionHeading}>
+                      <Typography variant="h2">{t('server-header')}</Typography>
+                      <Typography variant="h6">{t('server-desc')}</Typography>
+                    </div>
+                  </Grid>
+                </Grid>
 
-                        {/* Partners Section Start */}
+                <Grid container spacing={3}>
+                  <Grid item md={8} sm={6} xs={12}>
+                    <div
+                      className={`${styles['serverItem']} ${styles['rootAccessImg']}`}
+                    >
+                      <div className={styles.serverItemOverlay}></div>
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          y: '100%',
+                          visibility: 'hidden',
+                          zIndex: 2,
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          y: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
+                        viewport={{ once: true }}
+                      >
+                        <Typography variant="h4">
+                          {t('server-item1-header')}
+                        </Typography>
+                      </motion.div>
+                    </div>
+                  </Grid>
 
-                        <div className={styles.partersWrap}>
-                            <Container className={styles.containerBox}>
-                                <Grid container spacing={3}>
-                                    <Grid item md={6} sm={12}>
-                                        <div className={styles.sectionHeading}>
-                                            <Typography variant='h2'>
-                                                {t("partners-header1")}
-                                            </Typography>
-                                        </div>
+                  <Grid item md={4} sm={6} xs={12}>
+                    <div
+                      className={`${styles['serverItem']} ${styles['ssdServerImg']}`}
+                    >
+                      <div className={styles.serverItemOverlay}></div>
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          y: '100%',
+                          visibility: 'hidden',
+                          zIndex: 2,
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          y: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
+                        viewport={{ once: true }}
+                      >
+                        <Typography variant="h4">
+                          {t('server-item2-header')}
+                        </Typography>
+                      </motion.div>
+                    </div>
+                  </Grid>
 
-                                        <br></br>
-                                        <motion.div
-                                            initial={{
-                                                opacity: 0,
-                                                x: "-100%",
-                                                visibility: 'hidden'
-                                            }}
-                                            whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                            // animate={mainControls}
-                                            transition={{ duration: 0.3, delay: 0.10 }}
-                                            viewport={{ once: true }}>
+                  <Grid item md={4} sm={6} xs={12}>
+                    <div
+                      className={`${styles['serverItem']} ${styles['ultSpeedImgImg']}`}
+                    >
+                      <div className={styles.serverItemOverlay}></div>
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          y: '100%',
+                          visibility: 'hidden',
+                          zIndex: 2,
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          y: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
+                        viewport={{ once: true }}
+                      >
+                        <Typography variant="h4">
+                          {t('server-item3-header')}
+                        </Typography>
+                      </motion.div>
+                    </div>
+                  </Grid>
 
+                  <Grid item md={8} sm={6} xs={12}>
+                    <div
+                      className={`${styles['serverItem']} ${styles['optimizeVPSImg']}`}
+                    >
+                      <div className={styles.serverItemOverlay}></div>
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          y: '100%',
+                          visibility: 'hidden',
+                          zIndex: 2,
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          y: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
+                        viewport={{ once: true }}
+                      >
+                        <Typography variant="h4">
+                          {t('server-item4-header')}
+                        </Typography>
+                      </motion.div>
+                    </div>
+                  </Grid>
+                </Grid>
+              </Container>
+            </div>
 
-                                            <div className={styles.partnersImg}>
-                                                <img src={weAre01.src} alt='Partner Logo' />
-                                                <img src={weAre02.src} alt='Partner Logo' />
-                                                <img src={weAre03.src} alt='Partner Logo' />
-                                                <img src={weAre04.src} alt='Partner Logo' />
-                                            </div>
-                                        </motion.div>
-                                    </Grid>
+            <div className={styles.productsWrap}>
+              <div
+                className={`${styles['productItemWrap']} ${styles['bgShape01']}`}
+              >
+                <Container className={styles.containerBox}>
+                  <Grid container spacing={3}>
+                    <Grid item md={6} sm={12}>
+                      <div className={styles.productItemImg}>
+                        <motion.div
+                          initial={{
+                            opacity: 0,
+                            x: '-100%',
+                            visibility: 'hidden',
+                          }}
+                          whileInView={{
+                            opacity: 1,
+                            x: 0,
+                            visibility: 'visible',
+                          }}
+                          transition={{ duration: 0.5, delay: 0.25 }}
+                          viewport={{ once: true }}
+                        >
+                          <img src={lfiPhone.src} alt="LFi Smartphone" />
+                        </motion.div>
+                      </div>
+                    </Grid>
+                    <Grid item md={6} sm={12}>
+                      <Typography variant="h2">
+                        <span>LFi</span> ONE {t('product-item1-header')}
+                      </Typography>
 
-                                    <Grid item md={6} sm={12}>
-                                        <div className={styles.sectionHeading}>
-                                            <Typography variant='h2'>
-                                                {t("partners-header2")}
-                                            </Typography>
-                                        </div>
-                                        <br></br>
-                                        <motion.div
-                                            initial={{
-                                                opacity: 0,
-                                                x: "100%",
-                                                visibility: 'hidden'
-                                            }}
-                                            whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                                            // animate={mainControls}
-                                            transition={{ duration: 0.3, delay: 0.10 }}
-                                            viewport={{ once: true }}>
-                                            <div className={styles.partnersImg}>
-                                                <img src={pclogo01.src} alt='Partner Logo' />
-                                                <img src={pclogo02.src} alt='Partner Logo' />
-                                                <img src={pclogo03.src} alt='Partner Logo' />
-                                                <img src={pclogo04.src} alt='Partner Logo' />
-                                                <img src={pclogo05.src} alt='Partner Logo' />
-                                            </div>
-                                        </motion.div>
-                                    </Grid>
-                                </Grid>
-                            </Container>
+                      <Typography variant="h6">
+                        {t('product-item1-desc')}
+                      </Typography>
 
+                      <Typography variant="h4">
+                        {t('product-item1-subheader')}
+                      </Typography>
+
+                      <Grid
+                        container
+                        spacing={3}
+                        className={styles.productSpec}
+                      >
+                        <Grid item md={6}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '100%',
+                              visibility: 'hidden',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <OctaCoreIcon /> &nbsp;
+                              <Typography variant="h6">
+                                OctaCore MTK 2.4 Ghz
+                              </Typography>
+                            </span>
+                          </motion.div>
+                        </Grid>
+                        <Grid item md={6}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '100%',
+                              visibility: 'hidden',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.4, delay: 0.3 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <ZoomIcon /> &nbsp;
+                              <Typography variant="h6">
+                                Sony 64MPX Main Camera with Macro and Zoom
+                              </Typography>
+                            </span>
+                          </motion.div>
+                        </Grid>
+
+                        <Grid item md={6}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '100%',
+                              visibility: 'hidden',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <RamIcon /> &nbsp;
+                              <Typography variant="h6">12GB RAM</Typography>
+                            </span>
+                          </motion.div>
+                        </Grid>
+
+                        <Grid item md={6}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '100%',
+                              visibility: 'hidden',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.4, delay: 0.3 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <BatteryIcon />
+                              <Typography variant="h6">
+                                6100 mAh Battery Power
+                              </Typography>
+                            </span>
+                          </motion.div>
+                        </Grid>
+
+                        <Grid item md={6}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '100%',
+                              visibility: 'hidden',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <DpiIcon /> &nbsp;
+                              <Typography variant="h6">
+                                IPS 6.78” FHD+ @ 120Hz 396 DPI
+                              </Typography>
+                            </span>
+                          </motion.div>
+                        </Grid>
+
+                        <Grid item md={6}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '100%',
+                              visibility: 'hidden',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.4, delay: 0.3 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <MintingIcon />
+                              <Typography variant="h6">
+                                Mobile Minting App Native
+                              </Typography>
+                            </span>
+                          </motion.div>
+                        </Grid>
+                      </Grid>
+
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          x: '100%',
+                          visibility: 'hidden',
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          x: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 0.2, delay: 0.25 }}
+                        viewport={{ once: true }}
+                      >
+                        <Button
+                          variant="contained"
+                          className={`${styles['btn']} ${styles['btn_primary']}`}
+                        >
+                          {t('product-btn1-shop')}
+                        </Button>
+                      </motion.div>
+                    </Grid>
+                  </Grid>
+                </Container>
+              </div>
+
+              <div
+                className={`${styles['productItemWrap']} ${styles['bgShape02']}`}
+              >
+                <Container className={styles.containerBox}>
+                  <Grid container spacing={3}>
+                    <Grid item md={12} xs={12} className={styles.watchHeading}>
+                      <Typography variant="h2">
+                        <span>LYO</span> WATCH
+                      </Typography>
+
+                      <Typography variant="h6">
+                        {t('product-item2-desc')}
+                      </Typography>
+                    </Grid>
+
+                    <Grid item md={4} sm={12}>
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          x: '-100%',
+                          visibility: 'hidden',
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          x: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 0.3, delay: 0.25 }}
+                        viewport={{ once: true }}
+                      >
+                        <Typography variant="h4">
+                          {t('product-item2-subheader1')}
+                        </Typography>
+
+                        <Grid
+                          container
+                          spacing={3}
+                          className={styles.productSpec}
+                        >
+                          <Grid item md={12}>
+                            <span>
+                              <OctaCoreIcon /> &nbsp;
+                              <Typography variant="h6">
+                                {t('product-item2-carac1')}
+                              </Typography>
+                            </span>
+                          </Grid>
+                          <Grid item md={12}>
+                            <span>
+                              <CalenderIcon /> &nbsp;
+                              <Typography variant="h6">
+                                {t('product-item2-carac2')}
+                              </Typography>
+                            </span>
+                          </Grid>
+                          <Grid item md={12}>
+                            <span>
+                              <HealthIcon /> &nbsp;
+                              <Typography variant="h6">
+                                {t('product-item2-carac3')}
+                              </Typography>
+                            </span>
+                          </Grid>
+                        </Grid>
+                      </motion.div>
+                    </Grid>
+
+                    <Grid item md={4} sm={12}>
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          y: '100%',
+                          visibility: 'hidden',
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          y: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 0.2, delay: 0.15 }}
+                        viewport={{ once: true }}
+                      >
+                        <div className={styles.productItemImg}>
+                          <img src={lyoWatchImg.src} alt="LYO Watch" />
                         </div>
+                      </motion.div>
+                    </Grid>
 
-                        {/* Partners Section End */}
-                        <Footer />
-                    </main >
-                </ThemeProvider >
+                    <Grid item md={4} sm={12}>
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          x: '100%',
+                          visibility: 'hidden',
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          x: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 0.3, delay: 0.25 }}
+                        viewport={{ once: true }}
+                      >
+                        <Typography variant="h4">
+                          {t('product-item2-subheader2')}
+                        </Typography>
 
-                {/* <motion.div
+                        <Grid
+                          container
+                          spacing={3}
+                          className={styles.productSpec}
+                        >
+                          <Grid item md={12} xs={12}>
+                            <Typography variant="h6">
+                              {t('product-item2-carac4')}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+
+                        <motion.div
+                          initial={{
+                            opacity: 0,
+                            x: '100%',
+                            visibility: 'hidden',
+                          }}
+                          whileInView={{
+                            opacity: 1,
+                            x: 0,
+                            visibility: 'visible',
+                          }}
+                          transition={{ duration: 0.4, delay: 0.3 }}
+                          viewport={{ once: true }}
+                        >
+                          <Button
+                            variant="contained"
+                            className={`${styles['btn']} ${styles['btn_primary']}`}
+                          >
+                            {t('product-btn2-shop')}
+                          </Button>
+                        </motion.div>
+                      </motion.div>
+                    </Grid>
+                  </Grid>
+                </Container>
+              </div>
+
+              <div
+                className={`${styles['productItemWrap']} ${styles['bgShape01']}`}
+              >
+                <Container className={styles.containerBox}>
+                  <Grid container spacing={3} className={styles.lyoTabMain}>
+                    <Grid item md={6} sm={12}>
+                      <Typography variant="h2">
+                        <span>LYO</span> TAB
+                      </Typography>
+
+                      <Typography variant="h6">
+                        {t('product-item3-desc')}
+                      </Typography>
+
+                      <Typography variant="h4">Versatile Use</Typography>
+
+                      <Grid
+                        container
+                        spacing={3}
+                        className={styles.productSpec}
+                      >
+                        <Grid item md={6}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <OctaCoreIcon />
+                              <Typography variant="h6">
+                                OctaCore MTK 2.4 Ghz
+                              </Typography>
+                            </span>
+                          </motion.div>
+                        </Grid>
+                        <Grid item md={6}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.4, delay: 0.3 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <ZoomIcon />
+                              <Typography variant="h6">
+                                Sony 64MPX Main Camera with Macro and Zoom
+                              </Typography>
+                            </span>
+                          </motion.div>
+                        </Grid>
+
+                        <Grid item md={6}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <RamIcon />
+                              <Typography variant="h6">12GB RAM</Typography>
+                            </span>
+                          </motion.div>
+                        </Grid>
+
+                        <Grid item md={6}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.4, delay: 0.3 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <BatteryIcon />
+                              <Typography variant="h6">
+                                6100 mAh Battery Power
+                              </Typography>
+                            </span>
+                          </motion.div>
+                        </Grid>
+
+                        <Grid item md={6}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <DpiIcon />
+                              <Typography variant="h6">
+                                10.1″ Full-HD Display
+                              </Typography>
+                            </span>
+                          </motion.div>
+                        </Grid>
+
+                        <Grid item md={6}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.4, delay: 0.3 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <MintingIcon />
+                              <Typography variant="h6">
+                                Minting App Native
+                              </Typography>
+                            </span>
+                          </motion.div>
+                        </Grid>
+                      </Grid>
+
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          x: '-100%',
+                          visibility: 'hidden',
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          x: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 0.4, delay: 0.3 }}
+                        viewport={{ once: true }}
+                      >
+                        <Button
+                          variant="contained"
+                          className={`${styles['btn']} ${styles['btn_primary']}`}
+                        >
+                          {t('product-btn3-shop')}
+                        </Button>
+                      </motion.div>
+                    </Grid>
+
+                    <Grid item md={6} sm={12}>
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          x: '100%',
+                          visibility: 'hidden',
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          x: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 0.3, delay: 0.25 }}
+                        viewport={{ once: true }}
+                      >
+                        <div className={styles.productItemImg}>
+                          <img src={lyoTabImg.src} alt="LYO Tab" />
+                        </div>
+                      </motion.div>
+                    </Grid>
+                  </Grid>
+                </Container>
+              </div>
+            </div>
+
+            {/* Content Section End */}
+
+            {/* Partners Section Start */}
+
+            <div className={styles.partersWrap}>
+              <Container className={styles.containerBox}>
+                <Grid container spacing={3}>
+                  <Grid item md={6} sm={12}>
+                    <div className={styles.sectionHeading}>
+                      <Typography variant="h2">
+                        {t('partners-header1')}
+                      </Typography>
+                    </div>
+
+                    <br></br>
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                        x: '-100%',
+                        visibility: 'hidden',
+                      }}
+                      whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
+                      // animate={mainControls}
+                      transition={{ duration: 0.3, delay: 0.1 }}
+                      viewport={{ once: true }}
+                    >
+                      <div className={styles.partnersImg}>
+                        <img src={weAre01.src} alt="Partner Logo" />
+                        <img src={weAre02.src} alt="Partner Logo" />
+                        <img src={weAre03.src} alt="Partner Logo" />
+                        <img src={weAre04.src} alt="Partner Logo" />
+                      </div>
+                    </motion.div>
+                  </Grid>
+
+                  <Grid item md={6} sm={12}>
+                    <div className={styles.sectionHeading}>
+                      <Typography variant="h2">
+                        {t('partners-header2')}
+                      </Typography>
+                    </div>
+                    <br></br>
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                        x: '100%',
+                        visibility: 'hidden',
+                      }}
+                      whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
+                      // animate={mainControls}
+                      transition={{ duration: 0.3, delay: 0.1 }}
+                      viewport={{ once: true }}
+                    >
+                      <div className={styles.partnersImg}>
+                        <img src={pclogo01.src} alt="Partner Logo" />
+                        <img src={pclogo02.src} alt="Partner Logo" />
+                        <img src={pclogo03.src} alt="Partner Logo" />
+                        <img src={pclogo04.src} alt="Partner Logo" />
+                        <img src={pclogo05.src} alt="Partner Logo" />
+                      </div>
+                    </motion.div>
+                  </Grid>
+                </Grid>
+              </Container>
+            </div>
+
+            {/* Partners Section End */}
+            <Footer />
+          </main>
+        </ThemeProvider>
+
+        {/* <motion.div
                     variants={{
                         hidden: { left: 0 },
                         visible: { left: "100%" },
@@ -874,8 +1023,7 @@ export default function Home() {
                         zIndex: 20,
                     }}
                 /> */}
-            </div>
-        </>
-    )
+      </div>
+    </>
+  );
 }
-

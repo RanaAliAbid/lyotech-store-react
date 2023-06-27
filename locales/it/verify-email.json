@@ -1,7 +1,7 @@
 {
-    "header1": "Email OTP Veirification",
-    "subHeader1": "Check your email inbox to get the email OTP code",
-    "not-received-code": "Did not received ?",
-    "resend-code-otp": "Resend new code",
-    "Submit-btn": "Submit"
+  "header1": "Email OTP Veirification",
+  "subHeader1": "Check your email inbox to get the email OTP code",
+  "not-received-code": "Did not received ?",
+  "resend-code-otp": "Resend new code",
+  "Submit-btn": "Submit"
 }
