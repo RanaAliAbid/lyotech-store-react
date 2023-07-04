@@ -32,6 +32,6 @@ export const ironOptions = {
     process.env.COOKIE_PASSWORD ?? '$zJW?QM,WT#a5PF2z_^Sv(UvHVcD(w8P4?.',
   // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
   cookieOptions: {
-    secure: true,
+    secure: ["sandbox", "dev"].includes(process.env.ENV_TYPE ?? "") ? false : true,
   },
 };

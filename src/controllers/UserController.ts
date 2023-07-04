@@ -1,21 +1,8 @@
 import { ApiData, ApiError } from '@/pages/api/types';
-import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { API_HOST, API_KEY, ironOptions } from '../../app.config';
-import { AuthUser } from '@/contexts/auth.types';
-import jwt from 'jsonwebtoken';
+import { API_HOST } from '../../app.config';
+import { ApiService } from '@/services/api.service';
 
-export const getUserSession = async (
-  req: NextApiRequest,
-  res: NextApiResponse<AuthUser | ApiError>
-) => {
-  // try {
-  //     const user = req.session?.user ?? {id: 0, authToken: "", isAdmin: false}
-  //     res.status(200).json(user)
-  // } catch (error) {
-  //     res.status(400).json({ message: "An internal error occured.", status: false })
-  // }
-};
 
 export const signIn = async (
   req: NextApiRequest,
@@ -26,33 +13,17 @@ export const signIn = async (
   try {
     let data = req?.body;
 
-    const config = {
-      method: 'POST',
-      url: API_HOST + '/v1/user/login',
-      data: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-        'X-API-KEY': process.env.API_KEY
-      },
-    };
-    const result = await axios(config);
+    const result = await ApiService.PostRequest(API_HOST + '/v1/user/login', data);
 
-    if (result.status == 200) {
+    if (result && result.status == 200) {
       console.log(result.data.data);
 
-      if (result.data.code == 200) {
-        // const token = jwt.sign({test: "frank"}, ironOptions.password);
+      res.setHeader("Set-Cookie", [
+        `otpToken=${result?.data?.data?.otpVerificationToken}; HttpOnly; Max-Age=3600;`,
+        `token=${result?.data?.data?.token}; HttpOnly; Max-Age=3600;`,
+      ]);
 
-        res.status(200).json({
-          message: 'Sucessfull login',
-          status: true,
-          data: result?.data?.data,
-        });
-      } else {
-        res
-          .status(400)
-          .json({ message: result.data?.errors?.msg, status: false });
-      }
+      res.status(200).json(ApiService.ApiResponseSuccess(result?.data?.data, 'Sucessfull login. Please verify your email'));
     }
   } catch (error: any) {
     console.log('Catch error login ', error?.response?.data);
@@ -66,13 +37,7 @@ export const signIn = async (
         data: error?.response?.data?.errors?.data,
       });
     } else {
-      res.status(400).json({
-        message:
-          error?.response?.data?.msg ??
-          '' + ' ' + error?.response?.data?.errors?.msg ??
-          '',
-        status: false,
-      });
+      res.status(400).json(ApiService.ApiResponseError(error));
     }
   }
 };
@@ -85,36 +50,18 @@ export const signUp = async (
 
   try {
     let data = req?.body;
+    const result = await ApiService.PostRequest(API_HOST + '/v1/user/sign-up', data);
 
-    const config = {
-      method: 'POST',
-      url: API_HOST + '/v1/user/sign-up',
-      data: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-        // 'X-API-KEY': process.env.API_KEY
-      },
-    };
-    const result = await axios(config);
+    res.setHeader("Set-Cookie", [
+      `otpToken=${result?.data?.data?.otpVerificationToken}; HttpOnly; Max-Age=3600;`,
+      `token=${result?.data?.data?.token}; HttpOnly; Max-Age=3600;`,
+    ]);
 
-    if (result.status == 200) {
-      if (result.data?.code == 200) {
-        res.status(200).json({
-          message: 'Sucessfull register. Please verify your email',
-          status: true,
-          data: result?.data,
-        });
-      }
-    }
+    res.status(200).json(ApiService.ApiResponseSuccess(result?.data?.data, 'Sucessfull register. Please verify your email'));
+
   } catch (error: any) {
     console.log('Catch error register ', error);
-    res.status(400).json({
-      message:
-        error?.response?.data?.msg ??
-        '' + ' ' + error?.response?.data?.errors?.msg ??
-        '',
-      status: false,
-    });
+    res.status(400).json(ApiService.ApiResponseError(error));
   }
 };
 
@@ -127,77 +74,73 @@ export const verifyEmailOtp = async (
   try {
     let data = req?.body;
 
-    const config = {
-      method: 'POST',
-      url: API_HOST + '/v1/user/verify-user',
-      data: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${req.headers?.token}` ?? '',
-        // 'X-API-KEY': process.env.API_KEY
-      },
-    };
-    const result = await axios(config);
+    const result = await ApiService.PostRequest(API_HOST + '/v1/user/verify-user', data, `Bearer ${req.cookies?.otpToken}`);
 
-    if (result.status == 200) {
-      if (result.data?.code == 200) {
-        res.status(200).json({
-          message: 'Email verification completed',
-          status: true,
-          data: result?.data,
-        });
-      }
-    }
+    res.setHeader("set-Cookie", [
+      `userConnected=${"true"}; Max-Age=36000;`,
+      `authToken=${result?.data?.data?.accessToken}; HttpOnly; Max-Age=36000;`,
+      `refreshToken=${result?.data?.data?.refreshToken}; HttpOnly; Max-Age=36000;`,
+      `otpToken=deleted; HttpOnly; Max-Age=0;`,
+      `token=deleted; HttpOnly; Max-Age=0;`,
+    ]);
+
+    res.status(200).json(ApiService.ApiResponseSuccess({}, 'Email verification completed'));
+
   } catch (error: any) {
-    console.log('Catch error verify email otp ', error);
-    res.status(400).json({
-      message:
-        error?.response?.data?.msg ??
-        '' + ' ' + error?.response?.data?.errors?.msg ??
-        '',
-      status: false,
-    });
+    console.log('Catch error resend email otp ', error);
+    res.status(400).json(ApiService.ApiResponseError(error));
   }
 };
 
-export const checkUserToken = async (
+export const resendUserEmailOtp = async (
   req: NextApiRequest,
   res: NextApiResponse<ApiData | ApiError>
 ) => {
   res.setHeader('Allow', 'POST');
 
   try {
-    let data = req.body;
+    let data = req?.body;
 
-    const config = {
-      method: 'POST',
-      url: API_HOST + '/v1/user/auth',
-      data: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-        'X-API-KEY': API_KEY,
-      },
-    };
-    const result = await axios(config);
+    const result = await ApiService.PostRequest(API_HOST + '/v1/user/resend-otp', data, `Bearer ${req.cookies?.otpToken}`);
 
-    if (result.status == 200) {
-      if (result.data?.code == 200) {
-        res.status(200).json({
-          message: 'User token verified',
-          status: true,
-          data: result?.data,
-        });
-      }
+    res.status(200).json(ApiService.ApiResponseSuccess(result?.data, 'Email OTP sended'));
+
+  } catch (error: any) {
+    console.log('Catch error verify email otp ', error);
+    res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};
+
+export const validateUserToken = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  res.setHeader('Allow', 'GET');
+
+  try {
+    const result = await ApiService.GetRequest(API_HOST + '/v1/user/validate-token', `Bearer ${req.cookies?.authToken}`);
+
+    const token = result?.data?.data?.accessToken;
+
+    let tokeExpiredTime = 0;
+    let userId = result?.data?.data?._id;
+
+    let timePart = token?.split(".");
+    if (timePart && timePart[1]) {
+      const decodedToken = JSON.parse(atob(timePart[1]));
+      tokeExpiredTime = decodedToken.exp;
     }
+
+    res.status(200).json(ApiService.ApiResponseSuccess({
+      exp: tokeExpiredTime,
+      id: userId,
+      email: result?.data?.data?.email,
+      name: result?.data?.data?.name
+    }, 'User verified'));
+
   } catch (error: any) {
     console.log('Catch error auth login ', error);
-    res.status(400).json({
-      message:
-        error?.response?.data?.msg ??
-        '' + ' ' + error?.response?.data?.errors?.msg ??
-        '',
-      status: false,
-    });
+    res.status(400).json(ApiService.ApiResponseError(error));
   }
 };
 
@@ -210,35 +153,13 @@ export const forgotPassword = async (
   try {
     let data = req.body;
 
-    const config = {
-      method: 'POST',
-      url: API_HOST + '/v1/user/forgot-password',
-      data: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-        'X-API-KEY': API_KEY,
-      },
-    };
-    const result = await axios(config);
+    const result = await ApiService.PostRequest(API_HOST + '/v1/user/forgot-password', data);
 
-    if (result.status == 200) {
-      if (result.data?.code == 200) {
-        res.status(200).json({
-          message: 'Please check your email inbox to get the OTP code',
-          status: true,
-          data: result?.data,
-        });
-      }
-    }
+    res.status(200).json(ApiService.ApiResponseSuccess(result?.data, 'Please check your email inbox to get the OTP code'));
+
   } catch (error: any) {
     console.log('Catch error forget password ', error?.response?.data);
-    res.status(400).json({
-      message:
-        error?.response?.data?.msg ??
-        '' + ' ' + error?.response?.data?.errors?.msg ??
-        '',
-      status: false,
-    });
+    res.status(400).json(ApiService.ApiResponseError(error));
   }
 };
 
@@ -251,34 +172,29 @@ export const changePassword = async (
   try {
     let data = req.body;
 
-    const config = {
-      method: 'POST',
-      url: API_HOST + '/v1/user/create-password',
-      data: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-        'X-API-KEY': API_KEY,
-      },
-    };
-    const result = await axios(config);
+    const result = await ApiService.PostRequest(API_HOST + '/v1/user/create-password', data);
 
-    if (result.status == 200) {
-      if (result.data?.code == 200) {
-        res.status(200).json({
-          message: 'Your password has been updated! Try to login now',
-          status: true,
-          data: result?.data,
-        });
-      }
-    }
+    res.status(200).json(ApiService.ApiResponseSuccess(result?.data, 'Your password has been updated! Try to login now'));
+
   } catch (error: any) {
     console.log('Catch error change password ', error);
-    res.status(400).json({
-      message:
-        error?.response?.data?.msg ??
-        '' + ' ' + error?.response?.data?.errors?.msg ??
-        '',
-      status: false,
-    });
+    res.status(400).json(ApiService.ApiResponseError(error));
   }
 };
+
+export const logoutUser = (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  try {
+    res.setHeader("set-Cookie", [
+      `userConnected=${"false"}; Max-Age=0;`,
+      `authToken=deleted; HttpOnly; Max-Age=0;`,
+      `refreshToken=deleted; HttpOnly; Max-Age=0;`
+    ]);
+    res.status(200).json(ApiService.ApiResponseSuccess({}, 'Session has been deleted'));
+  } catch (error) {
+    console.log('Catch error logout ', error);
+    res.status(400).json(ApiService.ApiResponseError(error));
+  }
+}

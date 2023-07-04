@@ -75,9 +75,29 @@ const PutRequest = (url: string, data: any, authToken?: string) => {
   }
 };
 
+const ApiResponseError = (error: any) => {
+  return {
+    message:
+      error?.response?.data?.msg ??
+      '' + ' ' + error?.response?.data?.errors?.msg ??
+      '',
+    status: false,
+  };
+}
+
+const ApiResponseSuccess = (result:any, msg?: string) => {
+  return {
+    message: msg ?? 'Sucess',
+    status: true,
+    data: result,
+  };
+}
+
 export const ApiService = {
   GetRequest,
   PostRequest,
   PutRequest,
   DeleteRequest,
+  ApiResponseError,
+  ApiResponseSuccess
 };

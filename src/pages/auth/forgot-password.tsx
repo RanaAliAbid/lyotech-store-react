@@ -52,15 +52,13 @@ export default function ForgotPassword() {
       if (result?.status == 200) {
         console.log(result.data);
 
-        if (result?.data?.data?.userVerified == false) {
+        if (result?.data?.data?.data?.jwtToken) {
           router.push(
-            `/${locale}/auth/verify-email?token=${
-              result?.data?.data?.accessToken
+            `/${locale}/auth/verify-email?token=${result?.data?.data?.data?.token
             }&reset-password=true&key=${window.btoa(
-              result?.data?.data?.jwtToken
+              result?.data?.data?.data?.jwtToken
             )}`
           );
-          return;
         }
       }
     } catch (error: any) {
@@ -81,7 +79,7 @@ export default function ForgotPassword() {
 
       <ThemeProvider theme={theme}>
         <main className={`${styles['main']} ${styles['loginBG']}`}>
-          <Header title={t('header1')} />
+          <Header title={"Forgot Password"} />
           <div className={styles.loginBoxCenter}>
             <Container className={styles.containerBox}>
               <Grid container justifyContent="center" spacing={3}>

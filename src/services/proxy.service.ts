@@ -5,9 +5,10 @@ const GetRequest = (url: string, token?: string) => {
     const config = {
       method: 'GET',
       url: url,
+      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
-        token: token,
+        // token: token,
       },
     };
 
@@ -23,9 +24,10 @@ const PostRequest = (url: string, data: any, token?: string) => {
       method: 'POST',
       url: url,
       data: JSON.stringify(data),
+      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
-        token: token,
+        // token: token,
       },
     };
 
@@ -39,10 +41,11 @@ const DeleteRequest = (url: string, token?: string) => {
   try {
     const config = {
       method: 'DELETE',
+      withCredentials: true,
       url: url,
       headers: {
         'Content-Type': 'application/json',
-        token: token,
+        // token: token,
       },
     };
 
@@ -58,9 +61,10 @@ const PutRequest = (url: string, data: any, token?: string) => {
       method: 'PUT',
       url: url,
       data: JSON.stringify(data),
+      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
-        token: token,
+        // token: token,
       },
     };
 

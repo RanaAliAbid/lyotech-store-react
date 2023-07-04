@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {
   ForgotPasswordData,
   PartnerLinkData,
@@ -60,6 +59,22 @@ export const validateUserEmailOtp = async (
   }
 };
 
+export const resendUserEmailOtp = async (
+  token: string,
+  keyToken: string
+) => {
+  try {
+    const params = { token: token };
+    return ProxyService.PostRequest(
+      PROXY_HOST + '/api/v1/auth/resend-email-otp',
+      params,
+      keyToken
+    );
+  } catch (error) {
+    return null;
+  }
+};
+
 export const fogotPasswordUser = async (params: ForgotPasswordData) => {
   try {
     return ProxyService.PostRequest(
@@ -77,6 +92,14 @@ export const changePasswordUser = async (params: ForgotPasswordData) => {
       PROXY_HOST + '/api/v1/auth/change-password',
       params
     );
+  } catch (error) {
+    return null;
+  }
+};
+
+export const signOutUser = async () => {
+  try {
+    return ProxyService.GetRequest(PROXY_HOST + '/api/v1/auth/logout');
   } catch (error) {
     return null;
   }
