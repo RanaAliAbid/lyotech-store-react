@@ -1,12 +1,13 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import {
-  checkUserToken,
+  logoutUser,
+  validateUserToken,
   signIn,
-  getUserSession,
   forgotPassword,
   signUp,
   verifyEmailOtp,
   changePassword,
+  resendUserEmailOtp,
 } from '@/controllers/UserController';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ApiData, ApiError } from '../../types';
@@ -20,34 +21,30 @@ export default async function handler(
 
   switch (method) {
     case 'signin':
-      signIn(req, res);
-      break;
+      return signIn(req, res);
 
     case 'signup':
-      signUp(req, res);
-      break;
+      return signUp(req, res);
 
-    case 'user-session':
-      getUserSession(req, res);
-      break;
+    case 'logout':
+      return logoutUser(req, res);
 
     case 'checktoken':
-      checkUserToken(req, res);
-      break;
+      return validateUserToken(req, res);
 
     case 'verify-email-otp':
-      verifyEmailOtp(req, res);
-      break;
+      return verifyEmailOtp(req, res);
+
+    case 'resend-email-otp':
+      return resendUserEmailOtp(req, res);
 
     case 'forgot-password':
-      forgotPassword(req, res);
-      break;
+      return forgotPassword(req, res);
 
     case 'change-password':
-      changePassword(req, res);
-      break;
+      return changePassword(req, res);
 
     default:
-      res.status(400).json({ status: false, message: 'Unauthorized Request' });
+      return res.status(400).json({ status: false, message: 'Unauthorized Request' });
   }
 }

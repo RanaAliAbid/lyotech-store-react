@@ -332,7 +332,7 @@
 
 .myAccountMenu > div,
 .myCartMenu > div {
-  border: 1px solid #ededed;
+  /* border: 1px solid #ededed; */
   box-shadow: 0px 1px 6px rgba(133, 133, 133, 0.25);
 }
 .myAccountMenu ul {

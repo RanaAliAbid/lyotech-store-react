@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Head from 'next/head';
 import Header from '../../common/header';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -9,7 +8,6 @@ import Input from '@mui/material/Input';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
 import Email from '../../img/emailIcon.svg';
 import Password from '../../img/passwordIcon.svg';
 import styles from '@/styles/Home.module.css';
@@ -19,6 +17,7 @@ const workSans = Work_Sans({ subsets: ['latin'] });
 
 import {
   Alert,
+  AlertColor,
   Backdrop,
   CircularProgress,
   createTheme,
@@ -30,10 +29,12 @@ import { SignInData, SignInDataValidator } from '@/services/auth/auth.types';
 import { signInUser } from '@/services/auth/auth.service';
 import {
   signInCheckEmptyFields,
-  validatePassword,
 } from '@/validators/auth.validator';
 import useTranslation from 'next-translate/useTranslation';
-import { RampInstantSDK } from '@ramp-network/ramp-instant-sdk';
+import Cookies from 'js-cookie';
+import { ironOptions } from '../../../app.config';
+import { FaEyeSlash, FaEye } from "react-icons/fa";
+import Head from 'next/head';
 
 export default function SignIn() {
   const theme = createTheme({
@@ -49,6 +50,8 @@ export default function SignIn() {
   const [validator, setValidator] = React.useState<SignInDataValidator>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [reReqresponse, setReqResponse] = React.useState<string>('');
+  const [alertColor, setAlertColor] = React.useState<AlertColor>('error');
+  const [passwordVisible, setPasswordVisible] = React.useState<boolean>(true);
 
   const proceedSignIn = async (e: any) => {
     e.preventDefault();
@@ -73,26 +76,20 @@ export default function SignIn() {
         password: postData[1].value,
       });
       if (result?.status == 200) {
+
+        setAlertColor("success")
         setReqResponse(result?.data?.message);
 
-        if (result?.data?.data?.userVerified == false) {
+        if (result?.data?.data?.otpVerificationToken) {
           router.push(
-            `/${locale}/auth/verify-email?token=${
-              result?.data?.data?.token
+            `/${locale}/auth/verify-email?token=${result?.data?.data?.token
             }&key=${window.btoa(result?.data?.data?.otpVerificationToken)}`
           );
           return;
         }
-        console.log(result?.data?.data?.otpVerificationToken);
-        
-        router.push(
-          `/${locale}/auth/verify-email?token=${
-            result?.data?.data?.token
-          }&key=${window.btoa(result?.data?.data?.otpVerificationToken)}`
-        );
-        return;
       }
     } catch (error: any) {
+      setAlertColor("error");
       setReqResponse(error?.response?.data?.message);
     }
 
@@ -110,7 +107,8 @@ export default function SignIn() {
 
       <ThemeProvider theme={theme}>
         <main className={`${styles['main']} ${styles['loginBG']}`}>
-          <Header title={t('header1')} />
+          <Header title={"Sign In"} />
+
           <div className={styles.loginBoxCenter}>
             <Container className={styles.containerBox}>
               <Grid container justifyContent="center" spacing={3}>
@@ -140,7 +138,7 @@ export default function SignIn() {
                         <Alert severity="error">{t('email-error')}</Alert>
                       )}
 
-                      <div className={styles.formControl}>
+                      <div className={`${styles.formControl} position-relative`}>
                         <label className={styles.formLabel}>
                           {' '}
                           {t('password')} <span className="text-danger">*</span>{' '}
@@ -150,10 +148,15 @@ export default function SignIn() {
                           onKeyDown={(e) =>
                             setValidator({ email: true, password: true })
                           }
-                          type="password"
+                          type={`${(!passwordVisible) ? "text" : "password"}`}
                           className={styles.formInput}
                           placeholder={t('password')}
                         />
+                        <span className='passwordEye' onClick={(e) => setPasswordVisible(!passwordVisible)}>
+                          {
+                            (!passwordVisible) ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>
+                          }
+                        </span>
                       </div>
                       {validator && !validator.password && (
                         <Alert severity="error">
@@ -177,7 +180,7 @@ export default function SignIn() {
                       </div>
 
                       {reReqresponse && reReqresponse != '' && (
-                        <Alert severity="error">{reReqresponse}</Alert>
+                        <Alert severity={alertColor}>{reReqresponse}</Alert>
                       )}
 
                       <Button

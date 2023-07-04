@@ -9,6 +9,7 @@ import styles from '@/styles/Home.module.css';
 
 import {
   Alert,
+  AlertColor,
   Backdrop,
   CircularProgress,
   createTheme,
@@ -17,12 +18,16 @@ import {
 import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation';
 import OtpInput from 'react-otp-input';
-import { validateUserEmailOtp } from '@/services/auth/auth.service';
+import { resendUserEmailOtp, validateUserEmailOtp } from '@/services/auth/auth.service';
+import Cookies from 'js-cookie';
+import { useAuthContext } from '@/contexts/AuthContext';
 
 export default function VerifyEmailOtp({
+  email,
   token,
   key,
 }: {
+  email?: string
   token: string;
   key: string;
 }) {
@@ -38,9 +43,11 @@ export default function VerifyEmailOtp({
   const { locale } = router;
   const [loading, setLoading] = React.useState<boolean>(false);
   const [reReqresponse, setReqResponse] = React.useState<string>('');
+  const [alertColor, setAlertColor] = React.useState<AlertColor>('error');
   const [otp, setOtp] = React.useState<string>('');
   const [otpToken, setOtpToken] = React.useState<string>(token);
   const [keyToken, setKeyToken] = React.useState<string>(key);
+  const authContext = useAuthContext();
 
   React.useEffect(() => {
     try {
@@ -69,13 +76,23 @@ export default function VerifyEmailOtp({
 
       if (result?.status == 200) {
         setReqResponse(result?.data?.message);
-        // setTimeout(() => {
+        setAlertColor("success")
+        authContext.login();
+
+        // res.setHeader("Set-Cookie", [
+        //   `userConnected=${"true"}; Max-Age=36000;`,
+        //   `authToken=${result?.data?.data?.accessToken}; HttpOnly; Max-Age=36000;`,
+        //   `refreshToken=${result?.data?.data?.refreshToken}; HttpOnly; Max-Age=36000;`,
+        //   `otpToken=deleted; HttpOnly; Max-Age=0;`,
+        //   `token=deleted; HttpOnly; Max-Age=0;`,
+        // ]);
+
         router.push(`/${locale}`);
-        // }, 200);
       } else {
         setReqResponse(result?.data?.message);
       }
     } catch (error: any) {
+      setAlertColor("error")
       setReqResponse(error?.response?.data?.message);
     }
 
@@ -88,13 +105,38 @@ export default function VerifyEmailOtp({
     }
   }, [otp]);
 
-  const proceedSubmitResendOtp = () => {};
+  const proceedSubmitResendOtp = async () => {
+    try {
+      setReqResponse('');
+
+      setLoading(true);
+      const result = await resendUserEmailOtp("", "");
+
+      if (result?.status == 200) {
+        console.log(result.data);
+
+        if (result?.data?.data?.data?.jwtToken) {
+          router.push(
+            `/${locale}/auth/verify-email?token=${result?.data?.data?.data?.token
+            }&reset-password=true&key=${window.btoa(
+              result?.data?.data?.data?.jwtToken
+            )}`
+          );
+        }
+      }
+    } catch (error: any) {
+      setReqResponse(error?.response?.data?.message);
+    }
+
+    setLoading(false);
+  };
 
   return (
     <>
       <Head>
         <title>Verify Email OTP</title>
       </Head>
+
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 5 }}
         open={loading}
@@ -104,7 +146,7 @@ export default function VerifyEmailOtp({
 
       <ThemeProvider theme={theme}>
         <main className={`${styles['main']} ${styles['loginBG']}`}>
-          <Header title={t('header1')} />
+          <Header title={"Verify Email OTP"} />
           <div className={styles.loginBoxCenter}>
             <Container className={styles.containerBox}>
               <Grid container justifyContent="center" spacing={3}>
@@ -152,7 +194,7 @@ export default function VerifyEmailOtp({
                         {t('Submit-btn')}
                       </Button>
                       {reReqresponse && reReqresponse != '' && (
-                        <Alert severity="error" className="mb-3">
+                        <Alert severity={alertColor} className="mb-3">
                           {reReqresponse}
                         </Alert>
                       )}

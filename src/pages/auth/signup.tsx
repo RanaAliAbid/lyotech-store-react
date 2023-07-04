@@ -17,6 +17,7 @@ const workSans = Work_Sans({ subsets: ['latin'] });
 
 import {
   Alert,
+  AlertColor,
   Backdrop,
   CircularProgress,
   createTheme,
@@ -32,6 +33,7 @@ import {
   validatePassword,
 } from '@/validators/auth.validator';
 import useTranslation from 'next-translate/useTranslation';
+import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 export default function CreateAccount() {
   const theme = createTheme({
@@ -47,6 +49,8 @@ export default function CreateAccount() {
   const [validator, setValidator] = React.useState<SignUpDataValidator>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [reReqresponse, setReqResponse] = React.useState<string>('');
+  const [alertColor, setAlertColor] = React.useState<AlertColor>('error');
+  const [passwordVisible, setPasswordVisible] = React.useState<boolean>(true);
 
   const proceedSignUp = async (e: any) => {
     e.preventDefault();
@@ -78,12 +82,12 @@ export default function CreateAccount() {
 
       if (result?.status == 200) {
         setReqResponse(result?.data?.message);
+        setAlertColor("success")
 
-        if (result?.data?.data?.userVerified == false) {
+        if (result?.data?.data?.otpVerificationToken) {
           router.push(
-            `/${locale}/auth/verify-email?token=${
-              result?.data?.data?.accessToken
-            }&key=${window.btoa(result?.data?.data?.jwtToken)}`
+            `/${locale}/auth/verify-email?token=${result?.data?.data?.token
+            }&key=${window.btoa(result?.data?.data?.otpVerificationToken)}`
           );
           return;
         }
@@ -91,6 +95,7 @@ export default function CreateAccount() {
         setReqResponse(result?.data?.message);
       }
     } catch (error: any) {
+      setAlertColor("error")
       setReqResponse(error?.response?.data?.message);
     }
 
@@ -108,7 +113,7 @@ export default function CreateAccount() {
 
       <ThemeProvider theme={theme}>
         <main className={`${styles['main']} ${styles['loginBG']}`}>
-          <Header title={t('header1')} />
+          <Header title={"Sign Up"} />
           <div className={styles.loginBoxCenter}>
             <Container className={styles.containerBox}>
               <Grid container justifyContent="center" spacing={3}>
@@ -181,10 +186,15 @@ export default function CreateAccount() {
                         </label>
                         <Password className={styles.formIcon} />
                         <Input
-                          type="password"
+                          type={`${(!passwordVisible) ? "text" : "password"}`}
                           className={styles.formInput}
                           placeholder={t('password')}
                         />
+                        <span className='passwordEye' onClick={(e) => setPasswordVisible(!passwordVisible)}>
+                          {
+                            (!passwordVisible) ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>
+                          }
+                        </span>
                       </div>
                       {validator && !validator.password && (
                         <Alert severity="error">
@@ -202,10 +212,15 @@ export default function CreateAccount() {
                         </label>
                         <Password className={styles.formIcon} />
                         <Input
-                          type="password"
+                          type={`${(!passwordVisible) ? "text" : "password"}`}
                           className={styles.formInput}
                           placeholder={t('confirm-password')}
                         />
+                        <span className='passwordEye' onClick={(e) => setPasswordVisible(!passwordVisible)}>
+                          {
+                            (!passwordVisible) ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>
+                          }
+                        </span>
                       </div>
                       {validator && !validator.password_confirm && (
                         <Alert severity="error">
@@ -214,7 +229,7 @@ export default function CreateAccount() {
                       )}
 
                       {reReqresponse && reReqresponse != '' && (
-                        <Alert severity="error">{reReqresponse}</Alert>
+                        <Alert severity={alertColor}>{reReqresponse}</Alert>
                       )}
 
                       <Button

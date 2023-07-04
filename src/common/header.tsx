@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Menu from '@mui/material/Menu';
-import Button from '@mui/material/Button';
+import Button from '@mui/material/Button'; ``
 import MenuItem from '@mui/material/MenuItem';
 // import Link from '@mui/material/Link';
 import CloseIcon from '@mui/icons-material/Close';
@@ -38,6 +38,13 @@ import { useGlobalContext } from '../contexts/GlobalContext';
 import useTranslation from 'next-translate/useTranslation';
 
 import styles from '@/styles/Home.module.css';
+import { FaSignOutAlt } from 'react-icons/fa';
+import { signOutUser } from '@/services/auth/auth.service';
+
+import {
+  CircularProgress,
+  Backdrop
+} from '@mui/material';
 
 export default function Header({ title = 'Home' }: { title: string }) {
   const router = useRouter();
@@ -47,18 +54,20 @@ export default function Header({ title = 'Home' }: { title: string }) {
 
   const { t } = useTranslation('common');
 
-  const { locale, locales, defaultLocale } = router;
+  const { locale } = router;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const accountOpen = Boolean(anchorEl);
+  const [loading, setLoading] = React.useState(false);
 
   const handleAccountClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (authContext.userData.id == 0 || authContext.userData.authToken == '') {
+    if (!authContext.userConnected) {
       router.push(`/${locale}/auth/signin`);
       return;
     }
     setAnchorEl(event.currentTarget);
   };
+
   const handleAccountClose = () => {
     setAnchorEl(null);
   };
@@ -95,6 +104,20 @@ export default function Header({ title = 'Home' }: { title: string }) {
     setAnchorLang(null);
   };
 
+  const handleLogout = async (e: any) => {
+    try {
+      setLoading(true);
+      const result = await signOutUser();
+      if (result?.status == 200) {
+        authContext.logout();
+        // router.push(`/${locale}`);
+      }
+      setLoading(false);
+    } catch (error: any) {
+      setLoading(false);
+    }
+  }
+
   React.useEffect(() => {
     globalContext.updateLocale(locale);
   }, [locale]);
@@ -107,38 +130,40 @@ export default function Header({ title = 'Home' }: { title: string }) {
   return (
     <>
       <Head>
-        <title>LYOTECH Labs || {title}</title>
+        <title>{`LYOTECH Labs || ${title ?? 'Home'}`}</title>
         <meta name="description" content={siteDescription} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        />
-        <meta charSet="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <link rel="shortcut icon" href="/logo.png" type="image/png" />
         <meta name="description" content={siteDescription} />
         <meta property="og:image" content={bannerProduct.src} />
         <meta property="og:image:secure_url" content={bannerProduct.src} />
         <meta
-          name="keywords"
-          content="LYOTECH LABS, Phone, SmartPhone, Tablet, VPS, Cloud, Hardware"
-        />
-        <meta
           property="og:title"
           content={`LYOTECH Labs || ${title ?? 'Home'}`}
         />
-        <meta property="og:site_name" content="LYOTECH LABS" />
-        <meta property="og:url" content="https://lyotechlabs.com" />
         <meta property="og:description" content={siteDescription} />
         <meta
           name="twitter:title"
           content={`LYOTECH Labs || ${title ?? 'Home'}`}
         />
-        <meta name="twitter:site" content="LYOTECH LABS" />
         <meta name="twitter:description" content={siteDescription} />
         <meta name="twitter:image" content={bannerProduct.src} />
+        <meta
+          name="keywords"
+          content="LYOTECH LABS, Phone, SmartPhone, Tablet, VPS, Cloud, Hardware"
+        />
+        <meta property="og:site_name" content="LYOTECH LABS" />
+        <meta name="twitter:site" content="LYOTECH LABS" />
+        <meta property="og:url" content="https://lyotechlabs.com" />
+        <meta charSet="UTF-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 5 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
 
       <AppBar position="static" className={styles.header}>
         <Container maxWidth="lg">
@@ -171,7 +196,7 @@ export default function Header({ title = 'Home' }: { title: string }) {
                 className={styles.myAccount}
               >
                 <AccountIcon />
-                {t('MyAccount')}
+                {(authContext.connectedUserName.length > 0) ? authContext.connectedUserName : t('MyAccount')}
               </Button>
               <Menu
                 id="basic-menu"
@@ -229,6 +254,15 @@ export default function Header({ title = 'Home' }: { title: string }) {
                     {' '}
                     <>
                       <PreferencesIcon /> {t('Preferences')}
+                    </>{' '}
+                  </Link>
+                </MenuItem>
+
+                <MenuItem onClick={(e) => { handleAccountClose(); handleLogout(e) }}>
+                  <Link href={`#`}>
+                    {' '}
+                    <>
+                      &nbsp;<FaSignOutAlt></FaSignOutAlt>&nbsp; {t('Logout')}
                     </>{' '}
                   </Link>
                 </MenuItem>
@@ -375,7 +409,7 @@ export default function Header({ title = 'Home' }: { title: string }) {
             </div>
           </Toolbar>
         </Container>
-      </AppBar>
+      </AppBar >
     </>
   );
 }

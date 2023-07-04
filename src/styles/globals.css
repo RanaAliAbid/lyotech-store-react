@@ -19,6 +19,7 @@
 }
 
 body {
+  overflow-x: hidden;
   color: var(--black200);
 }
 
@@ -95,4 +96,15 @@ body > div,
 
 .input-otp-code input {
   margin: auto !important;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.passwordEye {
+  position: absolute;
+  top: 42px;
+  right: 15px;
+  cursor: pointer;
 }

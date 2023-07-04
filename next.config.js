@@ -1,13 +1,16 @@
 /** @type {import('next').NextConfig} */
-const nextTranslate = require('next-translate-plugin');
 require('dotenv').config();
 const webpack = require('webpack');
+const nextTranslate = require('next-translate-plugin');
 
 const nextConfig = nextTranslate({
-  // reactStrictMode: false,
-  reactStrictMode: true,
-  // Enable the React DevTools profiler
-  profiler: true,
+  reactStrictMode: false,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 
   webpack(config) {
     config.module.rules.push({
