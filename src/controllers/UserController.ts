@@ -3,7 +3,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { API_HOST } from '../../app.config';
 import { ApiService } from '@/services/api.service';
 
-
 export const signIn = async (
   req: NextApiRequest,
   res: NextApiResponse<ApiData | ApiError>
@@ -60,7 +59,7 @@ export const signUp = async (
     res.status(200).json(ApiService.ApiResponseSuccess(result?.data?.data, 'Sucessfull register. Please verify your email'));
 
   } catch (error: any) {
-    console.log('Catch error register ', error);
+    console.log('Catch error register ', error?.response?.data);
     res.status(400).json(ApiService.ApiResponseError(error));
   }
 };
@@ -76,10 +75,11 @@ export const verifyEmailOtp = async (
 
     const result = await ApiService.PostRequest(API_HOST + '/v1/user/verify-user', data, `Bearer ${req.cookies?.otpToken}`);
 
+    console.log("🚀 ~ file: UserController.ts:79 ~ result:", result?.data?.data)
     res.setHeader("set-Cookie", [
-      `userConnected=${"true"}; Max-Age=36000;`,
-      `authToken=${result?.data?.data?.accessToken}; HttpOnly; Max-Age=36000;`,
-      `refreshToken=${result?.data?.data?.refreshToken}; HttpOnly; Max-Age=36000;`,
+      `userConnected=${"true"}; Max-Age=36000; path: '/';`,
+      `authToken=${result?.data?.data?.accessToken}; HttpOnly; Max-Age=36000; path: '/';`,
+      `refreshToken=${result?.data?.data?.refreshToken}; HttpOnly; Max-Age=36000; path: '/';`,
       `otpToken=deleted; HttpOnly; Max-Age=0;`,
       `token=deleted; HttpOnly; Max-Age=0;`,
     ]);
@@ -87,7 +87,7 @@ export const verifyEmailOtp = async (
     res.status(200).json(ApiService.ApiResponseSuccess({}, 'Email verification completed'));
 
   } catch (error: any) {
-    console.log('Catch error resend email otp ', error);
+    console.log('Catch error resend email otp ', error?.response?.data);
     res.status(400).json(ApiService.ApiResponseError(error));
   }
 };
@@ -106,7 +106,7 @@ export const resendUserEmailOtp = async (
     res.status(200).json(ApiService.ApiResponseSuccess(result?.data, 'Email OTP sended'));
 
   } catch (error: any) {
-    console.log('Catch error verify email otp ', error);
+    console.log('Catch error verify email otp ', error?.response?.data);
     res.status(400).json(ApiService.ApiResponseError(error));
   }
 };
@@ -119,7 +119,6 @@ export const validateUserToken = async (
 
   try {
     const result = await ApiService.GetRequest(API_HOST + '/v1/user/validate-token', `Bearer ${req.cookies?.authToken}`);
-
     const token = result?.data?.data?.accessToken;
 
     let tokeExpiredTime = 0;
@@ -134,12 +133,18 @@ export const validateUserToken = async (
     res.status(200).json(ApiService.ApiResponseSuccess({
       exp: tokeExpiredTime,
       id: userId,
-      email: result?.data?.data?.email,
-      name: result?.data?.data?.name
+      email: result?.data?.data?.user?.email,
+      name: result?.data?.data?.user?.name ?? `${result?.data?.data?.user?.firstName} ${result?.data?.data?.user?.lastName}`,
+      user: result?.data?.data?.user
     }, 'User verified'));
 
   } catch (error: any) {
-    console.log('Catch error auth login ', error);
+    
+    res.setHeader("set-Cookie", [
+      `userConnected=${"false"}; Max-Age=0;`,
+      `authToken=deleted; HttpOnly; Max-Age=0;`,
+      `refreshToken=deleted; HttpOnly; Max-Age=0;`
+    ]);
     res.status(400).json(ApiService.ApiResponseError(error));
   }
 };
@@ -177,7 +182,7 @@ export const changePassword = async (
     res.status(200).json(ApiService.ApiResponseSuccess(result?.data, 'Your password has been updated! Try to login now'));
 
   } catch (error: any) {
-    console.log('Catch error change password ', error);
+    console.log('Catch error change password ', error?.response?.data);
     res.status(400).json(ApiService.ApiResponseError(error));
   }
 };
@@ -198,3 +203,41 @@ export const logoutUser = (
     res.status(400).json(ApiService.ApiResponseError(error));
   }
 }
+
+export const updateProfile = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  res.setHeader('Allow', 'POST');
+
+  try {
+    let data = req.body;
+
+    const result = await ApiService.PutRequest(API_HOST + '/v1/user/update-profile', data, `Bearer ${req.cookies?.authToken}`);
+
+    res.status(200).json(ApiService.ApiResponseSuccess(result?.data, 'User profile has been updated'));
+
+  } catch (error: any) {
+    console.log('Catch error update profile ', error?.response?.data);
+    res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};
+
+export const sendEmailOTP = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  res.setHeader('Allow', 'POST');
+
+  try {
+    let data = req.body;
+
+    const result = await ApiService.PostRequest(API_HOST + '/v1/user/email-otp', data, `Bearer ${req.cookies?.authToken}`);
+
+    res.status(200).json(ApiService.ApiResponseSuccess(result?.data, 'OTP sended successfully'));
+
+  } catch (error: any) {
+    console.log('Catch error email otp send', error?.response?.data);
+    res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};

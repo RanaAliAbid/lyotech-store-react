@@ -23,10 +23,14 @@ import { useRouter } from 'next/router';
 import { ProfileDataValidator } from '@/services/profile/profile.types';
 import { validatePassword } from '@/validators/auth.validator';
 import { updateUserProfile } from '@/services/profile/profile.service';
+import { appLanguages, countryCodeByCountryName, formatCountryCode, phoneNumberLenght, sortCountries } from '@/utils/app.utils';
+import { useGlobalContext } from '@/contexts/GlobalContext';
+import { useAuthContext } from '@/contexts/AuthContext';
+import countries from '../../../data/countries.json';
 
 export default function Profile() {
   const router = useRouter();
-  const { locale, locales, defaultLocale } = router;
+  const { locale } = router;
 
   const { t } = useTranslation('profile');
 
@@ -36,27 +40,25 @@ export default function Profile() {
     },
   });
 
-  const currencies = [
-    {
-      value: 'en',
-      label: 'English',
-    },
-    {
-      value: 'it',
-      label: 'Italian',
-    },
-    // {
-    //   value: 'fr',
-    //   label: 'French',
-    // },
-    // {
-    //   value: 'es',
-    //   label: 'Spanish',
-    // },
-  ];
-
+  const languages = appLanguages;
   const [validator, setValidator] = React.useState<ProfileDataValidator>();
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const [countryCode, setCountryCode] = React.useState<string>("+971");
+  const [phoneLength, setPhoneLength] = React.useState<number>(9);
+
+  const [firstname, setFirstname] = React.useState<string>("");
+  const [lastname, setLastname] = React.useState<string>("");
+  const [phone, setPhone] = React.useState<string>("");
+  const [email, setEmail] = React.useState<string>("");
+
+  const authContext = useAuthContext();
+  const globalContext = useGlobalContext();
+
+  React.useEffect(() => {
+    setFirstname(authContext.connectedUser?.firstName)
+    setLastname(authContext.connectedUser?.lastName)
+    setPhone(authContext.connectedUser?.mobileNumber ?? 0)
+    setEmail(authContext.connectedUser?.email)
+  }, [authContext.connectedUser])
 
   const proceedUpdateProfile = async (e: any) => {
     e.preventDefault();
@@ -64,55 +66,80 @@ export default function Profile() {
     const postData = e.target;
     const dataValidate: ProfileDataValidator = {
       email: true,
-      firstname: true,
-      lastname: true,
-      phone: true,
-      oldpassword: true,
-      newpassword: true,
+      firstName: true,
+      countryCode: true,
+      lastName: true,
+      mobileNumber: true,
+      prefferredLanguage: true,
+      oldPassword: true,
+      newPassword: true,
       confirm_password: true,
     };
-    dataValidate.firstname = postData[0].value == '' ? false : true;
-    dataValidate.lastname = postData[1].value == '' ? false : true;
+    dataValidate.firstName = postData[0].value == '' ? false : true;
+    dataValidate.lastName = postData[1].value == '' ? false : true;
     dataValidate.email = postData[2].value == '' ? false : true;
-    dataValidate.phone = postData[3].value == '' ? false : true;
-    dataValidate.oldpassword = postData[6].value == '' ? false : true;
-    dataValidate.oldpassword = !validatePassword(postData[6].value)
+    dataValidate.mobileNumber = postData[5].value == '' ? false : true;
+    dataValidate.oldPassword = postData[8].value == '' ? false : true;
+    dataValidate.oldPassword = !validatePassword(postData[8].value)
       ? false
       : true;
 
-    if (postData[7].value != null && postData[7].value.length > 0) {
-      dataValidate.newpassword = postData[7]?.value == '' ? false : true;
-      dataValidate.newpassword = !validatePassword(postData[7].value)
+    if (postData[9].value != null && postData[9].value.length > 0) {
+      dataValidate.newPassword = postData[9]?.value == '' ? false : true;
+      dataValidate.newPassword = !validatePassword(postData[7].value)
         ? false
         : true;
       dataValidate.confirm_password =
-        postData[7].value != postData[8].value ? false : true;
+        postData[9].value != postData[10].value ? false : true;
+    }
+
+    if (postData[5].value.length != phoneLength) {
+      dataValidate.mobileNumber = false;
     }
 
     setValidator(dataValidate);
 
     if (
       !dataValidate.email ||
-      !dataValidate.oldpassword ||
-      !dataValidate.newpassword ||
+      !dataValidate.oldPassword ||
+      !dataValidate.newPassword ||
       !dataValidate.confirm_password ||
-      !dataValidate.firstname ||
-      !dataValidate.phone ||
-      !dataValidate.firstname
+      !dataValidate.firstName ||
+      !dataValidate.mobileNumber ||
+      !dataValidate.firstName
     )
       return false;
 
-    setLoading(true);
-    const result = await updateUserProfile({
-      firstname: postData[0].value,
-      lastname: postData[1].value,
-      email: postData[2].value,
-      phone: postData[3].value,
-      oldpassword: postData[6].value,
-      newpassword: postData[7].value,
-      confirm_password: postData[8].value,
-    });
+    try {
+      globalContext.setGlobalLoading(true);
+
+      const result = await updateUserProfile({
+        firstName: postData[0].value,
+        lastName: postData[1].value,
+        email: postData[2].value,
+        countryCode: countryCode,
+        mobileNumber: parseInt(postData[5].value),
+        prefferredLanguage: router.locale ?? 'en',
+        oldPassword: postData[8].value,
+        newPassword: postData[9].value,
+        confirm_password: postData[10].value,
+      });
+
+      await authContext.checkUserSession();
+
+      globalContext.setGlobalLoading(false);
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
   };
+
+  const getCountryCode = (value: string) => {
+    const code: string = countryCodeByCountryName(value) ?? "+971";
+    setCountryCode(code);
+
+    const pLenght = phoneNumberLenght(value) ?? 9;
+    setPhoneLength(pLenght);
+  }
 
   return (
     <>
@@ -155,7 +182,8 @@ export default function Profile() {
                               <Input
                                 type="text"
                                 className={styles.formInput}
-                                defaultValue="Keanu"
+                                value={firstname}
+                                onChange={(e) => setFirstname(e.target.value)}
                                 placeholder={t('First-name')}
                               />
                             </div>
@@ -169,7 +197,8 @@ export default function Profile() {
                               <Input
                                 type="text"
                                 className={styles.formInput}
-                                defaultValue="Reeves"
+                                value={lastname}
+                                onChange={(e) => setLastname(e.target.value)}
                                 placeholder={t('Last-name')}
                               />
                             </div>
@@ -178,7 +207,7 @@ export default function Profile() {
                           <div className={styles.inline}>
                             <div className={styles.formControl}>
                               <span className="alert-field">
-                                {validator && !validator.firstname && (
+                                {validator && !validator.firstName && (
                                   <Alert severity="error">
                                     {t('required-field-error')}
                                   </Alert>
@@ -188,7 +217,7 @@ export default function Profile() {
 
                             <div className={styles.formControl}>
                               <span className="alert-field">
-                                {validator && !validator.lastname && (
+                                {validator && !validator.lastName && (
                                   <Alert severity="error">
                                     {t('required-field-error')}
                                   </Alert>
@@ -207,9 +236,49 @@ export default function Profile() {
                               <Input
                                 type="email"
                                 className={styles.formInput}
-                                defaultValue="keanureeves@gmail.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 placeholder={t('Email-Address')}
                               />
+                            </div>
+
+                            <div
+                              className={`${styles.formControl} country-code-field`}
+                            >
+                              <label className={styles.formLabel}>
+                                {' '}
+                                <p className="label-text">
+                                  {t('country-code')}
+                                </p>{' '}
+                                <span className="text-danger">*</span>
+                              </label>
+                              <TextField
+                                className={styles.formTextField}
+                                id="filled-select-country-code"
+                                select
+                                defaultValue={"United Arab Emirates"}
+                                variant="outlined"
+                                onChange={(e) => {
+                                  getCountryCode(e.target.value);
+                                }}
+                              >
+                                {sortCountries(countries.data).map(
+                                  (country: any, index: any) => (
+                                    <MenuItem
+                                      className="countries-menu-item"
+                                      key={index}
+                                      value={country?.name?.common}
+                                    >
+                                      <img
+                                        src={country?.flags?.png}
+                                        className="country-flag"
+                                        style={{ float: "left" }}
+                                      />{' '}
+                                      &nbsp;<span className="badge" style={{ width: "60px" }}>({countryCodeByCountryName(country?.name?.common)})</span> {country?.name?.common}
+                                    </MenuItem>
+                                  )
+                                )}
+                              </TextField>
                             </div>
 
                             <div className={styles.formControl}>
@@ -220,7 +289,9 @@ export default function Profile() {
                               </label>
                               <Input
                                 className={styles.formInput}
-                                defaultValue=""
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                type='number'
                               />
                             </div>
                           </div>
@@ -241,9 +312,9 @@ export default function Profile() {
 
                             <div className={styles.formControl}>
                               <span className="alert-field">
-                                {validator && !validator.phone && (
+                                {validator && !validator.mobileNumber && (
                                   <Alert severity="error">
-                                    {t('required-field-error')}
+                                    {t('required-field-error')} (Lenght: {phoneLength})
                                   </Alert>
                                 )}
                               </span>
@@ -259,7 +330,7 @@ export default function Profile() {
                               className={styles.formTextField}
                               id="filled-select-currency"
                               select
-                              defaultValue={locale}
+                              value={authContext.connectedUser?.preferredLanguage ?? locale}
                               variant="outlined"
                               onChange={(e) =>
                                 router.push(`/profile`, '', {
@@ -267,7 +338,7 @@ export default function Profile() {
                                 })
                               }
                             >
-                              {currencies.map((option) => (
+                              {languages.map((option) => (
                                 <MenuItem
                                   key={option.value}
                                   value={option.value}
@@ -296,7 +367,7 @@ export default function Profile() {
                               placeholder={t('Enter-Old-Password')}
                             />
                           </div>
-                          {validator && !validator.oldpassword && (
+                          {validator && !validator.oldPassword && (
                             <Alert severity="error">
                               {t('password-error1')}
                               <br />
@@ -333,7 +404,7 @@ export default function Profile() {
                           <div className={styles.inline}>
                             <div className={styles.formControl}>
                               <span className="alert-field">
-                                {validator && !validator.newpassword && (
+                                {validator && !validator.newPassword && (
                                   <Alert severity="error">
                                     {t('password-error1')}
                                     <br />

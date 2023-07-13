@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import Image from 'next/image';
 
@@ -40,6 +40,11 @@ import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 import { createTheme, ThemeProvider } from '@mui/material';
 import useTranslation from 'next-translate/useTranslation';
+import { homePageProducts } from '@/utils/app.utils';
+import { useGlobalContext } from '@/contexts/GlobalContext';
+import { addToCart } from '@/services/cart/cart.service';
+import { useRouter } from 'next/router';
+import { useAuthContext } from '@/contexts/AuthContext';
 
 export default function Home() {
   const theme = createTheme({
@@ -49,6 +54,24 @@ export default function Home() {
   });
 
   const { t } = useTranslation('home');
+  const globalContext = useGlobalContext();
+  const authContext = useAuthContext();
+  const router = useRouter();
+
+  const addProductToCart = async (id: string) => {
+    try {
+      if (!authContext.userConnected) {
+        router.push(`${router.locale}/auth/signin`);
+        return;
+      }
+      await globalContext.addCart(id, 1);
+
+      router.push("/cart");
+
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
+  }
 
   return (
     <>
@@ -108,15 +131,15 @@ export default function Home() {
                         transition={{ duration: 1, delay: 0.25 }}
                         viewport={{ once: true }}
                       >
-                      <div className={styles.bannerImg}>
-                        <Image
-                          width={'640'}
-                          height={'523'}
-                          style={{ width: '100%', height: 'auto' }}
-                          src={bannerProduct.src}
-                          alt="logo"
-                        />
-                      </div>
+                        <div className={styles.bannerImg}>
+                          <Image
+                            width={'640'}
+                            height={'523'}
+                            style={{ width: '100%', height: 'auto' }}
+                            src={bannerProduct.src}
+                            alt="logo"
+                          />
+                        </div>
                       </motion.div>
                     </Grid>
                   </Grid>
@@ -566,6 +589,7 @@ export default function Home() {
                         viewport={{ once: true }}
                       >
                         <Button
+                          onClick={(e) => addProductToCart(homePageProducts.LFI_ONE_Smartphone)}
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
@@ -711,6 +735,7 @@ export default function Home() {
                           viewport={{ once: true }}
                         >
                           <Button
+                            onClick={(e) => addProductToCart(homePageProducts.LYO_Watch)}
                             variant="contained"
                             className={`${styles['btn']} ${styles['btn_primary']}`}
                           >
@@ -901,6 +926,7 @@ export default function Home() {
                         viewport={{ once: true }}
                       >
                         <Button
+                          onClick={(e) => addProductToCart(homePageProducts.LYO_Tab)}
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >

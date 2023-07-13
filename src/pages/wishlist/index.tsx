@@ -20,12 +20,61 @@ import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider } from '@mui/material';
+import { useGlobalContext } from '@/contexts/GlobalContext';
+import { useAuthContext } from '@/contexts/AuthContext';
+import { getUserWishList, removeUserWishList } from '@/services/wishlist/wishlist.service';
+import Image from 'next/image';
 export default function Wishlist() {
   const theme = createTheme({
     typography: {
       fontFamily: ['Work Sans'].join(','),
     },
   });
+
+  const globalContext = useGlobalContext();
+  const authContext = useAuthContext();
+
+  const [userWishList, setUserWishList] = React.useState<any>([]);
+
+  const getProductFromWishList = async () => {
+    try {
+      globalContext.setGlobalLoading(true);
+
+      const result = await getUserWishList();
+
+      setUserWishList(result?.data?.data)
+
+      globalContext.setGlobalLoading(false);
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
+  }
+
+  const removeProductFromWishList = async (id: string) => {
+    try {
+      globalContext.setGlobalLoading(true);
+
+      const result = await removeUserWishList(id);
+
+      await getProductFromWishList();
+
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
+  }
+
+  const addProductToCart = async (id: string) => {
+    try {
+      await globalContext.addCart(id, 1);
+
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
+  }
+
+  React.useEffect(() => {
+    getProductFromWishList()
+  }, []);
 
   return (
     <>
@@ -46,205 +95,69 @@ export default function Wishlist() {
                     className={`${styles['wrapBox']} ${styles['wishlistSection']}`}
                   >
                     <List className={styles.wishlists}>
-                      <ListItem className={styles.productItem}>
-                        <div className={styles.productImg}>
-                          <img src={productImg.src} alt="logo" />
-                        </div>
-                        <div className={styles.productDetails}>
-                          <div className={styles.productName}>
-                            <div>
-                              <Typography variant="h5">
-                                LFi ONE Smartphone
-                              </Typography>
 
-                              <Typography variant="body1">
-                                Model Name: LFI ONE
-                              </Typography>
-                            </div>
-                          </div>
-                          <div className={styles.productReview}>
-                            <div className={styles.reviewStars}>
-                              <StarRateIcon className={styles.active} />
-                              <StarRateIcon className={styles.active} />
-                              <StarRateIcon className={styles.active} />
-                              <StarRateIcon className={styles.active} />
-                              <StarRateIcon />
-                            </div>
-                            <Typography variant="h6">( 10 Review )</Typography>
-                          </div>
-                          <Typography
-                            variant="h3"
-                            className={styles.productPrice}
-                          >
-                            $160.00
-                          </Typography>
-                        </div>
-                        <div className={styles.actionBtn}>
-                          <Button
-                            variant="contained"
-                            className={`${styles['btn']} ${styles['btn_primary']}`}
-                          >
-                            {' '}
-                            Add To Cart
-                          </Button>
-                          <Button
-                            variant="outlined"
-                            className={`${styles['btn']} ${styles['btn_outlined']}`}
-                          >
-                            Remove
-                          </Button>
-                        </div>
-                      </ListItem>
+                      {
+                        (userWishList && userWishList?.products?.length > 0) ? (
+                          userWishList?.products?.map((item: any, index: any) => (
+                            <ListItem className={styles.productItem}>
+                              <div className={styles.productImg}>
+                                <img src={productImg.src} alt="logo" />
+                              </div>
+                              <div className={styles.productDetails}>
+                                <div className={styles.productName}>
+                                  <div>
+                                    <Typography variant="h5">
+                                      {item?.productId?.name}
+                                    </Typography>
 
-                      <ListItem className={styles.productItem}>
-                        <div className={styles.productImg}>
-                          <img src={productImg.src} alt="logo" />
-                        </div>
-                        <div className={styles.productDetails}>
-                          <div className={styles.productName}>
-                            <div>
-                              <Typography variant="h5">
-                                LFi ONE Smartphone
-                              </Typography>
+                                    <Typography variant="body1">
+                                      Model Name: {item?.productId?.name}
+                                    </Typography>
+                                  </div>
+                                </div>
+                                <div className={styles.productReview}>
+                                  <div className={styles.reviewStars}>
+                                    <StarRateIcon className={styles.active} />
+                                    <StarRateIcon className={styles.active} />
+                                    <StarRateIcon className={styles.active} />
+                                    <StarRateIcon className={styles.active} />
+                                    <StarRateIcon />
+                                  </div>
+                                  <Typography variant="h6">( 1 Review )</Typography>
+                                </div>
+                                <Typography
+                                  variant="h3"
+                                  className={styles.productPrice}
+                                >
+                                  {item?.productId?.price?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}
+                                </Typography>
+                              </div>
+                              <div className={styles.actionBtn}>
+                                <Button
+                                  onClick={(e) => addProductToCart(item?.productId?._id)}
+                                  variant="contained"
+                                  className={`${styles['btn']} ${styles['btn_primary']}`}
+                                >
+                                  {' '}
+                                  Add To Cart
+                                </Button>
+                                <Button
+                                  onClick={(e) => removeProductFromWishList(item?.productId?._id)}
+                                  variant="outlined"
+                                  className={`${styles['btn']} ${styles['btn_outlined']}`}
+                                >
+                                  Remove
+                                </Button>
+                              </div>
+                            </ListItem>
+                          ))
+                        ) : (
+                          <div className='w-100 text-center'>
+                            <div className="notfound"><Image src={"/not-found.gif"} alt='Not Found' fill={true} /></div>
+                          </div>
+                        )
+                      }
 
-                              <Typography variant="body1">
-                                Model Name: LFI ONE
-                              </Typography>
-                            </div>
-                          </div>
-                          <div className={styles.productReview}>
-                            <div className={styles.reviewStars}>
-                              <StarRateIcon className={styles.active} />
-                              <StarRateIcon className={styles.active} />
-                              <StarRateIcon className={styles.active} />
-                              <StarRateIcon className={styles.active} />
-                              <StarRateIcon />
-                            </div>
-                            <Typography variant="h6">( 10 Review )</Typography>
-                          </div>
-                          <Typography
-                            variant="h3"
-                            className={styles.productPrice}
-                          >
-                            $160.00
-                          </Typography>
-                        </div>
-                        <div className={styles.actionBtn}>
-                          <Button
-                            variant="contained"
-                            className={`${styles['btn']} ${styles['btn_primary']}`}
-                          >
-                            {' '}
-                            Add To Cart
-                          </Button>
-                          <Button
-                            variant="outlined"
-                            className={`${styles['btn']} ${styles['btn_outlined']}`}
-                          >
-                            Remove
-                          </Button>
-                        </div>
-                      </ListItem>
-
-                      <ListItem className={styles.productItem}>
-                        <div className={styles.productImg}>
-                          <img src={productImg.src} alt="logo" />
-                        </div>
-                        <div className={styles.productDetails}>
-                          <div className={styles.productName}>
-                            <div>
-                              <Typography variant="h5">
-                                LFi ONE Smartphone
-                              </Typography>
-
-                              <Typography variant="body1">
-                                Model Name: LFI ONE
-                              </Typography>
-                            </div>
-                          </div>
-                          <div className={styles.productReview}>
-                            <div className={styles.reviewStars}>
-                              <StarRateIcon className={styles.active} />
-                              <StarRateIcon className={styles.active} />
-                              <StarRateIcon className={styles.active} />
-                              <StarRateIcon className={styles.active} />
-                              <StarRateIcon />
-                            </div>
-                            <Typography variant="h6">( 10 Review )</Typography>
-                          </div>
-                          <Typography
-                            variant="h3"
-                            className={styles.productPrice}
-                          >
-                            $160.00
-                          </Typography>
-                        </div>
-                        <div className={styles.actionBtn}>
-                          <Button
-                            variant="contained"
-                            className={`${styles['btn']} ${styles['btn_primary']}`}
-                          >
-                            {' '}
-                            Add To Cart
-                          </Button>
-                          <Button
-                            variant="outlined"
-                            className={`${styles['btn']} ${styles['btn_outlined']}`}
-                          >
-                            Remove
-                          </Button>
-                        </div>
-                      </ListItem>
-
-                      <ListItem className={styles.productItem}>
-                        <div className={styles.productImg}>
-                          <img src={productImg.src} alt="logo" />
-                        </div>
-                        <div className={styles.productDetails}>
-                          <div className={styles.productName}>
-                            <div>
-                              <Typography variant="h5">
-                                LFi ONE Smartphone
-                              </Typography>
-
-                              <Typography variant="body1">
-                                Model Name: LFI ONE
-                              </Typography>
-                            </div>
-                          </div>
-                          <div className={styles.productReview}>
-                            <div className={styles.reviewStars}>
-                              <StarRateIcon className={styles.active} />
-                              <StarRateIcon className={styles.active} />
-                              <StarRateIcon className={styles.active} />
-                              <StarRateIcon className={styles.active} />
-                              <StarRateIcon />
-                            </div>
-                            <Typography variant="h6">( 10 Review )</Typography>
-                          </div>
-                          <Typography
-                            variant="h3"
-                            className={styles.productPrice}
-                          >
-                            $160.00
-                          </Typography>
-                        </div>
-                        <div className={styles.actionBtn}>
-                          <Button
-                            variant="contained"
-                            className={`${styles['btn']} ${styles['btn_primary']}`}
-                          >
-                            {' '}
-                            Add To Cart
-                          </Button>
-                          <Button
-                            variant="outlined"
-                            className={`${styles['btn']} ${styles['btn_outlined']}`}
-                          >
-                            Remove
-                          </Button>
-                        </div>
-                      </ListItem>
                     </List>
                   </div>
                 </Grid>

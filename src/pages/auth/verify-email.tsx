@@ -62,7 +62,7 @@ export default function VerifyEmailOtp({
         setOtp(_otp ?? '');
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }, []);
 
@@ -73,30 +73,28 @@ export default function VerifyEmailOtp({
 
     try {
       const result = await validateUserEmailOtp(otpToken, otp, keyToken);
+      // setReqResponse(result?.data?.message);
+      // setAlertColor("success")
+      authContext.login();
 
-      if (result?.status == 200) {
-        setReqResponse(result?.data?.message);
-        setAlertColor("success")
-        authContext.login();
+      // res.setHeader("Set-Cookie", [
+      //   `userConnected=${"true"}; Max-Age=36000;`,
+      //   `authToken=${result?.data?.data?.accessToken}; HttpOnly; Max-Age=36000;`,
+      //   `refreshToken=${result?.data?.data?.refreshToken}; HttpOnly; Max-Age=36000;`,
+      //   `otpToken=deleted; HttpOnly; Max-Age=0;`,
+      //   `token=deleted; HttpOnly; Max-Age=0;`,
+      // ]);
 
-        // res.setHeader("Set-Cookie", [
-        //   `userConnected=${"true"}; Max-Age=36000;`,
-        //   `authToken=${result?.data?.data?.accessToken}; HttpOnly; Max-Age=36000;`,
-        //   `refreshToken=${result?.data?.data?.refreshToken}; HttpOnly; Max-Age=36000;`,
-        //   `otpToken=deleted; HttpOnly; Max-Age=0;`,
-        //   `token=deleted; HttpOnly; Max-Age=0;`,
-        // ]);
-
-        router.push(`/${locale}`);
-      } else {
-        setReqResponse(result?.data?.message);
-      }
+      router.push(`/${locale}`);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000)
     } catch (error: any) {
       setAlertColor("error")
       setReqResponse(error?.response?.data?.message);
+      setLoading(false);
     }
 
-    setLoading(false);
   };
 
   React.useEffect(() => {
