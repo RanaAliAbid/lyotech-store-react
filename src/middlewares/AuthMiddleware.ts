@@ -10,6 +10,18 @@ const isUserAuthenticated = (request: NextRequest) => {
             if(request.nextUrl.pathname.startsWith('/auth')) {
                 return true
             }
+         }else {
+            if(request.nextUrl.pathname.startsWith('/profile')) {
+                return true
+            }
+
+            if(request.nextUrl.pathname.startsWith('/cart')) {
+                return true
+            }
+
+            if(request.nextUrl.pathname.startsWith('/checkout')) {
+                return true
+            }
          }
 
         return false;

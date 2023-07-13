@@ -1,21 +1,25 @@
 // POST data types
 export type ProfileData = {
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  phone: string;
-  oldpassword: string;
-  newpassword: string;
+  mobileNumber: number;
+  countryCode: string;
+  prefferredLanguage: string;
+  oldPassword: boolean;
+  newPassword: boolean;
   confirm_password: string;
 };
 
 // Validators data types
 export type ProfileDataValidator = {
-  firstname: boolean;
-  lastname: boolean;
+  firstName: boolean;
+  lastName: boolean;
   email: boolean;
-  phone: boolean;
-  oldpassword: boolean;
-  newpassword: boolean;
+  mobileNumber: boolean;
+  prefferredLanguage: boolean;
+  countryCode: boolean;
+  oldPassword: boolean;
+  newPassword: boolean;
   confirm_password: boolean;
 };

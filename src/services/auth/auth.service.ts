@@ -10,7 +10,7 @@ import { ProxyService } from '../proxy.service';
 export const verifyUserHandover = async (params: PartnerLinkData) => {
   try {
     return ProxyService.PostRequest(
-      PROXY_HOST + '/api/v1/auth/checktoken',
+      PROXY_HOST + '/api/v1/checktoken',
       params
     );
   } catch (error) {
@@ -20,7 +20,7 @@ export const verifyUserHandover = async (params: PartnerLinkData) => {
 
 export const validateUserSession = async () => {
   try {
-    return ProxyService.GetRequest(PROXY_HOST + '/api/v1/auth/checktoken');
+    return ProxyService.GetRequest(PROXY_HOST + '/api/v1/checktoken');
   } catch (error) {
     return null;
   }
@@ -28,7 +28,7 @@ export const validateUserSession = async () => {
 
 export const signInUser = async (params: SignInData) => {
   try {
-    return ProxyService.PostRequest(PROXY_HOST + '/api/v1/auth/signin', params);
+    return ProxyService.PostRequest(PROXY_HOST + '/api/v1/signin', params);
   } catch (error) {
     return null;
   }
@@ -36,7 +36,7 @@ export const signInUser = async (params: SignInData) => {
 
 export const signUpUser = async (params: SignUpData) => {
   try {
-    return ProxyService.PostRequest(PROXY_HOST + '/api/v1/auth/signup', params);
+    return ProxyService.PostRequest(PROXY_HOST + '/api/v1/signup', params);
   } catch (error) {
     return null;
   }
@@ -50,7 +50,7 @@ export const validateUserEmailOtp = async (
   try {
     const params = { token: token, otp: parseInt(otp) };
     return ProxyService.PostRequest(
-      PROXY_HOST + '/api/v1/auth/verify-email-otp',
+      PROXY_HOST + '/api/v1/verify-email-otp',
       params,
       keyToken
     );
@@ -66,7 +66,7 @@ export const resendUserEmailOtp = async (
   try {
     const params = { token: token };
     return ProxyService.PostRequest(
-      PROXY_HOST + '/api/v1/auth/resend-email-otp',
+      PROXY_HOST + '/api/v1/resend-email-otp',
       params,
       keyToken
     );
@@ -78,7 +78,7 @@ export const resendUserEmailOtp = async (
 export const fogotPasswordUser = async (params: ForgotPasswordData) => {
   try {
     return ProxyService.PostRequest(
-      PROXY_HOST + '/api/v1/auth/forgot-password',
+      PROXY_HOST + '/api/v1/forgot-password',
       params
     );
   } catch (error) {
@@ -89,7 +89,7 @@ export const fogotPasswordUser = async (params: ForgotPasswordData) => {
 export const changePasswordUser = async (params: ForgotPasswordData) => {
   try {
     return ProxyService.PostRequest(
-      PROXY_HOST + '/api/v1/auth/change-password',
+      PROXY_HOST + '/api/v1/change-password',
       params
     );
   } catch (error) {
@@ -99,7 +99,7 @@ export const changePasswordUser = async (params: ForgotPasswordData) => {
 
 export const signOutUser = async () => {
   try {
-    return ProxyService.GetRequest(PROXY_HOST + '/api/v1/auth/logout');
+    return ProxyService.GetRequest(PROXY_HOST + '/api/v1/logout');
   } catch (error) {
     return null;
   }

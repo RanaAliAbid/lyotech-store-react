@@ -27,6 +27,10 @@ import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider } from '@mui/material';
+import { useGlobalContext } from '@/contexts/GlobalContext';
+import { useAuthContext } from '@/contexts/AuthContext';
+import { getPaymentMethods } from '@/services/payments/payment.service';
+import { getShippingMethods } from '@/services/cart/cart.service';
 
 export default function Checkout() {
   const theme = createTheme({
@@ -36,9 +40,12 @@ export default function Checkout() {
   });
 
   const [shippingType, setShippingType] = React.useState('express');
-
   const [paymentType, setPaymentType] = React.useState('crypto');
-  console.log(paymentType);
+  const [paymentMethods, setPaymentMethods] = React.useState([]);
+  const [shippingMethods, setShippingMethods] = React.useState([]);
+
+  const globalContext = useGlobalContext();
+  const authContext = useAuthContext();
 
   const handleChangeShippingType = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -50,11 +57,41 @@ export default function Checkout() {
     setPaymentType((event.target as HTMLInputElement).value);
   };
 
+  const getPaymentMethodList = async () => {
+    try {
+      const result = await getPaymentMethods();
+
+      setPaymentMethods(result?.data?.data);
+
+      getShippingMethodList()
+
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
+  }
+
+  const getShippingMethodList = async () => {
+    try {
+      const result = await getShippingMethods();
+
+      setShippingMethods(result?.data?.data);
+
+      globalContext.setGlobalLoading(false);
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
+  }
+
+  React.useEffect(() => {
+    globalContext.setGlobalLoading(true);
+    getPaymentMethodList()
+  }, [])
+
   return (
     <>
       <ThemeProvider theme={theme}>
         <main className={styles.main}>
-          <Header title="Checkout" />
+          <Header title={`Cart (${globalContext.cart?.cart?.products?.length} Items)`} />
           <div className={styles.paddingTB60}>
             <Container className={styles.containerBox}>
               <Grid container spacing={3}>
@@ -263,107 +300,114 @@ export default function Checkout() {
                       value={paymentType}
                       onChange={handleChangePayment}
                     >
-                      <ListItem
-                        className={`${
-                          paymentType === 'crypto' ? styles.show : ''
-                        }`}
-                      >
-                        <div className={styles.paymentTypelogo}>
-                          <div className={styles.lyomc}>
-                            <FormControlLabel
-                              value="crypto"
-                              control={
-                                <Radio
-                                  size="small"
-                                  checked={paymentType === 'crypto'}
+                      {
+                        (paymentMethods?.length > 0 && paymentMethods?.findIndex((x: any) => x?.type?.name?.toLowerCase() === "crypto") != -1) && (
+                          <ListItem
+                            className={`${paymentType === 'crypto' ? styles.show : ''
+                              }`}
+                          >
+                            <div className={styles.paymentTypelogo}>
+                              <div className={styles.lyomc}>
+                                <FormControlLabel
+                                  value="crypto"
+                                  control={
+                                    <Radio
+                                      size="small"
+                                      checked={paymentType === 'crypto'}
+                                    />
+                                  }
+                                  label=""
                                 />
-                              }
-                              label=""
-                            />
-                            <img src={lyoMC.src} alt="" />
-                          </div>
-                          <div className={styles.coin}>
-                            <img src={usdtCoin.src} alt="" />
-                          </div>
-                        </div>
-
-                        <div className={styles.payInfoBox}>
-                          <div className={styles.note}>
-                            <Typography variant="h5">
-                              Pay with your crypto currencies via our super-cool
-                              payment gateway.
-                            </Typography>
-                          </div>
-                        </div>
-                      </ListItem>
-
-                      <ListItem
-                        className={`${
-                          paymentType === 'creditCard' ? styles.show : ''
-                        }`}
-                      >
-                        <div className={styles.paymentTypelogo}>
-                          <div className={styles.lyomc}>
-                            <FormControlLabel
-                              value="creditCard"
-                              control={
-                                <Radio
-                                  size="small"
-                                  checked={paymentType === 'creditCard'}
-                                />
-                              }
-                              label="Credit card"
-                            />
-                          </div>
-                          <div className={styles.usdt}>
-                            <img src={creditCard.src} alt="" />
-                          </div>
-                        </div>
-                        <div className={styles.payInfoBox}>
-                          <Grid item md={12} xs={12}>
-                            <div className={styles.formControl}>
-                              <label> Card Number </label>
-                              <Input
-                                className={styles.formInput}
-                                placeholder="0000 0000 0000 0000"
-                              />
+                                <img src={lyoMC.src} alt="" />
+                              </div>
+                              <div className={styles.coin}>
+                                <img src={usdtCoin.src} alt="" />
+                              </div>
                             </div>
-                          </Grid>
-                          <Grid container className={styles.payInline}>
-                            <Grid item md={6} xs={12}>
-                              <div className={styles.formControl}>
-                                <label> Expiry date </label>
-                                <Input
-                                  className={styles.formInput}
-                                  placeholder="MM YYYY"
+
+                            <div className={styles.payInfoBox}>
+                              <div className={styles.note}>
+                                <Typography variant="h5">
+                                  Pay with your crypto currencies via our super-cool
+                                  payment gateway.
+                                </Typography>
+                              </div>
+                            </div>
+                          </ListItem>
+                        )
+                      }
+
+                      {
+                        (paymentMethods?.length > 0 && paymentMethods?.findIndex((x: any) => x?.type?.name?.toLowerCase() === "card") != -1) && (
+                          <ListItem
+                            className={`${paymentType === 'creditCard' ? styles.show : ''
+                              }`}
+                          >
+                            <div className={styles.paymentTypelogo}>
+                              <div className={styles.lyomc}>
+                                <FormControlLabel
+                                  value="creditCard"
+                                  control={
+                                    <Radio
+                                      size="small"
+                                      checked={paymentType === 'creditCard'}
+                                    />
+                                  }
+                                  label="Credit card"
                                 />
                               </div>
-                            </Grid>
-                            <Grid item md={6} xs={12}>
-                              <div className={styles.formControl}>
-                                <label> CVV Number </label>
-                                <Input
-                                  className={styles.formInput}
-                                  placeholder="123"
-                                />
+                              <div className={styles.usdt}>
+                                <img src={creditCard.src} alt="" />
                               </div>
-                            </Grid>
-                          </Grid>
-                          <FormControlLabel
-                            control={<Checkbox size="small" defaultChecked />}
-                            label="Save payment information to my account for future purchases."
-                          />
-                          <div className={styles.note}>
-                            <Typography variant="h5">
-                              Pay with your credit card via Stripe. TEST MODE
-                              ENABLED. In test mode, you can use the card number
-                              4242424242424242 with any CVC and a valid
-                              expiration date or check the Testing Stripe
-                              documentation for more card numbers.
-                            </Typography>
-                          </div>
-                        </div>
-                      </ListItem>
+                            </div>
+                            <div className={styles.payInfoBox}>
+                              <Grid item md={12} xs={12}>
+                                <div className={styles.formControl}>
+                                  <label> Card Number </label>
+                                  <Input
+                                    className={styles.formInput}
+                                    placeholder="0000 0000 0000 0000"
+                                  />
+                                </div>
+                              </Grid>
+                              <Grid container className={styles.payInline}>
+                                <Grid item md={6} xs={12}>
+                                  <div className={styles.formControl}>
+                                    <label> Expiry date </label>
+                                    <Input
+                                      className={styles.formInput}
+                                      placeholder="MM YYYY"
+                                    />
+                                  </div>
+                                </Grid>
+                                <Grid item md={6} xs={12}>
+                                  <div className={styles.formControl}>
+                                    <label> CVV Number </label>
+                                    <Input
+                                      className={styles.formInput}
+                                      placeholder="123"
+                                    />
+                                  </div>
+                                </Grid>
+                              </Grid>
+                              <FormControlLabel
+                                control={<Checkbox size="small" defaultChecked />}
+                                label="Save payment information to my account for future purchases."
+                              />
+                              <div className={styles.note}>
+                                <Typography variant="h5">
+                                  Pay with your credit card via Stripe. TEST MODE
+                                  ENABLED. In test mode, you can use the card number
+                                  4242424242424242 with any CVC and a valid
+                                  expiration date or check the Testing Stripe
+                                  documentation for more card numbers.
+                                </Typography>
+                              </div>
+                            </div>
+                          </ListItem>
+                        )
+                      }
+
                     </RadioGroup>
                   </div>
                 </Grid>
@@ -374,7 +418,7 @@ export default function Checkout() {
                   >
                     <Typography variant="h4">Order Summary</Typography>
 
-                    <Typography variant="h6">Order ID: #0297509</Typography>
+                    {/* <Typography variant="h6">Order ID: #0297509</Typography> */}
                   </div>
 
                   <div className={styles.wrapBox}>
@@ -382,9 +426,9 @@ export default function Checkout() {
                       <List>
                         <ListItem className={styles.subTotal}>
                           <Typography variant="h6">
-                            Subtotal (3 items)
+                            Subtotal ({globalContext?.cart?.cart?.products?.length} items)
                           </Typography>
-                          <Typography variant="h6">$480.00</Typography>
+                          <Typography variant="h6">{globalContext?.cart?.cart?.totalAmount} {globalContext.currencySymbol}</Typography>
                         </ListItem>
 
                         <ListItem>
@@ -401,41 +445,31 @@ export default function Checkout() {
                           value={shippingType}
                           onChange={handleChangeShippingType}
                         >
-                          <ListItem
-                            className={`${
-                              shippingType === 'express' ? styles.active : ''
-                            }`}
-                          >
-                            <FormControlLabel
-                              value="express"
-                              control={
-                                <Radio
-                                  size="small"
-                                  checked={shippingType === 'express'}
-                                />
-                              }
-                              label="Express Saver"
-                            />
-                            <Typography variant="h6">102.35 €</Typography>
-                          </ListItem>
+                          {
+                            (shippingMethods?.length > 0) ? (
+                              shippingMethods?.map((method: any, index: any) => (
+                                <ListItem
+                                  className={`${shippingType === method?._id ? styles.active : ''
+                                    }`}
+                                >
+                                  <FormControlLabel
+                                    value={method?._id}
+                                    control={
+                                      <Radio
+                                        size="small"
+                                        checked={shippingType === method?._id}
+                                      />
+                                    }
+                                    label={method.name}
+                                  />
+                                  <Typography variant="h6">{method?.price} {globalContext.currencySymbol}</Typography>
+                                </ListItem>
+                              ))
+                            ) : (
+                              <></>
+                            )
+                          }
 
-                          <ListItem
-                            className={`${
-                              shippingType === 'local' ? styles.active : ''
-                            }`}
-                          >
-                            <FormControlLabel
-                              value="local"
-                              control={
-                                <Radio
-                                  size="small"
-                                  checked={shippingType === 'local'}
-                                />
-                              }
-                              label="Local pickup "
-                            />
-                            <Typography variant="h6">20.00</Typography>
-                          </ListItem>
                         </RadioGroup>
                       </List>
 

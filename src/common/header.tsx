@@ -5,7 +5,7 @@ import Image from 'next/image';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
-import Drawer from '@mui/material/Drawer';
+// import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -14,9 +14,8 @@ import Button from '@mui/material/Button'; ``
 import MenuItem from '@mui/material/MenuItem';
 // import Link from '@mui/material/Link';
 import CloseIcon from '@mui/icons-material/Close';
-import MenuIcon from '@mui/icons-material/Menu';
-import TranslateIcon from '@mui/icons-material/Translate';
-
+// import MenuIcon from '@mui/icons-material/Menu';
+// import TranslateIcon from '@mui/icons-material/Translate';
 import logo from '../img/lyotech-logo.png';
 import OrderIcon from '../img/orderIcon.svg';
 import WishlistIcon from '../img/wishlistIcon.svg';
@@ -26,12 +25,11 @@ import TrackOrderIcon from '../img/trackOrderIcon.svg';
 import UserIcon from '../img/userIcon.svg';
 import AccountIcon from '../img/accountIcon.svg';
 import CartIcon from '../img/cartIcon.svg';
-import Payments from '../img/digitalpayments.svg';
+// import Payments from '../img/digitalpayments.svg';
 import bannerProduct from '../img/bannerProduct.png';
-
 import productImg from '../img/productImg.png';
 
-import Sidebar from './sidebar';
+// import Sidebar from './sidebar';
 import Link from 'next/link';
 import { useAuthContext } from '../contexts/AuthContext';
 import { useGlobalContext } from '../contexts/GlobalContext';
@@ -59,6 +57,7 @@ export default function Header({ title = 'Home' }: { title: string }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const accountOpen = Boolean(anchorEl);
   const [loading, setLoading] = React.useState(false);
+  const [cartData, setCartData] = React.useState<any>([]);
 
   const handleAccountClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!authContext.userConnected) {
@@ -76,6 +75,14 @@ export default function Header({ title = 'Home' }: { title: string }) {
   const cartOpen = Boolean(anchorCart);
 
   const handleCartClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (
+      !authContext.userConnected ||
+      !globalContext.cart?.cart?.products ||
+      globalContext.cart?.cart?.products?.length == 0
+    ) {
+      return;
+    }
+
     setAnchorCart(event.currentTarget);
   };
   const handleCartClose = () => {
@@ -110,7 +117,6 @@ export default function Header({ title = 'Home' }: { title: string }) {
       const result = await signOutUser();
       if (result?.status == 200) {
         authContext.logout();
-        // router.push(`/${locale}`);
       }
       setLoading(false);
     } catch (error: any) {
@@ -121,6 +127,30 @@ export default function Header({ title = 'Home' }: { title: string }) {
   React.useEffect(() => {
     globalContext.updateLocale(locale);
   }, [locale]);
+
+  const getCart = async () => {
+    try {
+      if (!authContext.userConnected) return;
+
+      await globalContext.getCart();
+
+    } catch (error) {
+    }
+  }
+
+  const deletFromCart = async (id: string) => {
+    try {
+      if (!authContext.userConnected) return;
+
+      await globalContext.deleteCart(id, 0);
+
+    } catch (error) {
+    }
+  }
+
+  React.useEffect(() => {
+    getCart()
+  }, [authContext.userConnected])
 
   const siteDescription =
     'LYOTECH LABS is an R&D company that works on the development of software and hardware products including mobile phones, tablets, laptops and smart watches. Our goal is giving best our customers in technologys';
@@ -194,9 +224,10 @@ export default function Header({ title = 'Home' }: { title: string }) {
                 onClick={handleAccountClick}
                 variant="text"
                 className={styles.myAccount}
+                style={{ maxWidth: "150px" }}
               >
                 <AccountIcon />
-                {(authContext.connectedUserName.length > 0) ? authContext.connectedUserName : t('MyAccount')}
+                <p className='text-ellipsis xs-d-none' style={{ maxWidth: "100px" }}>{(authContext.connectedUserName?.length > 0) ? authContext.connectedUserName : t('MyAccount')}</p>
               </Button>
               <Menu
                 id="basic-menu"
@@ -280,8 +311,12 @@ export default function Header({ title = 'Home' }: { title: string }) {
                 className={styles.myAccount}
               >
                 <CartIcon />
-                {t('Cart')}
-                <span className={styles.badge}>9</span>
+                <span className='xs-d-none'>{t('Cart')}</span>
+                {
+                  (globalContext.cart?.cart?.products) && (
+                    <span className={styles.badge}>{globalContext.cart?.cart?.products?.length}</span>
+                  )
+                }
               </Button>
               <Menu
                 id="basic-menu"
@@ -294,26 +329,35 @@ export default function Header({ title = 'Home' }: { title: string }) {
                 className={styles.myCartMenu}
               >
                 <div>
-                  <List className={styles.productsList}>
-                    <ListItem className={styles.productItem}>
-                      <div className={styles.productImg}>
-                        <img src={productImg.src} alt="logo" />
-                      </div>
-                      <div className={styles.productHead}>
-                        <Typography variant="h5" className={styles.productitle}>
-                          LFi ONE Smart phone LFi ONE Smartphone
-                        </Typography>
+                  {
+                    globalContext.cart?.cart?.products?.map((cartItem: any, index: any) => (
+                      <List key={index} className={styles.productsList}>
+                        <ListItem className={styles.productItem}>
+                          <div className={styles.productImg}>
+                            <img src={cartItem?.productId?.images[0]?.link ?? productImg.src} alt="logo" />
+                          </div>
+                          <div className={styles.productHead}>
+                            <Typography variant="h5" className={styles.productitle}>
+                              {cartItem.productId.name}
+                            </Typography>
 
-                        <Typography
-                          variant="h6"
-                          className={styles.productPrice}
-                        >
-                          160.00 €
-                        </Typography>
-                      </div>
-                      <CloseIcon />
-                    </ListItem>
-                  </List>
+                            <Typography variant="h5" className={styles.productitle}>
+                              {cartItem?.quantity} {t('Items')}
+                            </Typography>
+
+                            <Typography
+                              variant="h6"
+                              className={styles.productPrice}
+                            >
+                              {((cartItem?.quantity ?? 0) * cartItem.productId.price).toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}
+                            </Typography>
+                          </div>
+                          <span onClick={(e) => deletFromCart(cartItem?.productId?._id)}><CloseIcon /></span>
+                        </ListItem>
+                      </List>
+                    ))
+                  }
+
                 </div>
 
                 <div className={styles.productSubTotal}>
@@ -322,7 +366,7 @@ export default function Header({ title = 'Home' }: { title: string }) {
                   </Typography>
 
                   <Typography variant="h6" className={styles.productPrice}>
-                    160.00 €
+                    {globalContext.cart?.totalAmount?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}
                   </Typography>
                 </div>
 

@@ -16,9 +16,14 @@ export function AuthWrapper({
   const [userConnected, setUserConnected] = useState<boolean>(false);
   const [connectedUserId, setConnectedUserId] = useState<string>("");
   const [connectedUserName, setConnectedUserName] = useState<string>("");
-  // const [tokenValidity, setTokenValidity] = useState<number>(0);
+  const [connectedUserEmail, setConnectedUserEmail] = useState<string>("");
+  const [connectedUser, setConnectedUser] = useState<any>(null);
 
   const checkUserSession = async () => {
+    const currentStatus = Cookies.get("userConnected");
+
+    if (!currentStatus || currentStatus == "") return false;
+
     try {
       const result = await validateUserSession();
 
@@ -31,6 +36,7 @@ export function AuthWrapper({
         setConnectedUserId("");
         timeoutCheckUserSession(0);
         setConnectedUserName("");
+        setConnectedUserEmail("");
       } else {
         Cookies.set("userConnected", "true");
         Cookies.set("tokenValidity", `${tokeExpiredTime}`);
@@ -38,9 +44,11 @@ export function AuthWrapper({
         setConnectedUserId(result?.data?.data?.id ?? "");
         timeoutCheckUserSession(tokeExpiredTime ?? 0);
         setConnectedUserName(result?.data?.data?.name ?? "");
+        setConnectedUserEmail(result?.data?.data?.email ?? "");
+        setConnectedUser(result?.data?.data?.user);
       }
     } catch (error) {
-      Cookies.remove("userConnected");
+      // Cookies.remove("userConnected");
       setUserConnected(false);
     }
   }
@@ -59,6 +67,7 @@ export function AuthWrapper({
   }
 
   const login = () => {
+    checkUserSession();
     Cookies.set("userConnected", "true");
     setUserConnected(true);
   }
@@ -82,7 +91,10 @@ export function AuthWrapper({
         userConnected, setUserConnected,
         connectedUserId, setConnectedUserId,
         connectedUserName, setConnectedUserName,
-        logout, login
+        connectedUserEmail, setConnectedUserEmail,
+        connectedUser, setConnectedUser,
+        logout, login,
+        checkUserSession
       }
     }>{children}</AuthContext.Provider>
   );

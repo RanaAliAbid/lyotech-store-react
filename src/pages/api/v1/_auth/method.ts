@@ -8,16 +8,23 @@ import {
   verifyEmailOtp,
   changePassword,
   resendUserEmailOtp,
+  sendEmailOTP,
 } from '@/controllers/UserController';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ApiData, ApiError } from '../../types';
 import { AuthUser } from '@/contexts/auth.types';
+import { userCart } from '@/controllers/CartController';
 
-export default async function handler(
+export default async function AuthHandler(
   req: NextApiRequest,
   res: NextApiResponse<ApiData | ApiError | AuthUser>
 ) {
-  const method = req.query.method;
+
+  const methods = req.query.method;
+
+  if (!methods) return res.status(400).json({ status: false, message: 'Unauthorized Request.' });
+
+  const method = methods[0] ?? "";
 
   switch (method) {
     case 'signin':
@@ -44,7 +51,7 @@ export default async function handler(
     case 'change-password':
       return changePassword(req, res);
 
-    default:
-      return res.status(400).json({ status: false, message: 'Unauthorized Request' });
+    case 'email-otp':
+      return sendEmailOTP(req, res);
   }
 }

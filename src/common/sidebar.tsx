@@ -23,11 +23,15 @@ import styles from '@/styles/Home.module.css';
 
 import useTranslation from 'next-translate/useTranslation';
 import Link from 'next/link';
+import { useAuthContext } from '@/contexts/AuthContext';
+import { useGlobalContext } from '@/contexts/GlobalContext';
 
 export default function Sidebar() {
   const router = useRouter();
 
   const { t } = useTranslation('common');
+  const authContext = useAuthContext();
+  const globalContext = useGlobalContext();
 
   return (
     <>
@@ -39,9 +43,9 @@ export default function Sidebar() {
         <div className={styles.userName}>
           <Typography variant="h6">{t('Welcome')}</Typography>
 
-          <Typography variant="h4">Keanu Reeves</Typography>
+          <Typography variant="h4" className='text-capitalize text-ellipsis'>{authContext?.connectedUserName}</Typography>
 
-          <Link href={'#'}>keanureeves@gmail.com</Link>
+          <p className='text-ellipsis'><Link href={'#'}>{authContext?.connectedUserEmail}</Link></p>
         </div>
 
         <Typography variant="h5" className={styles.listTitle}>

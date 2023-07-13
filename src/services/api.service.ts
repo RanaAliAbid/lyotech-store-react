@@ -6,6 +6,7 @@ const GetRequest = (url: string, authToken?: string) => {
     const config = {
       method: 'GET',
       url: url,
+      // signal: AbortSignal.timeout(5000),
       headers: {
         'Content-Type': 'application/json',
         Authorization: authToken,
@@ -25,6 +26,7 @@ const PostRequest = (url: string, data: any, authToken?: string) => {
       method: 'POST',
       url: url,
       data: JSON.stringify(data),
+      // signal: AbortSignal.timeout(15000),
       headers: {
         'Content-Type': 'application/json',
         Authorization: authToken,
@@ -43,6 +45,7 @@ const DeleteRequest = (url: string, authToken?: string) => {
     const config = {
       method: 'DELETE',
       url: url,
+      // signal: AbortSignal.timeout(5000),
       headers: {
         'Content-Type': 'application/json',
         Authorization: authToken,
@@ -62,6 +65,7 @@ const PutRequest = (url: string, data: any, authToken?: string) => {
       method: 'PUT',
       url: url,
       data: JSON.stringify(data),
+      // signal: AbortSignal.timeout(5000),
       headers: {
         'Content-Type': 'application/json',
         Authorization: authToken,
