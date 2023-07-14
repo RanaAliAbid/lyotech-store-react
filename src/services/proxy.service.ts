@@ -1,3 +1,4 @@
+import { hash256 } from '@/utils/app.utils';
 import axios from 'axios';
 
 const GetRequest = (url: string, token?: string) => {
@@ -78,9 +79,17 @@ const PutRequest = (url: string, data: any, token?: string) => {
   }
 };
 
+const generateHashKey = async (requestBody: string) => {
+  const hashKey = await hash256(requestBody);
+  let body: any = JSON.parse(requestBody)
+  body.hashKey = hashKey
+  return body;
+}
+
 export const ProxyService = {
   GetRequest,
   PostRequest,
   PutRequest,
   DeleteRequest,
+  generateHashKey
 };

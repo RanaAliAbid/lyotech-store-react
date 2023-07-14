@@ -35,3 +35,5 @@ export const ironOptions = {
     secure: ["sandbox", "dev"].includes(process.env.ENV_TYPE ?? "") ? false : true,
   },
 };
+
+export const HASH_SALT = process.env.HASH_SALT || ""

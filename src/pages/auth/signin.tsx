@@ -35,6 +35,7 @@ import Cookies from 'js-cookie';
 import { ironOptions } from '../../../app.config';
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import Head from 'next/head';
+import { hash256, setLocalStorage } from '@/utils/app.utils';
 
 export default function SignIn() {
   const theme = createTheme({
@@ -95,6 +96,10 @@ export default function SignIn() {
 
     setLoading(false);
   };
+
+  React.useEffect(() => {
+    setLocalStorage("crsfKey", "test")
+  }, [])
 
   return (
     <>

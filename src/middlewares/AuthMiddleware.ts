@@ -2,7 +2,7 @@
 // import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-const isUserAuthenticated = (request: NextRequest) => {
+const isUserAuthenticated = async (request: NextRequest) => {
     try {
         const authToken = request.cookies.get("userConnected")?.value ?? "false";
 
@@ -20,6 +20,10 @@ const isUserAuthenticated = (request: NextRequest) => {
             }
 
             if(request.nextUrl.pathname.startsWith('/checkout')) {
+                return true
+            }
+
+            if(request.nextUrl.pathname.startsWith('/wishlist')) {
                 return true
             }
          }

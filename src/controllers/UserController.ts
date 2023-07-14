@@ -1,7 +1,8 @@
 import { ApiData, ApiError } from '@/pages/api/types';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { API_HOST } from '../../app.config';
+import { API_HOST, HASH_SALT } from '../../app.config';
 import { ApiService } from '@/services/api.service';
+import { compare, hash } from 'bcrypt';
 
 export const signIn = async (
   req: NextApiRequest,
@@ -75,11 +76,11 @@ export const verifyEmailOtp = async (
 
     const result = await ApiService.PostRequest(API_HOST + '/v1/user/verify-user', data, `Bearer ${req.cookies?.otpToken}`);
 
-    console.log("🚀 ~ file: UserController.ts:79 ~ result:", result?.data?.data)
+    // console.log("🚀 ~ file: UserController.ts:79 ~ result:", result?.data?.data)
     res.setHeader("set-Cookie", [
       `userConnected=${"true"}; Max-Age=36000; path: '/';`,
       `authToken=${result?.data?.data?.accessToken}; HttpOnly; Max-Age=36000; path: '/';`,
-      `refreshToken=${result?.data?.data?.refreshToken}; HttpOnly; Max-Age=36000; path: '/';`,
+      // `refreshToken=${result?.data?.data?.refreshToken}; HttpOnly; Max-Age=36000; path: '/';`,
       `otpToken=deleted; HttpOnly; Max-Age=0;`,
       `token=deleted; HttpOnly; Max-Age=0;`,
     ]);
