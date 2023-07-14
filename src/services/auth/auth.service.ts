@@ -9,9 +9,10 @@ import { ProxyService } from '../proxy.service';
 
 export const verifyUserHandover = async (params: PartnerLinkData) => {
   try {
+    const body = await ProxyService.generateHashKey(JSON.stringify(params))
     return ProxyService.PostRequest(
       PROXY_HOST + '/api/v1/checktoken',
-      params
+      body
     );
   } catch (error) {
     return null;
@@ -28,7 +29,8 @@ export const validateUserSession = async () => {
 
 export const signInUser = async (params: SignInData) => {
   try {
-    return ProxyService.PostRequest(PROXY_HOST + '/api/v1/signin', params);
+    const body = await ProxyService.generateHashKey(JSON.stringify(params))
+    return ProxyService.PostRequest(PROXY_HOST + '/api/v1/signin', body);
   } catch (error) {
     return null;
   }
@@ -36,7 +38,8 @@ export const signInUser = async (params: SignInData) => {
 
 export const signUpUser = async (params: SignUpData) => {
   try {
-    return ProxyService.PostRequest(PROXY_HOST + '/api/v1/signup', params);
+    const body = await ProxyService.generateHashKey(JSON.stringify(params))
+    return ProxyService.PostRequest(PROXY_HOST + '/api/v1/signup', body);
   } catch (error) {
     return null;
   }
@@ -49,9 +52,10 @@ export const validateUserEmailOtp = async (
 ) => {
   try {
     const params = { token: token, otp: parseInt(otp) };
+    const body = await ProxyService.generateHashKey(JSON.stringify(params))
     return ProxyService.PostRequest(
       PROXY_HOST + '/api/v1/verify-email-otp',
-      params,
+      body,
       keyToken
     );
   } catch (error) {
@@ -65,9 +69,10 @@ export const resendUserEmailOtp = async (
 ) => {
   try {
     const params = { token: token };
+    const body = await ProxyService.generateHashKey(JSON.stringify(params))
     return ProxyService.PostRequest(
       PROXY_HOST + '/api/v1/resend-email-otp',
-      params,
+      body,
       keyToken
     );
   } catch (error) {
@@ -77,9 +82,10 @@ export const resendUserEmailOtp = async (
 
 export const fogotPasswordUser = async (params: ForgotPasswordData) => {
   try {
+    const body = await ProxyService.generateHashKey(JSON.stringify(params))
     return ProxyService.PostRequest(
       PROXY_HOST + '/api/v1/forgot-password',
-      params
+      body
     );
   } catch (error) {
     return null;
@@ -88,9 +94,10 @@ export const fogotPasswordUser = async (params: ForgotPasswordData) => {
 
 export const changePasswordUser = async (params: ForgotPasswordData) => {
   try {
+    const body = await ProxyService.generateHashKey(JSON.stringify(params))
     return ProxyService.PostRequest(
       PROXY_HOST + '/api/v1/change-password',
-      params
+      body
     );
   } catch (error) {
     return null;

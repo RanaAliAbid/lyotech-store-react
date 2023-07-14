@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { APP_HOST } from '../app.config';
 import { SessionAccessMiddleware } from './middlewares/AuthMiddleware';
+import { ApiMiddleware } from './middlewares/ApiMiddleware';
 // import type { NextRequest } from 'next/server';
 
 const PUBLIC_FILE = /\.(.*)$/;
@@ -11,11 +12,12 @@ export async function middleware(request: NextRequest) {
 
   if (
     request.nextUrl.pathname.startsWith('/_next') ||
-    request.nextUrl.pathname.includes('/api/') ||
     PUBLIC_FILE.test(request.nextUrl.pathname)
   ) {
     return;
   }
+
+  await ApiMiddleware.validateUserAgent(request)
 
   if (request.nextUrl.locale === 'default') {
     const locale = request.cookies.get('NEXT_LOCALE')?.value || 'en';
@@ -29,7 +31,7 @@ export async function middleware(request: NextRequest) {
 
   const locale = request.cookies.get('lang')?.value ?? 'en';
 
-  if(SessionAccessMiddleware.isUserAuthenticated(request)) {
+  if(await SessionAccessMiddleware.isUserAuthenticated(request)) {
       return NextResponse.redirect(`${request.nextUrl.origin +"/"+ locale}`);
   }
 

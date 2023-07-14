@@ -8,6 +8,7 @@ import CartHandler from './_cart/method';
 import UserHandler from './_users/method';
 import Producthandler from './_products/method';
 import Paymenthandler from './_payments/method';
+import { hash256 } from '@/utils/app.utils';
 
 export default async function handler(
     req: NextApiRequest,
@@ -19,15 +20,45 @@ export default async function handler(
 
     try {
 
-        AuthHandler(req, res);
+        if ((req?.method == "POST" && req?.body?.hashKey?.length > 0) || (!req?.body?.hashKey && req?.method == "GET")) {
 
-        UserHandler(req, res);
+            let authorize = false;
 
-        CartHandler(req, res);
+            if(req?.method != "GET") {
+                const bodyKey = req?.body?.hashKey ?? ""
+                let params = req?.body ?? {}
+                delete params.hashKey;
 
-        Producthandler(req, res);
+                const hashKey = await hash256(JSON.stringify(params));
 
-        Paymenthandler(req, res);
+                if(hashKey === bodyKey) {
+                    authorize = true;
+                }else{
+                    authorize = false;
+                }
+            }else{
+                authorize = true;
+            }
+
+            if(authorize) {
+                
+                AuthHandler(req, res);
+
+                UserHandler(req, res);
+    
+                CartHandler(req, res);
+    
+                Producthandler(req, res);
+    
+                Paymenthandler(req, res);
+
+            }else{
+                return res.status(400).json({ status: false, message: 'Unauthorized. Request....' });
+            }
+            
+        }else{
+            return res.status(400).json({ status: false, message: 'Unauthorized. Request...' });
+        }
 
     } catch (error) {
         return res.status(400).json({ status: false, message: 'Unauthorized. Request' });

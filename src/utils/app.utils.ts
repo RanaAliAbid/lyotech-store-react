@@ -1,6 +1,7 @@
 import countriesCode from "../../data/countriesCode.json";
 import countries from "../../data/countries.json";
 import phoneLength from "../../data/phoneLength.json";
+import secureLocalStorage from "react-secure-storage";
 
 export const homePageProducts = {
   "LFI_ONE_Smartphone": "64a6b8796516ac2db58264d9",
@@ -70,6 +71,30 @@ export const phoneNumberLenght = (country: string) => {
     return phoneL;
   } catch (error) {
     return 0
+  }
+}
+
+export const setLocalStorage = (key: string, data: string) => {
+  secureLocalStorage.setItem(key, data)
+  return true;
+}
+
+export const getLocalStorage = (key: string) => {
+  return secureLocalStorage.getItem(key);
+}
+
+export const hash256 = async (string: string) => {
+  try {
+    const utf8 = new TextEncoder().encode(string);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray
+      .map((bytes) => bytes.toString(16).padStart(2, '0'))
+      .join('');
+    return hashHex;
+  } catch (e) {
+    console.log(e);
+    return "";
   }
 }
 
