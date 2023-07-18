@@ -11,6 +11,10 @@ const isUserAuthenticated = async (request: NextRequest) => {
                 return true
             }
          }else {
+            if(request.nextUrl.pathname.startsWith('/auth')) {
+                return false
+            }
+
             if(request.nextUrl.pathname.startsWith('/profile')) {
                 return true
             }
