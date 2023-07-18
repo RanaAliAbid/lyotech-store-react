@@ -387,70 +387,75 @@ export default function Header({ title = 'Home' }: { title: string }) {
               </Menu>
             </div>
 
-            <div>
-              <Button
-                id="basic-button"
-                aria-controls={langOpen ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={langOpen ? 'true' : undefined}
-                onClick={handleLangClick}
-                variant="text"
-                className={styles.myAccount}
-              >
-                <span className="flag-img-main">
-                  <Image
-                    alt=""
-                    src={`/flags/${locale}.png`}
-                    width={20}
-                    height={20}
-                  />
-                </span>
-                {locale}
-              </Button>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorLang}
-                open={langOpen}
-                onClose={handleLangClose}
-                MenuListProps={{
-                  'aria-labelledby': 'basic-button',
-                }}
-                className={styles.myAccountMenu}
-              >
-                <MenuItem onClick={handleLangClose}>
-                  <Link href={``} locale="en">
-                    {' '}
-                    <>
-                      <span className="flag-img">
-                        <Image
-                          alt=""
-                          src={`/flags/en.png`}
-                          width={20}
-                          height={20}
-                        />
-                      </span>{' '}
-                      English
-                    </>{' '}
-                  </Link>
-                </MenuItem>
-                <MenuItem onClick={handleLangClose}>
-                  <Link href={``} locale="it">
-                    {' '}
-                    <>
-                      <span className="flag-img">
-                        <Image
-                          alt=""
-                          src={`/flags/it.png`}
-                          width={20}
-                          height={20}
-                        />
-                      </span>{' '}
-                      Italian
-                    </>{' '}
-                  </Link>
-                </MenuItem>
-              </Menu>
-            </div>
+            {
+              (process.env.APP_ENV_TYPE == "dev") && (
+                <div>
+                  <Button
+                    id="basic-button"
+                    aria-controls={langOpen ? 'basic-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={langOpen ? 'true' : undefined}
+                    onClick={handleLangClick}
+                    variant="text"
+                    className={styles.myAccount}
+                  >
+                    <span className="flag-img-main">
+                      <Image
+                        alt=""
+                        src={`/flags/${locale}.png`}
+                        width={20}
+                        height={20}
+                      />
+                    </span>
+                    {locale}
+                  </Button>
+                  <Menu
+                    id="basic-menu"
+                    anchorEl={anchorLang}
+                    open={langOpen}
+                    onClose={handleLangClose}
+                    MenuListProps={{
+                      'aria-labelledby': 'basic-button',
+                    }}
+                    className={styles.myAccountMenu}
+                  >
+                    <MenuItem onClick={handleLangClose}>
+                      <Link href={``} locale="en">
+                        {' '}
+                        <>
+                          <span className="flag-img">
+                            <Image
+                              alt=""
+                              src={`/flags/en.png`}
+                              width={20}
+                              height={20}
+                            />
+                          </span>{' '}
+                          English
+                        </>{' '}
+                      </Link>
+                    </MenuItem>
+                    <MenuItem onClick={handleLangClose}>
+                      <Link href={``} locale="it">
+                        {' '}
+                        <>
+                          <span className="flag-img">
+                            <Image
+                              alt=""
+                              src={`/flags/it.png`}
+                              width={20}
+                              height={20}
+                            />
+                          </span>{' '}
+                          Italian
+                        </>{' '}
+                      </Link>
+                    </MenuItem>
+                  </Menu>
+                </div>
+              )
+            }
+
           </Toolbar>
         </Container>
       </AppBar >

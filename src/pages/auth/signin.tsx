@@ -215,7 +215,7 @@ export default function SignIn() {
 
                     <Typography variant="body1">
                       {t('not-registered')}{' '}
-                      <Link href={`/${locale}/auth/signup${(redirectTo.length >= 5) && `?redirectTo=${redirectTo}`}`}>
+                      <Link href={`/${locale}/auth/signup${(redirectTo.length >= 5) ? `?redirectTo=${redirectTo}` : ""}`}>
                         {' '}
                         {t('create-account')}{' '}
                       </Link>
