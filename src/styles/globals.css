@@ -192,3 +192,11 @@ body > div,
     display: none;
    }
 }
+
+.w-100 {
+  width: 100%;
+}
+
+.product_cart_image {
+  width: 200px;
+}

@@ -34,6 +34,7 @@ import {
 } from '@/validators/auth.validator';
 import useTranslation from 'next-translate/useTranslation';
 import { FaEyeSlash, FaEye } from "react-icons/fa";
+import { useAuthContext } from '@/contexts/AuthContext';
 
 export default function CreateAccount() {
   const theme = createTheme({
@@ -45,12 +46,26 @@ export default function CreateAccount() {
   const { t } = useTranslation('signup');
 
   const router = useRouter();
+  const authContext = useAuthContext();
+
   const { locale, locales, defaultLocale } = router;
   const [validator, setValidator] = React.useState<SignUpDataValidator>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [reReqresponse, setReqResponse] = React.useState<string>('');
   const [alertColor, setAlertColor] = React.useState<AlertColor>('error');
   const [passwordVisible, setPasswordVisible] = React.useState<boolean>(true);
+  const [redirectTo, setRedirectTo] = React.useState<string>("");
+
+  React.useEffect(() => {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const _redirectTo = urlParams.get('redirectTo');
+
+      if (_redirectTo != null) {
+        setRedirectTo(_redirectTo);
+      }
+    } catch (error) { }
+  }, []);
 
   const proceedSignUp = async (e: any) => {
     e.preventDefault();
@@ -87,7 +102,7 @@ export default function CreateAccount() {
         if (result?.data?.data?.otpVerificationToken) {
           router.push(
             `/${locale}/auth/verify-email?token=${result?.data?.data?.token
-            }&key=${window.btoa(result?.data?.data?.otpVerificationToken)}`
+            }&key=${window.btoa(result?.data?.data?.otpVerificationToken)}${(redirectTo.length >= 5) && `&redirectTo=${redirectTo}`}`
           );
           return;
         }
@@ -101,6 +116,10 @@ export default function CreateAccount() {
 
     setLoading(false);
   };
+
+  React.useEffect(() => {
+    authContext.setIsChangePassword(false);
+  }, [])
 
   return (
     <>
@@ -244,7 +263,7 @@ export default function CreateAccount() {
 
                     <Typography variant="body1">
                       {t('already-account')}{' '}
-                      <Link href={`/${locale}/auth/signin`}>
+                      <Link href={`/${locale}/auth/signin${(redirectTo.length >= 5) && `?redirectTo=${redirectTo}`}`}>
                         {' '}
                         {t('sign-in')}{' '}
                       </Link>

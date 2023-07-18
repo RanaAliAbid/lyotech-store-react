@@ -20,11 +20,11 @@ export default async function handler(
 
     try {
 
-        if ((req?.method == "POST" && req?.body?.hashKey?.length > 0) || (!req?.body?.hashKey && req?.method == "GET")) {
+        if ((["POST", "PUT"].includes(req?.method ?? "")  && req?.body?.hashKey?.length > 0) || (!req?.body?.hashKey && !["POST", "PUT"].includes(req?.method ?? ""))) {
 
             let authorize = false;
 
-            if(req?.method != "GET") {
+            if(["POST", "PUT"].includes(req?.method ?? "")) {
                 const bodyKey = req?.body?.hashKey ?? ""
                 let params = req?.body ?? {}
                 delete params.hashKey;

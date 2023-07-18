@@ -4,9 +4,10 @@ import { ProxyService } from '../proxy.service';
 
 export const updateUserProfile = async (params: ProfileData) => {
   try {
+    const body = await ProxyService.generateHashKey(JSON.stringify(params))
     return ProxyService.PutRequest(
       PROXY_HOST + '/api/v1/update-profile',
-      params
+      body
     );
   } catch (error) {
     return null;

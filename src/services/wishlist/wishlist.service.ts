@@ -3,9 +3,10 @@ import { ProxyService } from '../proxy.service';
 
 export const addUserWishList = async (params: any) => {
     try {
+        const body = await ProxyService.generateHashKey(JSON.stringify(params))
         return ProxyService.PostRequest(
             PROXY_HOST + '/api/v1/add-wishlist',
-            params
+            body
         );
     } catch (error) {
         return null;

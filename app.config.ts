@@ -1,15 +1,15 @@
 export const APP_HOST =
-  process.env.ENV_TYPE == 'dev'
+  process.env.APP_ENV_TYPE == 'dev'
     ? process.env.APP_DEV_HOST
-    : process.env.ENV_TYPE == 'sandbox'
-    ? process.env.APP_DEV_HOST
+    : process.env.APP_ENV_TYPE == 'sandbox'
+    ? process.env.APP_SANDBOX_HOST
     : process.env.APP_LIVE_HOST;
 
 export const PROXY_HOST =
   process.env.PROXY_ENV_TYPE == 'dev'
     ? process.env.APP_DEV_HOST
     : process.env.PROXY_ENV_TYPE == 'sandbox'
-    ? process.env.APP_DEV_HOST
+    ? process.env.APP_SANDBOX_HOST
     : process.env.APP_LIVE_HOST;
 
 export const API_HOST =
@@ -32,7 +32,7 @@ export const ironOptions = {
     process.env.COOKIE_PASSWORD ?? '$zJW?QM,WT#a5PF2z_^Sv(UvHVcD(w8P4?.',
   // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
   cookieOptions: {
-    secure: ["sandbox", "dev"].includes(process.env.ENV_TYPE ?? "") ? false : true,
+    secure: ["sandbox", "dev"].includes(process.env.APP_ENV_TYPE ?? "") ? false : true,
   },
 };
 

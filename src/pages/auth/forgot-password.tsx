@@ -18,6 +18,7 @@ import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider } from '@mui/material';
+import { useAuthContext } from '@/contexts/AuthContext';
 
 export default function ForgotPassword() {
   const theme = createTheme({
@@ -29,6 +30,8 @@ export default function ForgotPassword() {
   const { t } = useTranslation('forgotpassword');
 
   const router = useRouter();
+  const authContext = useAuthContext();
+
   const { locale, locales, defaultLocale } = router;
   const [validator, setValidator] = React.useState<SignInDataValidator>();
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -50,7 +53,8 @@ export default function ForgotPassword() {
       const result = await fogotPasswordUser({ email: postData[0].value });
 
       if (result?.status == 200) {
-        console.log(result.data);
+
+        authContext.setIsChangePassword(true);
 
         if (result?.data?.data?.data?.jwtToken) {
           router.push(
@@ -59,6 +63,7 @@ export default function ForgotPassword() {
               result?.data?.data?.data?.jwtToken
             )}`
           );
+
         }
       }
     } catch (error: any) {

@@ -84,7 +84,7 @@ export function GlobalWrapper({
     globalLoading, setGlobalLoading,
     cart, setCart, deleteCart, addCart, getCart,
     currencySymbol, setCurrencySymbol,
-    priceToFixed,
+    priceToFixed
   };
 
   return (

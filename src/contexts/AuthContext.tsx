@@ -2,7 +2,9 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { validateUserSession } from '@/services/auth/auth.service';
 import Cookies from 'js-cookie';
 // import { useRouter } from "next/router";
-import moment from 'moment';
+import moment, { locale } from 'moment';
+import { useRouter } from 'next/router';
+import { APP_HOST } from '../../app.config';
 
 const AuthContext = createContext<any>({});
 
@@ -12,12 +14,13 @@ export function AuthWrapper({
   children: JSX.Element | JSX.Element[];
 }) {
 
-  // const router = useRouter();
+  const router = useRouter();
   const [userConnected, setUserConnected] = useState<boolean>(false);
   const [connectedUserId, setConnectedUserId] = useState<string>("");
   const [connectedUserName, setConnectedUserName] = useState<string>("");
   const [connectedUserEmail, setConnectedUserEmail] = useState<string>("");
   const [connectedUser, setConnectedUser] = useState<any>(null);
+  const [isChangePassword, setIsChangePassword] = useState<boolean>(false);
 
   const checkUserSession = async () => {
     const currentStatus = Cookies.get("userConnected");
@@ -79,11 +82,25 @@ export function AuthWrapper({
     setConnectedUserId("");
     timeoutCheckUserSession(0);
     setConnectedUserName("");
+
+    const currentPath = btoa(APP_HOST + router.pathname);
+    router.push(`/${router.locale}/auth/signin?redirectTo=${currentPath}`)
   }
 
   useEffect(() => {
     checkUserSession();
   }, [userConnected])
+
+  useEffect(() => {
+    router.events.on('routeChangeComplete', handleRouteChangeComplete);
+  }, [router])
+
+  const handleRouteChangeComplete = () => {
+    const path = router.pathname
+    if (!path.includes("/verify-email") && !path.includes("/forgot-password")) {
+      // setIsChangePassword(false);
+    }
+  }
 
   return (
     <AuthContext.Provider value={
@@ -94,7 +111,8 @@ export function AuthWrapper({
         connectedUserEmail, setConnectedUserEmail,
         connectedUser, setConnectedUser,
         logout, login,
-        checkUserSession
+        checkUserSession,
+        isChangePassword, setIsChangePassword
       }
     }>{children}</AuthContext.Provider>
   );

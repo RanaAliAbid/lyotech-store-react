@@ -48,10 +48,11 @@ export const signUpUser = async (params: SignUpData) => {
 export const validateUserEmailOtp = async (
   token: string,
   otp: string,
-  keyToken: string
+  keyToken: string,
+  session: boolean = false
 ) => {
   try {
-    const params = { token: token, otp: parseInt(otp) };
+    const params = { token: token, otp: parseInt(otp), session: !session };
     const body = await ProxyService.generateHashKey(JSON.stringify(params))
     return ProxyService.PostRequest(
       PROXY_HOST + '/api/v1/verify-email-otp',
@@ -92,7 +93,7 @@ export const fogotPasswordUser = async (params: ForgotPasswordData) => {
   }
 };
 
-export const changePasswordUser = async (params: ForgotPasswordData) => {
+export const changePasswordUser = async (params: any) => {
   try {
     const body = await ProxyService.generateHashKey(JSON.stringify(params))
     return ProxyService.PostRequest(

@@ -31,6 +31,7 @@ import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { getPaymentMethods } from '@/services/payments/payment.service';
 import { getShippingMethods } from '@/services/cart/cart.service';
+import useTranslation from 'next-translate/useTranslation';
 
 export default function Checkout() {
   const theme = createTheme({
@@ -46,6 +47,8 @@ export default function Checkout() {
 
   const globalContext = useGlobalContext();
   const authContext = useAuthContext();
+
+  const { t } = useTranslation('cart');
 
   const handleChangeShippingType = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -426,13 +429,13 @@ export default function Checkout() {
                       <List>
                         <ListItem className={styles.subTotal}>
                           <Typography variant="h6">
-                            Subtotal ({globalContext?.cart?.cart?.products?.length} items)
+                            {t('Subtotal')} ({globalContext?.cart?.cart?.products?.length} items)
                           </Typography>
                           <Typography variant="h6">{globalContext?.cart?.cart?.totalAmount} {globalContext.currencySymbol}</Typography>
                         </ListItem>
 
                         <ListItem>
-                          <Typography variant="h6">Shipping</Typography>
+                          <Typography variant="h6">{t('Shipping')}</Typography>
                           <Typography variant="h6">
                             <Link>Details</Link>
                           </Typography>
@@ -446,9 +449,10 @@ export default function Checkout() {
                           onChange={handleChangeShippingType}
                         >
                           {
-                            (shippingMethods?.length > 0) ? (
+                            (shippingMethods && shippingMethods?.length > 0) ? (
                               shippingMethods?.map((method: any, index: any) => (
                                 <ListItem
+                                  key={index}
                                   className={`${shippingType === method?._id ? styles.active : ''
                                     }`}
                                 >

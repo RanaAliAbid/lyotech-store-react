@@ -35,22 +35,6 @@ const isUserAuthenticated = async (request: NextRequest) => {
     }
 }
 
-// const isTokenExpired = (token: string) => {
-//     let timePart = token?.split(".");
-//     if (timePart && timePart[1]) {
-//         const decodedToken = JSON.parse(atob(timePart[1]));
-//         const currentTime = Date.now();
-//         let tokeExpiredTime = decodedToken.exp * 1000;
-//         if (tokeExpiredTime <= currentTime) {
-//             return true;
-//         }
-
-//         // response.cookies.set("tokenExpiredTime", tokeExpiredTime.toString())
-//         return false;
-//     }
-//     return true;
-// }
-
 export const SessionAccessMiddleware = {
     isUserAuthenticated
 }

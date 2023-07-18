@@ -41,8 +41,6 @@ import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { addUserWishList } from '@/services/wishlist/wishlist.service';
 
-// import { UrlWithStringQuery } from 'url';
-
 export default function Cart({
   data,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -58,6 +56,8 @@ export default function Cart({
   const router = useRouter();
   const globalContext = useGlobalContext();
   const authContext = useAuthContext();
+
+  const [shippingMethods, setShippingMethods] = React.useState([]);
 
   const addIntoCart = async (id: string) => {
     try {
@@ -121,6 +121,10 @@ export default function Cart({
   }
 
   React.useEffect(() => {
+    setShippingMethods(globalContext?.cart?.shippingMethods ?? []);
+  }, [globalContext.cart]);
+
+  React.useEffect(() => {
     try {
       const urlParams = new URLSearchParams(window.location.search);
 
@@ -133,7 +137,7 @@ export default function Cart({
     } catch (error) { }
   }, []);
 
-  const [shippingType, setShippingType] = React.useState<string>('express');
+  const [shippingType, setShippingType] = React.useState<string>('');
 
   const handleChangeShippingType = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -174,7 +178,7 @@ export default function Cart({
                             <div
                               className={`${styles['productImg']} ${styles['forDesktop']}`}
                             >
-                              <img src={productImg.src} alt="logo" />
+                              <img src={cartItem?.productId?.images[0]?.link ?? productImg.src} alt="logo" className='product_cart_image' />
                             </div>
 
                             <div className={styles.productDetails}>
@@ -182,7 +186,7 @@ export default function Cart({
                                 <div
                                   className={`${styles['productImg']} ${styles['forMobile']}`}
                                 >
-                                  <img src={productImg.src} alt="logo" />
+                                  <img src={cartItem?.productId?.images[0]?.link ?? productImg.src} alt="logo" />
                                 </div>
                                 <div className={styles.productHead}>
                                   <div>
@@ -286,9 +290,9 @@ export default function Cart({
                       <List>
                         <ListItem className={styles.subTotal}>
                           <Typography variant="h6">
-                            {t('Subtotal')} (3 {t('items')})
+                            {t('Subtotal')} ({globalContext?.cart?.cart?.products?.length} {t('items')})
                           </Typography>
-                          <Typography variant="h6">$480.00</Typography>
+                          <Typography variant="h6">{globalContext?.cart?.cart?.totalAmount} {globalContext.currencySymbol}</Typography>
                         </ListItem>
 
                         <ListItem>
@@ -305,7 +309,7 @@ export default function Cart({
                           value={shippingType}
                           onChange={handleChangeShippingType}
                         >
-                          <ListItem
+                          {/* <ListItem
                             className={`${shippingType === 'express' ? styles.active : ''
                               }`}
                           >
@@ -320,24 +324,35 @@ export default function Cart({
                               label={t('Express-Saver')}
                             />
                             <Typography variant="h6">102.35 €</Typography>
-                          </ListItem>
+                          </ListItem> */}
 
-                          <ListItem
-                            className={`${shippingType === 'local' ? styles.active : ''
-                              }`}
-                          >
-                            <FormControlLabel
-                              value="local"
-                              control={
-                                <Radio
-                                  size="small"
-                                  checked={shippingType === 'local'}
-                                />
-                              }
-                              label={t('Local-pickup')}
-                            />
-                            <Typography variant="h6">20.00 €</Typography>
-                          </ListItem>
+                          {
+                            (shippingMethods && shippingMethods.length > 0) ? (
+                              shippingMethods?.map((method: any, index: any) => (
+                                <ListItem
+                                  key={index}
+                                  className={`${shippingType === method?._id ? styles.active : ''
+                                    }`}
+                                >
+                                  <FormControlLabel
+                                    value={method?._id}
+                                    control={
+                                      <Radio
+                                        size="small"
+                                        checked={shippingType === method?._id}
+                                      />
+                                    }
+                                    label={method.name}
+                                  />
+                                  <Typography variant="h6">{method?.amount} {globalContext.currencySymbol}</Typography>
+                                </ListItem>
+                              ))
+                            ) : (
+                              <></>
+                            )
+                          }
+
+
                         </RadioGroup>
                       </List>
 
