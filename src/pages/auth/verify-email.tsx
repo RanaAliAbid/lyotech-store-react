@@ -18,7 +18,10 @@ import {
 import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation';
 import OtpInput from 'react-otp-input';
-import { resendUserEmailOtp, validateUserEmailOtp } from '@/services/auth/auth.service';
+import {
+  resendUserEmailOtp,
+  validateUserEmailOtp,
+} from '@/services/auth/auth.service';
 import Cookies from 'js-cookie';
 import { useAuthContext } from '@/contexts/AuthContext';
 
@@ -27,7 +30,7 @@ export default function VerifyEmailOtp({
   token,
   key,
 }: {
-  email?: string
+  email?: string;
   token: string;
   key: string;
 }) {
@@ -47,6 +50,7 @@ export default function VerifyEmailOtp({
   const [otp, setOtp] = React.useState<string>('');
   const [otpToken, setOtpToken] = React.useState<string>(token);
   const [keyToken, setKeyToken] = React.useState<string>(key);
+  const [redirectTo, setRedirectTo] = React.useState<string>("");
   const authContext = useAuthContext();
 
   React.useEffect(() => {
@@ -55,11 +59,13 @@ export default function VerifyEmailOtp({
       const _token = urlParams.get('token');
       const _otp = urlParams.get('code');
       const _key = urlParams.get('key');
+      const _redirectTo = urlParams.get('redirectTo');
 
       if (_token != null && _key != null) {
         setOtpToken(_token);
         setKeyToken(window.atob(_key));
         setOtp(_otp ?? '');
+        setRedirectTo(_redirectTo ?? "");
       }
     } catch (error) {
       // console.log(error);
@@ -72,29 +78,33 @@ export default function VerifyEmailOtp({
     setLoading(true);
 
     try {
-      const result = await validateUserEmailOtp(otpToken, otp, keyToken);
-      // setReqResponse(result?.data?.message);
-      // setAlertColor("success")
-      authContext.login();
+      const result = await validateUserEmailOtp(otpToken, otp, keyToken, authContext.isChangePassword);
 
-      // res.setHeader("Set-Cookie", [
-      //   `userConnected=${"true"}; Max-Age=36000;`,
-      //   `authToken=${result?.data?.data?.accessToken}; HttpOnly; Max-Age=36000;`,
-      //   `refreshToken=${result?.data?.data?.refreshToken}; HttpOnly; Max-Age=36000;`,
-      //   `otpToken=deleted; HttpOnly; Max-Age=0;`,
-      //   `token=deleted; HttpOnly; Max-Age=0;`,
-      // ]);
+      if (authContext.isChangePassword) {
+        router.push(`/${locale}/auth/change-password`);
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
+      } else {
+        authContext.login();
 
-      router.push(`/${locale}`);
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000)
+        if (redirectTo.length >= 5) {
+          try {
+            window.location.href = window.atob(redirectTo) ?? "/";
+            return;
+          } catch (error) { }
+        }
+
+        router.push(`/${locale}`);
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
+      }
     } catch (error: any) {
-      setAlertColor("error")
+      setAlertColor('error');
       setReqResponse(error?.response?.data?.message);
       setLoading(false);
     }
-
   };
 
   React.useEffect(() => {
@@ -108,7 +118,7 @@ export default function VerifyEmailOtp({
       setReqResponse('');
 
       setLoading(true);
-      const result = await resendUserEmailOtp("", "");
+      const result = await resendUserEmailOtp('', '');
 
       if (result?.status == 200) {
         console.log(result.data);
@@ -144,7 +154,7 @@ export default function VerifyEmailOtp({
 
       <ThemeProvider theme={theme}>
         <main className={`${styles['main']} ${styles['loginBG']}`}>
-          <Header title={"Verify Email OTP"} />
+          <Header title={'Verify Email OTP'} />
           <div className={styles.loginBoxCenter}>
             <Container className={styles.containerBox}>
               <Grid container justifyContent="center" spacing={3}>

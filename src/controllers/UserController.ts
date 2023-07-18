@@ -16,7 +16,7 @@ export const signIn = async (
     const result = await ApiService.PostRequest(API_HOST + '/v1/user/login', data);
 
     if (result && result.status == 200) {
-      console.log(result.data.data);
+      // console.log(result.data.data);
 
       res.setHeader("Set-Cookie", [
         `otpToken=${result?.data?.data?.otpVerificationToken}; HttpOnly; Max-Age=3600;`,
@@ -77,13 +77,15 @@ export const verifyEmailOtp = async (
     const result = await ApiService.PostRequest(API_HOST + '/v1/user/verify-user', data, `Bearer ${req.cookies?.otpToken}`);
 
     // console.log("🚀 ~ file: UserController.ts:79 ~ result:", result?.data?.data)
-    res.setHeader("set-Cookie", [
-      `userConnected=${"true"}; Max-Age=36000; path: '/';`,
-      `authToken=${result?.data?.data?.accessToken}; HttpOnly; Max-Age=36000; path: '/';`,
-      // `refreshToken=${result?.data?.data?.refreshToken}; HttpOnly; Max-Age=36000; path: '/';`,
-      `otpToken=deleted; HttpOnly; Max-Age=0;`,
-      `token=deleted; HttpOnly; Max-Age=0;`,
-    ]);
+    if(data.session) {
+      res.setHeader("set-Cookie", [
+        `userConnected=${"true"}; Max-Age=36000; path: '/';`,
+        `authToken=${result?.data?.data?.accessToken}; HttpOnly; Max-Age=36000; path: '/';`,
+        // `refreshToken=${result?.data?.data?.refreshToken}; HttpOnly; Max-Age=36000; path: '/';`,
+        `otpToken=deleted; HttpOnly; Max-Age=0;`,
+        `token=deleted; HttpOnly; Max-Age=0;`,
+      ]);
+    }
 
     res.status(200).json(ApiService.ApiResponseSuccess({}, 'Email verification completed'));
 
@@ -131,11 +133,16 @@ export const validateUserToken = async (
       tokeExpiredTime = decodedToken.exp;
     }
 
+    let userName = result?.data?.data?.user?.name ?? `${result?.data?.data?.user?.firstName} ${result?.data?.data?.user?.lastName}`
+    if(result?.data?.data?.user?.firstName?.length < 1) {
+      userName = result?.data?.data?.user?.email?.split("@")[0] ?? ""
+    }
+
     res.status(200).json(ApiService.ApiResponseSuccess({
       exp: tokeExpiredTime,
       id: userId,
       email: result?.data?.data?.user?.email,
-      name: result?.data?.data?.user?.name ?? `${result?.data?.data?.user?.firstName} ${result?.data?.data?.user?.lastName}`,
+      name: userName,
       user: result?.data?.data?.user
     }, 'User verified'));
 
@@ -160,6 +167,12 @@ export const forgotPassword = async (
     let data = req.body;
 
     const result = await ApiService.PostRequest(API_HOST + '/v1/user/forgot-password', data);
+    // console.log("🚀 ~ file: UserController.ts:163 ~ result:", result)
+
+    res.setHeader("Set-Cookie", [
+      `otpToken=${result?.data?.data?.jwtToken}; HttpOnly; Max-Age=3600;`,
+      `token=${result?.data?.data?.token}; HttpOnly; Max-Age=3600;`,
+    ]);
 
     res.status(200).json(ApiService.ApiResponseSuccess(result?.data, 'Please check your email inbox to get the OTP code'));
 
@@ -178,11 +191,12 @@ export const changePassword = async (
   try {
     let data = req.body;
 
-    const result = await ApiService.PostRequest(API_HOST + '/v1/user/create-password', data);
+    const result = await ApiService.PostRequest(API_HOST + '/v1/user/create-password', data, `Bearer ${req.cookies?.otpToken}`);
 
     res.status(200).json(ApiService.ApiResponseSuccess(result?.data, 'Your password has been updated! Try to login now'));
 
   } catch (error: any) {
+    console.log("🚀 ~ file: UserController.ts:194 ~ error:", error)
     console.log('Catch error change password ', error?.response?.data);
     res.status(400).json(ApiService.ApiResponseError(error));
   }

@@ -36,6 +36,7 @@ import { ironOptions } from '../../../app.config';
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import Head from 'next/head';
 import { hash256, setLocalStorage } from '@/utils/app.utils';
+import { useAuthContext } from '@/contexts/AuthContext';
 
 export default function SignIn() {
   const theme = createTheme({
@@ -47,12 +48,26 @@ export default function SignIn() {
   const { t } = useTranslation('signin');
 
   const router = useRouter();
+  const authContext = useAuthContext();
+
   const { locale, locales, defaultLocale } = router;
   const [validator, setValidator] = React.useState<SignInDataValidator>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [reReqresponse, setReqResponse] = React.useState<string>('');
   const [alertColor, setAlertColor] = React.useState<AlertColor>('error');
   const [passwordVisible, setPasswordVisible] = React.useState<boolean>(true);
+  const [redirectTo, setRedirectTo] = React.useState<string>("");
+
+  React.useEffect(() => {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const _redirectTo = urlParams.get('redirectTo');
+
+      if (_redirectTo != null) {
+        setRedirectTo(_redirectTo);
+      }
+    } catch (error) { }
+  }, []);
 
   const proceedSignIn = async (e: any) => {
     e.preventDefault();
@@ -84,7 +99,7 @@ export default function SignIn() {
         if (result?.data?.data?.otpVerificationToken) {
           router.push(
             `/${locale}/auth/verify-email?token=${result?.data?.data?.token
-            }&key=${window.btoa(result?.data?.data?.otpVerificationToken)}`
+            }&key=${window.btoa(result?.data?.data?.otpVerificationToken)}${(redirectTo.length >= 5) && `&redirectTo=${redirectTo}`}`
           );
           return;
         }
@@ -98,7 +113,7 @@ export default function SignIn() {
   };
 
   React.useEffect(() => {
-    setLocalStorage("crsfKey", "test")
+    authContext.setIsChangePassword(false);
   }, [])
 
   return (
@@ -200,7 +215,7 @@ export default function SignIn() {
 
                     <Typography variant="body1">
                       {t('not-registered')}{' '}
-                      <Link href={`/${locale}/auth/signup`}>
+                      <Link href={`/${locale}/auth/signup${(redirectTo.length >= 5) && `?redirectTo=${redirectTo}`}`}>
                         {' '}
                         {t('create-account')}{' '}
                       </Link>

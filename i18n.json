@@ -13,6 +13,7 @@
     "/auth/signin": ["signin"],
     "/auth/signup": ["signup"],
     "/auth/verify-email": ["verify-email"],
-    "/auth/forgot-password": ["forgotpassword"]
+    "/auth/forgot-password": ["forgotpassword"],
+    "/auth/change-password": ["change-password"]
   }
 }

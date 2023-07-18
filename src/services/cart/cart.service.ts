@@ -11,7 +11,8 @@ export const getUserCart = async () => {
 
 export const addToCart = async (data: any) => {
     try {
-        return ProxyService.PostRequest(PROXY_HOST + '/api/v1/add-to-cart', data);
+        const body = await ProxyService.generateHashKey(JSON.stringify(data))
+        return ProxyService.PostRequest(PROXY_HOST + '/api/v1/add-to-cart', body);
     } catch (error) {
         return null;
     }
