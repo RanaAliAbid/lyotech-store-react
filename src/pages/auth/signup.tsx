@@ -263,7 +263,7 @@ export default function CreateAccount() {
 
                     <Typography variant="body1">
                       {t('already-account')}{' '}
-                      <Link href={`/${locale}/auth/signin${(redirectTo.length >= 5) && `?redirectTo=${redirectTo}`}`}>
+                      <Link href={`/${locale}/auth/signin${(redirectTo.length >= 5) ? `?redirectTo=${redirectTo}` : ""}`}>
                         {' '}
                         {t('sign-in')}{' '}
                       </Link>

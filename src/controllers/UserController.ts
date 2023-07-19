@@ -147,13 +147,17 @@ export const validateUserToken = async (
     }, 'User verified'));
 
   } catch (error: any) {
-    
-    res.setHeader("set-Cookie", [
-      `userConnected=${"false"}; Max-Age=0;`,
-      `authToken=deleted; HttpOnly; Max-Age=0;`,
-      `refreshToken=deleted; HttpOnly; Max-Age=0;`
-    ]);
-    res.status(400).json(ApiService.ApiResponseError(error));
+
+    if(error.response.status === 401) {
+      res.setHeader("set-Cookie", [
+        `userConnected=${"false"}; Max-Age=0;`,
+        `authToken=deleted; HttpOnly; Max-Age=0;`,
+        `refreshToken=deleted; HttpOnly; Max-Age=0;`
+      ]);
+      res.status(401).json(ApiService.ApiResponseError(error));
+    }else{
+      res.status(400).json(ApiService.ApiResponseError(error));
+    }
   }
 };
 
