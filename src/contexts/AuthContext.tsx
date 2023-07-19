@@ -50,8 +50,11 @@ export function AuthWrapper({
         setConnectedUserEmail(result?.data?.data?.email ?? "");
         setConnectedUser(result?.data?.data?.user);
       }
-    } catch (error) {
-      // Cookies.remove("userConnected");
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        Cookies.remove("userConnected");
+        Cookies.remove("tokenValidity");
+      }
       setUserConnected(false);
     }
   }
