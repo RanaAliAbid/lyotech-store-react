@@ -6,7 +6,7 @@ import {
 } from '@/services/auth/auth.types';
 
 const passwordRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+-={}|;:'",.<>?]).{8,}$/;
+  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
 const stringRegex = /[&\/\\#,+()@$~%.'":*?!<>{}]/g;
 
 export const validatePassword = (password: string): boolean => {
