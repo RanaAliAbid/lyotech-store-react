@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API_KEY } from '../../app.config';
 
-const GetRequest = (url: string, authToken?: string) => {
+const GetRequest = (url: string, authToken?: string, isGuest = false) => {
   try {
     const config = {
       method: 'GET',
@@ -9,6 +9,7 @@ const GetRequest = (url: string, authToken?: string) => {
       // signal: AbortSignal.timeout(5000),
       headers: {
         'Content-Type': 'application/json',
+        guestid: (isGuest) ? authToken : null,
         Authorization: authToken,
         'X-API-KEY': API_KEY,
       },
@@ -20,7 +21,7 @@ const GetRequest = (url: string, authToken?: string) => {
   }
 };
 
-const PostRequest = (url: string, data: any, authToken?: string) => {
+const PostRequest = (url: string, data: any, authToken?: string, isGuest = false) => {
   try {
     const config = {
       method: 'POST',
@@ -29,6 +30,7 @@ const PostRequest = (url: string, data: any, authToken?: string) => {
       // signal: AbortSignal.timeout(15000),
       headers: {
         'Content-Type': 'application/json',
+        guestid: (isGuest) ? authToken : null,
         Authorization: authToken,
         'X-API-KEY': API_KEY,
       },
@@ -40,7 +42,7 @@ const PostRequest = (url: string, data: any, authToken?: string) => {
   }
 };
 
-const DeleteRequest = (url: string, authToken?: string) => {
+const DeleteRequest = (url: string, authToken?: string, isGuest = false) => {
   try {
     const config = {
       method: 'DELETE',
@@ -48,6 +50,7 @@ const DeleteRequest = (url: string, authToken?: string) => {
       // signal: AbortSignal.timeout(5000),
       headers: {
         'Content-Type': 'application/json',
+        guestid: (isGuest) ? authToken : null,
         Authorization: authToken,
         'X-API-KEY': API_KEY,
       },
@@ -59,7 +62,7 @@ const DeleteRequest = (url: string, authToken?: string) => {
   }
 };
 
-const PutRequest = (url: string, data: any, authToken?: string) => {
+const PutRequest = (url: string, data: any, authToken?: string, isGuest = false) => {
   try {
     const config = {
       method: 'PUT',
@@ -68,6 +71,7 @@ const PutRequest = (url: string, data: any, authToken?: string) => {
       // signal: AbortSignal.timeout(5000),
       headers: {
         'Content-Type': 'application/json',
+        guestid: (isGuest) ? authToken : null,
         Authorization: authToken,
         'X-API-KEY': API_KEY,
       },

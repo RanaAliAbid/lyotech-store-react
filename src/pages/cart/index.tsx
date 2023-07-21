@@ -40,6 +40,8 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { addUserWishList } from '@/services/wishlist/wishlist.service';
+import { feesType } from '@/utils/app.utils';
+import Image from 'next/image';
 
 export default function Cart({
   data,
@@ -58,10 +60,11 @@ export default function Cart({
   const authContext = useAuthContext();
 
   const [shippingMethods, setShippingMethods] = React.useState([]);
+  const [cartFees, setCartFees] = React.useState([]);
 
   const addIntoCart = async (id: string) => {
     try {
-      if (!authContext.userConnected) return;
+      // if (!authContext.userConnected) return;
       const currentQty = globalContext.cart?.cart?.products?.find((x: any) => x.productId?._id === id)?.quantity ?? 0;
       const inputQty = document.getElementById(`cartProduct-${id}`) as HTMLInputElement;
       if (!inputQty) return;
@@ -79,7 +82,7 @@ export default function Cart({
 
   const deleteFromCart = async (id: string, qty?: number) => {
     try {
-      if (!authContext.userConnected) return;
+      // if (!authContext.userConnected) return;
 
       let quantityToRemove = qty;
 
@@ -99,14 +102,22 @@ export default function Cart({
         }
       }
 
-      await globalContext.deleteCart(id, quantityToRemove);
+      const result = await globalContext.deleteCart(id, quantityToRemove);
+
+      if (!result) {
+        globalContext.setGlobalLoading(false);
+      }
 
     } catch (error) {
+      globalContext.setGlobalLoading(false);
     }
   }
 
   const addProductToWishList = async (id: string) => {
     try {
+
+      if (!authContext.userConnected) return;
+
       globalContext.setGlobalLoading(true);
 
       const data = {
@@ -122,6 +133,7 @@ export default function Cart({
 
   React.useEffect(() => {
     setShippingMethods(globalContext?.cart?.shippingMethods ?? []);
+    setCartFees(globalContext?.cart?.cart?.fees ?? []);
   }, [globalContext.cart]);
 
   React.useEffect(() => {
@@ -139,10 +151,45 @@ export default function Cart({
 
   const [shippingType, setShippingType] = React.useState<string>('');
 
-  const handleChangeShippingType = (
+  const handleChangeShippingType = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setShippingType((event.target as HTMLInputElement).value);
+    try {
+      globalContext.setGlobalLoading(true);
+
+      const shippingMethodId = (event.target as HTMLInputElement).value
+
+      const result = await globalContext.updateCartShippingMethod(shippingMethodId);
+
+      if (!result) {
+        globalContext.setGlobalLoading(false);
+      }
+
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    setShippingType(globalContext?.cart?.cart?.shippingMethod ?? "")
+  }, [globalContext.cart]);
+
+  const updateCartOneCarePolicy = async (status: boolean, id: string) => {
+    try {
+      globalContext.setGlobalLoading(true);
+
+      const data = {
+        productId: id
+      }
+      const result = await globalContext.updateCartOneCare(id, status);
+
+      if (!result) {
+        globalContext.setGlobalLoading(false);
+      }
+
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
   };
 
   // const getUserCart = async (user_handover: string, product_id: number) => {
@@ -249,14 +296,18 @@ export default function Cart({
                                   </div>
                                 </ListItem>
 
-                                <ListItem className={styles.item} onClick={(e) => addProductToWishList(cartItem?.productId?._id)}>
-                                  <Link href="#" className={styles.wishlist}>
-                                    <FavoriteBorderIcon />
-                                    <Typography variant="h6">
-                                      {t('Move-to-Wishlist')}
-                                    </Typography>
-                                  </Link>
-                                </ListItem>
+                                {
+                                  (authContext.userConnected) && (
+                                    <ListItem className={styles.item} onClick={(e) => addProductToWishList(cartItem?.productId?._id)}>
+                                      <Link href="#" className={styles.wishlist}>
+                                        <FavoriteBorderIcon />
+                                        <Typography variant="h6">
+                                          {t('Move-to-Wishlist')}
+                                        </Typography>
+                                      </Link>
+                                    </ListItem>
+                                  )
+                                }
 
                                 <ListItem className={styles.item} onClick={(e) => deleteFromCart(cartItem?.productId?._id, 0)}>
                                   <Link href="#" className={styles.remove}>
@@ -272,6 +323,17 @@ export default function Cart({
                         </List>
                       </>
                     ))
+                  }
+
+                  {
+                    (globalContext?.cart?.length == 0) && (
+                      <div className='w-100 text-center position-relative'>
+                        <div className="notfound">
+                          <Image src={"/not-found.gif"} alt='Not Found' fill={true} />
+                        </div>
+                        <h4 className='bold-900'>Your cart is empty</h4>
+                      </div>
+                    )
                   }
 
                 </Grid>
@@ -292,7 +354,7 @@ export default function Cart({
                           <Typography variant="h6">
                             {t('Subtotal')} ({globalContext?.cart?.cart?.products?.length} {t('items')})
                           </Typography>
-                          <Typography variant="h6">{globalContext?.cart?.cart?.totalAmount} {globalContext.currencySymbol}</Typography>
+                          <Typography variant="h6">{globalContext?.cart?.cart?.totalAmount?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
                         </ListItem>
 
                         <ListItem>
@@ -309,37 +371,21 @@ export default function Cart({
                           value={shippingType}
                           onChange={handleChangeShippingType}
                         >
-                          {/* <ListItem
-                            className={`${shippingType === 'express' ? styles.active : ''
-                              }`}
-                          >
-                            <FormControlLabel
-                              value="express"
-                              control={
-                                <Radio
-                                  size="small"
-                                  checked={shippingType === 'express'}
-                                />
-                              }
-                              label={t('Express-Saver')}
-                            />
-                            <Typography variant="h6">102.35 €</Typography>
-                          </ListItem> */}
 
                           {
                             (shippingMethods && shippingMethods.length > 0) ? (
                               shippingMethods?.map((method: any, index: any) => (
                                 <ListItem
                                   key={index}
-                                  className={`${shippingType === method?._id ? styles.active : ''
+                                  className={`${shippingType === method?.shippingMethod ? styles.active : ''
                                     }`}
                                 >
                                   <FormControlLabel
-                                    value={method?._id}
+                                    value={method?.shippingMethod}
                                     control={
                                       <Radio
                                         size="small"
-                                        checked={shippingType === method?._id}
+                                        checked={shippingType === method?.shippingMethod}
                                       />
                                     }
                                     label={method.name}
@@ -351,57 +397,82 @@ export default function Cart({
                               <></>
                             )
                           }
-
-
                         </RadioGroup>
                       </List>
 
                       <List>
-                        <ListItem>
-                          <Typography variant="h6">
-                            {t('Membership-Fee')}
-                          </Typography>
-                          <Typography variant="h6">49.00 €</Typography>
-                        </ListItem>
 
-                        <ListItem>
+                        {
+                          (cartFees?.length > 0) && (
+                            cartFees.map((item: any, index: any) => (
+                              (!["oneCare", "payment"].includes(item.type)) && (
+                                <ListItem>
+                                  <Typography variant="h6">
+                                    {t(feesType(item.type))}
+                                  </Typography>
+                                  <Typography variant="h6">{item?.fee?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
+                                </ListItem>
+                              )
+                            ))
+                          )
+                        }
+
+
+                        {/* <ListItem>
                           <Typography variant="h6">{t('VAT')} 5%</Typography>
                           <Typography variant="h6">16.43 €</Typography>
-                        </ListItem>
+                        </ListItem>*/}
 
-                        <ListItem>
-                          <Typography variant="h6">
-                            {t('Activation-Fee')}
-                          </Typography>
-                          <Typography variant="h6">13.50 €</Typography>
-                        </ListItem>
                       </List>
 
                       <List>
-                        <ListItem>
-                          <Typography variant="h6">
-                            {t('Payment-Processing-Fee')}
-                          </Typography>
-                          <Typography variant="h6">104.00 €</Typography>
-                        </ListItem>
+                        {
+                          (cartFees?.length > 0) && (
+                            cartFees.map((item: any, index: any) => (
+                              (["payment"].includes(item.type)) && (
+                                <ListItem>
+                                  <Typography variant="h6">
+                                    {t(feesType(item.type))}
+                                  </Typography>
+                                  <Typography variant="h6">{item?.fee?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
+                                </ListItem>
+                              )
+                            ))
+                          )
+                        }
                       </List>
 
                       <List className={styles.policySummary}>
-                        <ListItem>
-                          <div className={styles.allCenter}>
-                            <Checkbox size="small" defaultChecked />
-                            <Typography variant="h5">
-                              {t('One-Care-Policy')}
-                            </Typography>
-                          </div>
-                          <Typography variant="h6">150.00 €</Typography>
-                        </ListItem>
+                        {
+                          (cartFees?.length > 0) && (
+                            cartFees.map((item: any, index: any) => (
+                              (["oneCare"].includes(item.type)) && (
+                                <ListItem>
+                                  <div className={styles.allCenter}>
+
+                                    <Checkbox
+                                      defaultChecked={
+                                        (globalContext?.cart?.cart?.oneCare?.findIndex((x: any) => x.productId == globalContext?.cart?.cart?.products[0]?.productId?._id) !== -1) ? true : false}
+                                      onChange={(e) => updateCartOneCarePolicy(e.target.checked, globalContext?.cart?.cart?.products[0]?.productId?._id ?? "")}
+                                      size="small"
+                                    />
+
+                                    <Typography variant="h5">
+                                      {t(feesType(item.type))}
+                                    </Typography>
+                                  </div>
+                                  <Typography variant="h6">{item?.fee?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
+                                </ListItem>
+                              )
+                            ))
+                          )
+                        }
                       </List>
 
                       <List>
                         <ListItem className={styles.summaryfoot}>
                           <Typography variant="h5">{t('Total')}</Typography>
-                          <Typography variant="h5">579.18 €</Typography>
+                          <Typography variant="h5">{globalContext?.cart?.cart?.totalIncludingFees?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
                         </ListItem>
                       </List>
                     </div>
@@ -447,9 +518,6 @@ export const getServerSideProps: GetServerSideProps<{ data: any }> = async ({
       productId: parseInt(product_id),
     });
   }
-  // console.log(result, "saaaaaa xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-
-  // const data = result?.data ?? null;
   const data = '';
   return { props: { data } };
 };

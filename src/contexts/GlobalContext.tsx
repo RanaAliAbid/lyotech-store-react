@@ -7,7 +7,7 @@ import {
 
 const GlobalContext = createContext<any>({});
 import { useRouter } from "next/router";
-import { addToCart, getUserCart, removeCartProduct } from '@/services/cart/cart.service';
+import { addToCart, getUserCart, removeCartProduct, updateCart } from '@/services/cart/cart.service';
 import { priceSymbol } from '@/utils/app.utils';
 
 export function GlobalWrapper({
@@ -75,6 +75,40 @@ export function GlobalWrapper({
 
       return result?.data?.data ?? null;
     } catch (error) {
+      setCart([]);
+      return null;
+    }
+  }
+
+  const updateCartOneCare = async (id: string, status: boolean = true) => {
+    try {
+      setGlobalLoading(true);
+      const result = await updateCart({
+        oneCare: {
+          "productId": id,
+          "purchase": status
+        }
+      });
+      await getCart();
+      setGlobalLoading(false);
+
+      return result;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  const updateCartShippingMethod = async (id: string) => {
+    try {
+      setGlobalLoading(true);
+      const result = await updateCart({
+        shippingMethodId: id
+      });
+      await getCart();
+      setGlobalLoading(false);
+
+      return result;
+    } catch (error) {
       return null;
     }
   }
@@ -84,7 +118,8 @@ export function GlobalWrapper({
     globalLoading, setGlobalLoading,
     cart, setCart, deleteCart, addCart, getCart,
     currencySymbol, setCurrencySymbol,
-    priceToFixed
+    priceToFixed,
+    updateCartOneCare, updateCartShippingMethod
   };
 
   return (

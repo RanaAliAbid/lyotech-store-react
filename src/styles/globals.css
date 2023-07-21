@@ -181,8 +181,9 @@ body > div,
 .notfound {
   display: block;
   position: relative;
+  left: 50%;
   transform: translate(-50%, 0);
-  margin: 0 100% auto;
+  /* margin: 0 100% auto; */
   height: 350px;
   width: 350px;
 }
@@ -199,4 +200,8 @@ body > div,
 
 .product_cart_image {
   width: 200px;
+}
+
+.bold-900 {
+  font-weight: 900;
 }
