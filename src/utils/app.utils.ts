@@ -13,10 +13,12 @@ export const appLanguages = [
   {
     value: 'en',
     label: 'English',
+    status: true
   },
   {
     value: 'it',
     label: 'Italian',
+    status: true
   },
   // {
   //   value: 'fr',
@@ -104,5 +106,17 @@ export const priceSymbol = (name: string) => {
     case "dollar": return "$";
     case "dirahm": return "د.إ";
     default: return "€";
+  }
+}
+
+export const feesType = (name: string) => {
+  switch (name) {
+    case "activation": return "Activation-Fee";
+    case "membership": return "Membership-Fee";
+    case "payment": return "Payment-Processing-Fee";
+    case "oneCare": return "One-Care-Policy";
+    case "shipping": return "Shipping Fee";
+    case "vat": return "VAT";
+    default: return "";
   }
 }

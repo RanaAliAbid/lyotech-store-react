@@ -60,13 +60,11 @@ export default function Home() {
 
   const addProductToCart = async (id: string) => {
     try {
-      if (!authContext.userConnected) {
-        router.push(`${router.locale}/auth/signin`);
-        return;
-      }
-      await globalContext.addCart(id, 1);
+      const result = await globalContext.addCart(id, 1);
 
-      router.push("/cart");
+      if (result) return router.push("/cart");
+
+      globalContext.setGlobalLoading(false);
 
     } catch (error) {
       globalContext.setGlobalLoading(false);

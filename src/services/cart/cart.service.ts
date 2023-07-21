@@ -33,3 +33,12 @@ export const getShippingMethods = async () => {
         return null;
     }
 };
+
+export const updateCart = async (data: any) => {
+    try {
+        const body = await ProxyService.generateHashKey(JSON.stringify(data))
+        return ProxyService.PutRequest(PROXY_HOST + '/api/v1/update-cart', body);
+    } catch (error) {
+        return null;
+    }
+};

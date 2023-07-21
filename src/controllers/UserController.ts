@@ -21,6 +21,7 @@ export const signIn = async (
       res.setHeader("Set-Cookie", [
         `otpToken=${result?.data?.data?.otpVerificationToken}; HttpOnly; Max-Age=3600;`,
         `token=${result?.data?.data?.token}; HttpOnly; Max-Age=3600;`,
+        `guestId=deleted; HttpOnly; Max-Age=0;`
       ]);
 
       res.status(200).json(ApiService.ApiResponseSuccess(result?.data?.data, 'Sucessfull login. Please verify your email'));

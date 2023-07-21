@@ -76,7 +76,7 @@ export default function Header({ title = 'Home' }: { title: string }) {
 
   const handleCartClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (
-      !authContext.userConnected ||
+      // !authContext.userConnected ||
       !globalContext.cart?.cart?.products ||
       globalContext.cart?.cart?.products?.length == 0
     ) {
@@ -130,7 +130,7 @@ export default function Header({ title = 'Home' }: { title: string }) {
 
   const getCart = async () => {
     try {
-      if (!authContext.userConnected) return;
+      // if (!authContext.userConnected) return;
 
       await globalContext.getCart();
 
@@ -140,7 +140,7 @@ export default function Header({ title = 'Home' }: { title: string }) {
 
   const deletFromCart = async (id: string) => {
     try {
-      if (!authContext.userConnected) return;
+      // if (!authContext.userConnected) return;
 
       await globalContext.deleteCart(id, 0);
 
@@ -155,7 +155,7 @@ export default function Header({ title = 'Home' }: { title: string }) {
   const siteDescription =
     'LYOTECH LABS is an R&D company that works on the development of software and hardware products including mobile phones, tablets, laptops and smart watches. Our goal is giving best our customers in technologys';
 
-  const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(false);
+  // const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(false);
 
   return (
     <>

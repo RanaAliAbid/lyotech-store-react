@@ -431,7 +431,7 @@ export default function Checkout() {
                           <Typography variant="h6">
                             {t('Subtotal')} ({globalContext?.cart?.cart?.products?.length} items)
                           </Typography>
-                          <Typography variant="h6">{globalContext?.cart?.cart?.totalAmount} {globalContext.currencySymbol}</Typography>
+                          <Typography variant="h6">{globalContext?.cart?.cart?.totalAmount?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
                         </ListItem>
 
                         <ListItem>
