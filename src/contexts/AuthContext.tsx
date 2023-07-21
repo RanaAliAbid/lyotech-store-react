@@ -86,8 +86,8 @@ export function AuthWrapper({
     timeoutCheckUserSession(0);
     setConnectedUserName("");
 
-    const currentPath = btoa(APP_HOST + router.pathname);
-    router.push(`/${router.locale}/auth/signin?redirectTo=${currentPath}`)
+    // const currentPath = btoa(APP_HOST + router.pathname);
+    router.push(`/${router.locale}/auth/signin`) //?redirectTo=${currentPath}
   }
 
   useEffect(() => {

@@ -87,6 +87,9 @@ export const getLocalStorage = (key: string) => {
 
 export const hash256 = async (string: string) => {
   try {
+    
+    if(process.env.APP_ENV_TYPE === 'dev') return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+
     const utf8 = new TextEncoder().encode(string);
     const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
