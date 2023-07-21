@@ -78,7 +78,7 @@ export const verifyEmailOtp = async (
     const result = await ApiService.PostRequest(API_HOST + '/v1/user/verify-user', data, `Bearer ${req.cookies?.otpToken}`);
 
     // console.log("🚀 ~ file: UserController.ts:79 ~ result:", result?.data?.data)
-    if(data.session) {
+    if (data.session) {
       res.setHeader("set-Cookie", [
         `userConnected=${"true"}; Max-Age=36000; path: '/';`,
         `authToken=${result?.data?.data?.accessToken}; HttpOnly; Max-Age=36000; path: '/';`,
@@ -115,6 +115,32 @@ export const resendUserEmailOtp = async (
   }
 };
 
+export const checkHandover = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  res.setHeader('Allow', 'POST');
+
+  try {
+    let data = req?.body;
+
+    const result = await ApiService.GetRequest(`${API_HOST}/v1/user/auth/${data?.productId}/${data?.handoverToken}`);
+
+    res.setHeader("set-Cookie", [
+      `userConnected=${"true"}; Max-Age=36000; path: '/';`,
+      `authToken=${result?.data?.data?.accessToken}; HttpOnly; Max-Age=36000; path: '/';`,
+      // `refreshToken=${result?.data?.data?.refreshToken}; HttpOnly; Max-Age=36000; path: '/';`,
+      `otpToken=deleted; HttpOnly; Max-Age=0;`,
+      `token=deleted; HttpOnly; Max-Age=0;`,
+    ]);
+
+    res.status(200).json(ApiService.ApiResponseSuccess({}, 'User account verified.'));
+
+  } catch (error: any) {
+    res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};
+
 export const validateUserToken = async (
   req: NextApiRequest,
   res: NextApiResponse<ApiData | ApiError>
@@ -135,7 +161,7 @@ export const validateUserToken = async (
     }
 
     let userName = result?.data?.data?.user?.name ?? `${result?.data?.data?.user?.firstName} ${result?.data?.data?.user?.lastName}`
-    if(result?.data?.data?.user?.firstName?.length < 1) {
+    if (result?.data?.data?.user?.firstName?.length < 1) {
       userName = result?.data?.data?.user?.email?.split("@")[0] ?? ""
     }
 
@@ -149,14 +175,14 @@ export const validateUserToken = async (
 
   } catch (error: any) {
 
-    if(error.response.status === 401) {
+    if (error.response.status === 401) {
       res.setHeader("set-Cookie", [
         `userConnected=${"false"}; Max-Age=0;`,
         `authToken=deleted; HttpOnly; Max-Age=0;`,
         `refreshToken=deleted; HttpOnly; Max-Age=0;`
       ]);
       res.status(401).json(ApiService.ApiResponseError(error));
-    }else{
+    } else {
       res.status(400).json(ApiService.ApiResponseError(error));
     }
   }
