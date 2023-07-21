@@ -29,8 +29,8 @@ export async function middleware(request: NextRequest) {
   const locale = request.cookies.get('lang')?.value ?? 'en';
 
   if(await SessionAccessMiddleware.isUserAuthenticated(request)) {
-      const currentPath = btoa(request.nextUrl.href);
-      return NextResponse.redirect(`${request.nextUrl.origin +"/"+ locale}/auth/signin?redirectTo=${currentPath}`);
+      // const currentPath = btoa(request.nextUrl.href); //?redirectTo=${currentPath}
+      return NextResponse.redirect(`${request.nextUrl.origin +"/"+ locale}/auth/signin`);
   }
 
   // return NextResponse.redirect(new URL(`/${locale}`, request.url));
