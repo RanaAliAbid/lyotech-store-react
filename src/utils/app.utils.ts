@@ -4,9 +4,9 @@ import phoneLength from "../../data/phoneLength.json";
 import secureLocalStorage from "react-secure-storage";
 
 export const homePageProducts = {
-  "LFI_ONE_Smartphone": "64a6b8796516ac2db58264d9",
-  "LYO_Watch": "64a407cca23f0f287a41df0a",
-  "LYO_Tab": "64a408cba23f0f287a41df1e",
+  "LFI_ONE_Smartphone": "64ba9efeee6cee247b7f43cb",
+  "LYO_Watch": "64ba9efeee6cee247b7f43cb",
+  "LYO_Tab": "64ba9efeee6cee247b7f43cb",
 }
 
 export const appLanguages = [
@@ -87,7 +87,7 @@ export const getLocalStorage = (key: string) => {
 
 export const hash256 = async (string: string) => {
   try {
-    
+
     if(process.env.APP_ENV_TYPE === 'dev') return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
 
     const utf8 = new TextEncoder().encode(string);
