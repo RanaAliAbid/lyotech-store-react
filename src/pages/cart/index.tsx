@@ -7,31 +7,21 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
 import Link from '@mui/material/Link';
-import { useRouter } from 'next/router';
-
 import productImg from '../../img/productImg.png';
-
 import styles from '@/styles/Home.module.css';
 
 import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider } from '@mui/material';
-
 import { verifyUserHandover } from '@/services/auth/auth.service';
-
 import useTranslation from 'next-translate/useTranslation';
 
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
@@ -40,11 +30,12 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { addUserWishList } from '@/services/wishlist/wishlist.service';
-import { feesType } from '@/utils/app.utils';
 import Image from 'next/image';
+import CartTotalComponent from '@/components/cart/cart-total.component';
+import { resolveTypeReferenceDirective } from 'typescript';
 
 export default function Cart({
-  data,
+  userJwt,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
   const { t } = useTranslation('cart');
@@ -55,16 +46,11 @@ export default function Cart({
     },
   });
 
-  const router = useRouter();
   const globalContext = useGlobalContext();
   const authContext = useAuthContext();
 
-  const [shippingMethods, setShippingMethods] = React.useState([]);
-  const [cartFees, setCartFees] = React.useState([]);
-
   const addIntoCart = async (id: string) => {
     try {
-      // if (!authContext.userConnected) return;
       const currentQty = globalContext.cart?.cart?.products?.find((x: any) => x.productId?._id === id)?.quantity ?? 0;
       const inputQty = document.getElementById(`cartProduct-${id}`) as HTMLInputElement;
       if (!inputQty) return;
@@ -82,8 +68,6 @@ export default function Cart({
 
   const deleteFromCart = async (id: string, qty?: number) => {
     try {
-      // if (!authContext.userConnected) return;
-
       let quantityToRemove = qty;
 
       if (!qty) {
@@ -132,11 +116,6 @@ export default function Cart({
   }
 
   React.useEffect(() => {
-    setShippingMethods(globalContext?.cart?.shippingMethods ?? []);
-    setCartFees(globalContext?.cart?.cart?.fees ?? []);
-  }, [globalContext.cart]);
-
-  React.useEffect(() => {
     try {
       const urlParams = new URLSearchParams(window.location.search);
 
@@ -148,57 +127,6 @@ export default function Cart({
       }
     } catch (error) { }
   }, []);
-
-  const [shippingType, setShippingType] = React.useState<string>('');
-
-  const handleChangeShippingType = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    try {
-      globalContext.setGlobalLoading(true);
-
-      const shippingMethodId = (event.target as HTMLInputElement).value
-
-      const result = await globalContext.updateCartShippingMethod(shippingMethodId);
-
-      if (!result) {
-        globalContext.setGlobalLoading(false);
-      }
-
-    } catch (error) {
-      globalContext.setGlobalLoading(false);
-    }
-  };
-
-  React.useEffect(() => {
-    setShippingType(globalContext?.cart?.cart?.shippingMethod ?? "")
-  }, [globalContext.cart]);
-
-  const updateCartOneCarePolicy = async (status: boolean, id: string) => {
-    try {
-      globalContext.setGlobalLoading(true);
-
-      const data = {
-        productId: id
-      }
-      const result = await globalContext.updateCartOneCare(id, status);
-
-      if (!result) {
-        globalContext.setGlobalLoading(false);
-      }
-
-    } catch (error) {
-      globalContext.setGlobalLoading(false);
-    }
-  };
-
-  // const getUserCart = async (user_handover: string, product_id: number) => {
-  //   const result = await verifyUserHandover({
-  //     handoverToken: user_handover,
-  //     productId: product_id,
-  //   });
-  //   console.log(result);
-  // };
 
   return (
     <>
@@ -339,153 +267,9 @@ export default function Cart({
                 </Grid>
 
                 <Grid item md={4} xs={12}>
-                  <div
-                    className={`${styles['wrapTitle']} ${styles['orderSum']}`}
-                  >
-                    <Typography variant="h4">{t('header-summary')}</Typography>
-
-                    <Typography variant="h6">Order ID: #0297509</Typography>
-                  </div>
-
-                  <div className={styles.wrapBox}>
-                    <div className={styles.summaryDetails}>
-                      <List>
-                        <ListItem className={styles.subTotal}>
-                          <Typography variant="h6">
-                            {t('Subtotal')} ({globalContext?.cart?.cart?.products?.length} {t('items')})
-                          </Typography>
-                          <Typography variant="h6">{globalContext?.cart?.cart?.totalAmount?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
-                        </ListItem>
-
-                        <ListItem>
-                          <Typography variant="h6">{t('Shipping')}</Typography>
-                          <Typography variant="h6">
-                            <Link>Details</Link>
-                          </Typography>
-                        </ListItem>
-                      </List>
-
-                      <List className={styles.shippingType}>
-                        <RadioGroup
-                          name="controlled-radio-buttons-group"
-                          value={shippingType}
-                          onChange={handleChangeShippingType}
-                        >
-
-                          {
-                            (shippingMethods && shippingMethods.length > 0) ? (
-                              shippingMethods?.map((method: any, index: any) => (
-                                <ListItem
-                                  key={index}
-                                  className={`${shippingType === method?.shippingMethod ? styles.active : ''
-                                    }`}
-                                >
-                                  <FormControlLabel
-                                    value={method?.shippingMethod}
-                                    control={
-                                      <Radio
-                                        size="small"
-                                        checked={shippingType === method?.shippingMethod}
-                                      />
-                                    }
-                                    label={method.name}
-                                  />
-                                  <Typography variant="h6">{method?.amount} {globalContext.currencySymbol}</Typography>
-                                </ListItem>
-                              ))
-                            ) : (
-                              <></>
-                            )
-                          }
-                        </RadioGroup>
-                      </List>
-
-                      <List>
-
-                        {
-                          (cartFees?.length > 0) && (
-                            cartFees.map((item: any, index: any) => (
-                              (!["oneCare", "payment"].includes(item.type)) && (
-                                <ListItem>
-                                  <Typography variant="h6">
-                                    {t(feesType(item.type))}
-                                  </Typography>
-                                  <Typography variant="h6">{item?.fee?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
-                                </ListItem>
-                              )
-                            ))
-                          )
-                        }
-
-
-                        {/* <ListItem>
-                          <Typography variant="h6">{t('VAT')} 5%</Typography>
-                          <Typography variant="h6">16.43 €</Typography>
-                        </ListItem>*/}
-
-                      </List>
-
-                      <List>
-                        {
-                          (cartFees?.length > 0) && (
-                            cartFees.map((item: any, index: any) => (
-                              (["payment"].includes(item.type)) && (
-                                <ListItem>
-                                  <Typography variant="h6">
-                                    {t(feesType(item.type))}
-                                  </Typography>
-                                  <Typography variant="h6">{item?.fee?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
-                                </ListItem>
-                              )
-                            ))
-                          )
-                        }
-                      </List>
-
-                      <List className={styles.policySummary}>
-                        {
-                          (cartFees?.length > 0) && (
-                            cartFees.map((item: any, index: any) => (
-                              (["oneCare"].includes(item.type)) && (
-                                <ListItem>
-                                  <div className={styles.allCenter}>
-
-                                    <Checkbox
-                                      defaultChecked={
-                                        (globalContext?.cart?.cart?.oneCare?.findIndex((x: any) => x.productId == globalContext?.cart?.cart?.products[0]?.productId?._id) !== -1) ? true : false}
-                                      onChange={(e) => updateCartOneCarePolicy(e.target.checked, globalContext?.cart?.cart?.products[0]?.productId?._id ?? "")}
-                                      size="small"
-                                    />
-
-                                    <Typography variant="h5">
-                                      {t(feesType(item.type))}
-                                    </Typography>
-                                  </div>
-                                  <Typography variant="h6">{item?.fee?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
-                                </ListItem>
-                              )
-                            ))
-                          )
-                        }
-                      </List>
-
-                      <List>
-                        <ListItem className={styles.summaryfoot}>
-                          <Typography variant="h5">{t('Total')}</Typography>
-                          <Typography variant="h5">{globalContext?.cart?.cart?.totalIncludingFees?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
-                        </ListItem>
-                      </List>
-                    </div>
-                    <Button
-                      onClick={(e) => { (globalContext.cart?.cart?.products?.length > 0) && router.push(`/${router.locale}/checkout`) }}
-                      variant="contained"
-                      fullWidth
-                      className={`${styles['btn']} ${styles['btn_primary']}`}
-                    >
-                      {t('Checkout-btn')}
-                    </Button>
-                  </div>
+                  <CartTotalComponent isCheckout={false}></CartTotalComponent>
                 </Grid>
+
               </Grid>
             </Container>
           </div>
@@ -498,7 +282,7 @@ export default function Cart({
 }
 
 
-export const getServerSideProps: GetServerSideProps<{ data: any }> = async ({
+export const getServerSideProps: GetServerSideProps<{ userJwt: any }> = async ({
   req,
   res,
 }: {
@@ -506,18 +290,44 @@ export const getServerSideProps: GetServerSideProps<{ data: any }> = async ({
   res: ServerResponse;
 }) => {
   let currentUrl = req.url?.split('?')[1] ?? '';
+  let result = null;
 
   if (currentUrl) {
     const urlParams = new URLSearchParams(currentUrl);
     const product_id = urlParams.get('product_id') ?? '';
     const user_handover = urlParams.get('user_handover') ?? '';
-    console.log('params', urlParams);
 
-    const result = verifyUserHandover({
-      handoverToken: user_handover,
-      productId: parseInt(product_id),
-    });
+    if (product_id?.length >= 1 && user_handover?.length >= 1) {
+      result = await verifyUserHandover({
+        handoverToken: user_handover,
+        productId: parseInt(product_id),
+      });
+
+      if (!result)
+        return {
+          redirect: {
+            destination: `/`,
+            permanent: false,
+          },
+        };
+
+      if (result.length > 10) {
+        res.setHeader("set-Cookie", [
+          `userConnected=${"true"}; Max-Age=36000; path: '/';`,
+          `authToken=${result}; HttpOnly; Max-Age=36000; path: '/';`,
+          `otpToken=deleted; HttpOnly; Max-Age=0;`,
+          `token=deleted; HttpOnly; Max-Age=0;`,
+        ]);
+
+        return {
+          redirect: {
+            destination: `/checkout`,
+            permanent: false,
+          },
+        };
+      }
+    }
   }
-  const data = '';
-  return { props: { data } };
+  const userJwt = result;
+  return { props: { userJwt } };
 };

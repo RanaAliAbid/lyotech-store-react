@@ -9,11 +9,11 @@ import {
   changePassword,
   resendUserEmailOtp,
   sendEmailOTP,
+  checkHandover,
 } from '@/controllers/UserController';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ApiData, ApiError } from '../../types';
 import { AuthUser } from '@/contexts/auth.types';
-import { userCart } from '@/controllers/CartController';
 
 export default async function AuthHandler(
   req: NextApiRequest,
@@ -38,6 +38,9 @@ export default async function AuthHandler(
 
     case 'checktoken':
       return validateUserToken(req, res);
+
+    case 'checkHandover': 
+      return checkHandover(req, res);
 
     case 'verify-email-otp':
       return verifyEmailOtp(req, res);

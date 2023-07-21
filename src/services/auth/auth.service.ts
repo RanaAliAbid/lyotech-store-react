@@ -4,17 +4,16 @@ import {
   SignInData,
   SignUpData,
 } from './auth.types';
-import { PROXY_HOST } from '../../../app.config';
+import { API_HOST, PROXY_HOST } from '../../../app.config';
 import { ProxyService } from '../proxy.service';
+import { ApiService } from '../api.service';
 
 export const verifyUserHandover = async (params: PartnerLinkData) => {
   try {
-    const body = await ProxyService.generateHashKey(JSON.stringify(params))
-    return ProxyService.PostRequest(
-      PROXY_HOST + '/api/v1/checktoken',
-      body
-    );
-  } catch (error) {
+    const result = await ApiService.GetRequest(`${API_HOST}/v1/user/auth/${params?.productId}/${params?.handoverToken}`);
+
+    return result?.data?.data?.jwtToken;
+  } catch (error: any) {
     return null;
   }
 };

@@ -5,6 +5,7 @@
     "*": ["common"],
     "/": ["home"],
     "/cart": ["cart"],
+    "/checkout": ["cart"],
     "/profile": ["profile"],
     "/trackorder": ["order"],
     "/orders": ["order"],

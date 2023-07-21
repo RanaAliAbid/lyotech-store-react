@@ -1,14 +1,11 @@
 import * as React from 'react';
-import Head from 'next/head';
 import Header from '../../common/header';
 import Footer from '../../common/footer';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
 
 import Checkbox from '@mui/material/Checkbox';
@@ -30,8 +27,8 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { getPaymentMethods } from '@/services/payments/payment.service';
-import { getShippingMethods } from '@/services/cart/cart.service';
 import useTranslation from 'next-translate/useTranslation';
+import CartTotalComponent from '@/components/cart/cart-total.component';
 
 export default function Checkout() {
   const theme = createTheme({
@@ -40,21 +37,13 @@ export default function Checkout() {
     },
   });
 
-  const [shippingType, setShippingType] = React.useState('express');
   const [paymentType, setPaymentType] = React.useState('crypto');
   const [paymentMethods, setPaymentMethods] = React.useState([]);
-  const [shippingMethods, setShippingMethods] = React.useState([]);
 
   const globalContext = useGlobalContext();
   const authContext = useAuthContext();
 
   const { t } = useTranslation('cart');
-
-  const handleChangeShippingType = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setShippingType((event.target as HTMLInputElement).value);
-  };
 
   const handleChangePayment = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPaymentType((event.target as HTMLInputElement).value);
@@ -66,20 +55,8 @@ export default function Checkout() {
 
       setPaymentMethods(result?.data?.data);
 
-      getShippingMethodList()
-
-    } catch (error) {
       globalContext.setGlobalLoading(false);
-    }
-  }
 
-  const getShippingMethodList = async () => {
-    try {
-      const result = await getShippingMethods();
-
-      setShippingMethods(result?.data?.data);
-
-      globalContext.setGlobalLoading(false);
     } catch (error) {
       globalContext.setGlobalLoading(false);
     }
@@ -88,7 +65,7 @@ export default function Checkout() {
   React.useEffect(() => {
     globalContext.setGlobalLoading(true);
     getPaymentMethodList()
-  }, [])
+  }, [globalContext.cart]);
 
   return (
     <>
@@ -416,121 +393,9 @@ export default function Checkout() {
                 </Grid>
 
                 <Grid item md={4} xs={12}>
-                  <div
-                    className={`${styles['wrapTitle']} ${styles['orderSum']}`}
-                  >
-                    <Typography variant="h4">Order Summary</Typography>
-
-                    {/* <Typography variant="h6">Order ID: #0297509</Typography> */}
-                  </div>
-
-                  <div className={styles.wrapBox}>
-                    <div className={styles.summaryDetails}>
-                      <List>
-                        <ListItem className={styles.subTotal}>
-                          <Typography variant="h6">
-                            {t('Subtotal')} ({globalContext?.cart?.cart?.products?.length} items)
-                          </Typography>
-                          <Typography variant="h6">{globalContext?.cart?.cart?.totalAmount?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
-                        </ListItem>
-
-                        <ListItem>
-                          <Typography variant="h6">{t('Shipping')}</Typography>
-                          <Typography variant="h6">
-                            <Link>Details</Link>
-                          </Typography>
-                        </ListItem>
-                      </List>
-
-                      <List className={styles.shippingType}>
-                        <RadioGroup
-                          name="controlled-radio-buttons-group"
-                          value={shippingType}
-                          onChange={handleChangeShippingType}
-                        >
-                          {
-                            (shippingMethods && shippingMethods?.length > 0) ? (
-                              shippingMethods?.map((method: any, index: any) => (
-                                <ListItem
-                                  key={index}
-                                  className={`${shippingType === method?._id ? styles.active : ''
-                                    }`}
-                                >
-                                  <FormControlLabel
-                                    value={method?._id}
-                                    control={
-                                      <Radio
-                                        size="small"
-                                        checked={shippingType === method?._id}
-                                      />
-                                    }
-                                    label={method.name}
-                                  />
-                                  <Typography variant="h6">{method?.price} {globalContext.currencySymbol}</Typography>
-                                </ListItem>
-                              ))
-                            ) : (
-                              <></>
-                            )
-                          }
-
-                        </RadioGroup>
-                      </List>
-
-                      <List>
-                        <ListItem>
-                          <Typography variant="h6">Membership Fee</Typography>
-                          <Typography variant="h6">49.00 €</Typography>
-                        </ListItem>
-
-                        <ListItem>
-                          <Typography variant="h6">VAT 5%</Typography>
-                          <Typography variant="h6">16.43 €</Typography>
-                        </ListItem>
-
-                        <ListItem>
-                          <Typography variant="h6">Activation Fee</Typography>
-                          <Typography variant="h6">13.50 €</Typography>
-                        </ListItem>
-                      </List>
-
-                      <List>
-                        <ListItem>
-                          <Typography variant="h6">
-                            Payment Processing Fee
-                          </Typography>
-                          <Typography variant="h6">04.00 €</Typography>
-                        </ListItem>
-                      </List>
-
-                      <List className={styles.policySummary}>
-                        <ListItem>
-                          <div className={styles.allCenter}>
-                            <Checkbox size="small" defaultChecked />
-                            <Typography variant="h5">
-                              One Care Policy
-                            </Typography>
-                          </div>
-                          <Typography variant="h6">150.00 €</Typography>
-                        </ListItem>
-                      </List>
-
-                      <List>
-                        <ListItem className={styles.summaryfoot}>
-                          <Typography variant="h5">Total</Typography>
-                          <Typography variant="h5">579.18 €</Typography>
-                        </ListItem>
-                      </List>
-                    </div>
-                    <Button
-                      variant="contained"
-                      fullWidth
-                      className={`${styles['btn']} ${styles['btn_primary']}`}
-                    >
-                      Checkout
-                    </Button>
-                  </div>
+                  <CartTotalComponent isCheckout={true}></CartTotalComponent>
                 </Grid>
+
               </Grid>
             </Container>
           </div>
