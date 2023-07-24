@@ -37,16 +37,19 @@ import pclogo05 from '../img/partners-logo/pclogo05.jpg';
 import styles from '@/styles/Home.module.css';
 import { Work_Sans } from 'next/font/google';
 
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
+import { IncomingMessage, ServerResponse } from 'http';
+
 const workSans = Work_Sans({ subsets: ['latin'] });
 import { createTheme, ThemeProvider } from '@mui/material';
 import useTranslation from 'next-translate/useTranslation';
 import { homePageProducts } from '@/utils/app.utils';
 import { useGlobalContext } from '@/contexts/GlobalContext';
-import { addToCart } from '@/services/cart/cart.service';
 import { useRouter } from 'next/router';
 import { useAuthContext } from '@/contexts/AuthContext';
+import { getHomePageProducts } from '@/services/products/product.service';
 
-export default function Home() {
+export default function Home({ products }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const theme = createTheme({
     typography: {
       fontFamily: ['Work Sans'].join(','),
@@ -60,6 +63,8 @@ export default function Home() {
 
   const addProductToCart = async (id: string) => {
     try {
+      if (!id) return;
+
       const result = await globalContext.addCart(id, 1);
 
       if (result) return router.push("/cart");
@@ -587,7 +592,7 @@ export default function Home() {
                         viewport={{ once: true }}
                       >
                         <Button
-                          onClick={(e) => addProductToCart(homePageProducts.LFI_ONE_Smartphone)}
+                          onClick={(e) => addProductToCart(products?.LFI_ONE_Smartphone)}
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
@@ -733,7 +738,7 @@ export default function Home() {
                           viewport={{ once: true }}
                         >
                           <Button
-                            onClick={(e) => addProductToCart(homePageProducts.LYO_Watch)}
+                            onClick={(e) => addProductToCart(products?.LYO_Watch)}
                             variant="contained"
                             className={`${styles['btn']} ${styles['btn_primary']}`}
                           >
@@ -924,7 +929,7 @@ export default function Home() {
                         viewport={{ once: true }}
                       >
                         <Button
-                          onClick={(e) => addProductToCart(homePageProducts.LYO_Tab)}
+                          onClick={(e) => addProductToCart(products?.LYO_Tab)}
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
@@ -1051,3 +1056,19 @@ export default function Home() {
     </>
   );
 }
+
+
+export const getServerSideProps: GetServerSideProps<{ products: any }> = async ({
+  req,
+  res,
+}: {
+  req: IncomingMessage;
+  res: ServerResponse;
+}) => {
+  let result = null;
+
+  result = await getHomePageProducts();
+
+  const products = result;
+  return { props: { products } };
+};

@@ -60,9 +60,7 @@ export default function ChangePassword() {
             const result = await changePasswordUser({ newPassword: postData[0].value });
 
             if (result?.status == 200) {
-                console.log(result.data);
-
-                router.push(`/${locale}/signin`);
+                router.push(`/${locale}/auth/signin`);
             }
         } catch (error: any) {
             setReqResponse(error?.response?.data?.message);

@@ -18,7 +18,6 @@ import productImg from '../../img/productImg.png';
 import styles from '@/styles/Home.module.css';
 
 import { Work_Sans } from 'next/font/google';
-const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider } from '@mui/material';
 import { verifyUserHandover } from '@/services/auth/auth.service';
@@ -32,7 +31,6 @@ import { useAuthContext } from '@/contexts/AuthContext';
 import { addUserWishList } from '@/services/wishlist/wishlist.service';
 import Image from 'next/image';
 import CartTotalComponent from '@/components/cart/cart-total.component';
-import { resolveTypeReferenceDirective } from 'typescript';
 
 export default function Cart({
   userJwt,
