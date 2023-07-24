@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ApiData, ApiError } from '../../types';
 import { AuthUser } from '@/contexts/auth.types';
-import { updateProfile } from '@/controllers/UserController';
+import { addAddress, getAddressList, removeAddress, setDefaultAddress, updateAddress, updateProfile } from '@/controllers/UserController';
 
 export default async function UserHandler(
   req: NextApiRequest,
@@ -17,5 +17,15 @@ export default async function UserHandler(
   switch (method) {
     case 'update-profile':
       return updateProfile(req, res);
+    case 'address':
+      return getAddressList(req, res);
+    case 'remove-address':
+      return removeAddress(req, res);
+    case 'default-address':
+      return setDefaultAddress(req, res);
+    case 'add-address':
+      return addAddress(req, res);
+    case 'update-address':
+      return updateAddress(req, res);
   }
 }

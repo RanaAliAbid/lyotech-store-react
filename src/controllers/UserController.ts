@@ -256,3 +256,99 @@ export const sendEmailOTP = async (
     res.status(400).json(ApiService.ApiResponseError(error));
   }
 };
+
+export const getAddressList = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  res.setHeader('Allow', 'GET');
+
+  try {
+      let data = req.body;
+
+      const result = await ApiService.GetRequest(API_HOST + '/v1/user/address', `Bearer ${req.cookies?.authToken}`);
+    
+      res.status(200).json(ApiService.ApiResponseSuccess(result?.data?.data, ''));
+
+  } catch (error: any) {     
+      res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};
+
+export const removeAddress = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  res.setHeader('Allow', 'PUT');
+
+  try {
+      const data = {
+        addressId : req.query.id
+      }
+    
+      const result = await ApiService.PutRequest(API_HOST + '/v1/user/address', data, `Bearer ${req.cookies?.authToken}`);
+
+      res.status(200).json(ApiService.ApiResponseSuccess(result?.data, ''));
+
+  } catch (error: any) {
+      console.log('Catch error remove address', error?.response?.data);
+      res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};
+
+export const setDefaultAddress = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  res.setHeader('Allow', 'PUT');
+
+  try {
+    const addressId = req.query?.addressId;        
+
+    const result = await ApiService.PutRequest(API_HOST + '/v1/user/address/default/'+ addressId, {}, `Bearer ${req.cookies?.authToken}`);
+
+    res.status(200).json(ApiService.ApiResponseSuccess(result?.data, ''));
+
+  } catch (error: any) {
+    console.log('Catch error set default address ', error?.response?.data);
+    res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};
+
+export const addAddress = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  res.setHeader('Allow', 'POST');
+
+  try {
+    let data = req.body;
+
+    const result = await ApiService.PostRequest(API_HOST + '/v1/user/address', data, `Bearer ${req.cookies?.authToken}`);
+
+    res.status(200).json(ApiService.ApiResponseSuccess(result?.data, ''));
+
+  } catch (error: any) {
+    console.log('Catch error email otp send', error?.response?.data);
+    res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};
+
+export const updateAddress = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  res.setHeader('Allow', 'PUT');
+
+  try {
+    const addressId = req.query?.addressId;        
+
+    const result = await ApiService.PutRequest(API_HOST + '/v1/user/address'+ addressId, {}, `Bearer ${req.cookies?.authToken}`);
+
+    res.status(200).json(ApiService.ApiResponseSuccess(result?.data, ''));
+
+  } catch (error: any) {
+    console.log('Catch error set update address ', error?.response?.data);
+    res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};

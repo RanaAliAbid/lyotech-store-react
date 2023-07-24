@@ -10,15 +10,30 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import Input from '@mui/material/Input';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
 
+import { useGlobalContext } from '@/contexts/GlobalContext';
+import { useAuthContext } from '@/contexts/AuthContext';
+import { getUserAddressList, removeAddress, setUserDefaultAddress, addUserAddress } from '@/services/addresses/addresses.service';
+import { getCityDetails, getCountry, getStateDetails } from '@/services/country/country.service';
+import { countryCodeByCountryName, phoneNumberLenght, sortCountries } from '@/utils/app.utils';
+import countries from '../../../data/countries.json';
 import styles from '@/styles/Home.module.css';
 
 import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
-import { createTheme, ThemeProvider } from '@mui/material';
+import { createTheme, ThemeProvider, Alert } from '@mui/material';
 
 import useTranslation from 'next-translate/useTranslation';
+import { AddressData, AddressDataValidator } from '@/services/addresses/addresses.types';
 
 export default function Addresses() {
   const { t } = useTranslation('address');
@@ -28,6 +43,194 @@ export default function Addresses() {
       fontFamily: ['Work Sans'].join(','),
     },
   });
+
+  const globalContext = useGlobalContext();
+  const authContext = useAuthContext();
+
+  const [validator, setValidator] = React.useState<AddressDataValidator>();
+  const [userAddressList, setUserAddressList] = React.useState<any>([]);
+  const [countryList, setCountryList] = React.useState<any>([]);
+  const [stateList, setStateList] = React.useState<any>([]);
+  const [cityList, setCityList] = React.useState<any>([]);
+  const [country, setCountry] = React.useState<any>("");
+  const [state, setState] = React.useState<any>("");
+  const [city, setCity] = React.useState<any>("");
+  const [countryCode, setCountryCode] = React.useState<string>("+971");
+  const [phone, setPhone] = React.useState<string>("");
+  const [type, setType] = React.useState<string>("");
+  const [address, setAddress] = React.useState<string>("");
+  const [open, setOpen] = React.useState(false);
+  const [phoneLength, setPhoneLength] = React.useState<number>(9);
+  
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+
+  const getUserAddresses = async () => {
+    try {
+      globalContext.setGlobalLoading(true);
+
+      const result = await getUserAddressList();
+
+      setUserAddressList(result?.data?.data);
+
+      globalContext.setGlobalLoading(false);
+
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
+  }
+
+  const getCountryList = async () => {
+    try {
+
+      const result = await getCountry();
+
+      setCountryList(result?.data?.data?.country);
+
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
+  }
+
+  const getStateDetailsOfCountry = async (value: any) => {
+    try {
+      const result = await getStateDetails(value);
+      setStateList(result?.data?.data?.states);
+
+    } catch (error) {
+
+    }
+
+  }
+
+  const getCityDetailsOfState = async (value: any) => {
+    try {
+      const result = await getCityDetails(value);
+      setCityList(result?.data?.data?.cities);
+
+    } catch (error) {
+
+    }
+
+  }
+
+  const removeUserAddress = async (value: string) => {
+    try {
+      const result = await removeAddress(value);
+
+      if (result?.status === 200) {
+        getUserAddresses();
+      }
+    } catch (error) {
+
+    }
+
+  }
+
+  const setDefaultAddress = async (value: string) => {
+    try {
+      const result = await setUserDefaultAddress(value);
+
+      if (result?.status === 200) {
+        getUserAddresses();
+      }
+
+    } catch (error) {
+
+    }
+
+  }
+
+  const getCountryCode = (value: string) => {
+    const code: string = countryCodeByCountryName(value) ?? "+971";
+    setCountryCode(code);
+
+    const pLenght = phoneNumberLenght(value) ?? 9;
+    setPhoneLength(pLenght);
+  }
+
+  // const handleOpenModal = (data) => {    
+
+  //   if(data?._id){
+  //     setCountry(data.country);
+  //     setCity(data.city);
+  //     setType(data.type);
+  //     setAddress(data.address);
+  //     setPhone(data.contact);
+  //     setCountryCode(data.code);
+  //   }
+    
+  // }
+
+  const proceedAddAddress = async (e: any) => {
+    e.preventDefault();
+    const postData = e.target;
+
+    const dataValidate: AddressDataValidator = {
+      country: true,
+      state: true,
+      city: true,
+      type: true,
+      address: true,
+      code: true,
+      contact: true,
+    };
+
+    dataValidate.country = postData[0].value == '' ? false : true;
+    dataValidate.state = postData[2].value == '' ? false : true;
+    dataValidate.city = postData[4].value == '' ? false : true;
+    dataValidate.type = postData[6].value == '' ? false : true;
+    dataValidate.address = postData[7].value == '' ? false : true;
+    dataValidate.code = postData[9].value == '' ? false : true;
+    dataValidate.contact = postData[11].value == '' ? false : true;
+
+    if (postData[11].value.length != phoneLength) {
+      dataValidate.contact = false;
+    }
+
+    setValidator(dataValidate);
+
+    if (
+      !dataValidate.country ||
+      !dataValidate.city ||
+      !dataValidate.type ||
+      !dataValidate.address ||
+      !dataValidate.code ||
+      !dataValidate.contact
+    )
+      return false;
+
+    try {
+      globalContext.setGlobalLoading(true);
+      handleClose();
+      const result = await addUserAddress({
+        country: postData[0].value,
+        city: postData[4].value,
+        type: postData[6].value,
+        address: postData[7].value, //postData[8].value
+        code: postData[9].value,
+        contact: postData[11].value,
+        latitude: 0,
+        longitude: 0
+      })   
+
+      await authContext.checkUserSession();
+      globalContext.setGlobalLoading(false);
+      if (result?.status === 200) {
+        getUserAddresses();
+      }
+
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
+
+  };
+
+  React.useEffect(() => {
+    getUserAddresses();
+    getCountryList();
+  }, []);
 
   return (
     <>
@@ -44,6 +247,7 @@ export default function Addresses() {
                 <Grid item md={9} xs={12}>
                   <div className={styles.wrapTitle}>
                     <Typography variant="h4">{t('header1')}</Typography>
+                    <Button onClick={handleOpen}>Add new address</Button>
                   </div>
 
                   <div
@@ -60,42 +264,45 @@ export default function Addresses() {
                         <List>
                           <ListItem style={{ width: '100%' }}>
                             <div className={styles.addresses}>
-                              <div className={styles.addressesType}>
-                                <Typography variant="h4">
-                                  {t('Home-address')}
+
+                              {userAddressList?.address?.defaultAddress ?
+                                <>
+                                  <div className={styles.addressesType}>
+                                    <Typography variant="h4" className='text-capitalize'>
+                                      {userAddressList?.address?.defaultAddress?.type}
+                                    </Typography>
+                                  </div>
+
+                                  <Typography variant="body1">
+                                    {userAddressList?.address?.defaultAddress?.address}<br />
+                                    {userAddressList?.address?.defaultAddress?.city}<br />
+                                    {userAddressList?.address?.defaultAddress?.country}<br />
+                                    <span>{userAddressList?.address?.defaultAddress?.code} {userAddressList?.address?.defaultAddress?.contact}</span>
+                                  </Typography>
+
+                                  <div className={styles.actionBtn}>
+                                    <Button
+                                      variant="outlined"
+                                      className={`${styles['btn']} ${styles['btn_outlined']}`}
+                                      onClick={(e) => handleOpen()}
+                                    >
+                                      {' '}
+                                      {t('edit-btn')}{' '}
+                                    </Button>
+                                    <Button
+                                      variant="text"
+                                      className={`${styles['btn']} ${styles['btn_delete']}`}
+                                      onClick={(e) => removeUserAddress(userAddressList?.address?.defaultAddress?.addressId)}
+                                    >
+                                      {t('delete-btn')}
+                                    </Button>
+                                  </div>
+                                </>
+                                :
+                                <Typography variant="body1">
+                                  No addresses added
                                 </Typography>
-                              </div>
-
-                              <Typography variant="h5">Keanu Reeves</Typography>
-
-                              <Typography variant="body1">
-                                keanureeves@gmail.com
-                              </Typography>
-
-                              <Typography variant="body1">
-                                3rd floor, CBA technologies 57XF+XM <br />
-                                Dubai Dubai UAE
-                              </Typography>
-
-                              <Typography variant="body1">
-                                +971-58-1234659
-                              </Typography>
-
-                              <div className={styles.actionBtn}>
-                                <Button
-                                  variant="outlined"
-                                  className={`${styles['btn']} ${styles['btn_outlined']}`}
-                                >
-                                  {' '}
-                                  {t('edit-btn')}{' '}
-                                </Button>
-                                <Button
-                                  variant="text"
-                                  className={`${styles['btn']} ${styles['btn_delete']}`}
-                                >
-                                  {t('delete-btn')}
-                                </Button>
-                              </div>
+                              }
                             </div>
                           </ListItem>
                         </List>
@@ -111,49 +318,57 @@ export default function Addresses() {
 
                       <div className={styles.boxInfoBody}>
                         <List>
-                          <ListItem>
-                            <div className={styles.addresses}>
-                              <div className={styles.addressesType}>
-                                <Typography variant="h4">
-                                  {t('Work-address')}
-                                </Typography>
-                                <Typography variant="h6">
-                                  <Link href="#"> {t('set-as-default')} </Link>
-                                </Typography>
-                              </div>
+                          {userAddressList?.address?.address && userAddressList?.address?.address.length > 0 ?
+                            userAddressList?.address?.address.map(
+                              (address: any, index: any) => (
+                                <ListItem>
+                                  <div className={styles.addresses}>
+                                    <div className={styles.addressesType}>
+                                      <Typography variant="h4" className='text-capitalize'>
+                                        {address?.type}
+                                      </Typography>
+                                      {userAddressList?.address?.defaultAddress?.addressId !== address?.addressId ?
+                                        <Typography variant="h6">
+                                          <Link onClick={(e) => setDefaultAddress(address?.addressId)}> {t('set-as-default')} </Link>
+                                        </Typography>
+                                        : ""
+                                      }
+                                    </div>
 
-                              <Typography variant="h5">Keanu Reeves</Typography>
+                                    <Typography variant="body1">
+                                      {address?.address}<br />
+                                      {address?.city}<br />
+                                      {address?.country}<br />
+                                      <span>{address?.code} {address?.contact}</span>
+                                    </Typography>
 
-                              <Typography variant="body1">
-                                keanureeves@gmail.com
-                              </Typography>
 
-                              <Typography variant="body1">
-                                3rd floor, CBA technologies 57XF+XM <br />
-                                Dubai Dubai UAE
-                              </Typography>
+                                    <div className={styles.actionBtn}>
+                                      <Button
+                                        variant="outlined"
+                                        className={`${styles['btn']} ${styles['btn_outlined']}`}
+                                        onClick={(e) => handleOpen()}
+                                      >
+                                        {' '}
+                                        {t('edit-btn')}{' '}
+                                      </Button>
+                                      <Button
+                                        variant="text"
+                                        className={`${styles['btn']} ${styles['btn_delete']}`}
+                                        onClick={(e) => removeUserAddress(address?.addressId)}
+                                      >
+                                        {t('delete-btn')}
+                                      </Button>
+                                    </div>
+                                  </div>
+                                </ListItem>
+                              )
+                            )
+                            :
+                            ""
+                          }
 
-                              <Typography variant="body1">
-                                +971-58-1234659
-                              </Typography>
 
-                              <div className={styles.actionBtn}>
-                                <Button
-                                  variant="outlined"
-                                  className={`${styles['btn']} ${styles['btn_outlined']}`}
-                                >
-                                  {' '}
-                                  {t('edit-btn')}{' '}
-                                </Button>
-                                <Button
-                                  variant="text"
-                                  className={`${styles['btn']} ${styles['btn_delete']}`}
-                                >
-                                  {t('delete-btn')}
-                                </Button>
-                              </div>
-                            </div>
-                          </ListItem>
                         </List>
                       </div>
                     </div>
@@ -162,6 +377,290 @@ export default function Addresses() {
               </Grid>
             </Container>
           </div>
+          
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box className={styles.customModal}>
+              <Typography variant="h6">
+                {t('Add Address')}
+              </Typography>
+
+              <form
+                method="post"
+                onSubmit={(e) => proceedAddAddress(e)}
+                className={styles.customForm}
+              >
+
+                <div className={styles.wrapBox}>
+                  <div className={styles.flexBox}>
+                    <div className={styles.formControl}>
+                      <label className={styles.formLabel}>
+                        {' '}
+                        Country *{' '}
+                      </label>
+                      <Select
+                        label="Country"
+                        className={`${styles.formTextField} formSelect`}
+                        value={country ?? ""}
+                      >
+                        {countryList.map((country: any, index: any) => (
+                          <MenuItem
+                            key={index}
+                            value={country.name}
+                            onClick={(e) => {
+                              getStateDetailsOfCountry(country._id);
+                              setCountry(country.name);
+                            }}
+                          >
+                            {country.name}
+                          </MenuItem>
+                        ))}
+
+                      </Select>
+
+                      <div className={styles.inline}>
+                        <div className={styles.formControl}>
+                          <span className="alert-field">
+                            {validator && !validator.country && (
+                              <Alert severity="error">
+                                {t('required-field-error')}
+                              </Alert>
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={styles.formControl}>
+                      <label className={styles.formLabel}> State / Region *</label>
+                      {
+                        <Select
+                          label="States"
+                          className={styles.formTextField}
+                          value={state ?? ""}
+                        >
+                          <MenuItem value={""}>
+                            Select a State/Region
+                          </MenuItem>
+                          {stateList && stateList.length > 0 ?
+                            stateList.map((state: any, index: any) => (
+                              <MenuItem
+                                key={index}
+                                value={state?.name}
+                                onClick={(e) => {
+                                  getCityDetailsOfState(state._id);
+                                  setState(state?.name)
+                                }}
+                              >
+                                {state?.name}
+                              </MenuItem>
+                            ))
+                            : "Select a state"
+                          }
+                        </Select>
+                      }
+                      <div className={styles.inline}>
+                        <div className={styles.formControl}>
+                          <span className="alert-field">
+                            {validator && !validator.state && (
+                              <Alert severity="error">
+                                {t('required-field-error')}
+                              </Alert>
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={styles.formControl}>
+                      <label className={styles.formLabel}>
+                        {' '}
+                        Town / City *{' '}
+                      </label>
+                      {
+                        <Select
+                          label="City"
+                          className={styles.formTextField}
+                          value={city ?? ""}
+                        >
+                          <MenuItem value={""}>
+                            Select a state/region
+                          </MenuItem>
+                          {cityList && cityList.length > 0 ?
+                            cityList.map((city: any, index: any) => (
+                              <MenuItem
+                                key={index}
+                                value={city?.name}
+                                onClick={(e) => {
+                                  setCity(city?.name)
+                                }}
+                              >
+                                {city?.name}
+                              </MenuItem>
+                            ))
+                            : "Select a city"
+                          }
+                        </Select>
+                      }
+                      <div className={styles.inline}>
+                        <div className={styles.formControl}>
+                          <span className="alert-field">
+                            {validator && !validator.city && (
+                              <Alert severity="error">
+                                {t('required-field-error')}
+                              </Alert>
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className={styles.formControl}>
+                      <label className={styles.formLabel}>
+                        {' '}
+                        Address type
+                      </label>
+                      <Input
+                        className={styles.formInput}
+                        placeholder="Address type"
+                        onChange={(e) => setType(e.target.value)}
+                      />
+                      <div className={styles.inline}>
+                        <div className={styles.formControl}>
+                          <span className="alert-field">
+                            {validator && !validator.type && (
+                              <Alert severity="error">
+                                {t('required-field-error')}
+                              </Alert>
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={styles.formControl}>
+                      <label className={styles.formLabel}>
+                        {' '}
+                        Address line 1 *{' '}
+                      </label>
+                      <Input
+                        className={styles.formInput}
+                        placeholder="Address line 1"
+                        onChange={(e) => setAddress(e.target.value)}
+                      />
+                      <div className={styles.inline}>
+                        <div className={styles.formControl}>
+                          <span className="alert-field">
+                            {validator && !validator.address && (
+                              <Alert severity="error">
+                                {t('required-field-error')}
+                              </Alert>
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={styles.formControl}>
+                      <label className={styles.formLabel}>
+                        {' '}
+                        Address line 2 {' '}
+                      </label>
+                      <Input
+                        className={styles.formInput}
+                        placeholder="Address line 2"
+                      />
+                    </div>
+
+
+                    <div className={styles.formControl}>
+                      <label className={styles.formLabel}>
+                        {' '}
+                        Country code *{' '}
+                      </label>
+                      <Select
+                        className={styles.formTextField}
+                        value={countryCode}
+                        defaultValue={"United Arab Emirates"}
+                        variant="outlined"
+                      >
+                        <MenuItem value={""}>
+                          Select a state/region
+                        </MenuItem>
+                        {sortCountries(countries.data).map(
+                          (country: any, index: any) => (
+                            <MenuItem
+                              className="countries-menu-item"
+                              key={index}
+                              value={country?.name?.common}
+                              onClick={(e) => {
+                                getCountryCode(country?.name?.common);
+                              }}
+                            >
+                              <img
+                                src={country?.flags?.png}
+                                className="country-flag"
+                                style={{ float: "left" }}
+                              />{' '}
+                              &nbsp;<span className="badge" style={{ width: "60px" }}>({countryCodeByCountryName(country?.name?.common)})</span> {country?.name?.common}
+                            </MenuItem>
+                          )
+                        )}
+                      </Select>
+                      <div className={styles.inline}>
+                        <div className={styles.formControl}>
+                          <span className="alert-field">
+                            {validator && !validator.code && (
+                              <Alert severity="error">
+                                {t('required-field-error')}
+                              </Alert>
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={styles.formControl}>
+                      <label className={styles.formLabel}>
+                        {' '}
+                        Mobile number *{' '}
+                       
+                      </label>
+                      <Input
+                        className={styles.formInput}
+                        type='number'
+                      />                     
+                      <div className={styles.formControl}>
+                        <span className="alert-field">
+                          {validator && !validator.contact && (
+                            <Alert severity="error">
+                              {t('required-field-error')} (Length: {phoneLength})
+                            </Alert>
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    className={`${styles['btn']} ${styles['btn_primary']}`}
+                  >
+                    {' '}
+                    Save Address
+                  </Button>
+                </div>
+
+
+
+              </form>
+
+            </Box>
+          </Modal>
 
           <Footer />
         </main>

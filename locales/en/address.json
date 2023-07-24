@@ -6,5 +6,6 @@
   "edit-btn": "Edit",
   "delete-btn": "Delete",
   "Work-address": "Work",
-  "set-as-default": "Set as default"
+  "set-as-default": "Set as default",
+  "required-field-error": "This field is required"
 }
