@@ -56,12 +56,13 @@ export default function Addresses() {
   const [state, setState] = React.useState<any>("");
   const [city, setCity] = React.useState<any>("");
   const [countryCode, setCountryCode] = React.useState<string>("+971");
+  const [countryCodeName, setCountryCodeName] = React.useState<string>("");
   const [phone, setPhone] = React.useState<string>("");
   const [type, setType] = React.useState<string>("");
   const [address, setAddress] = React.useState<string>("");
   const [open, setOpen] = React.useState(false);
   const [phoneLength, setPhoneLength] = React.useState<number>(9);
-  
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -83,85 +84,62 @@ export default function Addresses() {
 
   const getCountryList = async () => {
     try {
-
       const result = await getCountry();
 
       setCountryList(result?.data?.data?.country);
-
     } catch (error) {
       globalContext.setGlobalLoading(false);
     }
   }
 
-  const getStateDetailsOfCountry = async (value: any) => {
+  const getStateDetailsOfCountry = async (value: any, autoLoadCity: boolean = false, currentAddress: any = null) => {
     try {
       const result = await getStateDetails(value);
-      setStateList(result?.data?.data?.states);
+      setStateList(result?.data?.data?.states ?? []);
 
-    } catch (error) {
+      if (autoLoadCity) {
+        const state = result?.data?.data?.states?.find((x: any) => x?.name === currentAddress?.state)?._id
 
-    }
-
+        if (state) {
+          await getCityDetailsOfState(state)
+        }
+      }
+    } catch (error) { }
   }
 
   const getCityDetailsOfState = async (value: any) => {
     try {
       const result = await getCityDetails(value);
       setCityList(result?.data?.data?.cities);
-
-    } catch (error) {
-
-    }
-
+    } catch (error) { }
   }
 
   const removeUserAddress = async (value: string) => {
     try {
       const result = await removeAddress(value);
-
       if (result?.status === 200) {
         getUserAddresses();
       }
-    } catch (error) {
-
-    }
-
+    } catch (error) { }
   }
 
   const setDefaultAddress = async (value: string) => {
     try {
       const result = await setUserDefaultAddress(value);
-
       if (result?.status === 200) {
         getUserAddresses();
       }
-
-    } catch (error) {
-
-    }
-
+    } catch (error) { }
   }
 
-  const getCountryCode = (value: string) => {
+  const getCountryCode = async (value: string) => {
     const code: string = countryCodeByCountryName(value) ?? "+971";
     setCountryCode(code);
+    setCountryCodeName(value)
 
     const pLenght = phoneNumberLenght(value) ?? 9;
     setPhoneLength(pLenght);
   }
-
-  // const handleOpenModal = (data) => {    
-
-  //   if(data?._id){
-  //     setCountry(data.country);
-  //     setCity(data.city);
-  //     setType(data.type);
-  //     setAddress(data.address);
-  //     setPhone(data.contact);
-  //     setCountryCode(data.code);
-  //   }
-    
-  // }
 
   const proceedAddAddress = async (e: any) => {
     e.preventDefault();
@@ -213,7 +191,7 @@ export default function Addresses() {
         contact: postData[11].value,
         latitude: 0,
         longitude: 0
-      })   
+      })
 
       await authContext.checkUserSession();
       globalContext.setGlobalLoading(false);
@@ -224,8 +202,21 @@ export default function Addresses() {
     } catch (error) {
       globalContext.setGlobalLoading(false);
     }
-
   };
+
+  const editAddress = async (address: any) => {
+    await getStateDetailsOfCountry(countryList?.find((x: any) => x?.name === address?.country)?._id ?? "0", true, address);
+
+    setCountry(address?.country);
+    setAddress(address?.address);
+    setType(address?.type);
+    setPhone(address?.contact);
+    setCountryCode(address?.code);
+    setState(address?.state);
+    // setCity(address?.city);
+
+    handleOpen();
+  }
 
   React.useEffect(() => {
     getUserAddresses();
@@ -284,7 +275,7 @@ export default function Addresses() {
                                     <Button
                                       variant="outlined"
                                       className={`${styles['btn']} ${styles['btn_outlined']}`}
-                                      onClick={(e) => handleOpen()}
+                                      onClick={(e) => editAddress(userAddressList?.address?.defaultAddress)}
                                     >
                                       {' '}
                                       {t('edit-btn')}{' '}
@@ -347,7 +338,7 @@ export default function Addresses() {
                                       <Button
                                         variant="outlined"
                                         className={`${styles['btn']} ${styles['btn_outlined']}`}
-                                        onClick={(e) => handleOpen()}
+                                        onClick={(e) => editAddress(address)}
                                       >
                                         {' '}
                                         {t('edit-btn')}{' '}
@@ -377,7 +368,7 @@ export default function Addresses() {
               </Grid>
             </Container>
           </div>
-          
+
           <Modal
             open={open}
             onClose={handleClose}
@@ -414,6 +405,7 @@ export default function Addresses() {
                             onClick={(e) => {
                               getStateDetailsOfCountry(country._id);
                               setCountry(country.name);
+                              setCountryCodeName(country.name);
                             }}
                           >
                             {country.name}
@@ -583,7 +575,7 @@ export default function Addresses() {
                       </label>
                       <Select
                         className={styles.formTextField}
-                        value={countryCode}
+                        value={countryCodeName}
                         defaultValue={"United Arab Emirates"}
                         variant="outlined"
                       >
@@ -627,12 +619,12 @@ export default function Addresses() {
                       <label className={styles.formLabel}>
                         {' '}
                         Mobile number *{' '}
-                       
+
                       </label>
                       <Input
                         className={styles.formInput}
                         type='number'
-                      />                     
+                      />
                       <div className={styles.formControl}>
                         <span className="alert-field">
                           {validator && !validator.contact && (
