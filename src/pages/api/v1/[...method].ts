@@ -9,6 +9,7 @@ import UserHandler from './_users/method';
 import Producthandler from './_products/method';
 import Paymenthandler from './_payments/method';
 import { hash256 } from '@/utils/app.utils';
+import MasterCardHandler from './_mastercard/method';
 
 export default async function handler(
     req: NextApiRequest,
@@ -51,6 +52,8 @@ export default async function handler(
                 Producthandler(req, res);
     
                 Paymenthandler(req, res);
+                
+                MasterCardHandler(req, res);
 
             }else{
                 return res.status(400).json({ status: false, message: 'Unauthorized. Request....' });
