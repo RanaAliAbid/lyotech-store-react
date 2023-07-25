@@ -85,6 +85,12 @@ body > div,
   width: auto !important;
 }
 
+.customForm .alert-field{
+  margin-top: 15px !important;
+  display: block !important;
+}
+
+
 .text-danger {
   color: red;
 }

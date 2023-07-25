@@ -88,6 +88,7 @@
   flex-wrap: wrap;
   gap: 14px;
   justify-content: center;
+  margin: 0 0 30px;
 }
 
 .formControl {
@@ -127,6 +128,10 @@
 .formControl .formTextField:focus fieldset {
   border: 1px solid #5399ee !important;
   box-shadow: 0px 1px 6px #deedff;
+}
+
+.formSelect .MuiSelect-select{
+  padding: 9px 14px !important; 
 }
 
 .formControl .formTextField div div {
@@ -1876,6 +1881,16 @@ ul.wishlists,
 
 .drawerMenu {
   display: none;
+}
+
+.customModal{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  background-color: #fff;   
+  box-shadow: 0px 11px 15px -7px rgba(0,0,0,0.2), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,0.12);
+  padding: 32px;  
 }
 
 @media (max-width: 767px) {
