@@ -372,14 +372,15 @@ export const updateAddress = async (
   res.setHeader('Allow', 'PUT');
 
   try {
-    const addressId = req.query?.addressId;        
+    const addressId = req.query?.addressId;  
+    const data = req?.body      
 
-    const result = await ApiService.PutRequest(API_HOST + '/v1/user/address'+ addressId, {}, `Bearer ${req.cookies?.authToken}`);
+    const result = await ApiService.PutRequest(API_HOST + '/v1/user/address/'+ addressId, data, `Bearer ${req.cookies?.authToken}`);
 
     res.status(200).json(ApiService.ApiResponseSuccess(result?.data, ''));
 
   } catch (error: any) {
-    console.log('Catch error set update address ', error?.response?.data);
+    console.log('Catch error set update address ', error?.response);
     res.status(400).json(ApiService.ApiResponseError(error));
   }
 };

@@ -37,9 +37,10 @@ export const setUserDefaultAddress = async (id: string) => {
     }
 };
 
-export const updateAddress = async (id: string) => {
+export const updateAddress = async (data:any, id: string) => {
     try {
-        return ProxyService.GetRequest(PROXY_HOST + `/api/v1/update-address?addressId=${id}`)
+        const body = await ProxyService.generateHashKey(JSON.stringify(data))
+        return ProxyService.PutRequest(PROXY_HOST + `/api/v1/update-address?addressId=${id}`, body)
     } catch (error) {
         return null;
     }

@@ -21,7 +21,7 @@ import TextField from '@mui/material/TextField';
 
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
-import { getUserAddressList, removeAddress, setUserDefaultAddress, addUserAddress } from '@/services/addresses/addresses.service';
+import { getUserAddressList, removeAddress, setUserDefaultAddress, addUserAddress, updateAddress } from '@/services/addresses/addresses.service';
 import { getCityDetails, getCountry, getStateDetails } from '@/services/country/country.service';
 import { countryCodeByCountryName, phoneNumberLenght, sortCountries } from '@/utils/app.utils';
 import countries from '../../../data/countries.json';
@@ -58,10 +58,12 @@ export default function Addresses() {
   const [countryCode, setCountryCode] = React.useState<string>("+971");
   const [countryCodeName, setCountryCodeName] = React.useState<string>("");
   const [phone, setPhone] = React.useState<string>("");
-  const [type, setType] = React.useState<string>("");
+  const [type, setType] = React.useState<string>("Home");
   const [address, setAddress] = React.useState<string>("");
+  const [address2, setAddress2] = React.useState<string>("");
   const [open, setOpen] = React.useState(false);
   const [phoneLength, setPhoneLength] = React.useState<number>(9);
+  const [updateAddressId, setUpdateAddressId] = React.useState<string>("");
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -182,8 +184,10 @@ export default function Addresses() {
     try {
       globalContext.setGlobalLoading(true);
       handleClose();
-      const result = await addUserAddress({
+
+      const data = {
         country: postData[0].value,
+        state: postData[2].value,
         city: postData[4].value,
         type: postData[6].value,
         address: postData[7].value, //postData[8].value
@@ -191,7 +195,14 @@ export default function Addresses() {
         contact: postData[11].value,
         latitude: 0,
         longitude: 0
-      })
+      };
+
+      let result: any;
+      if (updateAddressId.length > 5) {
+        result = await updateAddress(data, updateAddressId);
+      } else {
+        result = await addUserAddress(data)
+      }
 
       await authContext.checkUserSession();
       globalContext.setGlobalLoading(false);
@@ -205,17 +216,50 @@ export default function Addresses() {
   };
 
   const editAddress = async (address: any) => {
+    setUpdateAddressId(address?._id);
     await getStateDetailsOfCountry(countryList?.find((x: any) => x?.name === address?.country)?._id ?? "0", true, address);
 
     setCountry(address?.country);
+    setCountryCodeName(address?.country);
     setAddress(address?.address);
     setType(address?.type);
     setPhone(address?.contact);
     setCountryCode(address?.code);
     setState(address?.state);
-    // setCity(address?.city);
+    setCity(address?.city);
+
+    setValidator(resetValidator());
 
     handleOpen();
+  }
+
+  const addNewAddress = () => {
+    setUpdateAddressId("");
+    setCountry("");
+    setCountryCodeName("");
+    setAddress("");
+    setType("");
+    setPhone("");
+    setCountryCode("");
+    setState("");
+    setCity("");
+
+    setValidator(resetValidator());
+
+    handleOpen();
+  }
+
+  const resetValidator = () => {
+    const dataValidate: AddressDataValidator = {
+      country: true,
+      state: true,
+      city: true,
+      type: true,
+      address: true,
+      code: true,
+      contact: true,
+    };
+    return dataValidate;
   }
 
   React.useEffect(() => {
@@ -238,7 +282,7 @@ export default function Addresses() {
                 <Grid item md={9} xs={12}>
                   <div className={styles.wrapTitle}>
                     <Typography variant="h4">{t('header1')}</Typography>
-                    <Button onClick={handleOpen}>Add new address</Button>
+                    <Button onClick={() => addNewAddress()}>Add new address</Button>
                   </div>
 
                   <div
@@ -271,7 +315,7 @@ export default function Addresses() {
                                     <span>{userAddressList?.address?.defaultAddress?.code} {userAddressList?.address?.defaultAddress?.contact}</span>
                                   </Typography>
 
-                                  <div className={styles.actionBtn}>
+                                  {/* <div className={styles.actionBtn}>
                                     <Button
                                       variant="outlined"
                                       className={`${styles['btn']} ${styles['btn_outlined']}`}
@@ -287,7 +331,7 @@ export default function Addresses() {
                                     >
                                       {t('delete-btn')}
                                     </Button>
-                                  </div>
+                                  </div> */}
                                 </>
                                 :
                                 <Typography variant="body1">
@@ -518,6 +562,7 @@ export default function Addresses() {
                       <Input
                         className={styles.formInput}
                         placeholder="Address type"
+                        value={type}
                         onChange={(e) => setType(e.target.value)}
                       />
                       <div className={styles.inline}>
@@ -541,6 +586,7 @@ export default function Addresses() {
                       <Input
                         className={styles.formInput}
                         placeholder="Address line 1"
+                        value={address}
                         onChange={(e) => setAddress(e.target.value)}
                       />
                       <div className={styles.inline}>
@@ -564,6 +610,8 @@ export default function Addresses() {
                       <Input
                         className={styles.formInput}
                         placeholder="Address line 2"
+                        value={address2}
+                        onChange={(e) => setAddress2(e.target.value)}
                       />
                     </div>
 
@@ -623,7 +671,9 @@ export default function Addresses() {
                       </label>
                       <Input
                         className={styles.formInput}
+                        value={phone}
                         type='number'
+                        onChange={(e) => setPhone(e.target.value)}
                       />
                       <div className={styles.formControl}>
                         <span className="alert-field">
