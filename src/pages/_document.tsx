@@ -1,5 +1,10 @@
 import { Html, Head, Main, NextScript } from 'next/document';
-
+declare global {
+  interface Window {
+    PaymentSession: any;
+    Pss: any;
+  }
+}
 export default function Document() {
   return (
     <Html lang="en">
@@ -8,6 +13,7 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
+        <script src={`https://ap-gateway.mastercard.com/form/version/72/merchant/${process.env.MC_MERCHANT_ID}/session.js`}></script>
         <link rel="shortcut icon" href="/logo.png" type="image/png" />
       </Head>
       <body>
