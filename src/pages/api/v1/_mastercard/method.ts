@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ApiData, ApiError } from '../../types';
 import { AuthUser } from '@/contexts/auth.types';
-import { createSession, updateSession } from '@/controllers/MastercardController';
+import { checkEnrollment, createSession, updateSession } from '@/controllers/MastercardController';
 
 export default async function MasterCardHandler(
   req: NextApiRequest,
@@ -17,5 +17,7 @@ export default async function MasterCardHandler(
       return createSession(req, res);
     case 'update-session':
       return updateSession(req, res);
+    case 'check-enrollment':
+      return checkEnrollment(req, res);
   }
 }

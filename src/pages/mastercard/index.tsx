@@ -1,4 +1,4 @@
-import { createMasterCardSession, updateMasterCardSession } from '@/services/mastercard/mastercard.services';
+import { checkMasterCard3DSEnrollment, createMasterCardSession, updateMasterCardSession } from '@/services/mastercard/mastercard.services';
 import * as React from 'react';
 import { useForm } from "react-hook-form";
 
@@ -25,7 +25,7 @@ export default function MastercardSession() {
     }, [sessionId])
 
     const updateSession = async () => {
-        const session = await updateMasterCardSession({ id: sessionId, amount: 2 }); // get from cart
+        const session = await updateMasterCardSession({ sessionId: sessionId, orderAmount: 1 }); // get from cart
         console.log("updateSession ~ session:", session)
     };
 
@@ -49,12 +49,22 @@ export default function MastercardSession() {
                     console.log("configureSession ~ response", response)
                     // HANDLE INITIALIZATION RESPONSE
                 },
-                formSessionUpdate: function (response: any) {
+                formSessionUpdate: async function (response: any) {
                     // HANDLE RESPONSE FOR UPDATE SESSION
                     if (response.status) {
                         if ("ok" == response.status) {
                             console.log("Session updated with data: " + response.session.id);
-
+                            const masterCard3DSEnrollment = await checkMasterCard3DSEnrollment({
+                                sessionId: response.session.id,
+                                orderAmount: 1,
+                                orderId: '12354',
+                                transactionId: '123',
+                                orderDescription: 'string',
+                                secureIdResponseUrl: 'http://10.101.12.23:3002/v1/mastercard-payment/3d-secure/process-payment',
+                            });
+                            if (masterCard3DSEnrollment) {
+                                console.log( masterCard3DSEnrollment?.data?.data['3DSecure']?.veResEnrolled)
+                            }
                             //check if the security code was provided by the user
                             if (response.sourceOfFunds.provided.card.securityCode) {
                                 console.log("Security code was provided.");

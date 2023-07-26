@@ -33,3 +33,19 @@ export const updateSession = async (
         return res.status(400).json(ApiService.ApiResponseError(error));
     }
 };
+
+export const checkEnrollment = async (
+    req: NextApiRequest,
+    res: NextApiResponse<ApiData | ApiError>
+) => {
+    res.setHeader('Allow', 'POST');
+    try {
+        const data = req.body;
+        const result = await ApiService.PostRequest(API_HOST + '/v1/mastercard-payment/3d-secure/check-enrollment', data, `Bearer ${req.cookies?.authToken}`);
+        return res.status(200).json(ApiService.ApiResponseSuccess(result?.data, ''));
+
+    } catch (error: any) {
+        console.log('Catch error post master card check 3d-secure enrollment', error);
+        return res.status(400).json(ApiService.ApiResponseError(error));
+    }
+};
