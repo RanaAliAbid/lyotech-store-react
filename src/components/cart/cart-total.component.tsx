@@ -21,10 +21,26 @@ import useTranslation from 'next-translate/useTranslation';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { feesType } from '@/utils/app.utils';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import { Alert } from '@mui/material';
 
-export default function CartTotalComponent({ isCheckout }: { isCheckout: boolean }) {
+export default function CartTotalComponent({ isCheckout, handlePlaceOrder }: { isCheckout: boolean, handlePlaceOrder: any }) {
 
     const { t } = useTranslation('cart');
+
+    const modalStyle = {
+        position: 'absolute' as 'absolute',
+        bottom: '10%',
+        left: '50%',
+        transform: 'translate(-50%, 0%)',
+        width: 400,
+        background: "#fff",
+        borderRadius: 3,
+        border: '0px solid #000',
+        boxShadow: 24,
+        p: 2,
+    };
 
     const router = useRouter();
     const globalContext = useGlobalContext();
@@ -32,6 +48,18 @@ export default function CartTotalComponent({ isCheckout }: { isCheckout: boolean
 
     const [shippingMethods, setShippingMethods] = React.useState([]);
     const [cartFees, setCartFees] = React.useState([]);
+    const [termsCheckbox, setTermsCheckbox] = React.useState<any>({
+        presale: false,
+        onecare: false,
+        minting: false,
+    });
+    const [showTermsCheckbox, setShowTermsCheckbox] = React.useState(false);
+
+    React.useEffect(() => {
+        if (termsCheckbox.presale && termsCheckbox.onecare && termsCheckbox.minting) {
+            setShowTermsCheckbox(false);
+        }
+    }, [termsCheckbox])
 
     React.useEffect(() => {
         setShippingMethods(globalContext?.cart?.shippingMethods ?? []);
@@ -67,9 +95,6 @@ export default function CartTotalComponent({ isCheckout }: { isCheckout: boolean
         try {
             globalContext.setGlobalLoading(true);
 
-            const data = {
-                productId: id
-            }
             const result = await globalContext.updateCartOneCare(id, status);
 
             if (!result) {
@@ -81,13 +106,16 @@ export default function CartTotalComponent({ isCheckout }: { isCheckout: boolean
         }
     };
 
-    // const getUserCart = async (user_handover: string, product_id: number) => {
-    //   const result = await verifyUserHandover({
-    //     handoverToken: user_handover,
-    //     productId: product_id,
-    //   });
-    //   console.log(result);
-    // };
+    const placeUserOrder = async () => {
+        if (!termsCheckbox.presale && !termsCheckbox.onecare && !termsCheckbox.minting) {
+            setShowTermsCheckbox(true);
+            return;
+        }
+
+        if (!handlePlaceOrder) return;
+
+        handlePlaceOrder()
+    }
 
     return (
         <>
@@ -159,7 +187,7 @@ export default function CartTotalComponent({ isCheckout }: { isCheckout: boolean
                             (cartFees?.length > 0) && (
                                 cartFees.map((item: any, index: any) => (
                                     (!["oneCare", "payment"].includes(item.type)) && (
-                                        <ListItem>
+                                        <ListItem key={index}>
                                             <Typography variant="h6">
                                                 {t(feesType(item.type))}
                                             </Typography>
@@ -183,7 +211,7 @@ export default function CartTotalComponent({ isCheckout }: { isCheckout: boolean
                             (cartFees?.length > 0) && (
                                 cartFees.map((item: any, index: any) => (
                                     (["payment"].includes(item.type)) && (
-                                        <ListItem>
+                                        <ListItem key={index}>
                                             <Typography variant="h6">
                                                 {t(feesType(item.type))}
                                             </Typography>
@@ -200,11 +228,11 @@ export default function CartTotalComponent({ isCheckout }: { isCheckout: boolean
                             (cartFees?.length > 0) && (
                                 cartFees.map((item: any, index: any) => (
                                     (["oneCare"].includes(item.type)) && (
-                                        <ListItem>
+                                        <ListItem key={index}>
                                             <div className={styles.allCenter}>
 
                                                 <Checkbox
-                                                    defaultChecked={
+                                                    checked={
                                                         (globalContext?.cart?.cart?.oneCare?.findIndex((x: any) => x.productId == globalContext?.cart?.cart?.products[0]?.productId?._id) !== -1) ? true : false}
                                                     onChange={(e) => updateCartOneCarePolicy(e.target.checked, globalContext?.cart?.cart?.products[0]?.productId?._id ?? "")}
                                                     size="small"
@@ -229,15 +257,89 @@ export default function CartTotalComponent({ isCheckout }: { isCheckout: boolean
                         </ListItem>
                     </List>
                 </div>
-                <Button
-                    onClick={(e) => { (globalContext.cart?.cart?.products?.length > 0) && router.push(`/${router.locale}/checkout`) }}
-                    variant="contained"
-                    fullWidth
-                    className={`${styles['btn']} ${styles['btn_primary']}`}
-                >
-                    {t('Checkout-btn')}
-                </Button>
+
+                {
+                    (isCheckout) ? (
+                        <Button
+                            onClick={(e) => { placeUserOrder() }}
+                            variant="contained"
+                            fullWidth
+                            className={`${styles['btn']} ${styles['btn_primary']}`}
+                        >
+                            {t('place-order-btn')}
+                        </Button>
+                    ) : (
+                        <Button
+                            onClick={(e) => { (globalContext.cart?.cart?.products?.length > 0) && router.push(`/${router.locale}/checkout`) }}
+                            variant="contained"
+                            fullWidth
+                            className={`${styles['btn']} ${styles['btn_primary']}`}
+                        >
+                            {t('Checkout-btn')}
+                        </Button>
+                    )
+                }
+
             </div>
+
+
+            <Modal
+                open={showTermsCheckbox}
+                onClose={setShowTermsCheckbox}
+            >
+                <Box sx={{ ...modalStyle, maxWidth: '500px', width: '100%' }}>
+                    <Alert color='info'>Please read and accept our terms and conditions</Alert>
+
+                    <ListItem>
+                        <div className={styles.allCenter}>
+                            <Checkbox
+                                checked={termsCheckbox.presale}
+                                onChange={(e) => setTermsCheckbox({ ...termsCheckbox, presale: e.target.checked })}
+                                size="small"
+                            />
+                            <Typography variant="h6" className='t-13'>
+                                I have read and Accept <span className='text-primary cursor-pointer'>Presale Policy</span>
+                            </Typography>
+                        </div>
+                    </ListItem>
+
+                    <ListItem>
+                        <div className={styles.allCenter}>
+                            <Checkbox
+                                checked={termsCheckbox.onecare}
+                                onChange={(e) => setTermsCheckbox({ ...termsCheckbox, onecare: e.target.checked })}
+                                size="small"
+                            />
+                            <Typography variant="h6" className='t-13'>
+                                I have read and Accept <span className='text-primary cursor-pointer'>One Care Policy</span>
+                            </Typography>
+                        </div>
+                    </ListItem>
+
+                    <ListItem>
+                        <div className={styles.allCenter}>
+                            <Checkbox
+                                checked={termsCheckbox.minting}
+                                onChange={(e) => setTermsCheckbox({ ...termsCheckbox, minting: e.target.checked })}
+                                size="small"
+                            />
+                            <Typography variant="h6" className='t-13'>
+                                I have read and Accept <span className='text-primary cursor-pointer'>Hardware Minting Policy</span>
+                            </Typography>
+                        </div>
+                    </ListItem>
+
+
+                    <Button
+                        onClick={(e) => { setShowTermsCheckbox(false) }}
+                        variant="contained"
+                        size='small'
+                        className={`${styles['btn']} ${styles['btn_danger']} float-right`}
+                    >
+                        {t('close')}
+                    </Button>
+                </Box>
+            </Modal>
         </>
     );
 }

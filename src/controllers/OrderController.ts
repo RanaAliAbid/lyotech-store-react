@@ -1,0 +1,36 @@
+import { ApiData, ApiError } from "@/pages/api/types";
+import { ApiService } from "@/services/api.service";
+import { NextApiRequest, NextApiResponse } from "next";
+import { API_HOST } from "../../app.config";
+
+export const placeUserOrder = async (
+    req: NextApiRequest,
+    res: NextApiResponse<ApiData | ApiError>
+) => {
+    res.setHeader('Allow', 'POST');
+
+    try {
+        let data = req.body;
+
+        const token = req.cookies?.authToken ?? null;
+        const guestId = req.cookies?.guestId ?? null;
+
+        let result;
+
+        if (token) {
+            result = await ApiService.PostRequest(API_HOST + '/v1/order', data, `Bearer ${token}`);
+        } else {
+            result = await ApiService.PostRequest(API_HOST + '/v1/order/guest', data, `${guestId}`, true);
+
+            res.setHeader("Set-Cookie", [
+                `guestId=${guestId}; HttpOnly; Max-Age=3600;`
+            ]);
+        }
+
+        return res.status(200).json(ApiService.ApiResponseSuccess(result?.data, ''));
+
+    } catch (error: any) {
+        console.log('Catch error add to cart ', error?.response?.data);
+        return res.status(400).json(ApiService.ApiResponseError(error));
+    }
+};

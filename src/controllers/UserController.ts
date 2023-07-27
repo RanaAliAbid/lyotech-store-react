@@ -175,7 +175,7 @@ export const validateUserToken = async (
 
   } catch (error: any) {
 
-    if (error.response.status === 401) {
+    if (error.response?.status === 401) {
       res.setHeader("set-Cookie", [
         `userConnected=${"false"}; Max-Age=0;`,
         `authToken=deleted; HttpOnly; Max-Age=0;`,

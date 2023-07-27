@@ -4,9 +4,9 @@ import phoneLength from "../../data/phoneLength.json";
 import secureLocalStorage from "react-secure-storage";
 
 export const homePageProducts = {
-  "LFI_ONE_Smartphone": "64ba9efeee6cee247b7f43cb",
-  "LYO_Watch": "64ba9efeee6cee247b7f43cb",
-  "LYO_Tab": "64ba9efeee6cee247b7f43cb",
+  "LFI_ONE_Smartphone": "lfiphone",
+  "LYO_Watch": "lyowatch",
+  "LYO_Tab": "lyotab",
 }
 
 export const appLanguages = [

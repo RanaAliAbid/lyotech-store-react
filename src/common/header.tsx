@@ -128,15 +128,15 @@ export default function Header({ title = 'Home' }: { title: string }) {
     globalContext.updateLocale(locale);
   }, [locale]);
 
-  const getCart = async () => {
-    try {
-      // if (!authContext.userConnected) return;
+  // const getCart = async () => {
+  //   try {
+  //     // if (!authContext.userConnected) return;
 
-      await globalContext.getCart();
+  //     await globalContext.getCart();
 
-    } catch (error) {
-    }
-  }
+  //   } catch (error) {
+  //   }
+  // }
 
   const deletFromCart = async (id: string) => {
     try {
@@ -148,9 +148,9 @@ export default function Header({ title = 'Home' }: { title: string }) {
     }
   }
 
-  React.useEffect(() => {
-    getCart()
-  }, [authContext.userConnected])
+  // React.useEffect(() => {
+  //   getCart()
+  // }, [authContext.userConnected])
 
   const siteDescription =
     'LYOTECH LABS is an R&D company that works on the development of software and hardware products including mobile phones, tablets, laptops and smart watches. Our goal is giving best our customers in technologys';

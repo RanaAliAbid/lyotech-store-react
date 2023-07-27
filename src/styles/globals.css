@@ -211,3 +211,19 @@ body > div,
 .bold-900 {
   font-weight: 900;
 }
+
+.float-right {
+  float: right;
+}
+
+.t-13 {
+  font-size: 13px;
+}
+
+.text-primary {
+  color: #0063ef;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

@@ -145,6 +145,9 @@ export default function Addresses() {
 
   const proceedAddAddress = async (e: any) => {
     e.preventDefault();
+
+    if (!authContext.userConnected) return;
+
     const postData = e.target;
 
     const dataValidate: AddressDataValidator = {
@@ -191,7 +194,7 @@ export default function Addresses() {
         city: postData[4].value,
         type: postData[6].value,
         address: postData[7].value, //postData[8].value
-        code: postData[9].value,
+        code: countryCode,//postData[9].value,
         contact: postData[11].value,
         latitude: 0,
         longitude: 0
@@ -204,7 +207,6 @@ export default function Addresses() {
         result = await addUserAddress(data)
       }
 
-      await authContext.checkUserSession();
       globalContext.setGlobalLoading(false);
       if (result?.status === 200) {
         getUserAddresses();
@@ -554,6 +556,7 @@ export default function Addresses() {
                         </div>
                       </div>
                     </div>
+                    
                     <div className={styles.formControl}>
                       <label className={styles.formLabel}>
                         {' '}

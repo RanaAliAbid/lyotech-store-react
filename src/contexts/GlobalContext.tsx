@@ -24,6 +24,7 @@ export function GlobalWrapper({
   const [cart, setCart] = useState<any>([]);
   const [currencySymbol, setCurrencySymbol] = useState<string>(".");
   const priceToFixed: number = 2;
+  const [loadComponents, setLoadComponents] = useState<boolean>(false);
 
   useEffect(() => {
     setCurrencySymbol(priceSymbol("euro"))
@@ -113,6 +114,20 @@ export function GlobalWrapper({
     }
   }
 
+  useEffect(() => {
+    cartFirstLoad();
+  }, [router])
+
+  const cartFirstLoad = async () => {
+    const data: any = await getCart();
+    if ((!data?.cart?.products || data?.cart?.products?.length == 0)
+      && (router.pathname.startsWith("/checkout") || router.pathname.startsWith("/cart"))) {
+      router.push("/");
+    } else {
+      setLoadComponents(true);
+    }
+  }
+
   const globalData = {
     updateLocale,
     globalLoading, setGlobalLoading,
@@ -132,7 +147,9 @@ export function GlobalWrapper({
         <CircularProgress color="inherit" />
       </Backdrop>
 
-      {children}
+      {
+        loadComponents && children
+      }
     </GlobalContext.Provider>
   );
 }

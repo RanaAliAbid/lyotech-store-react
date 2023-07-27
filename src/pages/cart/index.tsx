@@ -143,111 +143,111 @@ export default function Cart({
 
                   {
                     globalContext.cart?.cart?.products?.map((cartItem: any, index: any) => (
-                      <>
-                        <List className={`${styles.productsList} mb-1`}>
-                          <ListItem
-                            className={`${styles['wrapBox']} ${styles['productItem']}`}
+                      // <>
+                      <List className={`${styles.productsList} mb-1`} key={index}>
+                        <ListItem
+                          className={`${styles['wrapBox']} ${styles['productItem']}`}
+                        >
+                          <div
+                            className={`${styles['productImg']} ${styles['forDesktop']}`}
                           >
-                            <div
-                              className={`${styles['productImg']} ${styles['forDesktop']}`}
-                            >
-                              <img src={cartItem?.productId?.images[0]?.link ?? productImg.src} alt="logo" className='product_cart_image' />
-                            </div>
+                            <img src={cartItem?.productId?.images[0]?.link ?? productImg.src} alt="logo" className='product_cart_image' />
+                          </div>
 
-                            <div className={styles.productDetails}>
-                              <div className={styles.productName}>
-                                <div
-                                  className={`${styles['productImg']} ${styles['forMobile']}`}
-                                >
-                                  <img src={cartItem?.productId?.images[0]?.link ?? productImg.src} alt="logo" />
+                          <div className={styles.productDetails}>
+                            <div className={styles.productName}>
+                              <div
+                                className={`${styles['productImg']} ${styles['forMobile']}`}
+                              >
+                                <img src={cartItem?.productId?.images[0]?.link ?? productImg.src} alt="logo" />
+                              </div>
+                              <div className={styles.productHead}>
+                                <div>
+                                  <Typography
+                                    variant="h4"
+                                    className={styles.productitle}
+                                  >
+                                    {cartItem?.productId?.name}
+                                  </Typography>
+
+                                  <Typography variant="body1">
+                                    {t('Model-Name')}: {cartItem?.productId?.name}
+                                  </Typography>
                                 </div>
-                                <div className={styles.productHead}>
-                                  <div>
-                                    <Typography
-                                      variant="h4"
-                                      className={styles.productitle}
-                                    >
-                                      {cartItem?.productId?.name}
-                                    </Typography>
-
-                                    <Typography variant="body1">
-                                      {t('Model-Name')}: {cartItem?.productId?.name}
-                                    </Typography>
-                                  </div>
-                                  <div>
-                                    <Typography
-                                      variant="h3"
-                                      className={styles.productPrice}
-                                    >
-                                      {cartItem?.productId?.price?.toFixed(globalContext.priceToFixed)} €
-                                    </Typography>
-                                  </div>
+                                <div>
+                                  <Typography
+                                    variant="h3"
+                                    className={styles.productPrice}
+                                  >
+                                    {cartItem?.productId?.price?.toFixed(globalContext.priceToFixed)} €
+                                  </Typography>
                                 </div>
                               </div>
-                              <Typography
-                                variant="h6"
-                                className={styles.productSummary}
-                              >
-                                Lorem ipsum dolor sit amet, consectetur adipisicing
-                                elit, Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit,
-                              </Typography>
-                              <Typography variant="h6">
-                                <strong>{t('product-delivery')}</strong>
-                              </Typography>
-                              <List className={styles.productWrapSec}>
-                                <ListItem className={styles.item}>
-                                  <Typography variant="h5">
-                                    {t('Quantity')}
-                                  </Typography>
-                                  <div className={styles.productQty}>
-                                    <div className={styles.qtyBtn} onClick={(e) => deleteFromCart(cartItem?.productId?._id)}>
-                                      {' '}
-                                      <RemoveIcon />{' '}
-                                    </div>
-                                    {
-                                      (!globalContext.globalLoading) && (
-                                        <Input
-                                          id={`cartProduct-${cartItem?.productId?._id}`}
-                                          placeholder={cartItem?.quantity}
-                                          className={styles.formControl}
-                                          defaultValue={cartItem?.quantity}
-                                        />
-                                      )
-                                    }
-                                    <div className={styles.qtyBtn} onClick={(e) => addIntoCart(cartItem?.productId?._id)}>
-                                      {' '}
-                                      <AddIcon />{' '}
-                                    </div>
-                                  </div>
-                                </ListItem>
-
-                                {
-                                  (authContext.userConnected) && (
-                                    <ListItem className={styles.item} onClick={(e) => addProductToWishList(cartItem?.productId?._id)}>
-                                      <Link href="#" className={styles.wishlist}>
-                                        <FavoriteBorderIcon />
-                                        <Typography variant="h6">
-                                          {t('Move-to-Wishlist')}
-                                        </Typography>
-                                      </Link>
-                                    </ListItem>
-                                  )
-                                }
-
-                                <ListItem className={styles.item} onClick={(e) => deleteFromCart(cartItem?.productId?._id, 0)}>
-                                  <Link href="#" className={styles.remove}>
-                                    <DeleteOutlineIcon />
-                                    <Typography variant="h6">
-                                      {t('Remove')}
-                                    </Typography>
-                                  </Link>
-                                </ListItem>
-                              </List>
                             </div>
-                          </ListItem>
-                        </List>
-                      </>
+                            <Typography
+                              variant="h6"
+                              className={styles.productSummary}
+                            >
+                              Lorem ipsum dolor sit amet, consectetur adipisicing
+                              elit, Lorem ipsum dolor sit amet, consectetur
+                              adipisicing elit,
+                            </Typography>
+                            <Typography variant="h6">
+                              <strong>{t('product-delivery')}</strong>
+                            </Typography>
+                            <List className={styles.productWrapSec}>
+                              <ListItem className={styles.item}>
+                                <Typography variant="h5">
+                                  {t('Quantity')}
+                                </Typography>
+                                <div className={styles.productQty}>
+                                  <div className={styles.qtyBtn} onClick={(e) => deleteFromCart(cartItem?.productId?._id)}>
+                                    {' '}
+                                    <RemoveIcon />{' '}
+                                  </div>
+                                  {
+                                    (!globalContext.globalLoading) && (
+                                      <Input
+                                        id={`cartProduct-${cartItem?.productId?._id}`}
+                                        // placeholder={cartItem?.quantity}
+                                        className={styles.formControl}
+                                        defaultValue={cartItem?.quantity}
+                                      />
+                                    )
+                                  }
+                                  <div className={styles.qtyBtn} onClick={(e) => addIntoCart(cartItem?.productId?._id)}>
+                                    {' '}
+                                    <AddIcon />{' '}
+                                  </div>
+                                </div>
+                              </ListItem>
+
+                              {
+                                (authContext.userConnected) && (
+                                  <ListItem className={styles.item} onClick={(e) => addProductToWishList(cartItem?.productId?._id)}>
+                                    <Link href="#" className={styles.wishlist}>
+                                      <FavoriteBorderIcon />
+                                      <Typography variant="h6">
+                                        {t('Move-to-Wishlist')}
+                                      </Typography>
+                                    </Link>
+                                  </ListItem>
+                                )
+                              }
+
+                              <ListItem className={styles.item} onClick={(e) => deleteFromCart(cartItem?.productId?._id, 0)}>
+                                <Link href="#" className={styles.remove}>
+                                  <DeleteOutlineIcon />
+                                  <Typography variant="h6">
+                                    {t('Remove')}
+                                  </Typography>
+                                </Link>
+                              </ListItem>
+                            </List>
+                          </div>
+                        </ListItem>
+                      </List>
+                      // </>
                     ))
                   }
 

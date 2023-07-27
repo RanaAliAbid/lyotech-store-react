@@ -5,30 +5,26 @@ import Footer from '../../common/footer';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import ListItem from '@mui/material/ListItem';
-import Input from '@mui/material/Input';
-
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
 import Link from '@mui/material/Link';
-
-import lyoMC from '../../img/lyomerchant.png';
-import usdtCoin from '../../img/theter_trc.png';
-import creditCard from '../../img/creaditCard.png';
 
 import styles from '@/styles/Home.module.css';
 
 import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
-import { createTheme, ThemeProvider } from '@mui/material';
+import { Alert, createTheme, MenuItem, Select, ThemeProvider } from '@mui/material';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
-import { getPaymentMethods } from '@/services/payments/payment.service';
 import useTranslation from 'next-translate/useTranslation';
 import CartTotalComponent from '@/components/cart/cart-total.component';
+import { getUserAddressList } from '@/services/addresses/addresses.service';
+import ShippingFormComponent from '@/components/checkout/forms/shipping.component';
+import BillingFormComponent from '@/components/checkout/forms/billing.component';
+import PaymentMethodComponent from '@/components/checkout/payment.component';
+import { saveUserOrder } from '@/services/orders/order.service';
+import { formCheckEmptyFields } from '@/validators/order.validator';
 
 export default function Checkout() {
   const theme = createTheme({
@@ -38,7 +34,11 @@ export default function Checkout() {
   });
 
   const [paymentType, setPaymentType] = React.useState('crypto');
-  const [paymentMethods, setPaymentMethods] = React.useState([]);
+  const [userAddressList, setUserAddressList] = React.useState<any>([]);
+  const [changeAddress, setChangeAddress] = React.useState(false);
+  const [formAddress, setFormAddress] = React.useState<any>(null);
+  const [shippingSameBilling, setShippingSameBilling] = React.useState(true);
+
 
   const globalContext = useGlobalContext();
   const authContext = useAuthContext();
@@ -49,11 +49,16 @@ export default function Checkout() {
     setPaymentType((event.target as HTMLInputElement).value);
   };
 
-  const getPaymentMethodList = async () => {
+  const getUserAddresses = async () => {
     try {
-      const result = await getPaymentMethods();
 
-      setPaymentMethods(result?.data?.data);
+      if (!authContext.userConnected) return;
+
+      globalContext.setGlobalLoading(true);
+
+      const result = await getUserAddressList();
+
+      setUserAddressList(result?.data?.data);
 
       globalContext.setGlobalLoading(false);
 
@@ -63,9 +68,71 @@ export default function Checkout() {
   }
 
   React.useEffect(() => {
-    globalContext.setGlobalLoading(true);
-    getPaymentMethodList()
+    getUserAddresses()
+
+    if (!authContext.userConnected) {
+      setChangeAddress(true);
+    }
+
   }, [globalContext.cart]);
+
+  React.useEffect(() => {
+    let addresses = {
+      shippingAddress: {
+        firstName: authContext.connectedUser?.firstName ?? "",
+        lastName: authContext.connectedUser?.lastName ?? "",
+        email: authContext.connectedUser?.email ?? "",
+        phone: userAddressList?.address?.defaultAddress?.contact ?? "",
+        address: userAddressList?.address?.defaultAddress?.address ?? "",
+        city: userAddressList?.address?.defaultAddress?.city ?? "",
+        country: userAddressList?.address?.defaultAddress?.country ?? "",
+        state: userAddressList?.address?.defaultAddress?.state ?? "",
+        address2: userAddressList?.address?.defaultAddress?.address2 ?? "",
+      },
+      billingAddress: {
+        firstName: authContext.connectedUser?.firstName ?? "",
+        lastName: authContext.connectedUser?.lastName ?? "",
+        email: authContext.connectedUser?.email ?? "",
+        phone: userAddressList?.address?.defaultAddress?.contact ?? "",
+        address: userAddressList?.address?.defaultAddress?.address ?? "",
+        city: userAddressList?.address?.defaultAddress?.city ?? "",
+        country: userAddressList?.address?.defaultAddress?.country ?? "",
+        state: userAddressList?.address?.defaultAddress?.state ?? "",
+        address2: userAddressList?.address?.defaultAddress?.address2 ?? "",
+      },
+      notes: "",
+    }
+
+    const checkForm: any = formCheckEmptyFields(addresses);
+
+    if (!userAddressList?.address?.defaultAddress) {
+      setChangeAddress(true);
+    }
+
+    setFormAddress(addresses)
+  }, [changeAddress]);
+
+
+  const handlePlaceOrder = async () => {
+    try {
+
+      globalContext.setGlobalLoading(true);
+
+      const data = {
+        cartId: globalContext.cart?.cart?._id,
+        shippingAddress: formAddress.shippingAddress,
+        billingAddress: shippingSameBilling ? formAddress.shippingAddress : formAddress.billingAddress,
+        notes: formAddress.notes
+      }
+
+      const result = await saveUserOrder(data);
+
+      globalContext.setGlobalLoading(false);
+
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
+  }
 
   return (
     <>
@@ -76,324 +143,151 @@ export default function Checkout() {
             <Container className={styles.containerBox}>
               <Grid container spacing={3}>
                 <Grid item md={8} xs={12}>
-                  <Grid container spacing={3}>
-                    <Grid item md={6} xs={12}>
-                      <div className={styles.wrapTitle}>
-                        <Typography variant="h4">Shipping Address</Typography>
 
-                        <Typography variant="h6">
-                          <Link href="#"> Add new address </Link>
-                        </Typography>
-                      </div>
 
-                      <div
-                        className={`${styles['wrapBox']} ${styles['addresses']}`}
-                      >
-                        <div className={styles.addressesType}>
-                          <Typography variant="h4">Work</Typography>
-                          <Typography variant="h6">
-                            <Link href="#"> Change </Link>
-                          </Typography>
+                  {
+                    (authContext.userConnected && !changeAddress && userAddressList?.address?.defaultAddress?._id) && (
+                      <Grid container spacing={3}>
+                        <Grid item md={6} xs={12}>
+                          <div className={styles.wrapTitle}>
+                            <Typography variant="h4">Shipping Address</Typography>
+
+                            <Typography variant="h6">
+                              <Link href="#" onClick={(e) => setChangeAddress(!changeAddress)}> Add new address </Link>
+                            </Typography>
+                          </div>
+
+
+                          <div
+                            className={`${styles['wrapBox']} ${styles['addresses']}`}
+                          >
+                            <div className={styles.addressesType}>
+                              <Typography variant="h4">{userAddressList?.address?.defaultAddress?.type}</Typography>
+                              <Typography variant="h6">
+                                <Link href="#" onClick={(e) => setChangeAddress(!changeAddress)}> Change </Link>
+                              </Typography>
+                            </div>
+
+                            <Typography variant="h5">{authContext?.connectedUserName}</Typography>
+
+                            <Typography variant="body1">
+                              {authContext?.connectedUserEmail}
+                            </Typography>
+
+                            <Typography variant="body1">
+                              {userAddressList?.address?.defaultAddress?.address}  <br />
+                              {userAddressList?.address?.defaultAddress?.city}&nbsp;
+                              {userAddressList?.address?.defaultAddress?.state},&nbsp;
+                              {userAddressList?.address?.defaultAddress?.country}
+                            </Typography>
+
+                            <Typography variant="body1">{userAddressList?.address?.defaultAddress?.code}-
+                              {userAddressList?.address?.defaultAddress?.contact}</Typography>
+                          </div>
+                        </Grid>
+                        <Grid item md={6} xs={12}>
+                          <div className={styles.wrapTitle}>
+                            <Typography variant="h4">Billing address</Typography>
+                          </div>
+                          <div
+                            className={`${styles['wrapBox']} ${styles['addresses']}`}
+                          >
+                            <div className={styles.addressesType}>
+                              <Typography variant="h4">{userAddressList?.address?.defaultAddress?.type}</Typography>
+                              <Typography variant="h6">
+                                <Link href="#"> Change </Link>
+                              </Typography>
+                            </div>
+
+                            <Typography variant="h5">{authContext?.connectedUserName}</Typography>
+
+                            <Typography variant="body1">
+                              {authContext?.connectedUserEmail}
+                            </Typography>
+
+                            <Typography variant="body1">
+                              {userAddressList?.address?.defaultAddress?.address}  <br />
+                              {userAddressList?.address?.defaultAddress?.city}&nbsp;
+                              {userAddressList?.address?.defaultAddress?.state},&nbsp;
+                              {userAddressList?.address?.defaultAddress?.country}
+                            </Typography>
+
+                            <Typography variant="body1">{userAddressList?.address?.defaultAddress?.code}-
+                              {userAddressList?.address?.defaultAddress?.contact}</Typography>
+                          </div>
+                        </Grid>
+                      </Grid>
+                    )
+                  }
+
+
+                  {
+                    (changeAddress) && (
+                      <>
+                        <div className={styles.wrapTitle}>
+                          <Typography variant="h4">Shipping Address</Typography>
+
+                          {
+                            (userAddressList?.address?.defaultAddress) && (
+                              <Typography variant="h6">
+                                <Link href="#" onClick={(e) => setChangeAddress(!changeAddress)}>Use Default Address </Link>
+                              </Typography>
+                            )
+                          }
                         </div>
 
-                        <Typography variant="h5">Vimek patel</Typography>
+                        <div className={styles.wrapBox}>
+                          {/* // shipping address form  */}
+                          <ShippingFormComponent formAddress={formAddress} setFormAddress={setFormAddress}></ShippingFormComponent>
 
-                        <Typography variant="body1">
-                          vimekpatel123456@gmail.com
-                        </Typography>
+                          <div className={styles.addressBox}>
+                            <FormControlLabel
+                              control={<Checkbox size="small" onChange={(e) => setShippingSameBilling(!shippingSameBilling)} checked={shippingSameBilling} />}
+                              label="Billing Address same as shipping address."
+                            />
 
-                        <Typography variant="body1">
-                          3rd floor, CBA technologies 57XF+XM <br />
-                          Dubai Dubai UAE
-                        </Typography>
+                            {
+                              (authContext.userConnected) && (
+                                <Typography variant="h6">
+                                  <Link href="#"> Save this address </Link>
+                                </Typography>
+                              )
+                            }
 
-                        <Typography variant="body1">+971-58-1234659</Typography>
-                      </div>
-                    </Grid>
-                    <Grid item md={6} xs={12}>
-                      <div className={styles.wrapTitle}>
-                        <Typography variant="h4">Billing address</Typography>
-                      </div>
-                      <div
-                        className={`${styles['wrapBox']} ${styles['addresses']}`}
-                      >
-                        <div className={styles.addressesType}>
-                          <Typography variant="h4">Work</Typography>
-                          <Typography variant="h6">
-                            <Link href="#"> Change </Link>
-                          </Typography>
+                          </div>
                         </div>
 
-                        <Typography variant="h5">Vimek patel</Typography>
+                        {
+                          (!shippingSameBilling) && (
+                            <>
+                              <div className={`${styles.wrapTitle} mt-2`}>
+                                <Typography variant="h4">Billing Address</Typography>
+                              </div>
 
-                        <Typography variant="body1">
-                          vimekpatel123456@gmail.com
-                        </Typography>
+                              <div className={styles.wrapBox}>
+                                {/* billing address form  */}
+                                <BillingFormComponent formAddress={formAddress} setFormAddress={setFormAddress}></BillingFormComponent>
+                              </div>
+                            </>
+                          )
+                        }
+                      </>
+                    )
+                  }
 
-                        <Typography variant="body1">
-                          3rd floor, CBA technologies 57XF+XM <br />
-                          Dubai Dubai UAE
-                        </Typography>
-
-                        <Typography variant="body1">+971-58-1234659</Typography>
-                      </div>
-                    </Grid>
-                  </Grid>
-
-                  <div className={styles.wrapTitle}>
-                    <Typography variant="h4">Shipping Address</Typography>
-
-                    <Typography variant="h6">
-                      <Link href="#"> Add new address </Link>
-                    </Typography>
-                  </div>
-
-                  <div className={styles.wrapBox}>
-                    <div className={styles.flexBox}>
-                      <div className={styles.formControl}>
-                        <label className={styles.formLabel}>
-                          {' '}
-                          First name *{' '}
-                        </label>
-                        <Input
-                          className={styles.formInput}
-                          placeholder="First name"
-                        />
-                      </div>
-
-                      <div className={styles.formControl}>
-                        <label className={styles.formLabel}>
-                          {' '}
-                          Last name *{' '}
-                        </label>
-                        <Input
-                          className={styles.formInput}
-                          placeholder="Last name"
-                        />
-                      </div>
-
-                      <div className={styles.formControl}>
-                        <label className={styles.formLabel}>
-                          {' '}
-                          Email Address *{' '}
-                        </label>
-                        <Input
-                          className={styles.formInput}
-                          placeholder="Email Address"
-                        />
-                      </div>
-
-                      <div className={styles.formControl}>
-                        <label className={styles.formLabel}> Phone * </label>
-                        <Input
-                          className={styles.formInput}
-                          placeholder="Phone Number"
-                        />
-                      </div>
-
-                      <div className={styles.formControl}>
-                        <label className={styles.formLabel}>
-                          {' '}
-                          Country / Region *{' '}
-                        </label>
-                        <Input
-                          className={styles.formInput}
-                          placeholder="Country / Region"
-                        />
-                      </div>
-
-                      <div className={styles.formControl}>
-                        <label className={styles.formLabel}> State </label>
-                        <Input
-                          className={styles.formInput}
-                          placeholder="State"
-                        />
-                      </div>
-
-                      <div className={styles.formControl}>
-                        <label className={styles.formLabel}>
-                          {' '}
-                          Town / City *{' '}
-                        </label>
-                        <Input
-                          className={styles.formInput}
-                          placeholder="Town / City"
-                        />
-                      </div>
-
-                      <div className={styles.formControl}>
-                        <label className={styles.formLabel}>
-                          {' '}
-                          Partner User ID *{' '}
-                        </label>
-                        <Input
-                          className={styles.formInput}
-                          placeholder="Partner User ID "
-                        />
-                      </div>
-
-                      <div className={styles.formControl}>
-                        <label className={styles.formLabel}>
-                          {' '}
-                          Address line 1 *{' '}
-                        </label>
-                        <Input
-                          className={styles.formInput}
-                          placeholder="Address line 1"
-                        />
-                      </div>
-
-                      <div className={styles.formControl}>
-                        <label className={styles.formLabel}>
-                          {' '}
-                          Address line 2 *{' '}
-                        </label>
-                        <Input
-                          className={styles.formInput}
-                          placeholder="Address line 2"
-                        />
-                      </div>
-                    </div>
-
-                    <div className={styles.addressBox}>
-                      <FormControlLabel
-                        control={<Checkbox size="small" defaultChecked />}
-                        label="Billing Address same as shipping address."
-                      />
-                      <Typography variant="h6">
-                        <Link href="#"> Add Billing address </Link>
-                      </Typography>
-                    </div>
-                  </div>
-
-                  <div className={styles.wrapTitle}>
+                  <div className={`${styles.wrapTitle} mt-2 mb-2`}>
                     <Typography variant="h4">
                       Choose a payment method
                     </Typography>
                   </div>
 
-                  <div
-                    className={`${styles['wrapBox']} ${styles['paymentBox']}`}
-                  >
-                    <RadioGroup
-                      name="controlled-radio-buttons-group"
-                      value={paymentType}
-                      onChange={handleChangePayment}
-                    >
-                      {
-                        (paymentMethods?.length > 0 && paymentMethods?.findIndex((x: any) => x?.type?.name?.toLowerCase() === "crypto") != -1) && (
-                          <ListItem
-                            className={`${paymentType === 'crypto' ? styles.show : ''
-                              }`}
-                          >
-                            <div className={styles.paymentTypelogo}>
-                              <div className={styles.lyomc}>
-                                <FormControlLabel
-                                  value="crypto"
-                                  control={
-                                    <Radio
-                                      size="small"
-                                      checked={paymentType === 'crypto'}
-                                    />
-                                  }
-                                  label=""
-                                />
-                                <img src={lyoMC.src} alt="" />
-                              </div>
-                              <div className={styles.coin}>
-                                <img src={usdtCoin.src} alt="" />
-                              </div>
-                            </div>
+                  {/* //payment method */}
+                  <PaymentMethodComponent paymentType={paymentType} handleChangePayment={handleChangePayment}></PaymentMethodComponent>
 
-                            <div className={styles.payInfoBox}>
-                              <div className={styles.note}>
-                                <Typography variant="h5">
-                                  Pay with your crypto currencies via our super-cool
-                                  payment gateway.
-                                </Typography>
-                              </div>
-                            </div>
-                          </ListItem>
-                        )
-                      }
-
-                      {
-                        (paymentMethods?.length > 0 && paymentMethods?.findIndex((x: any) => x?.type?.name?.toLowerCase() === "card") != -1) && (
-                          <ListItem
-                            className={`${paymentType === 'creditCard' ? styles.show : ''
-                              }`}
-                          >
-                            <div className={styles.paymentTypelogo}>
-                              <div className={styles.lyomc}>
-                                <FormControlLabel
-                                  value="creditCard"
-                                  control={
-                                    <Radio
-                                      size="small"
-                                      checked={paymentType === 'creditCard'}
-                                    />
-                                  }
-                                  label="Credit card"
-                                />
-                              </div>
-                              <div className={styles.usdt}>
-                                <img src={creditCard.src} alt="" />
-                              </div>
-                            </div>
-                            <div className={styles.payInfoBox}>
-                              <Grid item md={12} xs={12}>
-                                <div className={styles.formControl}>
-                                  <label> Card Number </label>
-                                  <Input
-                                    className={styles.formInput}
-                                    placeholder="0000 0000 0000 0000"
-                                  />
-                                </div>
-                              </Grid>
-                              <Grid container className={styles.payInline}>
-                                <Grid item md={6} xs={12}>
-                                  <div className={styles.formControl}>
-                                    <label> Expiry date </label>
-                                    <Input
-                                      className={styles.formInput}
-                                      placeholder="MM YYYY"
-                                    />
-                                  </div>
-                                </Grid>
-                                <Grid item md={6} xs={12}>
-                                  <div className={styles.formControl}>
-                                    <label> CVV Number </label>
-                                    <Input
-                                      className={styles.formInput}
-                                      placeholder="123"
-                                    />
-                                  </div>
-                                </Grid>
-                              </Grid>
-                              <FormControlLabel
-                                control={<Checkbox size="small" defaultChecked />}
-                                label="Save payment information to my account for future purchases."
-                              />
-                              <div className={styles.note}>
-                                <Typography variant="h5">
-                                  Pay with your credit card via Stripe. TEST MODE
-                                  ENABLED. In test mode, you can use the card number
-                                  4242424242424242 with any CVC and a valid
-                                  expiration date or check the Testing Stripe
-                                  documentation for more card numbers.
-                                </Typography>
-                              </div>
-                            </div>
-                          </ListItem>
-                        )
-                      }
-
-                    </RadioGroup>
-                  </div>
                 </Grid>
 
                 <Grid item md={4} xs={12}>
-                  <CartTotalComponent isCheckout={true}></CartTotalComponent>
+                  <CartTotalComponent isCheckout={true} handlePlaceOrder={handlePlaceOrder}></CartTotalComponent>
                 </Grid>
 
               </Grid>
