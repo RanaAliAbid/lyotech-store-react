@@ -11,6 +11,7 @@ import Paymenthandler from './_payments/method';
 import { hash256 } from '@/utils/app.utils';
 import CountryHandler from './_country/method';
 import OrderHandler from './_order/method';
+import MasterCardHandler from './_mastercard/method';
 
 export default async function handler(
     req: NextApiRequest,
@@ -55,6 +56,8 @@ export default async function handler(
                 Producthandler(req, res);
     
                 Paymenthandler(req, res);
+                
+                MasterCardHandler(req, res);
 
                 CountryHandler(req, res);
 
