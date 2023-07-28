@@ -25,6 +25,7 @@ export function GlobalWrapper({
   const [currencySymbol, setCurrencySymbol] = useState<string>(".");
   const priceToFixed: number = 2;
   const [loadComponents, setLoadComponents] = useState<boolean>(false);
+  const [homeProduct, setHomeProduct] = useState<any>(null);
 
   useEffect(() => {
     setCurrencySymbol(priceSymbol("euro"))
@@ -188,7 +189,8 @@ export function GlobalWrapper({
     priceToFixed,
     updateCartOneCare, updateCartShippingMethod,
     updateCartCountry, updateCartPaymentMethod,
-    updateCartCoupon
+    updateCartCoupon,
+    homeProduct, setHomeProduct
   };
 
   return (

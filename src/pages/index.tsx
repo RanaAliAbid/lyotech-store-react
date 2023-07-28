@@ -76,6 +76,10 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
     }
   }
 
+  useEffect(() => {
+    globalContext.setHomeProduct(products)
+  }, [products])
+
   return (
     <>
       <div>
@@ -626,7 +630,7 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                         viewport={{ once: true }}
                       >
                         <Button
-                          onClick={(e) => addProductToCart(products?.LFI_ONE_Smartphone)}
+                          onClick={(e) => addProductToCart(globalContext?.homeProduct?.LFI_ONE_Smartphone)}
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
@@ -782,7 +786,7 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                           viewport={{ once: true }}
                         >
                           <Button
-                            onClick={(e) => addProductToCart(products?.LYO_Watch)}
+                            onClick={(e) => addProductToCart(globalContext?.homeProduct?.LYO_Watch)}
                             variant="contained"
                             className={`${styles['btn']} ${styles['btn_primary']}`}
                           >
@@ -1003,7 +1007,7 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                         viewport={{ once: true }}
                       >
                         <Button
-                          onClick={(e) => addProductToCart(products?.LYO_Tab)}
+                          onClick={(e) => addProductToCart(globalContext?.homeProduct?.LYO_Tab)}
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
