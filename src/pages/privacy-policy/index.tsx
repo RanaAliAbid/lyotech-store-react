@@ -12,15 +12,14 @@ import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 import { createTheme, ThemeProvider } from '@mui/material';
 
+const theme = createTheme({
+    typography: {
+        fontFamily: ['Work Sans'].join(','),
+    },
+});
+
+
 export default function Private() {
-    const theme = createTheme({
-        typography: {
-            fontFamily: ['Work Sans'].join(','),
-        },
-    });
-
-
-
     return (
         <>
             <div>
@@ -61,7 +60,7 @@ export default function Private() {
                                             <ListItem>
 
                                                 <Typography variant="h4">
-                                                    <strong> Last Updated: July 2023 </strong>
+                                                    <strong> Privacy and Cookies Policy</strong>
                                                 </Typography>
                                             </ListItem>
                                             <ListItem>
@@ -289,14 +288,16 @@ export default function Private() {
                                                                 </List>
                                                             </ListItem>
 
-                                                        </List>
-                                                    </ListItem>
-
-                                                    <ListItem>
+                                                            <ListItem>
                                                         <Typography variant="h5">
                                                             We may share your Personal data with any financial institutions which we partner to process payments you have authorized.
                                                         </Typography>
                                                     </ListItem>
+
+                                                        </List>
+                                                    </ListItem>
+
+                                                 
                                                 </List>
 
                                             </ListItem>

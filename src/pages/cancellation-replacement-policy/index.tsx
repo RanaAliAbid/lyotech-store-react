@@ -61,7 +61,7 @@ export default function Private() {
                                             <ListItem>
 
                                                 <Typography variant="h4">
-                                                    <strong> Last Update: July 2023 </strong>
+                                                    <strong> Cancellation and Replacement Policy </strong>
                                                 </Typography>
                                             </ListItem>
                                             <ListItem>
