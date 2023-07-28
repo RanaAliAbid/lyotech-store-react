@@ -212,6 +212,10 @@ body > div,
   font-weight: 900;
 }
 
+.bold-500 {
+  font-weight: 500;
+}
+
 .float-right {
   float: right;
 }
@@ -226,4 +230,8 @@ body > div,
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.d-flex {
+  display: flex;
 }

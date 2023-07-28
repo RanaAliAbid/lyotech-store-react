@@ -11,7 +11,7 @@ import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
 
-export default function ShippingFormComponent({ formAddress, setFormAddress }: { formAddress: any, setFormAddress: any }) {
+export default function ShippingFormComponent({ localAddress, formAddress, setFormAddress }: { localAddress: any, formAddress: any, setFormAddress: any }) {
 
     const [validator, setValidator] = React.useState<AddressDataValidator>();
     const [cityList, setCityList] = React.useState<any>([]);
@@ -46,7 +46,7 @@ export default function ShippingFormComponent({ formAddress, setFormAddress }: {
     }
 
     const handleChangeCountryType = async (
-        countryId:string
+        countryId: string
     ) => {
         try {
             globalContext.setGlobalLoading(true);
@@ -88,7 +88,7 @@ export default function ShippingFormComponent({ formAddress, setFormAddress }: {
 
     React.useEffect(() => {
         getCountryList()
-    }, [])
+    }, [localAddress])
 
     return (
         <>
@@ -149,9 +149,10 @@ export default function ShippingFormComponent({ formAddress, setFormAddress }: {
                             <Select
                                 label="Country"
                                 className={`${styles.formTextField} formSelect`}
-                                value={formAddress?.shippingAddress?.country}
+                                value={formAddress?.shippingAddress?.country ?? ""}
+                                size='small'
                             >
-                                <MenuItem value={""} disabled>
+                                <MenuItem value={formAddress?.shippingAddress?.country ?? ""} disabled>
                                     Select a Country
                                 </MenuItem>
                                 {countryList.map((country: any, index: any) => (
@@ -162,7 +163,7 @@ export default function ShippingFormComponent({ formAddress, setFormAddress }: {
                                             getStateDetailsOfCountry(country._id);
                                             setFormAddress({ ...formAddress, shippingAddress: { ...formAddress.shippingAddress, country: country.name } })
                                             setCountryCodeName(country.name);
-                                            handleChangeCountryType(country._id);                                            
+                                            handleChangeCountryType(country._id);
                                         }}
                                     >
                                         {country.name}
@@ -192,8 +193,9 @@ export default function ShippingFormComponent({ formAddress, setFormAddress }: {
                             label="States"
                             className={styles.formTextField}
                             value={formAddress?.shippingAddress?.state ?? ""}
+                            size='small'
                         >
-                            <MenuItem value={""} disabled>
+                            <MenuItem value={formAddress?.shippingAddress?.state ?? ""} disabled>
                                 Select a State/Region
                             </MenuItem>
                             {stateList && stateList.length > 0 ?
@@ -236,8 +238,9 @@ export default function ShippingFormComponent({ formAddress, setFormAddress }: {
                             label="City"
                             className={styles.formTextField}
                             value={formAddress?.shippingAddress?.city ?? ""}
+                            size='small'
                         >
-                            <MenuItem value={""}>
+                            <MenuItem value={formAddress?.shippingAddress?.city ?? ""}>
                                 Select a state/region
                             </MenuItem>
                             {cityList && cityList.length > 0 ?
@@ -276,6 +279,7 @@ export default function ShippingFormComponent({ formAddress, setFormAddress }: {
                     </label>
                     <Input
                         className={styles.formInput}
+                        disabled
                         placeholder="Partner User ID "
                     />
                 </div>

@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ApiData, ApiError } from '../../types';
 import { AuthUser } from '@/contexts/auth.types';
-import { placeUserOrder } from '@/controllers/OrderController';
+import { getPaymentLink, placeUserOrder } from '@/controllers/OrderController';
 
 export default async function OrderHandler(
   req: NextApiRequest,
@@ -17,5 +17,7 @@ export default async function OrderHandler(
   switch (method) {
     case 'place-order':
       return placeUserOrder(req, res);
+    case 'get-payment-link': 
+      return getPaymentLink(req, res);
   }
 }

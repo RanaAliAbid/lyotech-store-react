@@ -6,6 +6,7 @@
     "/": ["home"],
     "/cart": ["cart"],
     "/checkout": ["cart"],
+    "/checkout/payment/success": ["cart"],
     "/profile": ["profile"],
     "/trackorder": ["order"],
     "/orders": ["order"],
