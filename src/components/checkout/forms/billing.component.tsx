@@ -133,6 +133,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                                 label="Country"
                                 className={`${styles.formTextField} formSelect`}
                                 value={formAddress?.billingAddress?.country}
+                                size='small'
                             >
                                 <MenuItem value={""} disabled>
                                     Select a Country
@@ -174,6 +175,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                             label="States"
                             className={styles.formTextField}
                             value={formAddress?.billingAddress?.state ?? ""}
+                            size='small'
                         >
                             <MenuItem value={""} disabled>
                                 Select a State/Region
@@ -218,6 +220,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                             label="City"
                             className={styles.formTextField}
                             value={formAddress?.billingAddress?.city ?? ""}
+                            size='small'
                         >
                             <MenuItem value={""}>
                                 Select a state/region

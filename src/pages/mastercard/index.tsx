@@ -3,22 +3,22 @@ import * as React from 'react';
 
 export default function MastercardSession() {
 
-    const [sessionId, setSessionId] = React.useState<string>('');
+    const [sessionId, setSessionId] = React.useState<string>('SESSION0002703534560F85442791K1');
 
     React.useEffect(() => {
-        try {
-            const createSession = async () => {
-                const session = await createMasterCardSession()
-                if (session?.data?.id) setSessionId(session?.data?.id)
-            }
-            createSession()
-        } catch (error) {
-            console.log("error:", error)
-        }
+        // try {
+        //     const createSession = async () => {
+        //         const session = await createMasterCardSession()
+        //         if (session?.data?.id) setSessionId(session?.data?.id)
+        //     }
+        //     createSession()
+        // } catch (error) {
+        //     console.log("error:", error)
+        // }
     }, []);
 
     React.useEffect(() => {
-        updateSession()
+        // updateSession()
         configureSession()
     }, [sessionId])
 
@@ -54,11 +54,11 @@ export default function MastercardSession() {
                             console.log("Session updated with data: " + response.session.id);
                             const masterCard3DSEnrollment = await checkMasterCard3DSEnrollment({
                                 sessionId: response.session.id,
-                                orderAmount: 1,
+                                orderAmount: 15,
                                 orderId: '12354',
                                 transactionId: '123',
                                 orderDescription: 'string',
-                                secureIdResponseUrl: 'http://10.101.12.23:3002/v1/mastercard-payment/3d-secure/process-payment',
+                                secureIdResponseUrl: 'http://10.101.12.196:3002/v1/mastercard-payment/3d-secure/process-payment',
                             });
                             if (masterCard3DSEnrollment) {
                                 console.log(masterCard3DSEnrollment?.data?.data['3DSecure']?.veResEnrolled)
@@ -106,14 +106,15 @@ export default function MastercardSession() {
         })
     }
 
-    const pay = async () => {
+    const pay = async (e: any) => {
+        e.preventDefault();
         const res = await window.PaymentSession.updateSessionFromForm('card');
         console.log("pay ~ res:", res)
     }
 
     return (
         <>
-            <form onSubmit={() => pay()}>
+            <form onSubmit={(e) => pay(e)}>
                 <h3>Credit Card</h3>
                 <input
                     id="card-number" placeholder="Card Number" readOnly={true} />

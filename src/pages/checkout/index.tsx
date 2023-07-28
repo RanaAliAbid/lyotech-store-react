@@ -19,12 +19,13 @@ import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
 import CartTotalComponent from '@/components/cart/cart-total.component';
-import { getUserAddressList } from '@/services/addresses/addresses.service';
+import { addUserAddress, getUserAddressList, setUserDefaultAddress } from '@/services/addresses/addresses.service';
 import ShippingFormComponent from '@/components/checkout/forms/shipping.component';
 import BillingFormComponent from '@/components/checkout/forms/billing.component';
 import PaymentMethodComponent from '@/components/checkout/payment.component';
 import { saveUserOrder } from '@/services/orders/order.service';
 import { formCheckEmptyFields } from '@/validators/order.validator';
+import { countryCodeByCountryName, getLocalStorage, setLocalStorage } from '@/utils/app.utils';
 
 export default function Checkout() {
   const theme = createTheme({
@@ -33,11 +34,12 @@ export default function Checkout() {
     },
   });
 
-  const [paymentType, setPaymentType] = React.useState('crypto');
+  const [paymentType, setPaymentType] = React.useState('lyomerchant');
   const [userAddressList, setUserAddressList] = React.useState<any>([]);
   const [changeAddress, setChangeAddress] = React.useState(false);
   const [formAddress, setFormAddress] = React.useState<any>(null);
   const [shippingSameBilling, setShippingSameBilling] = React.useState(true);
+  const [localAddress, setLocalAddress] = React.useState<any>(null);
 
 
   const globalContext = useGlobalContext();
@@ -77,17 +79,22 @@ export default function Checkout() {
   }, [globalContext.cart]);
 
   React.useEffect(() => {
+
+    let localCheckoutAddress: any = getLocalStorage("checkoutAddress")
+    const _localAddress = JSON.parse(localCheckoutAddress)
+
     let addresses = {
       shippingAddress: {
-        firstName: authContext.connectedUser?.firstName ?? "",
-        lastName: authContext.connectedUser?.lastName ?? "",
-        email: authContext.connectedUser?.email ?? "",
-        phone: userAddressList?.address?.defaultAddress?.contact ?? "",
-        address: userAddressList?.address?.defaultAddress?.address ?? "",
-        city: userAddressList?.address?.defaultAddress?.city ?? "",
-        country: userAddressList?.address?.defaultAddress?.country ?? "",
-        state: userAddressList?.address?.defaultAddress?.state ?? "",
+        firstName: authContext.connectedUser?.firstName ?? _localAddress?.shippingAddress?.firstName ?? "",
+        lastName: authContext.connectedUser?.lastName ?? _localAddress?.shippingAddress?.lastName ?? "",
+        email: authContext.connectedUser?.email ?? _localAddress?.shippingAddress?.email ?? "",
+        phone: userAddressList?.address?.defaultAddress?.contact ?? _localAddress?.shippingAddress?.phone ?? "",
+        address: userAddressList?.address?.defaultAddress?.address ?? _localAddress?.shippingAddress?.address ?? "",
+        city: userAddressList?.address?.defaultAddress?.city ?? _localAddress?.shippingAddress?.city ?? "",
+        country: userAddressList?.address?.defaultAddress?.country ?? _localAddress?.shippingAddress?.country ?? "",
+        state: userAddressList?.address?.defaultAddress?.state ?? _localAddress?.shippingAddress?.state ?? "",
         address2: userAddressList?.address?.defaultAddress?.address2 ?? "",
+        type: userAddressList?.address?.defaultAddress?.type ?? "",
       },
       billingAddress: {
         firstName: authContext.connectedUser?.firstName ?? "",
@@ -105,12 +112,59 @@ export default function Checkout() {
 
     const checkForm: any = formCheckEmptyFields(addresses);
 
-    if (!userAddressList?.address?.defaultAddress) {
+    if (!userAddressList && !userAddressList?.address?.defaultAddress) {
       setChangeAddress(true);
     }
 
     setFormAddress(addresses)
   }, [changeAddress]);
+
+
+  React.useEffect(() => {
+    if (!authContext.userConnected && formAddress && formAddress?.shippingAddress?.email?.length > 5) {
+      setLocalStorage("checkoutAddress", JSON.stringify(formAddress));
+    }
+  }, [formAddress])
+
+
+  const saveShippingAddress = async () => {
+    try {
+
+      globalContext.setGlobalLoading(true);
+
+      let data = formAddress.shippingAddress
+      data.code = countryCodeByCountryName(data?.country) ?? "+971"
+      data.type = "Work"
+      data.contact = data.phone
+      data.latitude = 0
+      data.longitude = 0
+
+      delete data.phone;
+      delete data.address2;
+
+      const result = await addUserAddress(data);
+
+      if (result?.data) {
+        const addresses = result?.data?.data?.data?.address?.reverse();
+        setChangeAddress(false);
+        await setDefaultAddress(addresses[0]?.addressId ?? "")
+      }
+
+      globalContext.setGlobalLoading(false);
+
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
+  }
+
+  const setDefaultAddress = async (value: string) => {
+    try {
+      const result = await setUserDefaultAddress(value);
+      if (result?.status === 200) {
+        getUserAddresses();
+      }
+    } catch (error) { }
+  }
 
 
   const handlePlaceOrder = async () => {
@@ -126,6 +180,10 @@ export default function Checkout() {
       }
 
       const result = await saveUserOrder(data);
+
+      if (result?.data?.data?.data?.paymentLink) {
+        window.location.href = result?.data?.data?.data?.paymentLink;
+      }
 
       globalContext.setGlobalLoading(false);
 
@@ -143,7 +201,6 @@ export default function Checkout() {
             <Container className={styles.containerBox}>
               <Grid container spacing={3}>
                 <Grid item md={8} xs={12}>
-
 
                   {
                     (authContext.userConnected && !changeAddress && userAddressList?.address?.defaultAddress?._id) && (
@@ -238,7 +295,7 @@ export default function Checkout() {
 
                         <div className={styles.wrapBox}>
                           {/* // shipping address form  */}
-                          <ShippingFormComponent formAddress={formAddress} setFormAddress={setFormAddress}></ShippingFormComponent>
+                          <ShippingFormComponent localAddress={localAddress} formAddress={formAddress} setFormAddress={setFormAddress}></ShippingFormComponent>
 
                           <div className={styles.addressBox}>
                             <FormControlLabel
@@ -249,7 +306,7 @@ export default function Checkout() {
                             {
                               (authContext.userConnected) && (
                                 <Typography variant="h6">
-                                  <Link href="#"> Save this address </Link>
+                                  <Link href="#" onClick={(e) => saveShippingAddress()}> Save this address </Link>
                                 </Typography>
                               )
                             }

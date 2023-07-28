@@ -25,7 +25,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { Alert } from '@mui/material';
 
-export default function CartTotalComponent({ isCheckout, handlePlaceOrder }: { isCheckout: boolean, handlePlaceOrder: any }) {
+export default function CartTotalComponent({ isCheckout, handlePlaceOrder }: { isCheckout: boolean, handlePlaceOrder?: any }) {
 
     const { t } = useTranslation('cart');
 

@@ -129,6 +129,39 @@ export function GlobalWrapper({
     }
   }
 
+  const updateCartPaymentMethod = async (id: string) => {
+    try {
+      setGlobalLoading(true);
+      const result = await updateCart({
+        paymentMethodId: id
+      });
+      await getCart();
+      setGlobalLoading(false);
+
+      return result;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  const updateCartCoupon = async (code: string, apply: boolean = true) => {
+    try {
+      setGlobalLoading(true);
+      const result = await updateCart({
+        oneCare: {
+          "code": code,
+          "apply": apply
+        }
+      });
+      await getCart();
+      setGlobalLoading(false);
+
+      return result;
+    } catch (error) {
+      return null;
+    }
+  }
+
   useEffect(() => {
     cartFirstLoad();
   }, [router])
@@ -137,7 +170,11 @@ export function GlobalWrapper({
     const data: any = await getCart();
     if ((!data?.cart?.products || data?.cart?.products?.length == 0)
       && (router.pathname.startsWith("/checkout") || router.pathname.startsWith("/cart"))) {
-      router.push("/");
+      if (!router.pathname.includes("payment")) {
+        router.push("/");
+      } else {
+        setLoadComponents(true);
+      }
     } else {
       setLoadComponents(true);
     }
@@ -149,7 +186,9 @@ export function GlobalWrapper({
     cart, setCart, deleteCart, addCart, getCart,
     currencySymbol, setCurrencySymbol,
     priceToFixed,
-    updateCartOneCare, updateCartShippingMethod,updateCartCountry
+    updateCartOneCare, updateCartShippingMethod,
+    updateCartCountry, updateCartPaymentMethod,
+    updateCartCoupon
   };
 
   return (

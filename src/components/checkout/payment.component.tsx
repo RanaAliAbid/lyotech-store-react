@@ -19,7 +19,7 @@ import useTranslation from 'next-translate/useTranslation';
 
 export default function PaymentMethodComponent({ paymentType, handleChangePayment }: { paymentType: any, handleChangePayment: any }) {
 
-    const [paymentMethods, setPaymentMethods] = React.useState([]);
+    const [paymentMethods, setPaymentMethods] = React.useState<any>([]);
 
     const globalContext = useGlobalContext();
     const authContext = useAuthContext();
@@ -38,6 +38,25 @@ export default function PaymentMethodComponent({ paymentType, handleChangePaymen
         }
     }
 
+    const handleChangePaymentMethod = async (
+        methodName: string
+    ) => {
+        try {
+            const id: string = paymentMethods?.find((x: any) => x?.name?.toLowerCase() === methodName)?._id ?? "";
+
+            globalContext.setGlobalLoading(true);
+
+            const result = await globalContext.updateCartPaymentMethod(id);
+
+            if (!result) {
+                globalContext.setGlobalLoading(false);
+            }
+
+        } catch (error) {
+            globalContext.setGlobalLoading(false);
+        }
+    };
+
     React.useEffect(() => {
         getPaymentMethodList()
     }, [globalContext.cart]);
@@ -49,22 +68,22 @@ export default function PaymentMethodComponent({ paymentType, handleChangePaymen
                 <RadioGroup
                     name="controlled-radio-buttons-group"
                     value={paymentType}
-                    onChange={handleChangePayment}
+                    onChange={(e) => { handleChangePayment(e); handleChangePaymentMethod(e.target.value) }}
                 >
                     {
                         (paymentMethods?.length > 0 && paymentMethods?.findIndex((x: any) => x?.name?.toLowerCase() === "lyomerchant") != -1) && (
                             <ListItem
-                                className={`${paymentType === 'crypto' ? styles.show : ''
+                                className={`${paymentType === 'lyomerchant' ? styles.show : ''
                                     }`}
                             >
                                 <div className={styles.paymentTypelogo}>
                                     <div className={styles.lyomc}>
                                         <FormControlLabel
-                                            value="crypto"
+                                            value="lyomerchant"
                                             control={
                                                 <Radio
                                                     size="small"
-                                                    checked={paymentType === 'crypto'}
+                                                    checked={paymentType === 'lyomerchant'}
                                                 />
                                             }
                                             label=""
@@ -91,17 +110,17 @@ export default function PaymentMethodComponent({ paymentType, handleChangePaymen
                     {
                         (paymentMethods?.length > 0 && paymentMethods?.findIndex((x: any) => x?.name?.toLowerCase() === "mastercard") != -1) && (
                             <ListItem
-                                className={`${paymentType === 'creditCard' ? styles.show : ''
+                                className={`${paymentType === 'mastercard' ? styles.show : ''
                                     }`}
                             >
                                 <div className={styles.paymentTypelogo}>
                                     <div className={styles.lyomc}>
                                         <FormControlLabel
-                                            value="creditCard"
+                                            value="mastercard"
                                             control={
                                                 <Radio
                                                     size="small"
-                                                    checked={paymentType === 'creditCard'}
+                                                    checked={paymentType === 'mastercard'}
                                                 />
                                             }
                                             label="Credit card"
