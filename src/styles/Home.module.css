@@ -2606,6 +2606,9 @@ ul.wishlists,
   background-size: cover;
 }
 
+.orderedListDecimal li ul{
+  padding-bottom: 0;
+}
 .orderedListDecimal li {
   list-style: decimal;
   display: list-item;

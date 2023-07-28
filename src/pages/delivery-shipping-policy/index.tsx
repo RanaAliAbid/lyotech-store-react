@@ -121,8 +121,8 @@ export default function Private() {
 
 
                                             <ListItem>
-                                                <Typography variant="h5">
-                                                    Process of Shipping and Delivery Fees
+                                                <Typography variant="h4">
+                                                   <strong> Process of Shipping and Delivery Fees </strong>
                                                 </Typography>
 
                                                 <List>

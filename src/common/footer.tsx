@@ -49,7 +49,7 @@ export default function Footer() {
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="/terms">{t('footer-section2-item2')}</Link>
+                    <Link href="/terms">Terms & Condition</Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
