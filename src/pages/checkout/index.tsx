@@ -60,6 +60,10 @@ export default function Checkout() {
 
       const result = await getUserAddressList();
 
+      if (result?.data && !result?.data?.data?.address?.defaultAddress) {
+        setChangeAddress(true);
+      }
+
       setUserAddressList(result?.data?.data);
 
       globalContext.setGlobalLoading(false);

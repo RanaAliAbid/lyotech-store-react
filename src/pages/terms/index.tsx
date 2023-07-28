@@ -19,8 +19,6 @@ export default function Private() {
         },
     });
 
-
-
     return (
         <>
             <div>
@@ -353,13 +351,13 @@ export default function Private() {
                                                 <List>
                                                     <ListItem>
                                                         <Typography variant="h5">
-                                                        LYOTECH LABS ELECTRONICS TRADING L.L.C relies on third party service providers in order to fulfill the performance of the Platform to Users, and exercise maximum compliance and security. We will not be responsible for any fault or damage caused by any third party service provider, and herein exclude ourselves from any liability that may arise as a result of such third party service providers actions.
+                                                            LYOTECH LABS ELECTRONICS TRADING L.L.C relies on third party service providers in order to fulfill the performance of the Platform to Users, and exercise maximum compliance and security. We will not be responsible for any fault or damage caused by any third party service provider, and herein exclude ourselves from any liability that may arise as a result of such third party service providers actions.
                                                         </Typography>
                                                     </ListItem>
 
                                                     <ListItem>
                                                         <Typography variant="h5">
-                                                        LYOTECH LABS ELECTRONICS TRADING L.L.C Website may direct you to third party websites in relation to our Hardware and Services. Whilst we have adequate security measures in place to protect your use of our Website, we bear no responsibility for any occurrence upon clicking such links, and it is the Customers responsibility to make a judgment whether to follow such links. LYOTECH LABS ELECTRONICS TRADING L.L.C will not be held liable in relation to any access or utilization of a third party link.
+                                                            LYOTECH LABS ELECTRONICS TRADING L.L.C Website may direct you to third party websites in relation to our Hardware and Services. Whilst we have adequate security measures in place to protect your use of our Website, we bear no responsibility for any occurrence upon clicking such links, and it is the Customers responsibility to make a judgment whether to follow such links. LYOTECH LABS ELECTRONICS TRADING L.L.C will not be held liable in relation to any access or utilization of a third party link.
                                                         </Typography>
                                                     </ListItem>
                                                 </List>
