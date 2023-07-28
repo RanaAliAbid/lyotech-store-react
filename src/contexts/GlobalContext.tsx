@@ -114,6 +114,21 @@ export function GlobalWrapper({
     }
   }
 
+  const updateCartCountry = async (id: string) => {
+    try {
+      setGlobalLoading(true);
+      const result = await updateCart({
+        countryId: id
+      });
+      await getCart();
+      setGlobalLoading(false);
+
+      return result;
+    } catch (error) {
+      return null;
+    }
+  }
+
   useEffect(() => {
     cartFirstLoad();
   }, [router])
@@ -134,7 +149,7 @@ export function GlobalWrapper({
     cart, setCart, deleteCart, addCart, getCart,
     currencySymbol, setCurrencySymbol,
     priceToFixed,
-    updateCartOneCare, updateCartShippingMethod
+    updateCartOneCare, updateCartShippingMethod,updateCartCountry
   };
 
   return (

@@ -11,6 +11,10 @@ export const userCart = async (
 
     try {
 
+        // res.setHeader("Set-Cookie", [
+        //     `guestId=""; HttpOnly; Max-Age=0;`
+        // ]);
+
         const token = req.cookies?.authToken ?? null;
         const guestId = req.cookies?.guestId ?? null;
 

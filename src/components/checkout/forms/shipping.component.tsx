@@ -45,6 +45,23 @@ export default function ShippingFormComponent({ formAddress, setFormAddress }: {
         } catch (error) { }
     }
 
+    const handleChangeCountryType = async (
+        countryId:string
+    ) => {
+        try {
+            globalContext.setGlobalLoading(true);
+
+            const result = await globalContext.updateCartCountry(countryId);
+
+            if (!result) {
+                globalContext.setGlobalLoading(false);
+            }
+
+        } catch (error) {
+            globalContext.setGlobalLoading(false);
+        }
+    };
+
     const getStateDetailsOfCountry = async (value: any, autoLoadCity: boolean = false, currentAddress: any = null) => {
         try {
             const result = await getStateDetails(value);
@@ -145,6 +162,7 @@ export default function ShippingFormComponent({ formAddress, setFormAddress }: {
                                             getStateDetailsOfCountry(country._id);
                                             setFormAddress({ ...formAddress, shippingAddress: { ...formAddress.shippingAddress, country: country.name } })
                                             setCountryCodeName(country.name);
+                                            handleChangeCountryType(country._id);                                            
                                         }}
                                     >
                                         {country.name}
