@@ -32,11 +32,6 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
     const authContext = useAuthContext();
     const { t } = useTranslation('cart');
 
-
-    React.useEffect(() => {
-
-    }, [])
-
     return (
         <ThemeProvider theme={theme}>
             <main className={styles.main}>
