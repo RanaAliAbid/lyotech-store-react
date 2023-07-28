@@ -205,13 +205,16 @@ export default function Header({ title = 'Home' }: { title: string }) {
 
             <List className={styles.headMenu}>
               <ListItem>
-                <Link href={'#'}> {t('Services')} </Link>
+                <Link href={'#serviceSection'}> {t('Services')} </Link>
               </ListItem>
               <ListItem>
-                <Link href={'#'}> {t('Devices')} </Link>
+                <Link href={'#deviceSection'}> {t('Devices')} </Link>
               </ListItem>
               <ListItem>
-                <Link href={'#'}> {t('Co-Products')} </Link>
+                <Link href={'/co-products'}> {t('Co-Products')} </Link>
+              </ListItem>
+              <ListItem>
+                <Link href={'/about'}> {t('About Us')} </Link>
               </ListItem>
             </List>
 

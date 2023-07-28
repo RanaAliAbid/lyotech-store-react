@@ -45,20 +45,25 @@ export default function Footer() {
 
                 <List>
                   <ListItem className={styles.item}>
-                    <Link href="#">{t('footer-section2-item1')}</Link>
+                    <Link href="/privacy-policy">{t('footer-section2-item1')}</Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="#">{t('footer-section2-item2')}</Link>
+                    <Link href="/terms">{t('footer-section2-item2')}</Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="#">{t('footer-section2-item3')}</Link>
+                    <Link href="/delivery-shipping-policy">Delivery & Shipping Policy</Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="#">{t('footer-section2-item4')}</Link>
+                    <Link href="/return-refund-policy">Refund/Return Policy</Link>
                   </ListItem>
+
+                  <ListItem className={styles.item}>
+                    <Link href="/cancellation-replacement-policy">Cancellation & Replacement Policy</Link>
+                  </ListItem>
+
                 </List>
               </div>
             </Grid>
@@ -70,20 +75,22 @@ export default function Footer() {
                 </Typography>
 
                 <List>
+                
+
                   <ListItem className={styles.item}>
-                    <Link href="#">{t('footer-section3-item1')}</Link>
+                    <Link href="#serviceSection">Services</Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="#">{t('footer-section3-item2')}</Link>
+                    <Link href="#deviceSection">Devices</Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="#">{t('footer-section3-item3')}</Link>
+                    <Link href="/co-products">Co-Products</Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="#">{t('footer-section3-item4')}</Link>
+                    <Link href="/about">About Us</Link>
                   </ListItem>
                 </List>
               </div>

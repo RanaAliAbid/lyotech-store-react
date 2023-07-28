@@ -152,7 +152,7 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
             {/* Banner Section End */}
 
             {/* Services Section Start */}
-            <div className={styles.homeServicesWrap}>
+            <div className={styles.homeServicesWrap} id='serviceSection'>
               <Container className={styles.containerBox}>
                 <Grid container spacing={3}>
                   <Grid item md={3} sm={6} xs={12}>
@@ -391,7 +391,7 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
               </Container>
             </div>
 
-            <div className={styles.productsWrap}>
+            <div className={styles.productsWrap} id='deviceSection'>
               <div
                 className={`${styles['productItemWrap']} ${styles['bgShape01']}`}
               >
@@ -441,6 +441,10 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               opacity: 0,
                               x: '100%',
                               visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                              marginTop: '20px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -452,10 +456,11 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                           >
                             <span>
                               <OctaCoreIcon /> &nbsp;
-                              <Typography variant="h6">
-                                OctaCore MTK 2.4 Ghz
-                              </Typography>
                             </span>
+                            <Typography variant="h6">
+                              OctaCore MTK 2.4 Ghz
+                            </Typography>
+
                           </motion.div>
                         </Grid>
                         <Grid item md={6}>
@@ -464,6 +469,10 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               opacity: 0,
                               x: '100%',
                               visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                              marginTop: '20px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -475,10 +484,11 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                           >
                             <span>
                               <ZoomIcon /> &nbsp;
-                              <Typography variant="h6">
-                                Sony 64MPX Main Camera with Macro and Zoom
-                              </Typography>
                             </span>
+                            <Typography variant="h6">
+                              Sony 64MPX Main Camera with Macro and Zoom
+                            </Typography>
+
                           </motion.div>
                         </Grid>
 
@@ -488,6 +498,10 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               opacity: 0,
                               x: '100%',
                               visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                              marginTop: '20px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -499,8 +513,9 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                           >
                             <span>
                               <RamIcon /> &nbsp;
-                              <Typography variant="h6">12GB RAM</Typography>
                             </span>
+                            <Typography variant="h6">12GB RAM</Typography>
+
                           </motion.div>
                         </Grid>
 
@@ -510,6 +525,10 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               opacity: 0,
                               x: '100%',
                               visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                              marginTop: '20px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -520,11 +539,12 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                             viewport={{ once: true }}
                           >
                             <span>
-                              <BatteryIcon />
-                              <Typography variant="h6">
-                                6100 mAh Battery Power
-                              </Typography>
+                              <BatteryIcon /> &nbsp;
                             </span>
+                            <Typography variant="h6">
+                              6100 mAh Battery Power
+                            </Typography>
+
                           </motion.div>
                         </Grid>
 
@@ -534,6 +554,10 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               opacity: 0,
                               x: '100%',
                               visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                              marginTop: '20px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -545,10 +569,11 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                           >
                             <span>
                               <DpiIcon /> &nbsp;
-                              <Typography variant="h6">
-                                IPS 6.78” FHD+ @ 120Hz 396 DPI
-                              </Typography>
                             </span>
+                            <Typography variant="h6">
+                              IPS 6.78” FHD+ @ 120Hz 396 DPI
+                            </Typography>
+
                           </motion.div>
                         </Grid>
 
@@ -558,6 +583,10 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               opacity: 0,
                               x: '100%',
                               visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                              marginTop: '20px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -568,11 +597,12 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                             viewport={{ once: true }}
                           >
                             <span>
-                              <MintingIcon />
-                              <Typography variant="h6">
-                                Mobile Minting App Native
-                              </Typography>
+                              <MintingIcon /> &nbsp;
                             </span>
+                            <Typography variant="h6">
+                              Mobile Minting App Native
+                            </Typography>
+
                           </motion.div>
                         </Grid>
                       </Grid>
@@ -582,6 +612,10 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                           opacity: 0,
                           x: '100%',
                           visibility: 'hidden',
+                          display: 'flex',
+                          justifyContent: 'flex-start',
+                          alignItems: 'center',
+                          marginTop: '20px',
                         }}
                         whileInView={{
                           opacity: 1,
@@ -644,28 +678,38 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                           className={styles.productSpec}
                         >
                           <Grid item md={12}>
-                            <span>
-                              <OctaCoreIcon /> &nbsp;
+                            <div className={styles.productItemSpec}>
+                              <span>
+                                <OctaCoreIcon /> &nbsp;
+                              </span>
                               <Typography variant="h6">
                                 {t('product-item2-carac1')}
                               </Typography>
-                            </span>
+
+                            </div>
+
                           </Grid>
                           <Grid item md={12}>
-                            <span>
-                              <CalenderIcon /> &nbsp;
+                            <div className={styles.productItemSpec}>
+                              <span>
+                                <CalenderIcon /> &nbsp;
+                              </span>
                               <Typography variant="h6">
                                 {t('product-item2-carac2')}
                               </Typography>
-                            </span>
+
+                            </div>
                           </Grid>
                           <Grid item md={12}>
-                            <span>
-                              <HealthIcon /> &nbsp;
+                            <div className={styles.productItemSpec}>
+                              <span>
+                                <HealthIcon /> &nbsp;
+                              </span>
                               <Typography variant="h6">
                                 {t('product-item2-carac3')}
                               </Typography>
-                            </span>
+
+                            </div>
                           </Grid>
                         </Grid>
                       </motion.div>
@@ -778,6 +822,10 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               opacity: 0,
                               x: '-100%',
                               visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                              marginTop: '20px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -789,10 +837,11 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                           >
                             <span>
                               <OctaCoreIcon />
-                              <Typography variant="h6">
-                                OctaCore MTK 2.4 Ghz
-                              </Typography>
                             </span>
+                            <Typography variant="h6">
+                              OctaCore MTK 2.4 Ghz
+                            </Typography>
+
                           </motion.div>
                         </Grid>
                         <Grid item md={6}>
@@ -801,6 +850,10 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               opacity: 0,
                               x: '-100%',
                               visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                              marginTop: '20px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -812,10 +865,11 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                           >
                             <span>
                               <ZoomIcon />
-                              <Typography variant="h6">
-                                Sony 64MPX Main Camera with Macro and Zoom
-                              </Typography>
                             </span>
+                            <Typography variant="h6">
+                              Sony 64MPX Main Camera with Macro and Zoom
+                            </Typography>
+
                           </motion.div>
                         </Grid>
 
@@ -825,6 +879,10 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               opacity: 0,
                               x: '-100%',
                               visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                              marginTop: '20px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -836,8 +894,9 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                           >
                             <span>
                               <RamIcon />
-                              <Typography variant="h6">12GB RAM</Typography>
                             </span>
+                            <Typography variant="h6">12GB RAM</Typography>
+
                           </motion.div>
                         </Grid>
 
@@ -847,6 +906,10 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               opacity: 0,
                               x: '-100%',
                               visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                              marginTop: '20px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -858,10 +921,11 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                           >
                             <span>
                               <BatteryIcon />
-                              <Typography variant="h6">
-                                6100 mAh Battery Power
-                              </Typography>
                             </span>
+                            <Typography variant="h6">
+                              6100 mAh Battery Power
+                            </Typography>
+
                           </motion.div>
                         </Grid>
 
@@ -871,6 +935,10 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               opacity: 0,
                               x: '-100%',
                               visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                              marginTop: '20px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -882,10 +950,11 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                           >
                             <span>
                               <DpiIcon />
-                              <Typography variant="h6">
-                                10.1″ Full-HD Display
-                              </Typography>
                             </span>
+                            <Typography variant="h6">
+                              10.1″ Full-HD Display
+                            </Typography>
+
                           </motion.div>
                         </Grid>
 
@@ -895,6 +964,10 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               opacity: 0,
                               x: '-100%',
                               visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'center',
+                              marginTop: '20px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -906,10 +979,11 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                           >
                             <span>
                               <MintingIcon />
-                              <Typography variant="h6">
-                                Minting App Native
-                              </Typography>
                             </span>
+                            <Typography variant="h6">
+                              Minting App Native
+                            </Typography>
+
                           </motion.div>
                         </Grid>
                       </Grid>
