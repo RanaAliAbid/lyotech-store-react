@@ -11,10 +11,6 @@ export const userCart = async (
 
     try {
 
-        // res.setHeader("Set-Cookie", [
-        //     `guestId=""; HttpOnly; Max-Age=0;`
-        // ]);
-
         const token = req.cookies?.authToken ?? null;
         const guestId = req.cookies?.guestId ?? null;
 
@@ -29,6 +25,9 @@ export const userCart = async (
         res.status(200).json(ApiService.ApiResponseSuccess(result?.data?.data, ''));
 
     } catch (error: any) {
+        res.setHeader("Set-Cookie", [
+            `guestId=""; HttpOnly; Max-Age=0;`
+        ]);
         console.log('Catch error cart ', error?.response?.data);
         res.status(400).json(ApiService.ApiResponseError(error));
     }

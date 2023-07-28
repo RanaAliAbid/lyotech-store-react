@@ -16,7 +16,6 @@ export const signIn = async (
     const result = await ApiService.PostRequest(API_HOST + '/v1/user/login', data);
 
     if (result && result.status == 200) {
-      // console.log(result.data.data);
 
       res.setHeader("Set-Cookie", [
         `otpToken=${result?.data?.data?.otpVerificationToken}; HttpOnly; Max-Age=3600;`,

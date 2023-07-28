@@ -160,13 +160,13 @@ export const getServerSideProps: GetServerSideProps<{ order: any }> = async ({
 
             result = await verifyOrderDetails({ id: orderid });
 
-            if (!result || result?.isCancelled || ["pending", "failed", "cancelled"].includes(result?.status?.toLowerCase()))
-                return {
-                    redirect: {
-                        destination: `/`,
-                        permanent: false,
-                    },
-                };
+            // if (!result || result?.isCancelled || ["pending", "failed", "cancelled"].includes(result?.status?.toLowerCase()))
+            //     return {
+            //         redirect: {
+            //             destination: `/`,
+            //             permanent: false,
+            //         },
+            //     };
         }
     }
     const order = result;
