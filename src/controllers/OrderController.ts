@@ -52,9 +52,9 @@ export const getPaymentLink = async (
         let result;
 
         if (token) {
-            result = await ApiService.GetRequest(API_HOST + '/v1/order/'+orderId, `Bearer ${token}`);
+            result = await ApiService.GetRequest(API_HOST + '/v1/order/generate-payment-link/'+orderId, `Bearer ${token}`);
         } else {
-            result = await ApiService.GetRequest(API_HOST + '/v1/order/guest/'+orderId, `${guestId}`, true);
+            result = await ApiService.GetRequest(API_HOST + '/v1/order/guest/generate-payment-link/'+orderId, `${guestId}`, true);
 
             res.setHeader("Set-Cookie", [
                 `guestId=${guestId}; HttpOnly; Max-Age=3600;`
