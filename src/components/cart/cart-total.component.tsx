@@ -26,8 +26,8 @@ import Box from '@mui/material/Box';
 import { Alert } from '@mui/material';
 import PaymentMethodComponent from '../checkout/payment.component';
 
-export default function CartTotalComponent({ isCheckout, handlePlaceOrder, paymentType, handleChangePayment }:
-    { isCheckout: boolean, handlePlaceOrder?: any, paymentType?: any, handleChangePayment?: any }) {
+export default function CartTotalComponent({ isCheckout, handlePlaceOrder, paymentType, handleChangePayment, setDisplayAddress }:
+    { isCheckout: boolean, handlePlaceOrder?: any, paymentType?: any, handleChangePayment?: any, setDisplayAddress?: any }) {
 
     const { t } = useTranslation('cart');
 
@@ -275,8 +275,23 @@ export default function CartTotalComponent({ isCheckout, handlePlaceOrder, payme
                     </List>
 
                     {
-                        (globalContext.screenWitdh <= 900) && (
+                        (globalContext.screenWitdh <= 900 && setDisplayAddress) && (
                             <>
+                                <div className={`${styles.wrapTitle} mt-2 mb-2`}>
+                                    <Typography variant="h4">
+                                        Shipping & Billing Address
+
+                                        <Button
+                                            onClick={(e) => { setDisplayAddress(true) }}
+                                            variant="contained"
+                                            size='small'
+                                        >
+                                            {t('Update Addresses')}
+                                        </Button>
+
+                                    </Typography>
+                                </div>
+
                                 <div className={`${styles.wrapTitle} mt-2 mb-2`}>
                                     <Typography variant="h4">
                                         Choose a payment method

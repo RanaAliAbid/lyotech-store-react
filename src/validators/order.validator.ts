@@ -36,14 +36,14 @@ export const formCheckEmptyFields = (
         },
     };
 
-    dataValidate.firstName = data.firstName == '' ? false : true;
-    dataValidate.lastName = data.lastName == '' ? false : true;
-    dataValidate.email = data.email == '' ? false : true;
-    dataValidate.phone = data.phone == '' ? false : true;
-    dataValidate.address = data.address == '' ? false : true;
-    dataValidate.city = data.city == '' ? false : true;
-    dataValidate.country = data.country == '' ? false : true;
-    dataValidate.state = data.state == '' ? false : true;
+    dataValidate.shippingAddress.firstName = data.shippingAddress.firstName == '' ? false : true;
+    dataValidate.shippingAddress.lastName = data.shippingAddress.lastName == '' ? false : true;
+    dataValidate.shippingAddress.email = data.shippingAddress.email == '' ? false : true;
+    dataValidate.shippingAddress.phone = data.shippingAddress.phone == '' ? false : true;
+    dataValidate.shippingAddress.address = data.shippingAddress.address == '' ? false : true;
+    dataValidate.shippingAddress.city = data.shippingAddress.city == '' ? false : true;
+    dataValidate.shippingAddress.country = data.shippingAddress.country == '' ? false : true;
+    dataValidate.shippingAddress.state = data.shippingAddress.state == '' ? false : true;
 
     return dataValidate;
 };

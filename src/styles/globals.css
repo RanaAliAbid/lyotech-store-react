@@ -294,7 +294,7 @@ body > div,
 
 @media screen and (min-width: 900px) {
   .mobile-display {
-    display: none;
+    display: none !important;
   }
 }
 

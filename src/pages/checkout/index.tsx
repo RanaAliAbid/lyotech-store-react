@@ -121,15 +121,15 @@ export default function Checkout() {
     const checkForm: any = formCheckEmptyFields(addresses);
 
     if (
-      !checkForm.country ||
-      !checkForm.city ||
-      !checkForm.type ||
-      !checkForm.address ||
-      !checkForm.code ||
-      !checkForm.phone ||
-      !checkForm.firstName ||
-      !checkForm.lastName ||
-      !checkForm.email
+      !checkForm.shippingAddress.country ||
+      !checkForm.shippingAddress.city ||
+      !checkForm.shippingAddress.type ||
+      !checkForm.shippingAddress.address ||
+      !checkForm.shippingAddress.code ||
+      !checkForm.shippingAddress.phone ||
+      !checkForm.shippingAddress.firstName ||
+      !checkForm.shippingAddress.lastName ||
+      !checkForm.shippingAddress.email
     ) {
       setEnablePlaceOrder(false);
     } else {
@@ -336,7 +336,7 @@ export default function Checkout() {
                       <div className={`mobile-fixed ${(displayAddress) && 'active'}`}>
                         <div className={styles.wrapTitle}>
                           <Typography variant="h4">
-                            <span onClick={(e) => setDisplayAddress(false)} className='mobile-display float-left' style={{ marginTop: "2px" }}>
+                            <span onClick={(e) => setDisplayAddress(false)} className='mobile-display cursor-pointer float-left' style={{ marginTop: "2px" }}>
                               <FaArrowLeft></FaArrowLeft> &nbsp;&nbsp;
                             </span>
                             Shipping Address
@@ -420,7 +420,12 @@ export default function Checkout() {
                 </Grid>
 
                 <Grid item md={4} xs={12}>
-                  <CartTotalComponent isCheckout={true} handlePlaceOrder={handlePlaceOrder} paymentType={paymentType} handleChangePayment={handleChangePayment}></CartTotalComponent>
+                  <CartTotalComponent
+                    isCheckout={true}
+                    handlePlaceOrder={handlePlaceOrder}
+                    paymentType={paymentType}
+                    handleChangePayment={handleChangePayment}
+                    setDisplayAddress={setDisplayAddress}></CartTotalComponent>
                 </Grid>
 
               </Grid>
