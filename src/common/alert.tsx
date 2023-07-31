@@ -11,7 +11,7 @@ export default function AlertComponent(
         toast,
         timerProgressBar,
         timer = 3000,
-        position = 'top-end',
+        position = 'bottom-end',
         showConfirmButton = true,
         color = "#fff",
         background = "#013220"

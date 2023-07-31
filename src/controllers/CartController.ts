@@ -25,14 +25,20 @@ export const userCart = async (
         res.status(200).json(ApiService.ApiResponseSuccess(result?.data?.data, ''));
 
     } catch (error: any) {
-        
+
         if (req.cookies?.guestId) {
             res.setHeader("Set-Cookie", [
                 `guestId=""; HttpOnly; Max-Age=0;`
             ]);
         }
 
-        console.log('Catch error cart ', error?.response?.data);
+        if (error.response?.status === 401) {
+            res.setHeader("set-Cookie", [
+                `userConnected=${"false"}; Max-Age=0;`,
+                `authToken=deleted; HttpOnly; Max-Age=0;`,
+                `refreshToken=deleted; HttpOnly; Max-Age=0;`
+            ]);
+        }
 
         res.status(200).json(ApiService.ApiResponseSuccess([], 'No cart found'));
         // res.status(400).json(ApiService.ApiResponseError(error));

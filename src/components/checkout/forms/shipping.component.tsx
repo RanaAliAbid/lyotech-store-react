@@ -275,7 +275,7 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                 <div className={styles.formControl}>
                     <label className={styles.formLabel}>
                         {' '}
-                        Partner User ID *{' '}
+                        Partner User ID {' '}
                     </label>
                     <Input
                         className={styles.formInput}

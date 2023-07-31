@@ -149,6 +149,16 @@ export function GlobalWrapper({
       await getCart();
       setGlobalLoading(false);
 
+      setAlertProps({
+        show: true,
+        title: "Your cart country has been updated",
+        text: "",
+        toast: true,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        callback: closeAlert
+      })
+
       return result;
     } catch (error) {
       return null;
@@ -181,6 +191,16 @@ export function GlobalWrapper({
       });
       await getCart();
       setGlobalLoading(false);
+
+      setAlertProps({
+        show: true,
+        title: "Your coupon code has been applied",
+        text: "",
+        toast: true,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        callback: closeAlert
+      })
 
       return result;
     } catch (error) {

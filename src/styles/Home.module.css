@@ -1184,20 +1184,12 @@ margin: 0 auto 20px;
 }
 
 .wrapBox {
-<<<<<<< HEAD
   background: var(--white);
   /* border: 1px solid #EDEDED; */
   box-shadow: 0px 3px 6px rgba(179, 179, 179, 0.25);
   border-radius: 10px;
   padding: 20px 15px;
   /*  */
-=======
-	background: var(--white);
-	/* border: 1px solid #EDEDED; */
-	box-shadow: 0px 3px 6px rgba(179, 179, 179, 0.25);
-	border-radius: 10px;
-	padding: 20px 15px;
->>>>>>> 159c4d66e40db4dc6675bd92646798574626de3d
 }
 
 .summaryDetails ul {
@@ -1545,13 +1537,8 @@ margin: 0 auto 20px;
 }
 
 .wrapBox .flexBox .formControl {
-<<<<<<< HEAD
   width: 48%;
   margin: 0;
-=======
-	width: 49%;
-	margin: 0;
->>>>>>> 159c4d66e40db4dc6675bd92646798574626de3d
 }
 
 .addressBox {
@@ -1996,7 +1983,6 @@ ul.wishlists,
 	display: none;
 }
 
-<<<<<<< HEAD
 .customModal{
   position: absolute;
   top: 50%;
@@ -2008,16 +1994,6 @@ ul.wishlists,
   width: 100%;
   max-width: 800px;
   border-radius: 8px;
-=======
-.customModal {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	background-color: #fff;
-	box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
-	padding: 32px;
->>>>>>> 159c4d66e40db4dc6675bd92646798574626de3d
 }
 
 

@@ -95,7 +95,7 @@ export default function PaymentMethodComponent({ paymentType, handleChangePaymen
                                     </div>
                                 </div>
 
-                                <div className={styles.payInfoBox}>
+                                <div className={`${styles.payInfoBox} w-100`}>
                                     <div className={styles.note}>
                                         <Typography variant="h5">
                                             Pay with your crypto currencies via our super-cool

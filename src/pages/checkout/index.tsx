@@ -191,6 +191,7 @@ export default function Checkout() {
 
     } catch (error) {
       globalContext.setGlobalLoading(false);
+
     }
   }
 
@@ -209,6 +210,16 @@ export default function Checkout() {
 
       if (!enablePlaceOrder) {
         setDisplayAddress(true);
+        globalContext.setAlertProps({
+          show: true,
+          title: "Please fill all required fields and retry",
+          text: "",
+          toast: true,
+          background: "#8B0000",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          callback: globalContext.closeAlert
+        })
         return;
       }
 

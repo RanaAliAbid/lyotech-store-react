@@ -57,6 +57,7 @@ export default function CartTotalComponent({ isCheckout, handlePlaceOrder, payme
         minting: false,
     });
     const [showTermsCheckbox, setShowTermsCheckbox] = React.useState(false);
+    const [showOneCareModal, setShowOneCareModal] = React.useState(false);
 
     React.useEffect(() => {
         if (termsCheckbox.presale && termsCheckbox.onecare && termsCheckbox.minting) {
@@ -67,7 +68,7 @@ export default function CartTotalComponent({ isCheckout, handlePlaceOrder, payme
     React.useEffect(() => {
         setShippingMethods(globalContext?.cart?.shippingMethods ?? []);
         setCartFees(globalContext?.cart?.cart?.fees ?? []);
-        setCartVat(globalContext?.cart?.cart?.appliedTax ?? null)
+        setCartVat(globalContext?.cart?.appliedTax ?? null)
     }, [globalContext.cart]);
 
     const [shippingType, setShippingType] = React.useState<string>('');
@@ -95,9 +96,16 @@ export default function CartTotalComponent({ isCheckout, handlePlaceOrder, payme
         setShippingType(globalContext?.cart?.cart?.shippingMethod ?? "")
     }, [globalContext.cart]);
 
-    const updateCartOneCarePolicy = async (status: boolean, id: string) => {
+    const updateCartOneCarePolicy = async (status: boolean, id: string, force = false) => {
         try {
+            if (!status && !force) {
+                setShowOneCareModal(true);
+                return;
+            }
+
             globalContext.setGlobalLoading(true);
+
+            setShowOneCareModal(false);
 
             const result = await globalContext.updateCartOneCare(id, status);
 
@@ -122,18 +130,18 @@ export default function CartTotalComponent({ isCheckout, handlePlaceOrder, payme
     }
 
     return (
-        <>
+        <div className='position-relative'>
 
             <div
                 className={`${styles['wrapTitle']} ${styles['orderSum']}`}
             >
                 <Typography variant="h4">{t('header-summary')}</Typography>
 
-                <Typography variant="h6">Order ID: #0297509</Typography>
+                {/* <Typography variant="h6">Order ID: #0297509</Typography> */}
             </div>
 
             <div className={styles.wrapBox}>
-                <div className={styles.summaryDetails}>
+                <div className={`${styles.summaryDetails}`}>
                     <List>
                         <ListItem className={styles.subTotal}>
                             <Typography variant="h6">
@@ -309,6 +317,47 @@ export default function CartTotalComponent({ isCheckout, handlePlaceOrder, payme
 
             </div>
 
+            {
+                (showOneCareModal) && (
+                    <div className="oneCarePolicyModal">
+                        <Typography variant="h4" className="bold-500">{t('One Care Policy')}</Typography>
+                        <br />
+                        <Typography variant="h6">
+                            <p>
+                                Your phone is susceptible to physical damage and unexpected accidents can happen at any time.
+                            </p>
+                            <br />
+                            <p>
+                                One Care offers comprehensive protection that covers you against these unforeseen damages.
+                            </p>
+                            <br />
+                            <p>
+                                Don't take the risk of expensive repairs or replacements - ensure that you're protected with One Care today.
+                            </p>
+                            <br />
+                            <div className="">
+                                <Button
+                                    onClick={(e) => { updateCartOneCarePolicy(false, globalContext?.cart?.cart?.products[0]?.productId?._id ?? "", true) }}
+                                    variant="outlined"
+                                    size='small'
+                                    color="error"
+                                >
+                                    {t('No')}
+                                </Button>
+                                &nbsp;&nbsp;&nbsp;
+                                <Button
+                                    onClick={(e) => { updateCartOneCarePolicy(true, globalContext?.cart?.cart?.products[0]?.productId?._id ?? "") }}
+                                    variant="outlined"
+                                    size='small'
+                                    className={``}
+                                >
+                                    {t('Yes')}
+                                </Button>
+                            </div>
+                        </Typography>
+                    </div>
+                )
+            }
 
             <Modal
                 open={showTermsCheckbox}
@@ -367,6 +416,6 @@ export default function CartTotalComponent({ isCheckout, handlePlaceOrder, payme
                     </Button>
                 </Box>
             </Modal>
-        </>
+        </div>
     );
 }
