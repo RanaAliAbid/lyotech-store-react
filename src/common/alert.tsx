@@ -13,6 +13,8 @@ export default function AlertComponent(
         timer = 3000,
         position = 'top-end',
         showConfirmButton = true,
+        color = "#fff",
+        background = "#013220"
     }: SweetAlertOptions & { show: boolean, callback?: any }) {
 
     const swalProps = {
@@ -20,10 +22,18 @@ export default function AlertComponent(
         title: title,
         text: text,
         toast: toast,
+        color: color,
+        background: background,
         position: position,
         timerProgressBar: timerProgressBar,
         showConfirmButton: showConfirmButton,
-        timer: (timerProgressBar) ? timer : 0
+        timer: (timerProgressBar) ? timer : 0,
+        didClose: () => {
+            // run when swal is closed...
+            if (callback) {
+                callback()
+            }
+        }
     };
 
     return (

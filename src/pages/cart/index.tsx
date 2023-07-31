@@ -59,6 +59,7 @@ export default function Cart({
       if (quantityToAdd < 0) return;
 
       await globalContext.addCart(id, quantityToAdd);
+
     } catch (error) {
       globalContext.setGlobalLoading(false);
     }
@@ -88,10 +89,32 @@ export default function Cart({
 
       if (!result) {
         globalContext.setGlobalLoading(false);
+      } else {
+        globalContext.setAlertProps({
+          show: true,
+          title: "Your cart product has been remove",
+          text: "",
+          toast: true,
+          showConfirmButton: false,
+          timerProgressBar: true,
+          callback: globalContext.closeAlert
+        })
       }
 
     } catch (error) {
       globalContext.setGlobalLoading(false);
+
+      globalContext.setAlertProps({
+        show: true,
+        title: "Sorry an error occured.",
+        text: "",
+        toast: true,
+        showConfirmButton: false,
+        background: '#8B0000',
+        timerProgressBar: true,
+        callback: globalContext.closeAlert
+      })
+
     }
   }
 
@@ -106,6 +129,16 @@ export default function Cart({
         productId: id
       }
       const result = await addUserWishList(data);
+
+      globalContext.setAlertProps({
+        show: true,
+        title: "Your whishlist has been added",
+        text: "",
+        toast: true,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        callback: globalContext.closeAlert
+      })
 
       globalContext.setGlobalLoading(false);
     } catch (error) {

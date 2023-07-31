@@ -38,3 +38,11 @@ export const getUserOrders = async () => {
         return null;
     }
 }
+
+export const deleteUserOrders = async (id: string) =>{
+    try {
+        return ProxyService.DeleteRequest(PROXY_HOST + '/api/v1/delete-order?id='+id);
+    } catch (error) {
+        return null;
+    }
+}

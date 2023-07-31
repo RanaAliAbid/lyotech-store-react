@@ -228,6 +228,10 @@ body > div,
   color: #0063ef;
 }
 
+.text-danger {
+  color: red;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }

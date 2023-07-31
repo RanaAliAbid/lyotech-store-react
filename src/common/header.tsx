@@ -5,17 +5,13 @@ import Image from 'next/image';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
-// import Drawer from '@mui/material/Drawer';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Menu from '@mui/material/Menu';
 import Button from '@mui/material/Button'; ``
 import MenuItem from '@mui/material/MenuItem';
-// import Link from '@mui/material/Link';
 import CloseIcon from '@mui/icons-material/Close';
-// import MenuIcon from '@mui/icons-material/Menu';
-// import TranslateIcon from '@mui/icons-material/Translate';
 import logo from '../img/lyotech-logo.png';
 import OrderIcon from '../img/orderIcon.svg';
 import WishlistIcon from '../img/wishlistIcon.svg';
@@ -25,11 +21,9 @@ import TrackOrderIcon from '../img/trackOrderIcon.svg';
 import UserIcon from '../img/userIcon.svg';
 import AccountIcon from '../img/accountIcon.svg';
 import CartIcon from '../img/cartIcon.svg';
-// import Payments from '../img/digitalpayments.svg';
 import bannerProduct from '../img/bannerProduct.png';
 import productImg from '../img/productImg.png';
 
-// import Sidebar from './sidebar';
 import Link from 'next/link';
 import { useAuthContext } from '../contexts/AuthContext';
 import { useGlobalContext } from '../contexts/GlobalContext';
@@ -80,6 +74,16 @@ export default function Header({ title = 'Home' }: { title: string }) {
       !globalContext.cart?.cart?.products ||
       globalContext.cart?.cart?.products?.length == 0
     ) {
+      globalContext.setAlertProps({
+        show: true,
+        title: "Sorry your cart is empty !",
+        text: "",
+        toast: true,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        background: '#8B0000',
+        callback: globalContext.closeAlert
+      })
       return;
     }
 
@@ -128,34 +132,28 @@ export default function Header({ title = 'Home' }: { title: string }) {
     globalContext.updateLocale(locale);
   }, [locale]);
 
-  // const getCart = async () => {
-  //   try {
-  //     // if (!authContext.userConnected) return;
-
-  //     await globalContext.getCart();
-
-  //   } catch (error) {
-  //   }
-  // }
-
   const deletFromCart = async (id: string) => {
     try {
       // if (!authContext.userConnected) return;
-
       await globalContext.deleteCart(id, 0);
+
+      globalContext.setAlertProps({
+        show: true,
+        title: "Your cart has been deleted",
+        text: "",
+        toast: true,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        background: '#8B0000',
+        callback: globalContext.closeAlert
+      })
 
     } catch (error) {
     }
   }
 
-  // React.useEffect(() => {
-  //   getCart()
-  // }, [authContext.userConnected])
-
   const siteDescription =
     'LYOTECH LABS is an R&D company that works on the development of software and hardware products including mobile phones, tablets, laptops and smart watches. Our goal is giving best our customers in technologys';
-
-  // const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(false);
 
   return (
     <>

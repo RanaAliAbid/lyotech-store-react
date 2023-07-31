@@ -9,6 +9,8 @@ const GlobalContext = createContext<any>({});
 import { useRouter } from "next/router";
 import { addToCart, getUserCart, removeCartProduct, updateCart } from '@/services/cart/cart.service';
 import { priceSymbol } from '@/utils/app.utils';
+import AlertComponent from '../common/alert';
+import { SweetAlertOptions } from 'sweetalert2';
 
 export function GlobalWrapper({
   children,
@@ -27,6 +29,8 @@ export function GlobalWrapper({
   const [loadComponents, setLoadComponents] = useState<boolean>(false);
   const [homeProduct, setHomeProduct] = useState<any>(null);
   const [screenWitdh, setScreenWidth] = useState<number>(0);
+
+  const [alertProps, setAlertProps] = useState<SweetAlertOptions & { show: boolean, callback?: any }>({ show: false });
 
   useEffect(() => {
     setCurrencySymbol(priceSymbol("euro"))
@@ -74,6 +78,16 @@ export function GlobalWrapper({
       });
       await getCart();
       setGlobalLoading(false);
+
+      setAlertProps({
+        show: true,
+        title: "Your cart product has been added",
+        text: "",
+        toast: true,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        callback: closeAlert
+      })
 
       return result;
     } catch (error) {
@@ -192,6 +206,14 @@ export function GlobalWrapper({
     }
   }
 
+  const closeAlert = () => {
+    setAlertProps({
+      show: false,
+      title: "",
+      text: ""
+    })
+  }
+
   const globalData = {
     updateLocale,
     globalLoading, setGlobalLoading,
@@ -202,7 +224,8 @@ export function GlobalWrapper({
     updateCartCountry, updateCartPaymentMethod,
     updateCartCoupon,
     homeProduct, setHomeProduct,
-    screenWitdh, setScreenWidth
+    screenWitdh, setScreenWidth,
+    alertProps, setAlertProps, closeAlert
   };
 
   return (
@@ -214,6 +237,10 @@ export function GlobalWrapper({
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+
+      {
+        (loadComponents) && <AlertComponent {...alertProps}></AlertComponent>
+      }
 
       {
         loadComponents && children

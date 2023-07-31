@@ -17,11 +17,13 @@ import styles from '@/styles/Home.module.css';
 import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
-import { createTheme, ThemeProvider } from '@mui/material';
+import { createTheme, ThemeProvider, Button } from '@mui/material';
 import useTranslation from 'next-translate/useTranslation';
-import { getUserOrders } from '@/services/orders/order.service';
+import { deleteUserOrders, getUserOrders } from '@/services/orders/order.service';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
+
+import { generatePaymentLink } from '@/services/orders/order.service';
 
 export default function AllOrders() {
   const { t } = useTranslation('order');
@@ -46,6 +48,40 @@ export default function AllOrders() {
       setOrders(result?.data?.data?.data);
 
       globalContext.setGlobalLoading(false);
+
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
+  }
+
+  const cancelUserOrder = async (id: string) => {
+    if (!id) return;
+    try {
+      globalContext.setGlobalLoading(true);
+
+      const result = await deleteUserOrders(id);
+
+      await handleGetOrders();
+
+      globalContext.setGlobalLoading(false);
+
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
+  }
+
+  const placeOrderNow = async (id: string) => {
+    if (!id) return;
+    try {
+      globalContext.setGlobalLoading(true);
+
+      const result = await generatePaymentLink(id);
+
+      if (result?.data?.data?.data?.paymentLink) {
+        window.location.href = result?.data?.data?.data?.paymentLink;
+      } else {
+        globalContext.setGlobalLoading(false);
+      }
 
     } catch (error) {
       globalContext.setGlobalLoading(false);
@@ -94,7 +130,10 @@ export default function AllOrders() {
                                   </Typography>
                                   <Typography
                                     variant="h6"
-                                    className={styles.textgreen}
+                                    className={
+                                      `${(order?.status == 'cancelled') ? 'text-danger' :
+                                        ((order?.status == 'pending') ? 'text-primary' : styles.textgreen)}
+                                    `}
                                   >
                                     {order?.status}
                                   </Typography>
@@ -155,9 +194,39 @@ export default function AllOrders() {
                               </div>
 
                               <div className={styles.foot}>
-                                <Link href="#" variant="h6">
+                                <Button
+                                  onClick={(e) => { cancelUserOrder(order?._id) }}
+                                  variant="outlined"
+                                  size='small'
+                                  className={``}
+                                >
                                   {t('order-view-details')}
-                                </Link>
+                                </Button>
+
+                                {
+                                  (order?.status?.toLowerCase() == "pending") && (
+                                    <>
+                                      &nbsp;&nbsp;&nbsp;&nbsp;
+                                      <Button
+                                        onClick={(e) => { cancelUserOrder(order?._id) }}
+                                        variant="outlined"
+                                        size='small'
+                                        className={`text-danger`}
+                                      >
+                                        {t('Cancel')}
+                                      </Button>
+                                      &nbsp;&nbsp;&nbsp;&nbsp;
+                                      <Button
+                                        onClick={(e) => { placeOrderNow(order?._id) }}
+                                        variant="outlined"
+                                        size='small'
+                                        className={``}
+                                      >
+                                        {t('Pay now')}
+                                      </Button>
+                                    </>
+                                  )
+                                }
                               </div>
                             </ListItem>
                           ))

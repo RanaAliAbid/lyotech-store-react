@@ -159,10 +159,10 @@ export default function Addresses() {
       contact: true,
     };
 
-    dataValidate.country = postData[0].value == '' ? false : true;
-    dataValidate.state = postData[2].value == '' ? false : true;
-    dataValidate.city = postData[4].value == '' ? false : true;
-    dataValidate.type = postData[6].value == '' ? false : true;
+    dataValidate.country = postData[1].value == '' ? false : true;
+    dataValidate.state = postData[3].value == '' ? false : true;
+    dataValidate.city = postData[5].value == '' ? false : true;
+    dataValidate.type = postData[0].value == '' ? false : true;
     dataValidate.address = postData[7].value == '' ? false : true;
     dataValidate.code = postData[9].value == '' ? false : true;
     dataValidate.contact = postData[11].value == '' ? false : true;
@@ -188,12 +188,12 @@ export default function Addresses() {
       handleClose();
 
       const data = {
-        country: postData[0].value,
-        state: postData[2].value,
-        city: postData[4].value,
-        type: postData[6].value,
+        country: postData[1].value,
+        state: postData[3].value,
+        city: postData[5].value,
+        type: postData[0].value,
         address: postData[7].value, //postData[8].value
-        code: countryCodeByCountryName(postData[0].value) ?? "+971",//postData[9].value,
+        code: countryCodeByCountryName(postData[1].value) ?? "+971",//postData[9].value,
         contact: postData[11].value,
         latitude: 0,
         longitude: 0
@@ -218,6 +218,8 @@ export default function Addresses() {
 
   const editAddress = async (address: any) => {
     setUpdateAddressId(address?._id);
+    globalContext.setGlobalLoading(true);
+
     await getStateDetailsOfCountry(countryList?.find((x: any) => x?.name === address?.country)?._id ?? "0", true, address);
 
     setCountry(address?.country);
@@ -230,6 +232,8 @@ export default function Addresses() {
     setCity(address?.city);
 
     setValidator(resetValidator());
+
+    globalContext.setGlobalLoading(false);
 
     handleOpen();
   }

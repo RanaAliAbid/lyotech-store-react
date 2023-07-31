@@ -174,6 +174,17 @@ export default function Checkout() {
         const addresses = result?.data?.data?.data?.address?.reverse();
         setChangeAddress(false);
         await setDefaultAddress(addresses[0]?.addressId ?? "")
+
+        globalContext.setAlertProps({
+          show: true,
+          title: "Your shipping address has been saved",
+          text: "",
+          toast: true,
+          showConfirmButton: false,
+          timerProgressBar: true,
+          callback: globalContext.closeAlert
+        })
+
       }
 
       globalContext.setGlobalLoading(false);
@@ -214,9 +225,9 @@ export default function Checkout() {
 
       if (result?.data?.data?.data?.paymentLink) {
         window.location.href = result?.data?.data?.data?.paymentLink;
+      } else {
+        globalContext.setGlobalLoading(false);
       }
-
-      globalContext.setGlobalLoading(false);
 
     } catch (error) {
       globalContext.setGlobalLoading(false);

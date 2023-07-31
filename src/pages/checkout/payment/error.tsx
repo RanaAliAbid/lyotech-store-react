@@ -41,9 +41,9 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
 
             if (result?.data?.data?.data?.paymentLink) {
                 window.location.href = result?.data?.data?.data?.paymentLink;
+            } else {
+                globalContext.setGlobalLoading(false);
             }
-
-            globalContext.setGlobalLoading(false);
 
         } catch (error) {
             globalContext.setGlobalLoading(false);

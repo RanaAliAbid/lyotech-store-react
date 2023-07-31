@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ApiData, ApiError } from '../../types';
 import { AuthUser } from '@/contexts/auth.types';
-import { getOrders, getPaymentLink, placeUserOrder } from '@/controllers/OrderController';
+import { getOrders, getPaymentLink, placeUserOrder, deleteOrder } from '@/controllers/OrderController';
 
 export default async function OrderHandler(
   req: NextApiRequest,
@@ -21,5 +21,7 @@ export default async function OrderHandler(
       return getPaymentLink(req, res);
     case 'orders': 
       return getOrders(req, res);
+    case 'delete-order':
+      return deleteOrder(req, res);
   }
 }
