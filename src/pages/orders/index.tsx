@@ -26,164 +26,164 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import useTranslation from 'next-translate/useTranslation';
 
 export default function AllOrders() {
-  const { t } = useTranslation('order');
+	const { t } = useTranslation('order');
 
-  const theme = createTheme({
-    typography: {
-      fontFamily: ['Work Sans'].join(','),
-    },
-  });
+	const theme = createTheme({
+		typography: {
+			fontFamily: ['Work Sans'].join(','),
+		},
+	});
 
-  return (
-    <>
-      <ThemeProvider theme={theme}>
-        <main className={styles.main}>
-          <Header title={t('order-header')} />
-          <div className={styles.paddingTB60}>
-            <Container className={styles.containerBox}>
-              <Grid container spacing={3}>
-                <Grid item md={3} xs={12} className={styles.sidebarGrid}>
-                  <Sidebar />
-                </Grid>
-                <Grid item md={9} xs={12}>
-                  <div className={styles.wrapTitle}>
-                    <Typography variant="h4">{t('order-header')}</Typography>
-                  </div>
-                  <div className={`${styles['wrapBox']}`}>
-                    <List>
-                      <ListItem className={styles.ordersList}>
-                        <div className={styles.orderHead}>
-                          <div>
-                            <Typography variant="h5">
-                              {t('order-id')} :
-                            </Typography>
-                            <Typography variant="h6">
-                              403-1732169-5273
-                            </Typography>
-                          </div>
+	return (
+		<>
+			<ThemeProvider theme={theme}>
+				<main className={styles.main}>
+					<Header title={t('order-header')} />
+					<div className={styles.paddingTB60}>
+						<Container className={styles.containerBox}>
+							<Grid container spacing={3}>
+								<Grid item md={3} xs={12} className={styles.sidebarGrid}>
+									<Sidebar />
+								</Grid>
+								<Grid item md={9} xs={12}>
+									<div className={styles.wrapTitle}>
+										<Typography variant="h4">{t('order-header')}</Typography>
+									</div>
+									<div className={`${styles['wrapBox']}`}>
+										<List>
+											<ListItem className={styles.ordersList}>
+												<div className={styles.orderHead}>
+													<div>
+														<Typography variant="h5">
+															{t('order-id')} :
+														</Typography>
+														<Typography variant="h6">
+															403-1732169-5273
+														</Typography>
+													</div>
 
-                          <div>
-                            <Typography variant="h5">
-                              {t('order-Status')}:
-                            </Typography>
-                            <Typography
-                              variant="h6"
-                              className={styles.textgreen}
-                            >
-                              Delivered
-                            </Typography>
-                          </div>
+													<div>
+														<Typography variant="h5">
+															{t('order-Status')}:
+														</Typography>
+														<Typography
+															variant="h6"
+															className={styles.textgreen}
+														>
+															Delivered
+														</Typography>
+													</div>
 
-                          <div>
-                            <Typography variant="h5">
-                              {t('order-Total')}:
-                            </Typography>
-                            <Typography
-                              variant="h6"
-                              className={styles.textBlue}
-                            >
-                              $811.00
-                            </Typography>
-                          </div>
-                        </div>
+													<div>
+														<Typography variant="h5">
+															{t('order-Total')}:
+														</Typography>
+														<Typography
+															variant="h6"
+															className={styles.textBlue}
+														>
+															$811.00
+														</Typography>
+													</div>
+												</div>
 
-                        <div className={styles.orderBody}>
-                          <List>
-                            <ListItem className={styles.productItem}>
-                              <div className={styles.productImg}>
-                                <img src={productImg.src} alt="logo" />
-                              </div>
-                              <div className={styles.productDetails}>
-                                <div className={styles.productName}>
-                                  <div>
-                                    <Typography
-                                      variant="h4"
-                                      className={styles.productitle}
-                                    >
-                                      LFi ONE Smartphone
-                                    </Typography>
+												<div className={styles.orderBody}>
+													<List>
+														<ListItem className={styles.productItem}>
+															<div className={styles.productImg}>
+																<img src={productImg.src} alt="logo" />
+															</div>
+															<div className={styles.productDetails}>
+																<div className={styles.productName}>
+																	<div>
+																		<Typography
+																			variant="h4"
+																			className={styles.productitle}
+																		>
+																			LFi ONE Smartphone
+																		</Typography>
 
-                                    <Typography variant="body1">
-                                      Model Name: LFI ONE
-                                    </Typography>
-                                  </div>
-                                </div>
+																		<Typography variant="body1">
+																			Model Name: LFI ONE
+																		</Typography>
+																	</div>
+																</div>
 
-                                <Link href="#" variant="h6">
-                                  {t('write-review')}
-                                </Link>
-                              </div>
-                            </ListItem>
+																<Link href="#" variant="h6">
+																	{t('write-review')}
+																</Link>
+															</div>
+														</ListItem>
 
-                            <ListItem className={styles.productItem}>
-                              <div className={styles.productImg}>
-                                <img src={productImg.src} alt="logo" />
-                              </div>
-                              <div className={styles.productDetails}>
-                                <div className={styles.productName}>
-                                  <div>
-                                    <Typography
-                                      variant="h4"
-                                      className={styles.productitle}
-                                    >
-                                      LFi ONE Smartphone
-                                    </Typography>
+														<ListItem className={styles.productItem}>
+															<div className={styles.productImg}>
+																<img src={productImg.src} alt="logo" />
+															</div>
+															<div className={styles.productDetails}>
+																<div className={styles.productName}>
+																	<div>
+																		<Typography
+																			variant="h4"
+																			className={styles.productitle}
+																		>
+																			LFi ONE Smartphone
+																		</Typography>
 
-                                    <Typography variant="body1">
-                                      Model Name: LFI ONE
-                                    </Typography>
-                                  </div>
-                                </div>
+																		<Typography variant="body1">
+																			Model Name: LFI ONE
+																		</Typography>
+																	</div>
+																</div>
 
-                                <Link href="#" variant="h6">
-                                  {t('write-review')}
-                                </Link>
-                              </div>
-                            </ListItem>
+																<Link href="#" variant="h6">
+																	{t('write-review')}
+																</Link>
+															</div>
+														</ListItem>
 
-                            <ListItem className={styles.productItem}>
-                              <div className={styles.productImg}>
-                                <img src={productImg.src} alt="logo" />
-                              </div>
-                              <div className={styles.productDetails}>
-                                <div className={styles.productName}>
-                                  <div>
-                                    <Typography
-                                      variant="h4"
-                                      className={styles.productitle}
-                                    >
-                                      LFi ONE Smartphone
-                                    </Typography>
+														<ListItem className={styles.productItem}>
+															<div className={styles.productImg}>
+																<img src={productImg.src} alt="logo" />
+															</div>
+															<div className={styles.productDetails}>
+																<div className={styles.productName}>
+																	<div>
+																		<Typography
+																			variant="h4"
+																			className={styles.productitle}
+																		>
+																			LFi ONE Smartphone
+																		</Typography>
 
-                                    <Typography variant="body1">
-                                      Model Name: LFI ONE
-                                    </Typography>
-                                  </div>
-                                </div>
+																		<Typography variant="body1">
+																			Model Name: LFI ONE
+																		</Typography>
+																	</div>
+																</div>
 
-                                <Link href="#" variant="h6">
-                                  {t('write-review')}
-                                </Link>
-                              </div>
-                            </ListItem>
-                          </List>
-                        </div>
+																<Link href="#" variant="h6">
+																	{t('write-review')}
+																</Link>
+															</div>
+														</ListItem>
+													</List>
+												</div>
 
-                        <div className={styles.foot}>
-                          <Link href="#" variant="h6">
-                            {t('order-view-details')}
-                          </Link>
-                        </div>
-                      </ListItem>
-                    </List>
-                  </div>
-                </Grid>
-              </Grid>
-            </Container>
-          </div>
-          <Footer />
-        </main>
-      </ThemeProvider>
-    </>
-  );
+												<div className={styles.foot}>
+													<Link href="#" variant="h6">
+														{t('order-view-details')}
+													</Link>
+												</div>
+											</ListItem>
+										</List>
+									</div>
+								</Grid>
+							</Grid>
+						</Container>
+					</div>
+					<Footer />
+				</main>
+			</ThemeProvider>
+		</>
+	);
 }
