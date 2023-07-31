@@ -26,6 +26,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { verifyOrderDetails } from '@/services/orders/order.service';
 import { FaCalendar, FaInfoCircle, FaMailBulk, FaMoneyBill, FaPhoneAlt, FaShippingFast, FaUser, FaWallet } from 'react-icons/fa';
+import moment from 'moment';
 
 export default function PaymentSuccessComponent({ order }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
@@ -67,7 +68,7 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
                                                 </Typography>
 
                                                 <Typography variant="h6">
-                                                    Placed on 24 Nov 2022
+                                                    Placed on {order?.details?.createdAt && moment(order.details.createdAt).format("DD MMM YYYY")}
                                                 </Typography>
                                             </div>
                                         </div>
@@ -91,62 +92,61 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
                                                         Your Order
                                                     </Typography>
                                                 </div>
-
-                                                <div className={styles.orderdetail}>
-                                                    <div className={styles.productImg}>
-                                                        <img src={productImg.src} alt="logo" />
-                                                    </div>
-                                                    <div className={styles.productDetails}>
-                                                        <div className={styles.productName}>
-                                                            <Typography
-                                                                variant="h4"
-                                                                className={styles.productitle}
-                                                            >
-                                                                LFi ONE Smartphone
-                                                            </Typography>
-
-                                                            <Typography variant="body1">
-                                                                Model Name: LFI ONE
-                                                            </Typography>
-                                                            <Typography variant="h5">
-                                                                {t('order-id')} : 403-1732169-5273
-                                                            </Typography>
+                                                {
+                                                    order?.products?.map((product: any) =>
+                                                    (<div className={styles.orderdetail}>
+                                                        <div className={styles.productImg}>
+                                                            <img src={productImg.src} alt="logo" />
                                                         </div>
-
-                                                    </div>
-                                                </div>
+                                                        <div className={styles.productDetails}>
+                                                            <div className={styles.productName}>
+                                                                <Typography
+                                                                    variant="h4"
+                                                                    className={styles.productitle}
+                                                                >
+                                                                    {product?.productId?.name}
+                                                                </Typography>
+                                                                <Typography variant="body1">
+                                                                    {product?.productId?.shortDescription ? product.productId.shortDescription : product?.productId?.name}
+                                                                </Typography>
+                                                                <Typography variant="h5">
+                                                                    Quantity: {product?.quantity}
+                                                                </Typography>
+                                                                <Typography variant="h5">
+                                                                    Price: {product?.orderPrice}
+                                                                </Typography>
+                                                                <Typography variant="h5">
+                                                                    {t('order-id')} : {order?._id}
+                                                                </Typography>
+                                                            </div>
+                                                        </div>
+                                                    </div>)
+                                                    )
+                                                }
                                             </div>
-
-
                                             <div className={styles.ordersList}>
                                                 <div className={styles.orderHead}>
 
                                                     <Typography variant="h5">
                                                         Delivery address
                                                     </Typography>
-
-
                                                 </div>
-
                                                 <div className={styles.orderBody}>
                                                     <div>
                                                         <div className={styles.addresses}>
                                                             <div className={styles.addressesType}>
                                                                 <Typography variant="h4" className='text-capitalize'>
-                                                                    Vimek patel
+                                                                    {order?.details?.shippingAddress?.firstName} {order?.details?.shippingAddress?.lastName}
                                                                 </Typography>
                                                             </div>
                                                             <div>
                                                                 <Typography variant="body1">
-                                                                    3rd floor, CBA technologies 57XF+XM - Dubai <br />
-                                                                    Dubai, United Arab Emirates    <br />
-                                                                    +971-58-1234659    <br />
+                                                                    {order?.details?.shippingAddress?.address}, {order?.details?.shippingAddress?.city} <br />
+                                                                    {order?.details?.shippingAddress?.state}, {order?.details?.shippingAddress?.country}    <br />
+                                                                    {order?.details?.shippingAddress?.phone}    <br />
                                                                     <span> </span>
                                                                 </Typography>
                                                             </div>
-
-
-
                                                         </div>
                                                     </div>
 
@@ -169,7 +169,7 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
                                                             </Typography>
 
                                                             <Typography variant="body1">
-                                                                Lyomerchant
+                                                                {order?.paymentMethod?.name}
                                                             </Typography>
                                                         </ListItem>
 
@@ -179,7 +179,7 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
                                                             </Typography>
 
                                                             <Typography variant="body1">
-                                                                Express plus
+                                                                {order?.shippingMethod?.name}
                                                             </Typography>
                                                         </ListItem>
                                                     </List>
@@ -187,11 +187,11 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
 
                                                 <div className={styles.foot}>
                                                     <Typography variant="h5">
-                                                        Total Amout:
+                                                        Total Amount:
                                                     </Typography>
 
                                                     <Typography variant="h5">
-                                                        4066.15 
+                                                        {order?.totalAmount} {globalContext.currencySymbol}
                                                     </Typography>
                                                 </div>
                                             </div>
@@ -221,103 +221,6 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
                                 </div>
                             </Grid>
                         </Grid>
-                    </Container>
-                    <Container className={styles.containerBox}>
-                        <div className='' style={{ minHeight: "50vh" }}>
-                            <Grid container spacing={3}>
-
-                                {/* <Grid item md={12} xs={12} justifyItems={"center"} alignContent={"center"}>
-                                    <div
-                                        className={`${styles['wrapTitle']} ${styles['orderSum']}`}
-                                    >
-                                        <span className='d-flex'>
-                                            <Image src="/success.gif" alt='success' height={110} width={150} />
-                                            <Typography className='bold-500' style={{ marginTop: "35px" }} variant='h1' color={"green"}>Your Order has been placed</Typography>
-                                        </span>
-                                    </div>
-                                </Grid> */}
-
-                                <Grid item md={6} xs={12} justifyItems={"center"} alignContent={"center"}>
-                                    <div className={`${styles['wrapTitle']} ${styles['orderSum']}`}>
-                                        <List
-                                            sx={{ width: '100%', bgcolor: 'background.paper' }}
-                                            subheader={<ListSubheader>
-                                                <Typography variant="h4">{t('order-summary')}</Typography>
-                                            </ListSubheader>}
-                                        >
-                                            <ListItem>
-                                                <ListItemIcon>
-                                                    <FaInfoCircle />
-                                                </ListItemIcon>
-                                                <ListItemText id="switch-list-label-wifi" primary={`Order: #${order?._id}`} />
-                                            </ListItem>
-
-                                            <ListItem>
-                                                <ListItemIcon>
-                                                    <FaMoneyBill />
-                                                </ListItemIcon>
-                                                <ListItemText id="switch-list-label-wifi" primary={`Amount: ${order?.totalAmount} ${globalContext.currencySymbol}`} />
-                                            </ListItem>
-
-                                            <ListItem>
-                                                <ListItemIcon>
-                                                    <FaWallet />
-                                                </ListItemIcon>
-                                                <ListItemText id="switch-list-label-wifi" primary={`Payment Method: ${order?.paymentMethod?.name}`} />
-                                            </ListItem>
-
-                                            <ListItem>
-                                                <ListItemIcon>
-                                                    <FaShippingFast />
-                                                </ListItemIcon>
-                                                <ListItemText id="switch-list-label-wifi" primary={`Shipping Method: ${order?.shippingMethod?.name}`} />
-                                            </ListItem>
-                                            <ListItem>
-                                                <ListItemIcon>
-                                                    <FaCalendar />
-                                                </ListItemIcon>
-                                                <ListItemText id="switch-list-label-wifi" primary={`Date: ${order?.createdAt}`} />
-                                            </ListItem>
-                                        </List>
-                                    </div>
-
-                                </Grid>
-
-                                <Grid item md={6} xs={12} justifyItems={"center"} alignContent={"center"}>
-
-                                    <div className={`${styles['wrapTitle']} ${styles['orderSum']}`}>
-                                        <List
-                                            sx={{ width: '100%', bgcolor: 'background.paper' }}
-                                            subheader={<ListSubheader>
-                                                <Typography variant="h4">{t('order-summary')}</Typography>
-                                            </ListSubheader>}
-                                        >
-                                            <ListItem>
-                                                <ListItemIcon>
-                                                    <FaUser />
-                                                </ListItemIcon>
-                                                <ListItemText id="switch-list-label-wifi" primary={`Name : ${order?.details?.shippingAddress?.firstName} ${order?.details?.shippingAddress?.lastName}`} />
-                                            </ListItem>
-
-                                            <ListItem>
-                                                <ListItemIcon>
-                                                    <FaMailBulk />
-                                                </ListItemIcon>
-                                                <ListItemText id="switch-list-label-wifi" primary={`Email: ${order?.details?.shippingAddress?.email}`} />
-                                            </ListItem>
-
-                                            <ListItem>
-                                                <ListItemIcon>
-                                                    <FaPhoneAlt />
-                                                </ListItemIcon>
-                                                <ListItemText id="switch-list-label-wifi" primary={`Phone Number: ${order?.details?.shippingAddress?.phone}`} />
-                                            </ListItem>
-                                        </List>
-                                    </div>
-
-                                </Grid>
-                            </Grid>
-                        </div>
                     </Container>
                 </div>
 

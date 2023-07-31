@@ -2030,6 +2030,7 @@ ul.wishlists,
 
 .ordersPlaceSec .orderdetail {
 	padding: 15px;
+	border-bottom: 1px solid var(--border-color);
 }
 
 .ordersPlaceSec .orderdetail .productImg {
@@ -2041,6 +2042,11 @@ ul.wishlists,
 	display: inline-block;
 	vertical-align: top;
 }
+
+.ordersPlaceSec .orderdetail .productDetails {
+	padding: 0 15px;
+}
+
 
 .ordersPlaceSec .orderdetail .productImg img {
 	width: 100%;
@@ -2056,7 +2062,7 @@ ul.wishlists,
 	font-size: 13px;
 	font-weight: 400;
 	color: var(--gray100);
-	margin-bottom: 8px;
+	
 }
 
 .ordersPlaceSec .orderdetail .productDetails h5 {
