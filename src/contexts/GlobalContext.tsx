@@ -26,12 +26,23 @@ export function GlobalWrapper({
   const priceToFixed: number = 2;
   const [loadComponents, setLoadComponents] = useState<boolean>(false);
   const [homeProduct, setHomeProduct] = useState<any>(null);
+  const [screenWitdh, setScreenWidth] = useState<number>(0);
 
   useEffect(() => {
     setCurrencySymbol(priceSymbol("euro"))
     router.events.on('routeChangeStart', handleRouteChange);
     router.events.on('routeChangeComplete', handleRouteChangeComplete);
+
+    if (window) {
+      setScreenWidth(window.innerWidth)
+    }
+
+    window.addEventListener('resize', handleResizeScreen);
   }, [])
+
+  const handleResizeScreen = () => {
+    setScreenWidth(window.innerWidth)
+  }
 
   const handleRouteChange = () => {
     setGlobalLoading(true)
@@ -190,7 +201,8 @@ export function GlobalWrapper({
     updateCartOneCare, updateCartShippingMethod,
     updateCartCountry, updateCartPaymentMethod,
     updateCartCoupon,
-    homeProduct, setHomeProduct
+    homeProduct, setHomeProduct,
+    screenWitdh, setScreenWidth
   };
 
   return (

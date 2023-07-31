@@ -35,6 +35,34 @@ export const placeUserOrder = async (
     }
 };
 
+export const getOrders = async (
+    req: NextApiRequest,
+    res: NextApiResponse<ApiData | ApiError>
+) => {
+    res.setHeader('Allow', 'GET');
+
+    try {
+        let data = req.body;
+
+        const token = req.cookies?.authToken ?? null;
+        const guestId = req.cookies?.guestId ?? null;
+
+        let result;
+
+        if (token) {
+            result = await ApiService.GetRequest(API_HOST + '/v1/order', `Bearer ${token}`);
+        } else {
+            result = await ApiService.GetRequest(API_HOST + '/v1/order/guest', `${guestId}`, true);
+        }
+
+        return res.status(200).json(ApiService.ApiResponseSuccess(result?.data, ''));
+
+    } catch (error: any) {
+        console.log('Catch error get user orders ', error?.response?.data);
+        return res.status(400).json(ApiService.ApiResponseError(error));
+    }
+};
+
 
 export const getPaymentLink = async (
     req: NextApiRequest,

@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import Header from '../../common/header';
 import Footer from '../../common/footer';
+import AlertComponent from '../../common/alert';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -35,23 +36,30 @@ import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 import { createTheme, ThemeProvider } from '@mui/material';
 import useTranslation from 'next-translate/useTranslation';
-import { homePageProducts } from '@/utils/app.utils';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useRouter } from 'next/router';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { getHomePageProducts } from '@/services/products/product.service';
 
-export default function Home() {
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
+import { IncomingMessage, ServerResponse } from 'http';
+
+import { SweetAlertOptions } from 'sweetalert2';
+
+export default function CoProducts({ products }: InferGetServerSidePropsType<typeof getServerSideProps>) {
     const theme = createTheme({
         typography: {
             fontFamily: ['Work Sans'].join(','),
         },
     });
 
+
     const { t } = useTranslation('home');
     const globalContext = useGlobalContext();
     const authContext = useAuthContext();
     const router = useRouter();
+    const [alertProps, setAlertProps] = useState<SweetAlertOptions & { show: boolean, callback?: any }>({ show: false });
+
 
     const addProductToCart = async (id: string) => {
         try {
@@ -68,12 +76,27 @@ export default function Home() {
         }
     }
 
+    useEffect(() => {
+        globalContext.setHomeProduct(products)
+    }, [products])
+
+    const handleBuyFromPartner = () => {
+        setAlertProps({
+            show: true,
+            title: "",
+            text: "",
+            callback: setAlertProps
+        })
+    }
+
     return (
         <>
             <div>
+                <AlertComponent {...alertProps}></AlertComponent>
+
                 <ThemeProvider theme={theme}>
                     <main className={styles.main}>
-                        <Header title="Home" />
+                        <Header title="Co-Products" />
                         {/* Banner Section Start */}
                         <div className={`${styles['paddingT0']} ${styles['mainBannerLfi-Wrap']}`}>
                             <div className={`${styles['mainBannerLfi']}`}>
@@ -291,6 +314,7 @@ export default function Home() {
                                         <Typography variant="h2">
                                             <span>LFi</span> Smartphone
                                         </Typography>
+                                        <br />
 
                                         <Typography variant="h5">
                                             1,397.00 €
@@ -323,12 +347,14 @@ export default function Home() {
 
                                         <div className={styles.BuyLfiPhone}>
                                             <Button
+                                                onClick={(e) => addProductToCart(globalContext?.homeProduct?.LFI_ONE_Smartphone)}
                                                 variant="contained"
                                                 className={`${styles['btn']} ${styles['btn_primary']}`}>
                                                 Buy Now
                                             </Button>
 
                                             <Button
+                                                onClick={(e) => handleBuyFromPartner()}
                                                 variant="contained"
                                                 className={`${styles['btn']} ${styles['btn_primary']}`}>
                                                 Buy from Partners
@@ -341,12 +367,6 @@ export default function Home() {
                                         </Typography>
                                     </Grid>
                                 </Grid>
-
-
-
-
-
-
                             </Container>
                         </div>
 
@@ -540,8 +560,22 @@ export default function Home() {
                         <Footer />
                     </main>
                 </ThemeProvider>
-            </div>
+            </div >
         </>
     );
 }
 
+export const getServerSideProps: GetServerSideProps<{ products: any }> = async ({
+    req,
+    res,
+}: {
+    req: IncomingMessage;
+    res: ServerResponse;
+}) => {
+    let result = null;
+
+    result = await getHomePageProducts();
+
+    const products = result;
+    return { props: { products } };
+};

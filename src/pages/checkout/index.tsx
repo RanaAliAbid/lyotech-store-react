@@ -14,7 +14,7 @@ import styles from '@/styles/Home.module.css';
 import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
-import { Alert, createTheme, MenuItem, Select, ThemeProvider } from '@mui/material';
+import { Alert, Button, createTheme, MenuItem, Select, ThemeProvider } from '@mui/material';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
@@ -26,6 +26,7 @@ import PaymentMethodComponent from '@/components/checkout/payment.component';
 import { saveUserOrder } from '@/services/orders/order.service';
 import { formCheckEmptyFields } from '@/validators/order.validator';
 import { countryCodeByCountryName, getLocalStorage, setLocalStorage } from '@/utils/app.utils';
+import { FaArrowLeft } from 'react-icons/fa';
 
 export default function Checkout() {
   const theme = createTheme({
@@ -40,6 +41,9 @@ export default function Checkout() {
   const [formAddress, setFormAddress] = React.useState<any>(null);
   const [shippingSameBilling, setShippingSameBilling] = React.useState(true);
   const [localAddress, setLocalAddress] = React.useState<any>(null);
+  const [formValidation, setFormValidation] = React.useState(null);
+  const [enablePlaceOrder, setEnablePlaceOrder] = React.useState(false);
+  const [displayAddress, setDisplayAddress] = React.useState(false);
 
 
   const globalContext = useGlobalContext();
@@ -116,6 +120,24 @@ export default function Checkout() {
 
     const checkForm: any = formCheckEmptyFields(addresses);
 
+    if (
+      !checkForm.country ||
+      !checkForm.city ||
+      !checkForm.type ||
+      !checkForm.address ||
+      !checkForm.code ||
+      !checkForm.phone ||
+      !checkForm.firstName ||
+      !checkForm.lastName ||
+      !checkForm.email
+    ) {
+      setEnablePlaceOrder(false);
+    } else {
+      setEnablePlaceOrder(true);
+    }
+
+    setFormValidation(checkForm);
+
     if (!userAddressList && !userAddressList?.address?.defaultAddress) {
       setChangeAddress(true);
     }
@@ -173,6 +195,11 @@ export default function Checkout() {
 
   const handlePlaceOrder = async () => {
     try {
+
+      if (!enablePlaceOrder) {
+        setDisplayAddress(true);
+        return;
+      }
 
       globalContext.setGlobalLoading(true);
 
@@ -284,9 +311,14 @@ export default function Checkout() {
 
                   {
                     (changeAddress) && (
-                      <>
+                      <div className={`mobile-fixed ${(displayAddress) && 'active'}`}>
                         <div className={styles.wrapTitle}>
-                          <Typography variant="h4">Shipping Address</Typography>
+                          <Typography variant="h4">
+                            <span onClick={(e) => setDisplayAddress(false)} className='mobile-display float-left' style={{ marginTop: "2px" }}>
+                              <FaArrowLeft></FaArrowLeft> &nbsp;&nbsp;
+                            </span>
+                            Shipping Address
+                          </Typography>
 
                           {
                             (userAddressList?.address?.defaultAddress) && (
@@ -332,23 +364,41 @@ export default function Checkout() {
                             </>
                           )
                         }
+
+                        <Button
+                          onClick={(e) => { setDisplayAddress(false) }}
+                          variant="contained"
+                          size='small'
+                          className={`${styles['btn']} mt-2 mobile-display ${styles['btn_danger']} float-right`}
+                        >
+                          {t('Use this Address')}
+                        </Button>
+
+                      </div>
+                    )
+                  }
+
+                  {
+                    (globalContext.screenWitdh > 900) && (
+                      <>
+                        <div className={`${styles.wrapTitle} mt-2 mb-2`}>
+                          <Typography variant="h4">
+                            Choose a payment method
+                          </Typography>
+                        </div>
+
+                        {/* //payment method */}
+                        <PaymentMethodComponent paymentType={paymentType} handleChangePayment={handleChangePayment}></PaymentMethodComponent>
+
                       </>
                     )
                   }
 
-                  <div className={`${styles.wrapTitle} mt-2 mb-2`}>
-                    <Typography variant="h4">
-                      Choose a payment method
-                    </Typography>
-                  </div>
-
-                  {/* //payment method */}
-                  <PaymentMethodComponent paymentType={paymentType} handleChangePayment={handleChangePayment}></PaymentMethodComponent>
 
                 </Grid>
 
                 <Grid item md={4} xs={12}>
-                  <CartTotalComponent isCheckout={true} handlePlaceOrder={handlePlaceOrder}></CartTotalComponent>
+                  <CartTotalComponent isCheckout={true} handlePlaceOrder={handlePlaceOrder} paymentType={paymentType} handleChangePayment={handleChangePayment}></CartTotalComponent>
                 </Grid>
 
               </Grid>

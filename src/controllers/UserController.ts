@@ -147,7 +147,7 @@ export const validateUserToken = async (
   res.setHeader('Allow', 'GET');
 
   try {
-    const result = await ApiService.GetRequest(API_HOST + '/v1/user/validate-token', `Bearer ${req.cookies?.authToken}`);
+    const result = await ApiService.GetRequest(API_HOST + '/v1/user/validate-token', `Bearer ${req.cookies?.partnerToken ?? req.cookies?.authToken}`);
     const token = result?.data?.data?.accessToken;
 
     let tokeExpiredTime = 0;
@@ -162,6 +162,13 @@ export const validateUserToken = async (
     let userName = result?.data?.data?.user?.name ?? `${result?.data?.data?.user?.firstName} ${result?.data?.data?.user?.lastName}`
     if (result?.data?.data?.user?.firstName?.length < 1) {
       userName = result?.data?.data?.user?.email?.split("@")[0] ?? ""
+    }
+
+    if(req.cookies?.partnerToken) {
+      res.setHeader("set-Cookie", [
+        `authToken=${req.cookies?.partnerToken}; HttpOnly; Max-Age=36000; path: '/';`,
+        `partnerToken=deleted; HttpOnly; Max-Age=0;`,
+      ]);
     }
 
     res.status(200).json(ApiService.ApiResponseSuccess({
@@ -359,7 +366,7 @@ export const addAddress = async (
     res.status(200).json(ApiService.ApiResponseSuccess(result?.data, ''));
 
   } catch (error: any) {
-    console.log('Catch error email otp send', error?.response?.data);
+    console.log('Catch error email otp send', error?.response);
     res.status(400).json(ApiService.ApiResponseError(error));
   }
 };

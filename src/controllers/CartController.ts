@@ -11,8 +11,8 @@ export const userCart = async (
 
     try {
 
-        const token = req.cookies?.authToken ?? null;
-        const guestId = req.cookies?.guestId ?? null;
+        const token = req.cookies?.partnerToken ?? req.cookies?.authToken ?? null;
+        const guestId = req.cookies?.partnerToken ?? req.cookies?.guestId ?? null;
 
         let result;
 
@@ -25,11 +25,17 @@ export const userCart = async (
         res.status(200).json(ApiService.ApiResponseSuccess(result?.data?.data, ''));
 
     } catch (error: any) {
-        res.setHeader("Set-Cookie", [
-            `guestId=""; HttpOnly; Max-Age=0;`
-        ]);
+        
+        if (req.cookies?.guestId) {
+            res.setHeader("Set-Cookie", [
+                `guestId=""; HttpOnly; Max-Age=0;`
+            ]);
+        }
+
         console.log('Catch error cart ', error?.response?.data);
-        res.status(400).json(ApiService.ApiResponseError(error));
+
+        res.status(200).json(ApiService.ApiResponseSuccess([], 'No cart found'));
+        // res.status(400).json(ApiService.ApiResponseError(error));
     }
 };
 
@@ -159,9 +165,9 @@ export const cartUpdate = async (
         let result;
 
         if (token) {
-            result = await ApiService.PutRequest(API_HOST + '/v1/cart/update', data,  `Bearer ${token}`);
+            result = await ApiService.PutRequest(API_HOST + '/v1/cart/update', data, `Bearer ${token}`);
         } else {
-            result = await ApiService.PutRequest(API_HOST + '/v1/cart/guest/update', data,  `${guestId}`, true);
+            result = await ApiService.PutRequest(API_HOST + '/v1/cart/guest/update', data, `${guestId}`, true);
         }
 
         res.status(200).json(ApiService.ApiResponseSuccess(result?.data?.data, ''));

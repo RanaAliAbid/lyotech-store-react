@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Head from 'next/head';
 
 import Header from '../../common/header';
 import Footer from '../../common/footer';
@@ -10,20 +9,19 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import Button from '@mui/material/Button';
-import Image from 'next/image';
 import Link from '@mui/material/Link';
 
 import productImg from '../../img/productImg.png';
-
 import styles from '@/styles/Home.module.css';
 
 import { Work_Sans } from 'next/font/google';
 const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider } from '@mui/material';
-
 import useTranslation from 'next-translate/useTranslation';
+import { getUserOrders } from '@/services/orders/order.service';
+import { useGlobalContext } from '@/contexts/GlobalContext';
+import { useAuthContext } from '@/contexts/AuthContext';
 
 export default function AllOrders() {
   const { t } = useTranslation('order');
@@ -33,6 +31,30 @@ export default function AllOrders() {
       fontFamily: ['Work Sans'].join(','),
     },
   });
+
+  const globalContext = useGlobalContext();
+  const authContext = useAuthContext();
+
+  const [orders, setOrders] = React.useState([]);
+
+  const handleGetOrders = async () => {
+    try {
+      globalContext.setGlobalLoading(true);
+
+      const result = await getUserOrders();
+
+      setOrders(result?.data?.data?.data);
+
+      globalContext.setGlobalLoading(false);
+
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
+  }
+
+  React.useEffect(() => {
+    handleGetOrders();
+  }, []);
 
   return (
     <>
@@ -51,130 +73,101 @@ export default function AllOrders() {
                   </div>
                   <div className={`${styles['wrapBox']}`}>
                     <List>
-                      <ListItem className={styles.ordersList}>
-                        <div className={styles.orderHead}>
-                          <div>
-                            <Typography variant="h5">
-                              {t('order-id')} :
-                            </Typography>
-                            <Typography variant="h6">
-                              403-1732169-5273
-                            </Typography>
-                          </div>
 
-                          <div>
-                            <Typography variant="h5">
-                              {t('order-Status')}:
-                            </Typography>
-                            <Typography
-                              variant="h6"
-                              className={styles.textgreen}
-                            >
-                              Delivered
-                            </Typography>
-                          </div>
-
-                          <div>
-                            <Typography variant="h5">
-                              {t('order-Total')}:
-                            </Typography>
-                            <Typography
-                              variant="h6"
-                              className={styles.textBlue}
-                            >
-                              $811.00
-                            </Typography>
-                          </div>
-                        </div>
-
-                        <div className={styles.orderBody}>
-                          <List>
-                            <ListItem className={styles.productItem}>
-                              <div className={styles.productImg}>
-                                <img src={productImg.src} alt="logo" />
-                              </div>
-                              <div className={styles.productDetails}>
-                                <div className={styles.productName}>
-                                  <div>
-                                    <Typography
-                                      variant="h4"
-                                      className={styles.productitle}
-                                    >
-                                      LFi ONE Smartphone
-                                    </Typography>
-
-                                    <Typography variant="body1">
-                                      Model Name: LFI ONE
-                                    </Typography>
-                                  </div>
+                      {
+                        (orders && orders?.length > 0) ? (
+                          orders?.map((order: any) => (
+                            <ListItem className={styles.ordersList}>
+                              <div className={styles.orderHead}>
+                                <div>
+                                  <Typography variant="h5">
+                                    {t('order-id')} :
+                                  </Typography>
+                                  <Typography variant="h6">
+                                    {order?._id}
+                                  </Typography>
                                 </div>
 
-                                <Link href="#" variant="h6">
+                                <div>
+                                  <Typography variant="h5">
+                                    {t('order-Status')}:
+                                  </Typography>
+                                  <Typography
+                                    variant="h6"
+                                    className={styles.textgreen}
+                                  >
+                                    {order?.status}
+                                  </Typography>
+                                </div>
+
+                                <div>
+                                  <Typography variant="h5">
+                                    {t('order-Total')}:
+                                  </Typography>
+                                  <Typography
+                                    variant="h6"
+                                    className={styles.textBlue}
+                                  >
+                                    {order?.totalAmount?.toFixed(globalContext.priceToFixed)}
+                                    {globalContext?.currencySymbol}
+                                  </Typography>
+                                </div>
+                              </div>
+
+                              <div className={styles.orderBody}>
+                                <List>
+
+                                  {
+                                    (order?.products && order?.products?.length > 0) ? (
+                                      order?.products.map((product: any) => (
+                                        <ListItem className={`${styles.productItem} w-100`}>
+                                          <div className={styles.productImg}>
+                                            <img src={productImg.src} alt="logo" />
+                                          </div>
+                                          <div className={styles.productDetails}>
+                                            <div className={styles.productName}>
+                                              <div>
+                                                <Typography
+                                                  variant="h4"
+                                                  className={styles.productitle}
+                                                >
+                                                  {product.productId?.name}
+                                                </Typography>
+
+                                                <Typography variant="body1">
+                                                  Model Name: LFI ONE
+                                                </Typography>
+                                              </div>
+                                            </div>
+
+                                            {/* <Link href="#" variant="h6">
                                   {t('write-review')}
+                                </Link> */}
+                                          </div>
+                                        </ListItem>
+                                      ))
+                                    ) : (
+                                      <></>
+                                    )
+                                  }
+
+                                </List>
+                              </div>
+
+                              <div className={styles.foot}>
+                                <Link href="#" variant="h6">
+                                  {t('order-view-details')}
                                 </Link>
                               </div>
                             </ListItem>
+                          ))
+                        ) : (
+                          <>
 
-                            <ListItem className={styles.productItem}>
-                              <div className={styles.productImg}>
-                                <img src={productImg.src} alt="logo" />
-                              </div>
-                              <div className={styles.productDetails}>
-                                <div className={styles.productName}>
-                                  <div>
-                                    <Typography
-                                      variant="h4"
-                                      className={styles.productitle}
-                                    >
-                                      LFi ONE Smartphone
-                                    </Typography>
+                          </>
+                        )
+                      }
 
-                                    <Typography variant="body1">
-                                      Model Name: LFI ONE
-                                    </Typography>
-                                  </div>
-                                </div>
-
-                                <Link href="#" variant="h6">
-                                  {t('write-review')}
-                                </Link>
-                              </div>
-                            </ListItem>
-
-                            <ListItem className={styles.productItem}>
-                              <div className={styles.productImg}>
-                                <img src={productImg.src} alt="logo" />
-                              </div>
-                              <div className={styles.productDetails}>
-                                <div className={styles.productName}>
-                                  <div>
-                                    <Typography
-                                      variant="h4"
-                                      className={styles.productitle}
-                                    >
-                                      LFi ONE Smartphone
-                                    </Typography>
-
-                                    <Typography variant="body1">
-                                      Model Name: LFI ONE
-                                    </Typography>
-                                  </div>
-                                </div>
-
-                                <Link href="#" variant="h6">
-                                  {t('write-review')}
-                                </Link>
-                              </div>
-                            </ListItem>
-                          </List>
-                        </div>
-
-                        <div className={styles.foot}>
-                          <Link href="#" variant="h6">
-                            {t('order-view-details')}
-                          </Link>
-                        </div>
-                      </ListItem>
                     </List>
                   </div>
                 </Grid>
