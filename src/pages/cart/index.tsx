@@ -59,6 +59,7 @@ export default function Cart({
       if (quantityToAdd < 0) return;
 
       await globalContext.addCart(id, quantityToAdd);
+
     } catch (error) {
       globalContext.setGlobalLoading(false);
     }
@@ -88,10 +89,32 @@ export default function Cart({
 
       if (!result) {
         globalContext.setGlobalLoading(false);
+      } else {
+        globalContext.setAlertProps({
+          show: true,
+          title: "Your cart product has been remove",
+          text: "",
+          toast: true,
+          showConfirmButton: false,
+          timerProgressBar: true,
+          callback: globalContext.closeAlert
+        })
       }
 
     } catch (error) {
       globalContext.setGlobalLoading(false);
+
+      globalContext.setAlertProps({
+        show: true,
+        title: "Sorry an error occured.",
+        text: "",
+        toast: true,
+        showConfirmButton: false,
+        background: '#8B0000',
+        timerProgressBar: true,
+        callback: globalContext.closeAlert
+      })
+
     }
   }
 
@@ -106,6 +129,16 @@ export default function Cart({
         productId: id
       }
       const result = await addUserWishList(data);
+
+      globalContext.setAlertProps({
+        show: true,
+        title: "Your whishlist has been added",
+        text: "",
+        toast: true,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        callback: globalContext.closeAlert
+      })
 
       globalContext.setGlobalLoading(false);
     } catch (error) {
@@ -206,13 +239,18 @@ export default function Cart({
                                     <RemoveIcon />{' '}
                                   </div>
                                   {
-                                    (!globalContext.globalLoading) && (
+                                    (!globalContext.globalLoading) ? (
                                       <Input
                                         id={`cartProduct-${cartItem?.productId?._id}`}
-                                        // placeholder={cartItem?.quantity}
                                         className={styles.formControl}
                                         defaultValue={cartItem?.quantity}
                                       />
+                                    ) : (
+                                      <div
+                                        className={`${styles.formControl}`}
+                                        style={{ border: "1px solid #f5f5f5", height: "28px", borderRadius: "25px" }}>
+                                        {/* // */}
+                                      </div>
                                     )
                                   }
                                   <div className={styles.qtyBtn} onClick={(e) => addIntoCart(cartItem?.productId?._id)}>
@@ -279,7 +317,6 @@ export default function Cart({
   );
 }
 
-
 export const getServerSideProps: GetServerSideProps<{ userJwt: any }> = async ({
   req,
   res,
@@ -312,7 +349,7 @@ export const getServerSideProps: GetServerSideProps<{ userJwt: any }> = async ({
       if (result.length > 10) {
         res.setHeader("set-Cookie", [
           `userConnected=${"true"}; Max-Age=36000; path: '/';`,
-          `authToken=${result}; HttpOnly; Max-Age=36000; path: '/';`,
+          `partnerToken=${result}; HttpOnly; Max-Age=5; path: '/';`,
           `otpToken=deleted; HttpOnly; Max-Age=0;`,
           `token=deleted; HttpOnly; Max-Age=0;`,
         ]);

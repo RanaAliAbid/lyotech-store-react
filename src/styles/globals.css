@@ -201,7 +201,7 @@ body > div,
 }
 
 .w-100 {
-  width: 100%;
+  width: 100% !important;
 }
 
 .product_cart_image {
@@ -221,11 +221,15 @@ body > div,
 }
 
 .t-13 {
-  font-size: 13px;
+  font-size: 13px !important;
 }
 
 .text-primary {
   color: #0063ef;
+}
+
+.text-danger {
+  color: red;
 }
 
 .cursor-pointer {
@@ -234,4 +238,67 @@ body > div,
 
 .d-flex {
   display: flex;
+}
+
+.float-left {
+  float: left;
+}
+
+
+@media screen and (max-width: 900px) {
+  .mobile-fixed{
+    visibility: hidden;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  }
+
+  .mobile-fixed {
+    position: fixed;
+    top: 0;
+    margin-top: 0px;
+    bottom: 0;
+    left: 100%;
+    width: 100%;
+    z-index: 99;
+    background: #fff;
+    padding: 20px;
+    overflow-y: auto;
+    animation-name: addressesModal2;
+    animation-duration: 0.5s;
+  }
+
+  .mobile-fixed.active {
+    visibility: visible;
+    left: 0;
+    animation-name: addressesModal;
+    animation-duration: 0.5s;
+  }
+}
+
+@keyframes addressesModal {
+  from {
+    left: 100%;
+  }
+  to {
+    left: 0;
+  }
+}
+
+@keyframes addressesModal2 {
+  from {
+    left: 0;
+  }
+  to {
+    left: 100%;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .mobile-display {
+    display: none;
+  }
+}
+
+.maxH-85 {
+  max-height: 85vh;
+  overflow-y: auto;
 }

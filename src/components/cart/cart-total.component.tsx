@@ -24,8 +24,10 @@ import { feesType } from '@/utils/app.utils';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { Alert } from '@mui/material';
+import PaymentMethodComponent from '../checkout/payment.component';
 
-export default function CartTotalComponent({ isCheckout, handlePlaceOrder }: { isCheckout: boolean, handlePlaceOrder?: any }) {
+export default function CartTotalComponent({ isCheckout, handlePlaceOrder, paymentType, handleChangePayment }:
+    { isCheckout: boolean, handlePlaceOrder?: any, paymentType?: any, handleChangePayment?: any }) {
 
     const { t } = useTranslation('cart');
 
@@ -48,6 +50,7 @@ export default function CartTotalComponent({ isCheckout, handlePlaceOrder }: { i
 
     const [shippingMethods, setShippingMethods] = React.useState([]);
     const [cartFees, setCartFees] = React.useState([]);
+    const [cartVat, setCartVat] = React.useState<any>(null);
     const [termsCheckbox, setTermsCheckbox] = React.useState<any>({
         presale: false,
         onecare: false,
@@ -64,6 +67,7 @@ export default function CartTotalComponent({ isCheckout, handlePlaceOrder }: { i
     React.useEffect(() => {
         setShippingMethods(globalContext?.cart?.shippingMethods ?? []);
         setCartFees(globalContext?.cart?.cart?.fees ?? []);
+        setCartVat(globalContext?.cart?.cart?.appliedTax ?? null)
     }, [globalContext.cart]);
 
     const [shippingType, setShippingType] = React.useState<string>('');
@@ -198,11 +202,16 @@ export default function CartTotalComponent({ isCheckout, handlePlaceOrder }: { i
                             )
                         }
 
-
-                        {/* <ListItem>
-                          <Typography variant="h6">{t('VAT')} 5%</Typography>
-                          <Typography variant="h6">16.43 €</Typography>
-                        </ListItem>*/}
+                        {
+                            (cartVat && cartVat?.amount) && (
+                                <ListItem>
+                                    <Typography variant="h6">
+                                        {t('VAT')} {cartVat?.percentage}%
+                                    </Typography>
+                                    <Typography variant="h6">{cartVat?.amount?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
+                                </ListItem>
+                            )
+                        }
 
                     </List>
 
@@ -256,6 +265,24 @@ export default function CartTotalComponent({ isCheckout, handlePlaceOrder }: { i
                             <Typography variant="h5">{globalContext?.cart?.cart?.totalIncludingFees?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
                         </ListItem>
                     </List>
+
+                    {
+                        (globalContext.screenWitdh <= 900) && (
+                            <>
+                                <div className={`${styles.wrapTitle} mt-2 mb-2`}>
+                                    <Typography variant="h4">
+                                        Choose a payment method
+                                    </Typography>
+                                </div>
+
+                                {/* //payment method */}
+                                <PaymentMethodComponent paymentType={paymentType} handleChangePayment={handleChangePayment}></PaymentMethodComponent>
+                                <br />
+                                <br />
+                            </>
+                        )
+                    }
+
                 </div>
 
                 {

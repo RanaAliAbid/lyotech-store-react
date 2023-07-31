@@ -9,6 +9,8 @@ const GlobalContext = createContext<any>({});
 import { useRouter } from "next/router";
 import { addToCart, getUserCart, removeCartProduct, updateCart } from '@/services/cart/cart.service';
 import { priceSymbol } from '@/utils/app.utils';
+import AlertComponent from '../common/alert';
+import { SweetAlertOptions } from 'sweetalert2';
 
 export function GlobalWrapper({
   children,
@@ -26,12 +28,25 @@ export function GlobalWrapper({
   const priceToFixed: number = 2;
   const [loadComponents, setLoadComponents] = useState<boolean>(false);
   const [homeProduct, setHomeProduct] = useState<any>(null);
+  const [screenWitdh, setScreenWidth] = useState<number>(0);
+
+  const [alertProps, setAlertProps] = useState<SweetAlertOptions & { show: boolean, callback?: any }>({ show: false });
 
   useEffect(() => {
     setCurrencySymbol(priceSymbol("euro"))
     router.events.on('routeChangeStart', handleRouteChange);
     router.events.on('routeChangeComplete', handleRouteChangeComplete);
+
+    if (window) {
+      setScreenWidth(window.innerWidth)
+    }
+
+    window.addEventListener('resize', handleResizeScreen);
   }, [])
+
+  const handleResizeScreen = () => {
+    setScreenWidth(window.innerWidth)
+  }
 
   const handleRouteChange = () => {
     setGlobalLoading(true)
@@ -63,6 +78,16 @@ export function GlobalWrapper({
       });
       await getCart();
       setGlobalLoading(false);
+
+      setAlertProps({
+        show: true,
+        title: "Your cart product has been added",
+        text: "",
+        toast: true,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        callback: closeAlert
+      })
 
       return result;
     } catch (error) {
@@ -181,6 +206,14 @@ export function GlobalWrapper({
     }
   }
 
+  const closeAlert = () => {
+    setAlertProps({
+      show: false,
+      title: "",
+      text: ""
+    })
+  }
+
   const globalData = {
     updateLocale,
     globalLoading, setGlobalLoading,
@@ -190,7 +223,9 @@ export function GlobalWrapper({
     updateCartOneCare, updateCartShippingMethod,
     updateCartCountry, updateCartPaymentMethod,
     updateCartCoupon,
-    homeProduct, setHomeProduct
+    homeProduct, setHomeProduct,
+    screenWitdh, setScreenWidth,
+    alertProps, setAlertProps, closeAlert
   };
 
   return (
@@ -202,6 +237,10 @@ export function GlobalWrapper({
       >
         <CircularProgress color="inherit" />
       </Backdrop>
+
+      {
+        (loadComponents) && <AlertComponent {...alertProps}></AlertComponent>
+      }
 
       {
         loadComponents && children

@@ -13,11 +13,10 @@ import Link from '@mui/material/Link';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import TextField from '@mui/material/TextField';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
@@ -160,10 +159,10 @@ export default function Addresses() {
       contact: true,
     };
 
-    dataValidate.country = postData[0].value == '' ? false : true;
-    dataValidate.state = postData[2].value == '' ? false : true;
-    dataValidate.city = postData[4].value == '' ? false : true;
-    dataValidate.type = postData[6].value == '' ? false : true;
+    dataValidate.country = postData[1].value == '' ? false : true;
+    dataValidate.state = postData[3].value == '' ? false : true;
+    dataValidate.city = postData[5].value == '' ? false : true;
+    dataValidate.type = postData[0].value == '' ? false : true;
     dataValidate.address = postData[7].value == '' ? false : true;
     dataValidate.code = postData[9].value == '' ? false : true;
     dataValidate.contact = postData[11].value == '' ? false : true;
@@ -189,12 +188,12 @@ export default function Addresses() {
       handleClose();
 
       const data = {
-        country: postData[0].value,
-        state: postData[2].value,
-        city: postData[4].value,
-        type: postData[6].value,
+        country: postData[1].value,
+        state: postData[3].value,
+        city: postData[5].value,
+        type: postData[0].value,
         address: postData[7].value, //postData[8].value
-        code: countryCode,//postData[9].value,
+        code: countryCodeByCountryName(postData[1].value) ?? "+971",//postData[9].value,
         contact: postData[11].value,
         latitude: 0,
         longitude: 0
@@ -219,6 +218,8 @@ export default function Addresses() {
 
   const editAddress = async (address: any) => {
     setUpdateAddressId(address?._id);
+    globalContext.setGlobalLoading(true);
+
     await getStateDetailsOfCountry(countryList?.find((x: any) => x?.name === address?.country)?._id ?? "0", true, address);
 
     setCountry(address?.country);
@@ -231,6 +232,8 @@ export default function Addresses() {
     setCity(address?.city);
 
     setValidator(resetValidator());
+
+    globalContext.setGlobalLoading(false);
 
     handleOpen();
   }
@@ -358,7 +361,7 @@ export default function Addresses() {
                           {userAddressList?.address?.address && userAddressList?.address?.address.length > 0 ?
                             userAddressList?.address?.address.map(
                               (address: any, index: any) => (
-                                <ListItem>
+                                <ListItem key={index}>
                                   <div className={styles.addresses}>
                                     <div className={styles.addressesType}>
                                       <Typography variant="h4" className='text-capitalize'>
@@ -432,8 +435,42 @@ export default function Addresses() {
                 className={styles.customForm}
               >
 
-                <div className={styles.wrapBox}>
+                <div className={`${styles.wrapBox} maxH-85`}>
                   <div className={styles.flexBox}>
+
+                    <div className={`${styles.formControl}`} style={{ width: '98%' }}>
+                      <label className={styles.formLabel}>
+                        {' '}
+
+                        <div style={{ width: "100%" }}>
+                          <Stack direction="row" spacing={1}>
+                            <Chip label="Type :" variant="outlined" style={{ border: "0px", width: "70px" }} />
+                            <Chip color={`${(type == "Home") ? 'primary' : "default"}`} label="Home" className="cursor-pointer" onClick={(e) => setType("Home")} />
+                            <Chip color={`${(type == "Work") ? 'primary' : "default"}`} label="Work" className="cursor-pointer" onClick={(e) => setType("Work")} />
+                            <Chip color={`${(type == "Other") ? 'primary' : "default"}`} label="Other" className="cursor-pointer" onClick={(e) => setType("Other")} />
+                          </Stack>
+                        </div>
+                      </label>
+                      <Input
+                        className={styles.formInput}
+                        placeholder="Address type"
+                        value={type}
+                        readOnly
+                        onChange={(e) => setType(e.target.value)}
+                      />
+                      <div className={styles.inline}>
+                        <div className={`${styles.formControl} w-100`}>
+                          <span className="alert-field">
+                            {validator && !validator.type && (
+                              <Alert severity="error">
+                                {t('required-field-error')}
+                              </Alert>
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
                     <div className={styles.formControl}>
                       <label className={styles.formLabel}>
                         {' '}
@@ -443,6 +480,7 @@ export default function Addresses() {
                         label="Country"
                         className={`${styles.formTextField} formSelect`}
                         value={country ?? ""}
+                        size="small"
                       >
                         {countryList.map((country: any, index: any) => (
                           <MenuItem
@@ -461,7 +499,7 @@ export default function Addresses() {
                       </Select>
 
                       <div className={styles.inline}>
-                        <div className={styles.formControl}>
+                        <div className={`${styles.formControl} w-100`}>
                           <span className="alert-field">
                             {validator && !validator.country && (
                               <Alert severity="error">
@@ -480,6 +518,7 @@ export default function Addresses() {
                           label="States"
                           className={styles.formTextField}
                           value={state ?? ""}
+                          size="small"
                         >
                           <MenuItem value={""}>
                             Select a State/Region
@@ -502,7 +541,7 @@ export default function Addresses() {
                         </Select>
                       }
                       <div className={styles.inline}>
-                        <div className={styles.formControl}>
+                        <div className={`${styles.formControl} w-100`}>
                           <span className="alert-field">
                             {validator && !validator.state && (
                               <Alert severity="error">
@@ -524,6 +563,7 @@ export default function Addresses() {
                           label="City"
                           className={styles.formTextField}
                           value={city ?? ""}
+                          size="small"
                         >
                           <MenuItem value={""}>
                             Select a state/region
@@ -545,33 +585,9 @@ export default function Addresses() {
                         </Select>
                       }
                       <div className={styles.inline}>
-                        <div className={styles.formControl}>
+                        <div className={`${styles.formControl} w-100`}>
                           <span className="alert-field">
                             {validator && !validator.city && (
-                              <Alert severity="error">
-                                {t('required-field-error')}
-                              </Alert>
-                            )}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className={styles.formControl}>
-                      <label className={styles.formLabel}>
-                        {' '}
-                        Address type
-                      </label>
-                      <Input
-                        className={styles.formInput}
-                        placeholder="Address type"
-                        value={type}
-                        onChange={(e) => setType(e.target.value)}
-                      />
-                      <div className={styles.inline}>
-                        <div className={styles.formControl}>
-                          <span className="alert-field">
-                            {validator && !validator.type && (
                               <Alert severity="error">
                                 {t('required-field-error')}
                               </Alert>
@@ -593,7 +609,7 @@ export default function Addresses() {
                         onChange={(e) => setAddress(e.target.value)}
                       />
                       <div className={styles.inline}>
-                        <div className={styles.formControl}>
+                        <div className={`${styles.formControl} w-100`}>
                           <span className="alert-field">
                             {validator && !validator.address && (
                               <Alert severity="error">
@@ -605,7 +621,7 @@ export default function Addresses() {
                       </div>
                     </div>
 
-                    <div className={styles.formControl}>
+                    <div className={`${styles.formControl}`} style={{ display: "none" }}>
                       <label className={styles.formLabel}>
                         {' '}
                         Address line 2 {' '}
@@ -629,6 +645,7 @@ export default function Addresses() {
                         value={countryCodeName}
                         defaultValue={"United Arab Emirates"}
                         variant="outlined"
+                        size="small"
                       >
                         <MenuItem value={""}>
                           Select a state/region
@@ -654,7 +671,7 @@ export default function Addresses() {
                         )}
                       </Select>
                       <div className={styles.inline}>
-                        <div className={styles.formControl}>
+                        <div className={`${styles.formControl} w-100`}>
                           <span className="alert-field">
                             {validator && !validator.code && (
                               <Alert severity="error">
@@ -678,7 +695,7 @@ export default function Addresses() {
                         type='number'
                         onChange={(e) => setPhone(e.target.value)}
                       />
-                      <div className={styles.formControl}>
+                      <div className={`${styles.formControl} w-100`}>
                         <span className="alert-field">
                           {validator && !validator.contact && (
                             <Alert severity="error">
@@ -691,16 +708,24 @@ export default function Addresses() {
                   </div>
 
                   <Button
+                    onClick={() => handleClose()}
+                    type="button"
+                    variant="contained"
+                    className={`${styles['btn']} bg-danger`}
+                  >
+                    {' '}
+                    Close
+                  </Button>
+
+                  <Button
                     type="submit"
                     variant="contained"
-                    className={`${styles['btn']} ${styles['btn_primary']}`}
+                    className={`${styles['btn']} ${styles['btn_primary']} float-right`}
                   >
                     {' '}
                     Save Address
                   </Button>
                 </div>
-
-
 
               </form>
 
@@ -709,7 +734,7 @@ export default function Addresses() {
 
           <Footer />
         </main>
-      </ThemeProvider>
+      </ThemeProvider >
     </>
   );
 }

@@ -2,6 +2,7 @@ import countriesCode from "../../data/countriesCode.json";
 import countries from "../../data/countries.json";
 import phoneLength from "../../data/phoneLength.json";
 import secureLocalStorage from "react-secure-storage";
+import { withSwal } from 'react-sweetalert2';
 
 export const homePageProducts = {
   "LFI_ONE_Smartphone": "lfiphone",
@@ -122,4 +123,8 @@ export const feesType = (name: string) => {
     case "vat": return "VAT";
     default: return "";
   }
+}
+
+export const showAlert = ({}: {}) => {
+  return ("")
 }
