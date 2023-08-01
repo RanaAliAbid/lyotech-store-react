@@ -148,7 +148,7 @@ export const validateUserToken = async (
 
   try {
     const result = await ApiService.GetRequest(API_HOST + '/v1/user/validate-token', `Bearer ${req.cookies?.partnerToken ?? req.cookies?.authToken}`);
-    const token = result?.data?.data?.accessToken;
+    const token = req.cookies?.partnerToken ?? req.cookies?.authToken;
 
     let tokeExpiredTime = 0;
     let userId = result?.data?.data?._id;
