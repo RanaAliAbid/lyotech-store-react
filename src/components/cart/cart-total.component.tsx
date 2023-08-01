@@ -220,7 +220,7 @@ export default function CartTotalComponent(
                         }
 
                         {
-                            (cartVat && cartVat?.amount) && (
+                            (cartVat?.amount) && (
                                 <ListItem>
                                     <Typography variant="h6">
                                         {t('VAT')} {cartVat?.percentage}%
