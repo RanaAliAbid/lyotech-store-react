@@ -100,64 +100,8 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
     globalContext.setHomeProduct(products)
   }, [products])
 
-
-  const [open, setOpen] = React.useState(true);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
     <>
-
-
-      {/* <div>
-        <Button variant="outlined" onClick={handleClickOpen}>
-          Open alert dialog
-        </Button>
-      </div> */}
-
-
-
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
-        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-      >
-        <div className={styles.cookiesModal}>
-
-          <Typography variant='h4'>
-            Terms Consent
-          </Typography>
-
-          <Typography variant='h6'>
-            Our Website stores data such as cookies to enable essential site functionality as well as marketing, personalization and analytics. You may change your settings at any time or accept the default settings. We also have a comprehensive privacy policy which governs how we collect, use and protect your personal information. By clicking proceed you agree to be bound by our <a href="/privacy-policy" target="_blank" rel="noopener noreferer">Privacy and Cookies Policy.</a>.
-          </Typography>
-
-
-          <FormGroup className={styles.cookiesCheck}>
-            <FormControlLabel control={<Checkbox defaultChecked />} label="Marketing" />
-            <FormControlLabel control={<Checkbox defaultChecked />} label="Personalization" />
-            <FormControlLabel control={<Checkbox defaultChecked />} label="Analytics" />
-          </FormGroup>
-
-          <DialogActions className={styles.cookiesBtn}>
-            <Button variant="contained" className={`${styles['btn']} ${styles['btn_default']}`} onClick={handleClose}>Disagree</Button>
-            <Button variant="contained" className={`${styles['btn']} ${styles['btn_primary']}`} onClick={handleClose}>
-              Agree
-            </Button>
-          </DialogActions>
-        </div>
-      </Modal>
-
-
-
-
 
       <div>
         <ThemeProvider theme={theme}>

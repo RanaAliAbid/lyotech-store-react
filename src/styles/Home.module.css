@@ -2848,29 +2848,30 @@ ul.wishlists,
 	font-size: 16px;
 	color: var(--primary);
 }
-.cookiesCheck {
+
+.cookiesModal .cookiesCheck {
 	display: flex;
     justify-content: flex-start;
     width: 100%;
     clear: both;
     align-items: center;
-    flex-direction: row;
+    flex-direction: row !important;
     width: 100%;
 }
 
-.cookiesCheck label span{
+.cookiesModal .cookiesCheck label span{
 	color: #fff;
 }
-.btn_default{
+.cookiesModal .btn_default{
 	background: #E7EDF8;
 	color: #212529;
 }
 
-.btn_default:hover{
+.cookiesModal .btn_default:hover{
 	background: #d1d5dd;
 	color: #212529;
 }
-.cookiesBtn{
+.cookiesModal .cookiesBtn{
 	justify-content: flex-start;
 	padding-left: 0;
 	margin-top: 6px;

@@ -103,6 +103,7 @@ export default function DefaultAddressComponent(
 
                                 <div
                                     className={`${styles['wrapBox']} ${styles['addresses']}`}
+                                    onClick={(e) => setDisplayAddress(true)}
                                 >
                                     <div className={styles.addressesType}>
                                         <Typography variant="h4">
@@ -110,7 +111,7 @@ export default function DefaultAddressComponent(
                                             {formAddress?.shippingAddress?.firstName} {formAddress?.shippingAddress?.lastName}
                                         </Typography>
                                         <Typography variant="h6">
-                                            <Link href="#" onClick={(e) => setDisplayAddress(true)}> Change </Link>
+                                            <Link href="#"> Change </Link>
                                         </Typography>
                                     </div>
 
@@ -122,7 +123,7 @@ export default function DefaultAddressComponent(
 
                                     <Typography variant="body1">
                                         {formAddress?.shippingAddress?.address}<br /> {formAddress?.shippingAddress?.city}&nbsp;
-                                        {formAddress?.shippingAddress?.state},&nbsp;
+                                        {formAddress?.shippingAddress?.state} &nbsp;
                                         {formAddress?.shippingAddress?.country}
                                     </Typography>
 

@@ -19,15 +19,12 @@ import useTranslation from 'next-translate/useTranslation';
 import footerCard01 from '../img/footerCard01.png';
 import footerCard02 from '../img/footerCard02.png';
 import footerCard03 from '../img/footerCard03.png';
+import CookiesComponent from './cookies';
 
 export default function Footer() {
   const { t } = useTranslation('common');
 
   const YEAR = new Date().getFullYear();
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   return (
     <>
@@ -107,10 +104,7 @@ export default function Footer() {
                 <Typography variant="h4">
                   {t('footer-section3-header')}
                 </Typography>
-
                 <List>
-
-
                   <ListItem className={styles.item}>
                     <Link href="#serviceSection">Services</Link>
                   </ListItem>
@@ -181,6 +175,8 @@ export default function Footer() {
         </Container>
 
       </div>
+
+      <CookiesComponent></CookiesComponent>
     </>
   );
 }

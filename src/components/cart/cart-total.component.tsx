@@ -78,6 +78,8 @@ export default function CartTotalComponent(
     const handleChangeShippingType = async (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
+        return;
+
         try {
             globalContext.setGlobalLoading(true);
 
@@ -94,8 +96,30 @@ export default function CartTotalComponent(
         }
     };
 
+    const handleClickShippingType = async (
+        shippingMethodId: string
+    ) => {
+        try {
+            globalContext.setGlobalLoading(true);
+
+            const result = await globalContext.updateCartShippingMethod(shippingMethodId);
+
+            if (!result) {
+                globalContext.setGlobalLoading(false);
+            }
+
+        } catch (error) {
+            globalContext.setGlobalLoading(false);
+        }
+    };
+
     React.useEffect(() => {
+        setShowOneCareModal(false);
         setShippingType(globalContext?.cart?.cart?.shippingMethod ?? "")
+
+        if (!globalContext?.cart?.cart) {
+            router.push("/")
+        }
     }, [globalContext.cart]);
 
     const updateCartOneCarePolicy = async (status: boolean, id: string, force = false) => {
@@ -178,9 +202,10 @@ export default function CartTotalComponent(
                                 (shippingMethods && shippingMethods.length > 0) ? (
                                     shippingMethods?.map((method: any, index: any) => (
                                         <ListItem
+                                            onClick={(e) => handleClickShippingType(method?.shippingMethod)}
                                             key={index}
                                             className={`${shippingType === method?.shippingMethod ? styles.active : ''
-                                                }`}
+                                                } cursor-pointer`}
                                         >
                                             <FormControlLabel
                                                 value={method?.shippingMethod}
