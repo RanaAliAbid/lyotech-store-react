@@ -89,6 +89,33 @@ export default function Checkout() {
 
   React.useEffect(() => {
 
+    if (!formAddress) return;
+
+    const checkForm: any = formCheckEmptyFields(formAddress);
+
+    if (!checkForm) return;
+
+    if (
+      !checkForm.shippingAddress.country ||
+      !checkForm.shippingAddress.city ||
+      !checkForm.shippingAddress.type ||
+      !checkForm.shippingAddress.address ||
+      !checkForm.shippingAddress.phone ||
+      !checkForm.shippingAddress.firstName ||
+      !checkForm.shippingAddress.lastName ||
+      !checkForm.shippingAddress.email
+    ) {
+      setEnablePlaceOrder(false);
+    } else {
+      setEnablePlaceOrder(true);
+    }
+
+    setFormValidation(checkForm);
+
+  }, [userAddressList, formAddress, changeAddress])
+
+  React.useEffect(() => {
+
     let localCheckoutAddress: any = getLocalStorage("checkoutAddress")
     const _localAddress = JSON.parse(localCheckoutAddress)
 
@@ -118,26 +145,6 @@ export default function Checkout() {
       },
       notes: "",
     }
-
-    const checkForm: any = formCheckEmptyFields(addresses);
-
-    if (
-      !checkForm.shippingAddress.country ||
-      !checkForm.shippingAddress.city ||
-      !checkForm.shippingAddress.type ||
-      !checkForm.shippingAddress.address ||
-      !checkForm.shippingAddress.code ||
-      !checkForm.shippingAddress.phone ||
-      !checkForm.shippingAddress.firstName ||
-      !checkForm.shippingAddress.lastName ||
-      !checkForm.shippingAddress.email
-    ) {
-      setEnablePlaceOrder(false);
-    } else {
-      setEnablePlaceOrder(true);
-    }
-
-    setFormValidation(checkForm);
 
     if (!userAddressList && !userAddressList?.address?.defaultAddress) {
       setChangeAddress(true);

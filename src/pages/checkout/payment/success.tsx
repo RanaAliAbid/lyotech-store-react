@@ -48,11 +48,15 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
 
                     <Container className={styles.containerBox}>
                         <Grid container spacing={3}>
-                            <Grid item md={3} xs={12} className={styles.sidebarGrid}>
-                                <Sidebar />
-                            </Grid>
+                            {
+                                (authContext.userConnected) && (
+                                    <Grid item md={3} xs={12} className={styles.sidebarGrid}>
+                                        <Sidebar />
+                                    </Grid>
+                                )
+                            }
 
-                            <Grid item md={9} xs={12}>
+                            <Grid item md={(authContext.userConnected) ? 9 : 12} xs={12}>
                                 <div className={styles.wrapTitle}>
                                     <Typography variant="h4">  Your Orders </Typography>
                                 </div>
@@ -248,13 +252,13 @@ export const getServerSideProps: GetServerSideProps<{ order: any }> = async ({
 
             result = await verifyOrderDetails({ id: orderid });
 
-            // if (!result || result?.isCancelled || ["pending", "failed", "cancelled"].includes(result?.status?.toLowerCase()))
-            //     return {
-            //         redirect: {
-            //             destination: `/`,
-            //             permanent: false,
-            //         },
-            //     };
+            if (!result || result?.isCancelled || ["pending", "failed", "cancelled"].includes(result?.status?.toLowerCase()))
+                return {
+                    redirect: {
+                        destination: `/`,
+                        permanent: false,
+                    },
+                };
         }
     }
     const order = result;
