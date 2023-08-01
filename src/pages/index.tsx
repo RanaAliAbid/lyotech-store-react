@@ -136,7 +136,7 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
           </Typography>
 
           <Typography variant='h6'>
-            Our Website stores data such as cookies to enable essential site functionality as well as marketing, personalization and analytics. You may change your settings at any time or accept the default settings. We also have a comprehensive privacy policy which governs how we collect, use and protect your personal information. By clicking proceed you agree to be bound by our <a href="https://docs.lyotechlabs.com/legal-documents/privacy-and-cookies-policy" target="_blank" rel="noopener noreferer">Privacy and Cookies Policy.</a>.
+            Our Website stores data such as cookies to enable essential site functionality as well as marketing, personalization and analytics. You may change your settings at any time or accept the default settings. We also have a comprehensive privacy policy which governs how we collect, use and protect your personal information. By clicking proceed you agree to be bound by our <a href="/privacy-policy" target="_blank" rel="noopener noreferer">Privacy and Cookies Policy.</a>.
           </Typography>
 
 
