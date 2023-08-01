@@ -57,7 +57,6 @@ import { IncomingMessage, ServerResponse } from 'http';
 const workSans = Work_Sans({ subsets: ['latin'] });
 import { createTheme, ThemeProvider } from '@mui/material';
 import useTranslation from 'next-translate/useTranslation';
-import { homePageProducts } from '@/utils/app.utils';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useRouter } from 'next/router';
 import { useAuthContext } from '@/contexts/AuthContext';
@@ -68,6 +67,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
 import Modal from '@mui/material/Modal';
+import { _defaultHomePageProducts, homePageProducts, lfi_one_smartphone, lyo_tab, lyo_watch } from '@/utils/app.utils';
 
 export default function Home({ products }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const theme = createTheme({
@@ -1203,8 +1203,14 @@ export const getServerSideProps: GetServerSideProps<{ products: any }> = async (
 }) => {
   let result = null;
 
-  result = await getHomePageProducts();
+  result = await getHomePageProducts(_defaultHomePageProducts);
 
-  const products = result;
+  let productsId = homePageProducts;
+
+  productsId.LFI_ONE_Smartphone = result?.data?.data.find((x: any) => x.productKey === lfi_one_smartphone)?._id ?? "";
+  productsId.LYO_Watch = result?.data?.data.find((x: any) => x.productKey === lyo_watch)?._id ?? "";
+  productsId.LYO_Tab = result?.data?.data.find((x: any) => x.productKey === lyo_tab)?._id ?? "";
+
+  const products = productsId;
   return { props: { products } };
 };

@@ -26,11 +26,11 @@ export default function CookiesComponent() {
     };
 
     const handleReject = () => {
-        // Cookies.set('site-cookies', JSON.stringify({
-        //     marketing: false,
-        //     personalization: false,
-        //     analytics: false
-        // }));
+        Cookies.set('site-cookies', JSON.stringify({
+            marketing: false,
+            personalization: false,
+            analytics: false
+        }));
 
         Cookies.set('site-cookies-status', 'false');
 

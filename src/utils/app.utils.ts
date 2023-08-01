@@ -4,10 +4,20 @@ import phoneLength from "../../data/phoneLength.json";
 import secureLocalStorage from "react-secure-storage";
 import { withSwal } from 'react-sweetalert2';
 
+export const lfi_one_smartphone = "lfiphone";
+export const lyo_watch = "lyowatch";
+export const lyo_tab = "lyotab";
+
 export const homePageProducts = {
-  "LFI_ONE_Smartphone": "lfiphone",
-  "LYO_Watch": "lyowatch",
-  "LYO_Tab": "lyotab",
+  "LFI_ONE_Smartphone": lfi_one_smartphone,
+  "LYO_Watch": lyo_watch,
+  "LYO_Tab": lyo_watch,
+}
+
+export const _defaultHomePageProducts = {
+  "LFI_ONE_Smartphone": lfi_one_smartphone,
+  "LYO_Watch": lyo_watch,
+  "LYO_Tab": lyo_tab,
 }
 
 export const appLanguages = [
@@ -21,14 +31,6 @@ export const appLanguages = [
     label: 'Italian',
     status: true
   },
-  // {
-  //   value: 'fr',
-  //   label: 'French',
-  // },
-  // {
-  //   value: 'es',
-  //   label: 'Spanish',
-  // },
 ];
 
 export const formatCountryCode = (country: any) => {

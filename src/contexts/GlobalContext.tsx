@@ -161,6 +161,18 @@ export function GlobalWrapper({
 
       return result;
     } catch (error) {
+
+      setAlertProps({
+        show: true,
+        title: "Can't add the product to your cart",
+        text: "",
+        toast: true,
+        showConfirmButton: false,
+        background: "#8B0000",
+        timerProgressBar: true,
+        callback: closeAlert
+      })
+
       return null;
     }
   }
