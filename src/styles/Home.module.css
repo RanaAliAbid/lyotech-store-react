@@ -304,6 +304,8 @@
 	padding: 15px 20px;
 }
 
+
+
 .footer .footBox h4 {
 	color: var(--black100);
 	font-weight: 500;
@@ -326,6 +328,51 @@
 .footer .footBox h5,
 .footer .footBox ul li a {
 	color: #4d5670;
+}
+
+.footer .footerInfo h5{
+	margin-bottom: 10px;
+}
+
+.footer .footerInfo h4{
+	margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 18px;
+}
+.footer .footerCards{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.footer .footerCards img{
+	width: 100%;
+    max-width: 74px;
+}
+
+.footer .footerInfo h5 span{
+	font-weight: 600;
+}
+.footer .footerAddresses h5{
+	padding-left: 54px;
+	margin:6px 0 20px;
+}
+.footer .footerAddresses h5 span{
+	font-weight: 600;
+	display: block;
+	font-size: 18px;
+}
+
+.footerAddresses .uaeAddress{
+	background: url('../img/UAE.png') no-repeat left 6px;
+}
+
+.footerAddresses .doverAddress{
+	background: url('../img/dover.png') no-repeat left 6px;
+}
+
+.footerAddresses .hongKongAddress{
+	background: url('../img/hong-kong.png') no-repeat left 6px;
 }
 
 .copyright {
@@ -724,10 +771,14 @@
 }
 
 .partersWrap {
-	/* background: url(../img/partnerBg.png) no-repeat center center; */
+	background: url(../img/partnerBg.png) no-repeat center center;
 	text-align: center;
 	padding: 40px 0 100px;
 	background-size: cover;
+}
+.partersWrap h2{
+	text-transform: uppercase;
+	margin-top: 40px !important;
 }
 
 .partnersImg img {
@@ -735,7 +786,13 @@
 	max-width: 130px;
 	padding: 1px;
 	margin: 10px;
-	border: 1px solid #f0f2f9;
+	/* border: 1px solid #f0f2f9; */
+}
+.partnersImg03 img{
+	width: 100%;
+	max-width: 220px;
+	padding: 1px;
+	margin: 10px;
 }
 
 .productItemSpec {
@@ -2763,6 +2820,59 @@ ul.wishlists,
 	list-style: circle;
 }
 
+.cookiesModal {
+	padding: 12px 80px;
+    height: -moz-fit-content;
+    height: fit-content;
+    width: 100%;
+    background-color: #36383C;
+    border-radius: 0;
+    position: fixed;
+    bottom: 0;
+    z-index: 9999;
+    left: 0;
+    color: #fff;
+    align-items: center;
+    box-shadow: 0 0 10px #01add2;
+}
+.cookiesModal h4{
+    font-size: 26px;
+    margin: 10px 0 10px;
+}
 
+.cookiesModal h6{
+	font-size: 16px;
+}
 
+.cookiesModal h6 a{
+	font-size: 16px;
+	color: var(--primary);
+}
+.cookiesCheck {
+	display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    clear: both;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+}
+
+.cookiesCheck label span{
+	color: #fff;
+}
+.btn_default{
+	background: #E7EDF8;
+	color: #212529;
+}
+
+.btn_default:hover{
+	background: #d1d5dd;
+	color: #212529;
+}
+.cookiesBtn{
+	justify-content: flex-start;
+	padding-left: 0;
+	margin-top: 6px;
+}
 /* Co Products Css End */
