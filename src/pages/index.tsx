@@ -25,15 +25,29 @@ import ZoomIcon from '../img/zoomIcon.svg';
 import RamIcon from '../img/ramIcon.svg';
 import HealthIcon from '../img/healthIcon.svg';
 import CalenderIcon from '../img/calenderIcon.svg';
-import weAre01 from '../img/partners-logo/weAre01.jpg';
-import weAre02 from '../img/partners-logo/weAre02.jpg';
-import weAre03 from '../img/partners-logo/weAre03.jpg';
-import weAre04 from '../img/partners-logo/weAre04.jpg';
-import pclogo01 from '../img/partners-logo/pclogo01.jpg';
-import pclogo02 from '../img/partners-logo/pclogo02.jpg';
-import pclogo03 from '../img/partners-logo/pclogo03.jpg';
-import pclogo04 from '../img/partners-logo/pclogo04.jpg';
-import pclogo05 from '../img/partners-logo/pclogo05.jpg';
+import certificate01 from '../img/certification-logo/certificat01.png';
+import certificate02 from '../img/certification-logo/certificat02.png';
+import certificate03 from '../img/certification-logo/certificat03.png';
+import certificate04 from '../img/certification-logo/certificat04.png';
+import certificate05 from '../img/certification-logo/certificat05.png';
+import certificate06 from '../img/certification-logo/certificat06.png';
+import certificate07 from '../img/certification-logo/certificat07.png';
+import certificate08 from '../img/certification-logo/certificat08.png';
+import certificate09 from '../img/certification-logo/certificat09.png';
+import certificate10 from '../img/certification-logo/certificat10.png';
+import certificate11 from '../img/certification-logo/certificat11.png';
+import certificate12 from '../img/certification-logo/certificat12.png';
+import certificate13 from '../img/certification-logo/certificat13.png';
+
+import we01 from '../img/we-are/we01.png';
+import we02 from '../img/we-are/we02.png';
+import we03 from '../img/we-are/we03.png';
+import we04 from '../img/we-are/we04.png';
+import we05 from '../img/we-are/we05.png';
+
+import partner01 from '../img/partners-logo/partner01.png';
+import partner02 from '../img/partners-logo/partner02.png';
+
 import styles from '@/styles/Home.module.css';
 import { Work_Sans } from 'next/font/google';
 
@@ -48,6 +62,12 @@ import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useRouter } from 'next/router';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { getHomePageProducts } from '@/services/products/product.service';
+import DialogActions from '@mui/material/DialogActions';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+
+import Modal from '@mui/material/Modal';
 
 export default function Home({ products }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const theme = createTheme({
@@ -80,8 +100,65 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
     globalContext.setHomeProduct(products)
   }, [products])
 
+
+  const [open, setOpen] = React.useState(true);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
+
+
+      {/* <div>
+        <Button variant="outlined" onClick={handleClickOpen}>
+          Open alert dialog
+        </Button>
+      </div> */}
+
+
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+        style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      >
+        <div className={styles.cookiesModal}>
+
+          <Typography variant='h4'>
+            Terms Consent
+          </Typography>
+
+          <Typography variant='h6'>
+            Our Website stores data such as cookies to enable essential site functionality as well as marketing, personalization and analytics. You may change your settings at any time or accept the default settings. We also have a comprehensive privacy policy which governs how we collect, use and protect your personal information. By clicking proceed you agree to be bound by our <a href="/privacy-policy" target="_blank" rel="noopener noreferer">Privacy and Cookies Policy.</a>.
+          </Typography>
+
+
+          <FormGroup className={styles.cookiesCheck}>
+            <FormControlLabel control={<Checkbox defaultChecked />} label="Marketing" />
+            <FormControlLabel control={<Checkbox defaultChecked />} label="Personalization" />
+            <FormControlLabel control={<Checkbox defaultChecked />} label="Analytics" />
+          </FormGroup>
+
+          <DialogActions className={styles.cookiesBtn}>
+            <Button variant="contained" className={`${styles['btn']} ${styles['btn_default']}`} onClick={handleClose}>Disagree</Button>
+            <Button variant="contained" className={`${styles['btn']} ${styles['btn_primary']}`} onClick={handleClose}>
+              Agree
+            </Button>
+          </DialogActions>
+        </div>
+      </Modal>
+
+
+
+
+
       <div>
         <ThemeProvider theme={theme}>
           <main className={styles.main}>
@@ -1048,10 +1125,10 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
             <div className={styles.partersWrap}>
               <Container className={styles.containerBox}>
                 <Grid container spacing={3}>
-                  <Grid item md={6} sm={12}>
+                  <Grid item md={12} sm={12}>
                     <div className={styles.sectionHeading}>
                       <Typography variant="h2">
-                        {t('partners-header1')}
+                        product certification
                       </Typography>
                     </div>
 
@@ -1068,18 +1145,27 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                       viewport={{ once: true }}
                     >
                       <div className={styles.partnersImg}>
-                        <img src={weAre01.src} alt="Partner Logo" />
-                        <img src={weAre02.src} alt="Partner Logo" />
-                        <img src={weAre03.src} alt="Partner Logo" />
-                        <img src={weAre04.src} alt="Partner Logo" />
+                        <img src={certificate01.src} alt="Certification Logo" />
+                        <img src={certificate02.src} alt="Certification Logo" />
+                        <img src={certificate03.src} alt="Certification Logo" />
+                        <img src={certificate04.src} alt="Certification Logo" />
+                        <img src={certificate05.src} alt="Certification Logo" />
+                        <img src={certificate06.src} alt="Certification Logo" />
+                        <img src={certificate07.src} alt="Certification Logo" />
+                        <img src={certificate08.src} alt="Certification Logo" />
+                        <img src={certificate09.src} alt="Certification Logo" />
+                        <img src={certificate10.src} alt="Certification Logo" />
+                        <img src={certificate11.src} alt="Certification Logo" />
+                        <img src={certificate12.src} alt="Certification Logo" />
+                        <img src={certificate13.src} alt="Certification Logo" />
                       </div>
                     </motion.div>
                   </Grid>
 
-                  <Grid item md={6} sm={12}>
+                  <Grid item md={12} sm={12}>
                     <div className={styles.sectionHeading}>
                       <Typography variant="h2">
-                        {t('partners-header2')}
+                        We Are
                       </Typography>
                     </div>
                     <br></br>
@@ -1095,14 +1181,42 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                       viewport={{ once: true }}
                     >
                       <div className={styles.partnersImg}>
-                        <img src={pclogo01.src} alt="Partner Logo" />
-                        <img src={pclogo02.src} alt="Partner Logo" />
-                        <img src={pclogo03.src} alt="Partner Logo" />
-                        <img src={pclogo04.src} alt="Partner Logo" />
-                        <img src={pclogo05.src} alt="Partner Logo" />
+                        <img src={we01.src} alt="We Are Logo" />
+                        <img src={we02.src} alt="We Are Logo" />
+                        <img src={we03.src} alt="We Are Logo" />
+                        <img src={we04.src} alt="We Are Logo" />
+                        <img src={we05.src} alt="We Are Logo" />
                       </div>
                     </motion.div>
                   </Grid>
+
+
+                  <Grid item md={12} sm={12}>
+                    <div className={styles.sectionHeading}>
+                      <Typography variant="h2">
+                        Our Partners
+                      </Typography>
+                    </div>
+                    <br></br>
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                        x: '100%',
+                        visibility: 'hidden',
+                      }}
+                      whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
+                      // animate={mainControls}
+                      transition={{ duration: 0.3, delay: 0.1 }}
+                      viewport={{ once: true }}
+                    >
+                      <div className={styles.partnersImg03}>
+                        <img src={partner01.src} alt="Partner Logo" />
+                        <img src={partner02.src} alt="Partner Logo" />
+                      </div>
+                    </motion.div>
+                  </Grid>
+
+
                 </Grid>
               </Container>
             </div>

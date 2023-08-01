@@ -13,20 +13,29 @@ import darkLogo from '../img/dark-logo.png';
 
 import styles from '@/styles/Home.module.css';
 
+
 import useTranslation from 'next-translate/useTranslation';
+
+import footerCard01 from '../img/footerCard01.png';
+import footerCard02 from '../img/footerCard02.png';
+import footerCard03 from '../img/footerCard03.png';
 
 export default function Footer() {
   const { t } = useTranslation('common');
 
   const YEAR = new Date().getFullYear();
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <>
       <div className={styles.footer}>
         <Container className={styles.containerBox} maxWidth="lg">
-          <Grid container spacing={3}>
+          <Grid container spacing={1}>
             <Grid item md={3} xs={12}>
-              <div className={styles.footBox}>
+              <div className={`${styles['footBox']} ${styles['footerInfo']}`}>
                 <img
                   src={darkLogo.src}
                   alt="logo"
@@ -34,6 +43,29 @@ export default function Footer() {
                 <Typography variant="h5">
                   Lyotech labs electronics trading l.L.C
                 </Typography>
+
+                <Typography variant="h5">
+                  Licence Number. <span> 1150530 </span>
+                </Typography>
+
+                <Typography variant="h5">
+                  WHP2-BLOCK-T COMMERCIAL Area: Saih Shuaib 3, Dubai, UAE PO BOX: 33306
+                </Typography>
+
+                <Typography variant="h4">
+                  If you have any question. please contact us <a href="https://support.lyotechlabs.com" target="_blank"><b></b> create ticket</a>
+                </Typography>
+
+                <Typography variant="h4">
+                  Phone no. <a href="tel:+971 529988825">+971 52 998 8825</a>
+                </Typography>
+                <div className={styles.footerCards}>
+                  <img src={footerCard01.src} alt="Card" />
+                  <img src={footerCard02.src} alt="Card" />
+                  <img src={footerCard03.src} alt="Card" />
+                </div>
+
+
               </div>
             </Grid>
 
@@ -64,18 +96,20 @@ export default function Footer() {
                     <Link href="/cancellation-replacement-policy">Cancellation & Replacement Policy</Link>
                   </ListItem>
 
+
+
                 </List>
               </div>
             </Grid>
 
-            <Grid item md={3} xs={12}>
+            <Grid item md={2} xs={12}>
               <div className={styles.footBox}>
                 <Typography variant="h4">
                   {t('footer-section3-header')}
                 </Typography>
 
                 <List>
-                
+
 
                   <ListItem className={styles.item}>
                     <Link href="#serviceSection">Services</Link>
@@ -96,19 +130,34 @@ export default function Footer() {
               </div>
             </Grid>
 
-            <Grid item md={3} xs={12}>
-              <div className={styles.footBox}>
+            <Grid item md={4} xs={12}>
+              <div className={`${styles['footBox']} ${styles['footerAddresses']}`}>
                 <Typography variant="h4">
-                  {t('footer-section4-header1')}
+                  Address
                 </Typography>
 
-                <Typography variant="h5">
-                  {t('footer-section4-desc1')}{' '}
-                  <Link href="#"> demo@example.com </Link>
+                <Typography className={styles.uaeAddress} variant="h5">
+                  <span> Lyotech Labs LLC </span>
+                  WHP2-BLOCK-T COMMERCIAL
+                  Area: Saih Shuaib 3, Dubai, UAE
+                </Typography>
+
+                <Typography className={styles.doverAddress} variant="h5">
+                  <span> Lyotech Labs LLC </span>
+                  8 The Green, Suite R in the City
+                  of Dover, Zip code - 19901
+                </Typography>
+
+
+                <Typography className={styles.hongKongAddress} variant="h5">
+                  <span> Lyotech labs Limited</span>
+                  Room 1104, Crawford House, 70
+                  Queen's Rd. Centra, Central,
+                  Hong Kong
                 </Typography>
               </div>
 
-              <div className={styles.footBox}>
+              {/* <div className={styles.footBox}>
                 <Typography variant="h4">
                   {t('footer-section4-header2')}
                 </Typography>
@@ -116,7 +165,7 @@ export default function Footer() {
                 <Typography variant="h5">
                   {t('footer-section4-desc2')}
                 </Typography>
-              </div>
+              </div> */}
             </Grid>
           </Grid>
         </Container>
@@ -130,6 +179,7 @@ export default function Footer() {
             </Grid>
           </Grid>
         </Container>
+
       </div>
     </>
   );
