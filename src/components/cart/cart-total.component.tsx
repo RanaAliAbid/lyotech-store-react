@@ -25,9 +25,11 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { Alert } from '@mui/material';
 import PaymentMethodComponent from '../checkout/payment.component';
+import DefaultAddressComponent from '../checkout/address.component';
 
-export default function CartTotalComponent({ isCheckout, handlePlaceOrder, paymentType, handleChangePayment, setDisplayAddress }:
-    { isCheckout: boolean, handlePlaceOrder?: any, paymentType?: any, handleChangePayment?: any, setDisplayAddress?: any }) {
+export default function CartTotalComponent(
+    { isCheckout, handlePlaceOrder, paymentType, handleChangePayment, setDisplayAddress, addressProps }:
+        { isCheckout: boolean, handlePlaceOrder?: any, paymentType?: any, handleChangePayment?: any, setDisplayAddress?: any, addressProps?: any }) {
 
     const { t } = useTranslation('cart');
 
@@ -101,6 +103,13 @@ export default function CartTotalComponent({ isCheckout, handlePlaceOrder, payme
             if (!status && !force) {
                 setShowOneCareModal(true);
                 return;
+            }
+
+            if (status) {
+                if (globalContext?.cart?.cart?.oneCare?.findIndex((x: any) => x.productId == id) !== -1) {
+                    setShowOneCareModal(false);
+                    return;
+                }
             }
 
             globalContext.setGlobalLoading(true);
@@ -278,7 +287,7 @@ export default function CartTotalComponent({ isCheckout, handlePlaceOrder, payme
                         (globalContext.screenWitdh <= 900 && setDisplayAddress) && (
                             <>
                                 <div className={`${styles.wrapTitle} mt-2 mb-2`}>
-                                    <Typography variant="h4">
+                                    {/* <Typography variant="h4">
                                         Shipping & Billing Address
 
                                         <Button
@@ -289,7 +298,15 @@ export default function CartTotalComponent({ isCheckout, handlePlaceOrder, payme
                                             {t('Update Addresses')}
                                         </Button>
 
-                                    </Typography>
+                                    </Typography> */}
+
+                                    <DefaultAddressComponent
+                                        changeAddress={addressProps?.changeAddress}
+                                        userAddressList={addressProps?.userAddressList}
+                                        formAddress={addressProps?.formAddress}
+                                        setDisplayAddress={addressProps?.setDisplayAddress}
+                                        setChangeAddress={addressProps?.setChangeAddress}></DefaultAddressComponent>
+
                                 </div>
 
                                 <div className={`${styles.wrapTitle} mt-2 mb-2`}>

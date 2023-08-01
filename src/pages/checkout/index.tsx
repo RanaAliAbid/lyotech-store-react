@@ -27,6 +27,7 @@ import { saveUserOrder } from '@/services/orders/order.service';
 import { formCheckEmptyFields } from '@/validators/order.validator';
 import { countryCodeByCountryName, getLocalStorage, setLocalStorage } from '@/utils/app.utils';
 import { FaArrowLeft } from 'react-icons/fa';
+import DefaultAddressComponent from '@/components/checkout/address.component';
 
 export default function Checkout() {
   const theme = createTheme({
@@ -102,7 +103,7 @@ export default function Checkout() {
         country: userAddressList?.address?.defaultAddress?.country ?? _localAddress?.shippingAddress?.country ?? "",
         state: userAddressList?.address?.defaultAddress?.state ?? _localAddress?.shippingAddress?.state ?? "",
         address2: userAddressList?.address?.defaultAddress?.address2 ?? "",
-        type: userAddressList?.address?.defaultAddress?.type ?? "",
+        type: userAddressList?.address?.defaultAddress?.type ?? "Other",
       },
       billingAddress: {
         firstName: authContext.connectedUser?.firstName ?? "",
@@ -256,80 +257,18 @@ export default function Checkout() {
                 <Grid item md={8} xs={12}>
 
                   {
-                    (authContext.userConnected && !changeAddress && userAddressList?.address?.defaultAddress?._id) && (
-                      <Grid container spacing={3}>
-                        <Grid item md={6} xs={12}>
-                          <div className={styles.wrapTitle}>
-                            <Typography variant="h4">Shipping Address</Typography>
-
-                            <Typography variant="h6">
-                              <Link href="#" onClick={(e) => setChangeAddress(!changeAddress)}> Add new address </Link>
-                            </Typography>
-                          </div>
-
-
-                          <div
-                            className={`${styles['wrapBox']} ${styles['addresses']}`}
-                          >
-                            <div className={styles.addressesType}>
-                              <Typography variant="h4">{userAddressList?.address?.defaultAddress?.type}</Typography>
-                              <Typography variant="h6">
-                                <Link href="#" onClick={(e) => setChangeAddress(!changeAddress)}> Change </Link>
-                              </Typography>
-                            </div>
-
-                            <Typography variant="h5">{authContext?.connectedUserName}</Typography>
-
-                            <Typography variant="body1">
-                              {authContext?.connectedUserEmail}
-                            </Typography>
-
-                            <Typography variant="body1">
-                              {userAddressList?.address?.defaultAddress?.address}  <br />
-                              {userAddressList?.address?.defaultAddress?.city}&nbsp;
-                              {userAddressList?.address?.defaultAddress?.state},&nbsp;
-                              {userAddressList?.address?.defaultAddress?.country}
-                            </Typography>
-
-                            <Typography variant="body1">{userAddressList?.address?.defaultAddress?.code}-
-                              {userAddressList?.address?.defaultAddress?.contact}</Typography>
-                          </div>
-                        </Grid>
-                        <Grid item md={6} xs={12}>
-                          <div className={styles.wrapTitle}>
-                            <Typography variant="h4">Billing address</Typography>
-                          </div>
-                          <div
-                            className={`${styles['wrapBox']} ${styles['addresses']}`}
-                          >
-                            <div className={styles.addressesType}>
-                              <Typography variant="h4">{userAddressList?.address?.defaultAddress?.type}</Typography>
-                              <Typography variant="h6">
-                                <Link href="#"> Change </Link>
-                              </Typography>
-                            </div>
-
-                            <Typography variant="h5">{authContext?.connectedUserName}</Typography>
-
-                            <Typography variant="body1">
-                              {authContext?.connectedUserEmail}
-                            </Typography>
-
-                            <Typography variant="body1">
-                              {userAddressList?.address?.defaultAddress?.address}  <br />
-                              {userAddressList?.address?.defaultAddress?.city}&nbsp;
-                              {userAddressList?.address?.defaultAddress?.state},&nbsp;
-                              {userAddressList?.address?.defaultAddress?.country}
-                            </Typography>
-
-                            <Typography variant="body1">{userAddressList?.address?.defaultAddress?.code}-
-                              {userAddressList?.address?.defaultAddress?.contact}</Typography>
-                          </div>
-                        </Grid>
-                      </Grid>
+                    (globalContext.screenWitdh > 900) && (
+                      <>
+                        <DefaultAddressComponent
+                          changeAddress={changeAddress}
+                          userAddressList={userAddressList}
+                          formAddress={formAddress}
+                          setDisplayAddress={setDisplayAddress}
+                          setChangeAddress={setChangeAddress}></DefaultAddressComponent>
+                        {/* <br /> */}
+                      </>
                     )
                   }
-
 
                   {
                     (changeAddress) && (
@@ -415,8 +354,6 @@ export default function Checkout() {
                       </>
                     )
                   }
-
-
                 </Grid>
 
                 <Grid item md={4} xs={12}>
@@ -425,7 +362,17 @@ export default function Checkout() {
                     handlePlaceOrder={handlePlaceOrder}
                     paymentType={paymentType}
                     handleChangePayment={handleChangePayment}
-                    setDisplayAddress={setDisplayAddress}></CartTotalComponent>
+                    setDisplayAddress={setDisplayAddress}
+                    addressProps={
+                      {
+                        changeAddress: changeAddress,
+                        userAddressList: userAddressList,
+                        formAddress: formAddress,
+                        setDisplayAddress: setDisplayAddress,
+                        setChangeAddress: setChangeAddress
+                      }
+                    }
+                  ></CartTotalComponent>
                 </Grid>
 
               </Grid>

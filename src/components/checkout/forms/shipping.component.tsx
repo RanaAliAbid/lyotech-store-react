@@ -280,6 +280,7 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                     <Input
                         className={styles.formInput}
                         disabled
+                        value={authContext?.connectedUser?.licNumber ?? ""}
                         placeholder="Partner User ID "
                     />
                 </div>
