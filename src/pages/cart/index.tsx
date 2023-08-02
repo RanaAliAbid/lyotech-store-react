@@ -221,9 +221,9 @@ export default function Cart({
                               variant="h6"
                               className={styles.productSummary}
                             >
-                              Lorem ipsum dolor sit amet, consectetur adipisicing
+                              {/* Lorem ipsum dolor sit amet, consectetur adipisicing
                               elit, Lorem ipsum dolor sit amet, consectetur
-                              adipisicing elit,
+                              adipisicing elit, */}
                             </Typography>
                             <Typography variant="h6">
                               <strong>{t('product-delivery')}</strong>
@@ -337,7 +337,7 @@ export const getServerSideProps: GetServerSideProps<{ userJwt: any }> = async ({
       result = await verifyUserHandover({
         handoverToken: user_handover,
         productId: parseInt(product_id),
-        voucher:voucher
+        voucher: voucher
       });
 
       if (!result)

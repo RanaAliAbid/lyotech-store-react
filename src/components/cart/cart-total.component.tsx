@@ -191,62 +191,34 @@ export default function CartTotalComponent(
                             <Typography variant="h6">{globalContext?.cart?.cart?.totalAmount?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
                         </ListItem>
 
-                        <ListItem className={styles.productsLists}>
-                            <div className={styles.productsData}>                            
-                                <div className={styles.productImg}>
-                                    <img src={productImage.src} alt="" />
-                                </div>
+                        {
+                            (isCheckout) && (
+                                globalContext.cart?.cart?.products?.map((cartItem: any, index: any) => (
+                                    <ListItem key={index} className={styles.productsLists}>
+                                        <div className={styles.productsData}>
+                                            <div className={styles.productImg}>
+                                                <img src={cartItem?.productId?.images[0]?.link ?? productImage.src} alt="logo" />
+                                            </div>
 
-                                <div className={styles.productInfo}>
-                                    <Typography variant="h4">  LFi One Smartphone </Typography>
-                                    <Typography variant="h6">  Model Name: LFi One Smartphone </Typography>                                    
-                                    <Typography variant="h5">  <span> 1397.00 </span>  1100.00  {globalContext.currencySymbol}  </Typography>
-                                </div>
-                            </div>
+                                            <div className={styles.productInfo}>
+                                                <Typography variant="h4">  {cartItem?.productId?.name} </Typography>
+                                                <Typography variant="h6">  Model Name: {cartItem?.productId?.name}</Typography>
+                                                {
+                                                    (globalContext?.cart?.cart?.totalAmount == 0) ? (
+                                                        <Typography variant="h5">  <span> {cartItem?.productId?.price?.toFixed(globalContext.priceToFixed)} </span>  0  {globalContext.currencySymbol}  </Typography>
+                                                    ) : (
+                                                        <Typography variant="h5"> {cartItem?.productId?.price?.toFixed(globalContext.priceToFixed)}  {globalContext.currencySymbol}  </Typography>
+                                                    )
+                                                }
 
+                                            </div>
+                                        </div>
 
-                            <div className={styles.productsData}>                            
-                                <div className={styles.productImg}>
-                                    <img src={productImage.src} alt="" />
-                                </div>
+                                    </ListItem>
+                                ))
 
-                                <div className={styles.productInfo}>
-                                    <Typography variant="h4">  LFi One Smartphone </Typography>
-                                    <Typography variant="h6">  Model Name: LFi One Smartphone </Typography>
-                                    <Typography variant="h5">  <span> 1397.00 </span>  1100.00 {globalContext.currencySymbol}  </Typography>
-                                </div>
-                            </div>
-
-
-
-                            <div className={styles.productsData}>                            
-                                <div className={styles.productImg}>
-                                    <img src={productImage.src} alt="" />
-                                </div>
-
-                                <div className={styles.productInfo}>
-                                    <Typography variant="h4">  LFi One Smartphone </Typography>
-                                    <Typography variant="h6">  Model Name: LFi One Smartphone </Typography>
-                                    <Typography variant="h5">  <span> 1397.00 </span>  1100.00  {globalContext.currencySymbol}  </Typography>
-                                </div>
-                            </div>
-
-
-
-                            <div className={styles.productsData}>                            
-                                <div className={styles.productImg}>
-                                    <img src={productImage.src} alt="" />
-                                </div>
-
-                                <div className={styles.productInfo}>
-                                    <Typography variant="h4">  LFi One Smartphone </Typography>
-                                    <Typography variant="h6">  Model Name: LFi One Smartphone </Typography>
-                                    <Typography variant="h5">  <span> 1397.00 </span>  1100.00 {globalContext.currencySymbol}  </Typography>
-                                </div>
-                            </div>
-                        </ListItem>
-
-
+                            )
+                        }
 
                         <ListItem>
                             <Typography variant="h6">{t('Shipping')}</Typography>
