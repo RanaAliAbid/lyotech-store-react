@@ -167,19 +167,19 @@ export default function Header({ title = 'Home' }: { title: string }) {
   return (
     <>
       <Head>
-        <title>{`LYOTECH Labs || ${title ?? 'Home'}`}</title>
+        <title>{`LYOTECH Labs | ${title ?? 'Home'}`}</title>
         <meta name="description" content={siteDescription} />
         <meta name="description" content={siteDescription} />
         <meta property="og:image" content={bannerProduct.src} />
         <meta property="og:image:secure_url" content={bannerProduct.src} />
         <meta
           property="og:title"
-          content={`LYOTECH Labs || ${title ?? 'Home'}`}
+          content={`LYOTECH Labs | ${title ?? 'Home'}`}
         />
         <meta property="og:description" content={siteDescription} />
         <meta
           name="twitter:title"
-          content={`LYOTECH Labs || ${title ?? 'Home'}`}
+          content={`LYOTECH Labs | ${title ?? 'Home'}`}
         />
         <meta name="twitter:description" content={siteDescription} />
         <meta name="twitter:image" content={bannerProduct.src} />
