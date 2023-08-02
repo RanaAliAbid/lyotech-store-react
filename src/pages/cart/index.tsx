@@ -331,11 +331,13 @@ export const getServerSideProps: GetServerSideProps<{ userJwt: any }> = async ({
     const urlParams = new URLSearchParams(currentUrl);
     const product_id = urlParams.get('product_id') ?? '';
     const user_handover = urlParams.get('user_handover') ?? '';
+    const voucher = urlParams.get('voucher') ?? '';
 
     if (product_id?.length >= 1 && user_handover?.length >= 1) {
       result = await verifyUserHandover({
         handoverToken: user_handover,
         productId: parseInt(product_id),
+        voucher:voucher
       });
 
       if (!result)
