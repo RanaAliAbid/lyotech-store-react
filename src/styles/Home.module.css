@@ -1295,9 +1295,9 @@ margin: 0 auto 20px;
 	border-radius: 10px;
 }
 
-.summaryDetails .policySummary li h5 {
+/* .summaryDetails .policySummary li h5 {
 	color: #7371fc;
-}
+} */
 
 .summaryDetails .policySummary li label span {
 	font-size: 14px;
@@ -1384,6 +1384,58 @@ margin: 0 auto 20px;
 
 .summaryDetails .shippingType label span {
 	font-size: 15px;
+}
+
+.summaryDetails .productsLists {
+	display: block;
+}
+
+.summaryDetails .productsLists .productsData  {
+	padding: 10px 0;
+}
+
+.summaryDetails .productsLists .productsData + .productsData {
+	border-top: 1px solid  var(--border-color);
+} 
+.summaryDetails .productsLists .productImg img {
+	width: 100%;
+}
+
+.summaryDetails .productsLists .productsData {
+	display: flex;
+}
+
+.summaryDetails .productsLists .productsData .productImg {
+	width: 20%;	
+}
+
+.summaryDetails .productsLists .productsData .productInfo  {
+	padding-left: 10px;
+}
+
+.summaryDetails .productsLists .productsData .productInfo h4 {
+	font-size: 16px;
+	line-height: 20px;
+	font-weight: 500;
+}
+
+.summaryDetails .productsLists .productsData .productInfo h6 {
+	font-size: 12px;
+	font-weight: 400;
+}
+
+.summaryDetails .productsLists .productsData .productInfo h5 {
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.summaryDetails .productsLists .productsData .productInfo h5 span {
+	font-size: 12px;
+	font-weight: 400;
+	color: var(--gray100);	
+	text-decoration: line-through;
+	font-style: oblique;
+	margin-right: 5px;
 }
 
 .paymentTypelogo {
@@ -2153,6 +2205,15 @@ ul.wishlists,
 
 .ordersPlaceSec .ordersList .foot h5 {
 	font-weight: 500;
+}
+
+.termListItemText ul li {
+	font-family: 'work sans';
+	font-size: 16px;
+}
+
+.termListItemText ul li strong {
+	font-weight: 600;
 }
 
 
