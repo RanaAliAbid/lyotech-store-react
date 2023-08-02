@@ -195,7 +195,7 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
                                                     </Typography>
 
                                                     <Typography variant="h5">
-                                                        {order?.totalAmount} {globalContext.currencySymbol}
+                                                        {order?.totalAmount?.toFixed(2)} {globalContext.currencySymbol}
                                                     </Typography>
                                                 </div>
                                             </div>
