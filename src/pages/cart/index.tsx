@@ -160,21 +160,6 @@ export default function Cart({
     } catch (error) { }
   }, []);
 
-  React.useEffect(() => {
-    // if (message) {
-    globalContext.setAlertProps({
-      show: true,
-      title: message,
-      text: "",
-      toast: true,
-      showConfirmButton: false,
-      background: "#8B0000",
-      timerProgressBar: true,
-      callback: globalContext.closeAlert
-    })
-    // }
-  }, [message])
-
   return (
     <>
       <ThemeProvider theme={theme}>
