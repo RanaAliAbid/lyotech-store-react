@@ -107,6 +107,30 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
     }
   }, [products])
 
+  React.useEffect(() => {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const _errorMessage = urlParams.get('error');
+
+      if (_errorMessage != null) {
+
+        globalContext.setAlertProps({
+          show: true,
+          title: atob(_errorMessage),
+          text: "",
+          toast: true,
+          showConfirmButton: false,
+          background: "#8B0000",
+          timer: 6000,
+          timerProgressBar: true,
+          callback: globalContext.closeAlert
+        })
+
+        router.push("/")
+      }
+    } catch (error) { }
+  }, [])
+
   return (
     <>
 

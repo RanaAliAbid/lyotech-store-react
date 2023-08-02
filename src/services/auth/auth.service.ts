@@ -12,11 +12,18 @@ export const verifyUserHandover = async (params: PartnerLinkData) => {
   try {
 
     const result = await ApiService.GetRequest(`${API_HOST}/v1/user/auth/${params?.productId}/${params?.handoverToken}/${params?.voucher}`);
-    console.log(result);
     
-    return result?.data?.data?.jwtToken;
+    return {
+      success: true,
+      message: "Product added to cart",
+      data: result?.data?.data?.jwtToken,
+    };
   } catch (error: any) {
-    return null;
+    return {
+      success: false,
+      message: error?.response?.data?.msg?.message ?? "An error occured please try again later",
+      data: null
+    }
   }
 };
 

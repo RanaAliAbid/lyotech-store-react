@@ -34,6 +34,7 @@ import CartTotalComponent from '@/components/cart/cart-total.component';
 
 export default function Cart({
   userJwt,
+  message
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
   const { t } = useTranslation('cart');
@@ -158,6 +159,21 @@ export default function Cart({
       }
     } catch (error) { }
   }, []);
+
+  React.useEffect(() => {
+    // if (message) {
+    globalContext.setAlertProps({
+      show: true,
+      title: message,
+      text: "",
+      toast: true,
+      showConfirmButton: false,
+      background: "#8B0000",
+      timerProgressBar: true,
+      callback: globalContext.closeAlert
+    })
+    // }
+  }, [message])
 
   return (
     <>
@@ -317,7 +333,7 @@ export default function Cart({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{ userJwt: any }> = async ({
+export const getServerSideProps: GetServerSideProps<{ userJwt: any, message: any }> = async ({
   req,
   res,
 }: {
@@ -340,15 +356,15 @@ export const getServerSideProps: GetServerSideProps<{ userJwt: any }> = async ({
         voucher: voucher
       });
 
-      if (!result)
+      if (!result?.data)
         return {
           redirect: {
-            destination: `/`,
+            destination: `/?error=${btoa(result?.message)}`,
             permanent: false,
           },
         };
 
-      if (result.length > 10) {
+      if (result?.data?.length > 10) {
         res.setHeader("set-Cookie", [
           `userConnected=${"true"}; Max-Age=36000; path: '/';`,
           `partnerToken=${result}; HttpOnly; Max-Age=15; path: '/';`,
@@ -366,5 +382,6 @@ export const getServerSideProps: GetServerSideProps<{ userJwt: any }> = async ({
     }
   }
   const userJwt = result;
-  return { props: { userJwt } };
+  const message = result?.message ?? "";
+  return { props: { userJwt, message } };
 };
