@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 
 import darkLogo from '../img/dark-logo.png';
 
@@ -20,6 +20,8 @@ import footerCard01 from '../img/footerCard01.png';
 import footerCard02 from '../img/footerCard02.png';
 import footerCard03 from '../img/footerCard03.png';
 import CookiesComponent from './cookies';
+import { APP_HOST } from '../../app.config';
+import Link from 'next/link';
 
 export default function Footer() {
   const { t } = useTranslation('common');
@@ -106,11 +108,11 @@ export default function Footer() {
                 </Typography>
                 <List>
                   <ListItem className={styles.item}>
-                    <Link href="#serviceSection">Services</Link>
+                    <Link href={`${APP_HOST}#serviceSection`}>Services</Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="#deviceSection">Devices</Link>
+                    <Link href={`${APP_HOST}#deviceSection`}>Devices</Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>

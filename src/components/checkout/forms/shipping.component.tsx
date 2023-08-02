@@ -96,7 +96,7 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                 <div className={styles.formControl}>
                     <label className={styles.formLabel}>
                         {' '}
-                        First name *{' '}
+                        First name  <span className="text-danger">*</span>{' '}
                     </label>
                     <Input
                         className={styles.formInput}
@@ -108,7 +108,7 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                 <div className={styles.formControl}>
                     <label className={styles.formLabel}>
                         {' '}
-                        Last name *{' '}
+                        Last name  <span className="text-danger">*</span>{' '}
                     </label>
                     <Input
                         className={styles.formInput}
@@ -120,7 +120,7 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                 <div className={styles.formControl}>
                     <label className={styles.formLabel}>
                         {' '}
-                        Email Address *{' '}
+                        Email Address  <span className="text-danger">*</span>{' '}
                     </label>
                     <Input
                         className={styles.formInput}
@@ -130,7 +130,7 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                 </div>
 
                 <div className={styles.formControl}>
-                    <label className={styles.formLabel}> Phone * </label>
+                    <label className={styles.formLabel}> Phone <span className="text-danger">*</span></label>
                     <Input
                         className={styles.formInput}
                         placeholder="Phone Number"
@@ -141,7 +141,7 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                 <div className={styles.formControl}>
                     <label className={styles.formLabel}>
                         {' '}
-                        Country *{' '}
+                        Country  <span className="text-danger">*</span>{' '}
                     </label>
 
                     {
@@ -187,7 +187,7 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                 </div>
 
                 <div className={styles.formControl}>
-                    <label className={styles.formLabel}> State / Region *</label>
+                    <label className={styles.formLabel}> State / Region  <span className="text-danger">*</span></label>
                     {
                         <Select
                             label="States"
@@ -231,7 +231,7 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                 <div className={styles.formControl}>
                     <label className={styles.formLabel}>
                         {' '}
-                        Town / City *{' '}
+                        Town / City  <span className="text-danger">*</span>{' '}
                     </label>
                     {
                         <Select
@@ -288,7 +288,7 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                 <div className={styles.formControl}>
                     <label className={styles.formLabel}>
                         {' '}
-                        Address *{' '}
+                        Address  <span className="text-danger">*</span>{' '}
                     </label>
                     <Input
                         className={styles.formInput}

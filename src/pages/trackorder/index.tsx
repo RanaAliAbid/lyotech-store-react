@@ -18,6 +18,8 @@ const workSans = Work_Sans({ subsets: ['latin'] });
 import { createTheme, ThemeProvider } from '@mui/material';
 
 import useTranslation from 'next-translate/useTranslation';
+import { useGlobalContext } from '@/contexts/GlobalContext';
+import { useAuthContext } from '@/contexts/AuthContext';
 
 export default function TrackOrder() {
   const { t } = useTranslation('order');
@@ -27,6 +29,26 @@ export default function TrackOrder() {
       fontFamily: ['Work Sans'].join(','),
     },
   });
+
+  const globalContext = useGlobalContext();
+  const authContext = useAuthContext();
+
+  const handleTrackOrder = () => {
+    try {
+      globalContext.setAlertProps({
+        show: true,
+        title: "Under Maintenance. Please try again later",
+        text: "",
+        toast: true,
+        background: "#8B0000",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        callback: globalContext.closeAlert
+      })
+    } catch (error) {
+
+    }
+  }
 
   return (
     <>
@@ -79,6 +101,7 @@ export default function TrackOrder() {
                       </Grid>
                     </Grid>
                     <Button
+                      onClick={handleTrackOrder}
                       variant="contained"
                       className={`${styles['btn']} ${styles['btn_primary']}`}
                     >

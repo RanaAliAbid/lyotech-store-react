@@ -152,9 +152,19 @@ export default function Wishlist() {
                             </ListItem>
                           ))
                         ) : (
-                          <div className='w-100 text-center'>
-                            <div className="notfound"><Image src={"/not-found.gif"} alt='Not Found' fill={true} /></div>
-                          </div>
+                          <>
+                            <div className='w-100 text-center'>
+                              <div className="notfound"><Image src={"/not-found.gif"} alt='Not Found' fill={true} /></div>
+                            </div>
+                            <div className='w-100 text-center'>
+                              <Typography
+                                variant="h4"
+                                className={styles.productitle}
+                              >
+                                No Product added
+                              </Typography>
+                            </div>
+                          </>
                         )
                       }
 

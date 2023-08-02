@@ -122,7 +122,7 @@ export default function Sidebar() {
               </>
             </Link>
           </ListItem>
-          <ListItem
+          {/* <ListItem
             className={router.pathname == '/preferences' ? styles.active : ''}
           >
             <Link href="#">
@@ -131,7 +131,7 @@ export default function Sidebar() {
                 {t('Preferences')}
               </>
             </Link>
-          </ListItem>
+          </ListItem> */}
         </List>
       </div>
     </>

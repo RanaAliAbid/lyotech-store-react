@@ -107,7 +107,24 @@ export default function Checkout() {
     ) {
       setEnablePlaceOrder(false);
     } else {
-      setEnablePlaceOrder(true);
+
+      if (!shippingSameBilling) {
+        if (
+          !checkForm.billingAddress.country ||
+          !checkForm.billingAddress.city ||
+          !checkForm.billingAddress.address ||
+          !checkForm.billingAddress.phone ||
+          !checkForm.billingAddress.firstName ||
+          !checkForm.billingAddress.lastName ||
+          !checkForm.billingAddress.email
+        ) {
+          setEnablePlaceOrder(false);
+        } else {
+          setEnablePlaceOrder(true);
+        }
+      } else {
+        setEnablePlaceOrder(true);
+      }
     }
 
     setFormValidation(checkForm);
@@ -121,9 +138,9 @@ export default function Checkout() {
 
     let addresses = {
       shippingAddress: {
-        firstName: authContext.connectedUser?.firstName ?? _localAddress?.shippingAddress?.firstName ?? "",
-        lastName: authContext.connectedUser?.lastName ?? _localAddress?.shippingAddress?.lastName ?? "",
-        email: authContext.connectedUser?.email ?? _localAddress?.shippingAddress?.email ?? "",
+        firstName: userAddressList?.address?.defaultAddress?.firstName ?? _localAddress?.shippingAddress?.firstName ?? authContext.connectedUser?.firstName ?? "",
+        lastName: userAddressList?.address?.defaultAddress?.lastName ?? _localAddress?.shippingAddress?.lastName ?? authContext.connectedUser?.lastName ?? "",
+        email: userAddressList?.address?.defaultAddress?.email ?? _localAddress?.shippingAddress?.email ?? authContext.connectedUser?.email ?? "",
         phone: userAddressList?.address?.defaultAddress?.contact ?? _localAddress?.shippingAddress?.phone ?? "",
         address: userAddressList?.address?.defaultAddress?.address ?? _localAddress?.shippingAddress?.address ?? "",
         city: userAddressList?.address?.defaultAddress?.city ?? _localAddress?.shippingAddress?.city ?? "",
@@ -133,14 +150,14 @@ export default function Checkout() {
         type: userAddressList?.address?.defaultAddress?.type ?? "Other",
       },
       billingAddress: {
-        firstName: authContext.connectedUser?.firstName ?? "",
-        lastName: authContext.connectedUser?.lastName ?? "",
-        email: authContext.connectedUser?.email ?? "",
-        phone: userAddressList?.address?.defaultAddress?.contact ?? "",
-        address: userAddressList?.address?.defaultAddress?.address ?? "",
-        city: userAddressList?.address?.defaultAddress?.city ?? "",
-        country: userAddressList?.address?.defaultAddress?.country ?? "",
-        state: userAddressList?.address?.defaultAddress?.state ?? "",
+        firstName: userAddressList?.address?.defaultAddress?.firstName ?? _localAddress?.shippingAddress?.firstName ?? authContext.connectedUser?.firstName ?? "",
+        lastName: userAddressList?.address?.defaultAddress?.lastName ?? _localAddress?.shippingAddress?.lastName ?? authContext.connectedUser?.lastName ?? "",
+        email: userAddressList?.address?.defaultAddress?.email ?? _localAddress?.shippingAddress?.email ?? "",
+        phone: userAddressList?.address?.defaultAddress?.contact ?? _localAddress?.shippingAddress?.phone ?? "",
+        address: userAddressList?.address?.defaultAddress?.address ?? _localAddress?.shippingAddress?.address ?? "",
+        city: userAddressList?.address?.defaultAddress?.city ?? _localAddress?.shippingAddress?.city ?? "",
+        country: userAddressList?.address?.defaultAddress?.country ?? _localAddress?.shippingAddress?.country ?? "",
+        state: userAddressList?.address?.defaultAddress?.state ?? _localAddress?.shippingAddress?.state ?? "",
         address2: userAddressList?.address?.defaultAddress?.address2 ?? "",
       },
       notes: "",
@@ -168,7 +185,6 @@ export default function Checkout() {
 
       let data = formAddress.shippingAddress
       data.code = countryCodeByCountryName(data?.country) ?? "+971"
-      data.type = "Work"
       data.contact = data.phone
       data.latitude = 0
       data.longitude = 0

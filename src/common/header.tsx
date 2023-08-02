@@ -37,6 +37,7 @@ import {
   CircularProgress,
   Backdrop
 } from '@mui/material';
+import { APP_HOST } from '../../app.config';
 
 export default function Header({ title = 'Home' }: { title: string }) {
   const router = useRouter();
@@ -203,10 +204,10 @@ export default function Header({ title = 'Home' }: { title: string }) {
 
             <List className={styles.headMenu}>
               <ListItem>
-                <Link href={'#serviceSection'}> {t('Services')} </Link>
+                <Link href={`${APP_HOST}#serviceSection`}> {t('Services')} </Link>
               </ListItem>
               <ListItem>
-                <Link href={'#deviceSection'}> {t('Devices')} </Link>
+                <Link href={`${APP_HOST}#deviceSection`}> {t('Devices')} </Link>
               </ListItem>
               <ListItem>
                 <Link href={'/co-products'}> {t('Co-Products')} </Link>
@@ -281,14 +282,14 @@ export default function Header({ title = 'Home' }: { title: string }) {
                   </Link>
                 </MenuItem>
 
-                <MenuItem onClick={handleAccountClose}>
+                {/* <MenuItem onClick={handleAccountClose}>
                   <Link href={`/${locale}`}>
                     {' '}
                     <>
                       <PreferencesIcon /> {t('Preferences')}
                     </>{' '}
                   </Link>
-                </MenuItem>
+                </MenuItem> */}
 
                 <MenuItem onClick={(e) => { handleAccountClose(); handleLogout(e) }}>
                   <Link href={`#`}>

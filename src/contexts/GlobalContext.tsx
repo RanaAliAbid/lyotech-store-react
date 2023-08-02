@@ -90,7 +90,18 @@ export function GlobalWrapper({
       })
 
       return result;
-    } catch (error) {
+    } catch (error: any) {
+
+      setAlertProps({
+        show: true,
+        title: error?.response?.data?.message,
+        text: "",
+        toast: true,
+        background: "#8B0000",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        callback: closeAlert
+      })
       return null;
     }
   }

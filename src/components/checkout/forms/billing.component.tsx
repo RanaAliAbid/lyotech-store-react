@@ -79,7 +79,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                 <div className={styles.formControl}>
                     <label className={styles.formLabel}>
                         {' '}
-                        First name *{' '}
+                        First name  <span className="text-danger">*</span>{' '}
                     </label>
                     <Input
                         className={styles.formInput}
@@ -91,7 +91,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                 <div className={styles.formControl}>
                     <label className={styles.formLabel}>
                         {' '}
-                        Last name *{' '}
+                        Last name  <span className="text-danger">*</span>{' '}
                     </label>
                     <Input
                         className={styles.formInput}
@@ -103,7 +103,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                 <div className={styles.formControl}>
                     <label className={styles.formLabel}>
                         {' '}
-                        Email Address *{' '}
+                        Email Address  <span className="text-danger">*</span>{' '}
                     </label>
                     <Input
                         className={styles.formInput}
@@ -113,7 +113,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                 </div>
 
                 <div className={styles.formControl}>
-                    <label className={styles.formLabel}> Phone * </label>
+                    <label className={styles.formLabel}> Phone <span className="text-danger">*</span></label>
                     <Input
                         className={styles.formInput}
                         placeholder="Phone Number"
@@ -124,7 +124,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                 <div className={styles.formControl}>
                     <label className={styles.formLabel}>
                         {' '}
-                        Country *{' '}
+                        Country  <span className="text-danger">*</span>{' '}
                     </label>
 
                     {
@@ -135,7 +135,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                                 value={formAddress?.billingAddress?.country}
                                 size='small'
                             >
-                                <MenuItem value={""} disabled>
+                                <MenuItem value={formAddress?.shippingAddress?.country ?? ""} disabled>
                                     Select a Country
                                 </MenuItem>
                                 {countryList.map((country: any, index: any) => (
@@ -169,7 +169,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                 </div>
 
                 <div className={styles.formControl}>
-                    <label className={styles.formLabel}> State / Region *</label>
+                    <label className={styles.formLabel}> State / Region <span className="text-danger">*</span></label>
                     {
                         <Select
                             label="States"
@@ -177,7 +177,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                             value={formAddress?.billingAddress?.state ?? ""}
                             size='small'
                         >
-                            <MenuItem value={""} disabled>
+                            <MenuItem value={formAddress?.shippingAddress?.state ?? ""} disabled>
                                 Select a State/Region
                             </MenuItem>
                             {stateList && stateList.length > 0 ?
@@ -213,7 +213,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                 <div className={styles.formControl}>
                     <label className={styles.formLabel}>
                         {' '}
-                        Town / City *{' '}
+                        Town / City  <span className="text-danger">*</span>{' '}
                     </label>
                     {
                         <Select
@@ -222,7 +222,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                             value={formAddress?.billingAddress?.city ?? ""}
                             size='small'
                         >
-                            <MenuItem value={""}>
+                            <MenuItem value={formAddress?.shippingAddress?.city ?? ""}>
                                 Select a state/region
                             </MenuItem>
                             {cityList && cityList.length > 0 ?
@@ -257,7 +257,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                 <div className={styles.formControl}>
                     <label className={styles.formLabel}>
                         {' '}
-                        Address *{' '}
+                        Address  <span className="text-danger">*</span>{' '}
                     </label>
                     <Input
                         className={styles.formInput}

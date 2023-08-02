@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion, useInView, useAnimation } from 'framer-motion';
+import React, { useEffect } from 'react';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 import Header from '../common/header';
@@ -61,13 +61,8 @@ import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useRouter } from 'next/router';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { getHomePageProducts } from '@/services/products/product.service';
-import DialogActions from '@mui/material/DialogActions';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 
-import Modal from '@mui/material/Modal';
-import { _defaultHomePageProducts, homePageProducts, lfi_one_smartphone, lyo_tab, lyo_watch } from '@/utils/app.utils';
+import { getLocalStorage, homePageProducts, lfi_one_smartphone, lyo_tab, lyo_watch, setLocalStorage } from '@/utils/app.utils';
 
 export default function Home({ products }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const theme = createTheme({
@@ -97,7 +92,19 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
   }
 
   useEffect(() => {
-    globalContext.setHomeProduct(products)
+    let localProd: any = getLocalStorage("productsId") ?? "";
+
+    if (products?.LFI_ONE_Smartphone?.length > 3) {
+      setLocalStorage("productsId", JSON.stringify(products));
+      globalContext.setHomeProduct(products);
+
+    } else {
+      if (localProd.length > 3) {
+        localProd = JSON.parse(localProd)
+
+        globalContext.setHomeProduct(localProd);
+      }
+    }
   }, [products])
 
   return (
@@ -1203,7 +1210,7 @@ export const getServerSideProps: GetServerSideProps<{ products: any }> = async (
 }) => {
   let result = null;
 
-  result = await getHomePageProducts(_defaultHomePageProducts);
+  result = await getHomePageProducts(homePageProducts);
 
   let productsId = homePageProducts;
 
