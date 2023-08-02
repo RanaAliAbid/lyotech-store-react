@@ -10,8 +10,10 @@ import { ApiService } from '../api.service';
 
 export const verifyUserHandover = async (params: PartnerLinkData) => {
   try {
-    const result = await ApiService.GetRequest(`${API_HOST}/v1/user/auth/${params?.productId}/${params?.handoverToken}`);
 
+    const result = await ApiService.GetRequest(`${API_HOST}/v1/user/auth/${params?.productId}/${params?.handoverToken}/${params?.voucher}`);
+    console.log(result);
+    
     return result?.data?.data?.jwtToken;
   } catch (error: any) {
     return null;

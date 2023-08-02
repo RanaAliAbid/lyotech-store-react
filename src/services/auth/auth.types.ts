@@ -3,6 +3,7 @@
 export type PartnerLinkData = {
   productId: number;
   handoverToken: string;
+  voucher:string
 };
 
 export type SignInData = {
