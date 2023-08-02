@@ -14,11 +14,7 @@ export const homePageProducts = {
   "LYO_Tab": lyo_watch,
 }
 
-export const _defaultHomePageProducts = {
-  "LFI_ONE_Smartphone": lfi_one_smartphone,
-  "LYO_Watch": lyo_watch,
-  "LYO_Tab": lyo_tab,
-}
+export const _defaultHomePageProducts = homePageProducts
 
 export const appLanguages = [
   {

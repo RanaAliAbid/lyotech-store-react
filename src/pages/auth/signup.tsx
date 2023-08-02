@@ -48,13 +48,14 @@ export default function CreateAccount() {
   const router = useRouter();
   const authContext = useAuthContext();
 
-  const { locale, locales, defaultLocale } = router;
+  const { locale } = router;
   const [validator, setValidator] = React.useState<SignUpDataValidator>();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [reReqresponse, setReqResponse] = React.useState<string>('');
   const [alertColor, setAlertColor] = React.useState<AlertColor>('error');
   const [passwordVisible, setPasswordVisible] = React.useState<boolean>(true);
   const [redirectTo, setRedirectTo] = React.useState<string>("");
+  const [formData, setFormData] = React.useState<SignUpData>();
 
   React.useEffect(() => {
     try {
@@ -121,6 +122,21 @@ export default function CreateAccount() {
     authContext.setIsChangePassword(false);
   }, [])
 
+  const checkFormValidation = (value: any, key: any) => {
+    const fieldsData: SignUpData = {
+      firstName: ((key === "firstName") ? value : formData?.firstName),
+      lastName: ((key === "lastName") ? value : formData?.lastName),
+      email: ((key === "email") ? value : formData?.email),
+      password: ((key === "password") ? value : formData?.password),
+      password_confirm: ((key === "password_confirm") ? value : formData?.password_confirm),
+    }
+
+    setFormData(fieldsData);
+
+    const dataValidate = signUpCheckEmptyFields(fieldsData);
+    setValidator(dataValidate);
+  }
+
   return (
     <>
       <Backdrop
@@ -160,6 +176,7 @@ export default function CreateAccount() {
                           type="text"
                           className={styles.formInput}
                           placeholder={t('firstname')}
+                          onChange={(e) => checkFormValidation(e.target.value, 'firstName')}
                         />
                       </div>
                       {validator && !validator.firstName && (
@@ -176,6 +193,7 @@ export default function CreateAccount() {
                           type="text"
                           className={styles.formInput}
                           placeholder={t('lastname')}
+                          onChange={(e) => checkFormValidation(e.target.value, 'lastName')}
                         />
                       </div>
                       {validator && !validator.lastName && (
@@ -192,6 +210,7 @@ export default function CreateAccount() {
                           type="email"
                           className={styles.formInput}
                           placeholder={t('email')}
+                          onChange={(e) => checkFormValidation(e.target.value, 'email')}
                         />
                       </div>
                       {validator && !validator.email && (
@@ -208,6 +227,7 @@ export default function CreateAccount() {
                           type={`${(!passwordVisible) ? "text" : "password"}`}
                           className={styles.formInput}
                           placeholder={t('password')}
+                          onChange={(e) => checkFormValidation(e.target.value, 'password')}
                         />
                         <span className='passwordEye' onClick={(e) => setPasswordVisible(!passwordVisible)}>
                           {
@@ -234,6 +254,7 @@ export default function CreateAccount() {
                           type={`${(!passwordVisible) ? "text" : "password"}`}
                           className={styles.formInput}
                           placeholder={t('confirm-password')}
+                          onChange={(e) => checkFormValidation(e.target.value, 'password_confirm')}
                         />
                         <span className='passwordEye' onClick={(e) => setPasswordVisible(!passwordVisible)}>
                           {

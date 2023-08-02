@@ -8,7 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import { useRouter } from 'next/router';
 
 import styles from '@/styles/Home.module.css';
@@ -26,6 +26,7 @@ import Box from '@mui/material/Box';
 import { Alert } from '@mui/material';
 import PaymentMethodComponent from '../checkout/payment.component';
 import DefaultAddressComponent from '../checkout/address.component';
+import Link from 'next/link';
 
 export default function CartTotalComponent(
     { isCheckout, handlePlaceOrder, paymentType, handleChangePayment, setDisplayAddress, addressProps }:
@@ -185,9 +186,9 @@ export default function CartTotalComponent(
 
                         <ListItem>
                             <Typography variant="h6">{t('Shipping')}</Typography>
-                            <Typography variant="h6">
+                            {/* <Typography variant="h6">
                                 <Link>Details</Link>
-                            </Typography>
+                            </Typography> */}
                         </ListItem>
                     </List>
 
@@ -245,7 +246,7 @@ export default function CartTotalComponent(
                         }
 
                         {
-                            (cartVat?.amount) && (
+                            (cartVat?.amount?.length > 0) && (
                                 <ListItem>
                                     <Typography variant="h6">
                                         {t('VAT')} {cartVat?.percentage}%
@@ -312,18 +313,6 @@ export default function CartTotalComponent(
                         (globalContext.screenWitdh <= 900 && setDisplayAddress) && (
                             <>
                                 <div className={`${styles.wrapTitle} mt-2 mb-2`}>
-                                    {/* <Typography variant="h4">
-                                        Shipping & Billing Address
-
-                                        <Button
-                                            onClick={(e) => { setDisplayAddress(true) }}
-                                            variant="contained"
-                                            size='small'
-                                        >
-                                            {t('Update Addresses')}
-                                        </Button>
-
-                                    </Typography> */}
 
                                     <DefaultAddressComponent
                                         changeAddress={addressProps?.changeAddress}
@@ -431,7 +420,7 @@ export default function CartTotalComponent(
                                 size="small"
                             />
                             <Typography variant="h6" className='t-13'>
-                                I have read and Accept <span className='text-primary cursor-pointer'>Presale Policy</span>
+                                I have read and Accept <Link rel='noreferrer' target='_blank' href={`/pre-sale-policy`}><span className='text-primary cursor-pointer'>Presale Policy</span></Link>
                             </Typography>
                         </div>
                     </ListItem>
@@ -444,7 +433,7 @@ export default function CartTotalComponent(
                                 size="small"
                             />
                             <Typography variant="h6" className='t-13'>
-                                I have read and Accept <span className='text-primary cursor-pointer'>One Care Policy</span>
+                                I have read and Accept <Link rel='noreferrer' target='_blank' href={`/onecare-policy`}><span className='text-primary cursor-pointer'>One Care Policy</span></Link>
                             </Typography>
                         </div>
                     </ListItem>
@@ -457,7 +446,7 @@ export default function CartTotalComponent(
                                 size="small"
                             />
                             <Typography variant="h6" className='t-13'>
-                                I have read and Accept <span className='text-primary cursor-pointer'>Hardware Minting Policy</span>
+                                I have read and Accept <Link rel='noreferrer' target='_blank' href={`/minting-terms-condition`}><span className='text-primary cursor-pointer'>Hardware Minting Policy</span></Link>
                             </Typography>
                         </div>
                     </ListItem>

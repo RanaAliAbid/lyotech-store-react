@@ -35,7 +35,7 @@ export const signInUser = async (params: SignInData) => {
   }
 };
 
-export const signUpUser = async (params: SignUpData) => {
+export const signUpUser = async (params: SignUpData | undefined) => {
   try {
     const body = await ProxyService.generateHashKey(JSON.stringify(params))
     return ProxyService.PostRequest(PROXY_HOST + '/api/v1/signup', body);
