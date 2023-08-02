@@ -34,6 +34,10 @@ import { createTheme, ThemeProvider, Alert } from '@mui/material';
 import useTranslation from 'next-translate/useTranslation';
 import { AddressData, AddressDataValidator } from '@/services/addresses/addresses.types';
 
+import {
+  replaceSpecialChar
+} from '@/validators/order.validator';
+
 export default function Addresses() {
   const { t } = useTranslation('address');
 
@@ -98,6 +102,9 @@ export default function Addresses() {
       const result = await getStateDetails(value);
       setStateList(result?.data?.data?.states ?? []);
 
+      // const pLenght = phoneNumberLenght(value) ?? 0;
+      // setPhoneLength(pLenght);
+
       if (autoLoadCity) {
         const state = result?.data?.data?.states?.find((x: any) => x?.name === currentAddress?.state)?._id
 
@@ -159,13 +166,13 @@ export default function Addresses() {
       contact: true,
     };
 
-    dataValidate.country = postData[1].value == '' ? false : true;
-    dataValidate.state = postData[3].value == '' ? false : true;
-    dataValidate.city = postData[5].value == '' ? false : true;
-    dataValidate.type = postData[0].value == '' ? false : true;
-    dataValidate.address = postData[7].value == '' ? false : true;
-    dataValidate.code = postData[9].value == '' ? false : true;
-    dataValidate.contact = postData[11].value == '' ? false : true;
+    dataValidate.country = replaceSpecialChar(postData[1].value) == '' ? false : true;
+    dataValidate.state = replaceSpecialChar(postData[3].value) == '' ? false : true;
+    dataValidate.city = replaceSpecialChar(postData[5].value) == '' ? false : true;
+    dataValidate.type = replaceSpecialChar(postData[0].value) == '' ? false : true;
+    dataValidate.address = replaceSpecialChar(postData[7].value) == '' ? false : true;
+    dataValidate.code = replaceSpecialChar(postData[9].value) == '' ? false : true;
+    dataValidate.contact = replaceSpecialChar(postData[11].value) == '' ? false : true;
 
     if (postData[11].value.length != phoneLength) {
       dataValidate.contact = false;
@@ -188,13 +195,13 @@ export default function Addresses() {
       handleClose();
 
       const data = {
-        country: postData[1].value,
-        state: postData[3].value,
-        city: postData[5].value,
-        type: postData[0].value,
-        address: postData[7].value, //postData[8].value
+        country: replaceSpecialChar(postData[1].value),
+        state: replaceSpecialChar(postData[3].value),
+        city: replaceSpecialChar(postData[5].value),
+        type: replaceSpecialChar(postData[0].value),
+        address: replaceSpecialChar(postData[7].value), //postData[8].value
         code: countryCodeByCountryName(postData[1].value) ?? "+971",//postData[9].value,
-        contact: postData[11].value,
+        contact: replaceSpecialChar(postData[11].value),
         latitude: 0,
         longitude: 0
       };
@@ -271,6 +278,10 @@ export default function Addresses() {
     getUserAddresses();
     getCountryList();
   }, []);
+
+  React.useEffect(() => {
+    setPhone(phone.replace("+", ''));
+  }, [phone])
 
   return (
     <>
@@ -474,7 +485,7 @@ export default function Addresses() {
                     <div className={styles.formControl}>
                       <label className={styles.formLabel}>
                         {' '}
-                        Country *{' '}
+                        Country <span className="text-danger">*</span>{' '}
                       </label>
                       <Select
                         label="Country"
@@ -490,6 +501,7 @@ export default function Addresses() {
                               getStateDetailsOfCountry(country._id);
                               setCountry(country.name);
                               setCountryCodeName(country.name);
+                              getCountryCode(country?.name);
                             }}
                           >
                             {country.name}
@@ -512,7 +524,7 @@ export default function Addresses() {
                     </div>
 
                     <div className={styles.formControl}>
-                      <label className={styles.formLabel}> State / Region *</label>
+                      <label className={styles.formLabel}> State / Region <span className="text-danger">*</span></label>
                       {
                         <Select
                           label="States"
@@ -556,7 +568,7 @@ export default function Addresses() {
                     <div className={styles.formControl}>
                       <label className={styles.formLabel}>
                         {' '}
-                        Town / City *{' '}
+                        Town / City <span className="text-danger">*</span>{' '}
                       </label>
                       {
                         <Select
@@ -600,7 +612,7 @@ export default function Addresses() {
                     <div className={styles.formControl}>
                       <label className={styles.formLabel}>
                         {' '}
-                        Address line 1 *{' '}
+                        Address line 1 <span className="text-danger">*</span>{' '}
                       </label>
                       <Input
                         className={styles.formInput}
@@ -638,7 +650,7 @@ export default function Addresses() {
                     <div className={styles.formControl}>
                       <label className={styles.formLabel}>
                         {' '}
-                        Country code *{' '}
+                        Country code <span className="text-danger">*</span>{' '}
                       </label>
                       <Select
                         className={styles.formTextField}
@@ -646,9 +658,10 @@ export default function Addresses() {
                         defaultValue={"United Arab Emirates"}
                         variant="outlined"
                         size="small"
+                        disabled
                       >
                         <MenuItem value={""}>
-                          Select a state/region
+                          Select a country code
                         </MenuItem>
                         {sortCountries(countries.data).map(
                           (country: any, index: any) => (
@@ -686,7 +699,7 @@ export default function Addresses() {
                     <div className={styles.formControl}>
                       <label className={styles.formLabel}>
                         {' '}
-                        Mobile number *{' '}
+                        Mobile number <span className="text-danger">*</span>{' '}
 
                       </label>
                       <Input

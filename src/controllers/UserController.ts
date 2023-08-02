@@ -18,8 +18,8 @@ export const signIn = async (
     if (result && result.status == 200) {
 
       res.setHeader("Set-Cookie", [
-        `otpToken=${result?.data?.data?.otpVerificationToken}; HttpOnly; Max-Age=3600;`,
-        `token=${result?.data?.data?.token}; HttpOnly; Max-Age=3600;`,
+        `otpToken=${result?.data?.data?.otpVerificationToken}; HttpOnly; Max-Age=360;`,
+        `token=${result?.data?.data?.token}; HttpOnly; Max-Age=360;`,
         `guestId=deleted; HttpOnly; Max-Age=0;`
       ]);
 
@@ -53,8 +53,8 @@ export const signUp = async (
     const result = await ApiService.PostRequest(API_HOST + '/v1/user/sign-up', data);
 
     res.setHeader("Set-Cookie", [
-      `otpToken=${result?.data?.data?.otpVerificationToken}; HttpOnly; Max-Age=3600;`,
-      `token=${result?.data?.data?.token}; HttpOnly; Max-Age=3600;`,
+      `otpToken=${result?.data?.data?.otpVerificationToken}; HttpOnly; Max-Age=360;`,
+      `token=${result?.data?.data?.token}; HttpOnly; Max-Age=360;`,
     ]);
 
     res.status(200).json(ApiService.ApiResponseSuccess(result?.data?.data, 'Sucessfull register. Please verify your email'));
@@ -90,7 +90,7 @@ export const verifyEmailOtp = async (
     res.status(200).json(ApiService.ApiResponseSuccess({}, 'Email verification completed'));
 
   } catch (error: any) {
-    console.log('Catch error resend email otp ', error?.response?.data);
+    console.log('Catch error verify email otp ', error);
     res.status(400).json(ApiService.ApiResponseError(error));
   }
 };
@@ -104,12 +104,18 @@ export const resendUserEmailOtp = async (
   try {
     let data = req?.body;
 
-    const result = await ApiService.PostRequest(API_HOST + '/v1/user/resend-otp', data, `Bearer ${req.cookies?.otpToken}`);
+    const result = await ApiService.PostRequest(API_HOST + '/v1/user/resend-email', data, `Bearer ${req.cookies?.otpToken}`);
+
+    res.setHeader("Set-Cookie", [
+      `otpToken=${result?.data?.data?.otpVerificationToken}; HttpOnly; Max-Age=360;`,
+      `token=${result?.data?.data?.token}; HttpOnly; Max-Age=360;`,
+      `guestId=deleted; HttpOnly; Max-Age=0;`
+    ]);
 
     res.status(200).json(ApiService.ApiResponseSuccess(result?.data, 'Email OTP sended'));
 
   } catch (error: any) {
-    console.log('Catch error verify email otp ', error?.response?.data);
+    console.log('Catch error verify email otp ', error?.response);
     res.status(400).json(ApiService.ApiResponseError(error));
   }
 };

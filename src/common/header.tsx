@@ -52,7 +52,7 @@ export default function Header({ title = 'Home' }: { title: string }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const accountOpen = Boolean(anchorEl);
   const [loading, setLoading] = React.useState(false);
-  const [cartData, setCartData] = React.useState<any>([]);
+  const [cartQtyProduct, setCartQtyProduct] = React.useState<any>(0);
 
   const handleAccountClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (!authContext.userConnected) {
@@ -155,6 +155,14 @@ export default function Header({ title = 'Home' }: { title: string }) {
 
   const siteDescription =
     'LYOTECH LABS is an R&D company that works on the development of software and hardware products including mobile phones, tablets, laptops and smart watches. Our goal is giving best our customers in technologys';
+
+  React.useEffect(() => {
+    let count = 0;
+    globalContext.cart?.cart?.products?.map((cartItem: any, index: any) => {
+      count += cartItem?.quantity ?? 0
+      setCartQtyProduct(count);
+    })
+  }, [globalContext.cart]);
 
   return (
     <>
@@ -316,7 +324,7 @@ export default function Header({ title = 'Home' }: { title: string }) {
                 <span className='xs-d-none'>{t('Cart')}</span>
                 {
                   (globalContext.cart?.cart?.products) && (
-                    <span className={styles.badge}>{globalContext.cart?.cart?.products?.length}</span>
+                    <span className={styles.badge}>{cartQtyProduct}</span>
                   )
                 }
               </Button>
@@ -368,7 +376,7 @@ export default function Header({ title = 'Home' }: { title: string }) {
                   </Typography>
 
                   <Typography variant="h6" className={styles.productPrice}>
-                    {globalContext.cart?.totalAmount?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}
+                    {globalContext.cart?.cart?.totalAmount?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}
                   </Typography>
                 </div>
 

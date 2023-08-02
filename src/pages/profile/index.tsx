@@ -28,6 +28,11 @@ import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
 import countries from '../../../data/countries.json';
 
+import {
+  replaceSpecialChar,
+  validateEmail
+} from '@/validators/auth.validator';
+
 export default function Profile() {
   const router = useRouter();
   const { locale } = router;
@@ -75,9 +80,9 @@ export default function Profile() {
       newPassword: true,
       confirm_password: true,
     };
-    dataValidate.firstName = postData[0].value == '' ? false : true;
-    dataValidate.lastName = postData[1].value == '' ? false : true;
-    dataValidate.email = postData[2].value == '' ? false : true;
+    dataValidate.firstName = replaceSpecialChar(postData[0].value) == '' ? false : true;
+    dataValidate.lastName = replaceSpecialChar(postData[1].value) == '' ? false : true;
+    dataValidate.email = !validateEmail(postData[2].value ?? "") ? false : true;
     dataValidate.mobileNumber = postData[5].value == '' ? false : true;
     dataValidate.oldPassword = postData[8].value == '' ? false : true;
     dataValidate.oldPassword = !validatePassword(postData[8].value)
@@ -114,8 +119,8 @@ export default function Profile() {
       globalContext.setGlobalLoading(true);
 
       const result = await updateUserProfile({
-        firstName: postData[0].value,
-        lastName: postData[1].value,
+        firstName: replaceSpecialChar(postData[0].value),
+        lastName: replaceSpecialChar(postData[1].value),
         email: postData[2].value,
         countryCode: countryCode,
         mobileNumber: parseInt(postData[5].value),
@@ -330,8 +335,9 @@ export default function Profile() {
                               className={styles.formTextField}
                               id="filled-select-currency"
                               select
-                              value={authContext.connectedUser?.preferredLanguage ?? locale}
+                              value={locale ?? authContext.connectedUser?.preferredLanguage}
                               variant="outlined"
+                              disabled
                               onChange={(e) =>
                                 router.push(`/profile`, '', {
                                   locale: e.target.value,

@@ -118,16 +118,19 @@ export default function VerifyEmailOtp({
       setReqResponse('');
 
       setLoading(true);
-      const result = await resendUserEmailOtp('', '');
+      const result = await resendUserEmailOtp(otpToken, '');
 
       if (result?.status == 200) {
-        console.log(result.data);
 
-        if (result?.data?.data?.data?.jwtToken) {
+        if (result?.data?.data?.data?.otpVerificationToken) {
+
+          setOtpToken(result?.data?.data?.data?.token)
+          setKeyToken(result?.data?.data?.data?.otpVerificationToken)
+
           router.push(
             `/${locale}/auth/verify-email?token=${result?.data?.data?.data?.token
             }&reset-password=true&key=${window.btoa(
-              result?.data?.data?.data?.jwtToken
+              result?.data?.data?.data?.otpVerificationToken
             )}`
           );
         }

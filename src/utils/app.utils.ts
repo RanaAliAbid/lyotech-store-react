@@ -65,7 +65,7 @@ export const sortCountries = (countries: any) => {
 
 export const phoneNumberLenght = (country: string) => {
   try {
-    const data: any = countries.data.find((x: any) => x?.name?.common == country);
+    const data: any = countries.data.find((x: any) => x?.name?.common.toLowerCase() == country.toLowerCase());
 
     let phoneL = phoneLength.data.find((x: any) => x.cca2 == data?.cca2)?.phLength;
 

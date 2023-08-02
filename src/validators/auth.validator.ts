@@ -35,8 +35,8 @@ export const signUpCheckEmptyFields = (
     password: true,
     password_confirm: true,
   };
-  dataValidate.firstName = data?.firstName == '' ? false : true;
-  dataValidate.lastName = data?.lastName == '' ? false : true;
+  dataValidate.firstName = replaceSpecialChar(data?.firstName ?? "") == '' ? false : true;
+  dataValidate.lastName = replaceSpecialChar(data?.lastName ?? "") == '' ? false : true;
   dataValidate.email = !validateEmail(data?.email ?? "") ? false : true;
   dataValidate.password = data?.password == '' ? false : true;
   dataValidate.password = !validatePassword(data?.password ?? "") ? false : true;

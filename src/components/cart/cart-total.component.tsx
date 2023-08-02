@@ -119,7 +119,11 @@ export default function CartTotalComponent(
         setShippingType(globalContext?.cart?.cart?.shippingMethod ?? "")
 
         if (!globalContext?.cart?.cart) {
+            globalContext.setGlobalLoading(true);
             router.push("/")
+            setTimeout(() => {
+                globalContext.setGlobalLoading(false);
+            }, 200);
         }
     }, [globalContext.cart]);
 
@@ -153,7 +157,7 @@ export default function CartTotalComponent(
     };
 
     const placeUserOrder = async () => {
-        if (!termsCheckbox.presale && !termsCheckbox.onecare && !termsCheckbox.minting) {
+        if (!termsCheckbox.presale || !termsCheckbox.onecare || !termsCheckbox.minting) {
             setShowTermsCheckbox(true);
             return;
         }
@@ -407,7 +411,6 @@ export default function CartTotalComponent(
 
             <Modal
                 open={showTermsCheckbox}
-                onClose={setShowTermsCheckbox}
             >
                 <Box sx={{ ...modalStyle, maxWidth: '500px', width: '100%' }}>
                     <Alert color='info'>Please read and accept our terms and conditions</Alert>

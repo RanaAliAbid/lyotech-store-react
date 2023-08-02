@@ -349,7 +349,7 @@ export const getServerSideProps: GetServerSideProps<{ userJwt: any }> = async ({
       if (result.length > 10) {
         res.setHeader("set-Cookie", [
           `userConnected=${"true"}; Max-Age=36000; path: '/';`,
-          `partnerToken=${result}; HttpOnly; Max-Age=5; path: '/';`,
+          `partnerToken=${result}; HttpOnly; Max-Age=15; path: '/';`,
           `otpToken=deleted; HttpOnly; Max-Age=0;`,
           `token=deleted; HttpOnly; Max-Age=0;`,
         ]);
