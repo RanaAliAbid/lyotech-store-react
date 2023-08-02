@@ -86,10 +86,10 @@ export default function CookiesComponent() {
                     </FormGroup>
 
                     <DialogActions className={styles.cookiesBtn}>
-                        <Button variant="contained" className={`${styles['btn']} ${styles['btn_default']}`} onClick={handleReject}>Disagree</Button>
                         <Button variant="contained" className={`${styles['btn']} ${styles['btn_primary']}`} onClick={handleClickApprove}>
                             Agree
                         </Button>
+                        <Button variant="contained" className={`${styles['btn']} ${styles['btn_default']}`} onClick={handleReject}>Disagree</Button>
                     </DialogActions>
                 </div>
             </Modal>

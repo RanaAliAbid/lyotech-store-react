@@ -28,6 +28,9 @@ import PaymentMethodComponent from '../checkout/payment.component';
 import DefaultAddressComponent from '../checkout/address.component';
 import Link from 'next/link';
 
+import productImage from '../../img/thumImg.png';
+
+
 export default function CartTotalComponent(
     { isCheckout, handlePlaceOrder, paymentType, handleChangePayment, setDisplayAddress, addressProps }:
         { isCheckout: boolean, handlePlaceOrder?: any, paymentType?: any, handleChangePayment?: any, setDisplayAddress?: any, addressProps?: any }) {
@@ -183,6 +186,63 @@ export default function CartTotalComponent(
                             </Typography>
                             <Typography variant="h6">{globalContext?.cart?.cart?.totalAmount?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
                         </ListItem>
+
+                        <ListItem className={styles.productsLists}>
+                            <div className={styles.productsData}>                            
+                                <div className={styles.productImg}>
+                                    <img src={productImage.src} alt="" />
+                                </div>
+
+                                <div className={styles.productInfo}>
+                                    <Typography variant="h4">  LFi One Smartphone </Typography>
+                                    <Typography variant="h6">  Model Name: LFi One Smartphone </Typography>                                    
+                                    <Typography variant="h5">  <span> 1397.00 </span>  1100.00  {globalContext.currencySymbol}  </Typography>
+                                </div>
+                            </div>
+
+
+                            <div className={styles.productsData}>                            
+                                <div className={styles.productImg}>
+                                    <img src={productImage.src} alt="" />
+                                </div>
+
+                                <div className={styles.productInfo}>
+                                    <Typography variant="h4">  LFi One Smartphone </Typography>
+                                    <Typography variant="h6">  Model Name: LFi One Smartphone </Typography>
+                                    <Typography variant="h5">  <span> 1397.00 </span>  1100.00 {globalContext.currencySymbol}  </Typography>
+                                </div>
+                            </div>
+
+
+
+                            <div className={styles.productsData}>                            
+                                <div className={styles.productImg}>
+                                    <img src={productImage.src} alt="" />
+                                </div>
+
+                                <div className={styles.productInfo}>
+                                    <Typography variant="h4">  LFi One Smartphone </Typography>
+                                    <Typography variant="h6">  Model Name: LFi One Smartphone </Typography>
+                                    <Typography variant="h5">  <span> 1397.00 </span>  1100.00  {globalContext.currencySymbol}  </Typography>
+                                </div>
+                            </div>
+
+
+
+                            <div className={styles.productsData}>                            
+                                <div className={styles.productImg}>
+                                    <img src={productImage.src} alt="" />
+                                </div>
+
+                                <div className={styles.productInfo}>
+                                    <Typography variant="h4">  LFi One Smartphone </Typography>
+                                    <Typography variant="h6">  Model Name: LFi One Smartphone </Typography>
+                                    <Typography variant="h5">  <span> 1397.00 </span>  1100.00 {globalContext.currencySymbol}  </Typography>
+                                </div>
+                            </div>
+                        </ListItem>
+
+
 
                         <ListItem>
                             <Typography variant="h6">{t('Shipping')}</Typography>

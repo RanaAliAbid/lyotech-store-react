@@ -340,7 +340,7 @@ export default function Header({ title = 'Home' }: { title: string }) {
                           </div>
                           <div className={styles.productHead}>
                             <Typography variant="h5" className={styles.productitle}>
-                              {cartItem.productId.name}
+                              {cartItem.productId?.name}
                             </Typography>
 
                             <Typography variant="h5" className={styles.productitle}>
@@ -351,7 +351,7 @@ export default function Header({ title = 'Home' }: { title: string }) {
                               variant="h6"
                               className={styles.productPrice}
                             >
-                              {((cartItem?.quantity ?? 0) * cartItem.productId.price).toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}
+                              {((cartItem?.quantity ?? 0) * cartItem.productId?.price).toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}
                             </Typography>
                           </div>
                           <span onClick={(e) => deletFromCart(cartItem?.productId?._id)}><CloseIcon /></span>
