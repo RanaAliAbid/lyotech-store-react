@@ -121,7 +121,7 @@ export default function CartTotalComponent(
         setShowOneCareModal(false);
         setShippingType(globalContext?.cart?.cart?.shippingMethod ?? "")
 
-        if (!globalContext?.cart?.cart) {
+        if (!globalContext?.cart?.cart?.products || globalContext?.cart?.cart?.products?.length == 0) {
             globalContext.setGlobalLoading(true);
             router.push("/")
             setTimeout(() => {

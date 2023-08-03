@@ -54,7 +54,7 @@ export default function Sidebar() {
 
         <List className={styles.sideBarList}>
           <ListItem
-            className={router.pathname == '/orders' ? styles.active : ''}
+            className={router.pathname.startsWith('/orders') ? styles.active : ''}
           >
             <Link href="/orders">
               <>
