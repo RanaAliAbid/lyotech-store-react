@@ -341,18 +341,21 @@ export const getServerSideProps: GetServerSideProps<{ userJwt: any, message: any
         voucher: voucher
       });
 
-      if (!result?.data)
+      console.log("🚀 ~ file: index.tsx:339 ~ result:", result)
+
+      if (!result?.data || result?.data?.length < 9) {
         return {
           redirect: {
             destination: `/?error=${btoa(result?.message)}`,
             permanent: false,
           },
         };
+      }
 
       if (result?.data?.length > 10) {
         res.setHeader("set-Cookie", [
           `userConnected=${"true"}; Max-Age=36000; path: '/';`,
-          `partnerToken=${result}; HttpOnly; Max-Age=15; path: '/';`,
+          `partnerToken=${result?.data}; HttpOnly; Max-Age=20; path: '/';`,
           `otpToken=deleted; HttpOnly; Max-Age=0;`,
           `token=deleted; HttpOnly; Max-Age=0;`,
         ]);
