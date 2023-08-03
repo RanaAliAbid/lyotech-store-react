@@ -186,7 +186,7 @@ export default function CartTotalComponent(
                     <List>
                         <ListItem className={styles.subTotal}>
                             <Typography variant="h6">
-                                {t('Subtotal')} ({globalContext?.cart?.cart?.products?.length} {t('items')})
+                                {t('Subtotal')} ({globalContext?.cartQtyProduct} {t('items')})
                             </Typography>
                             <Typography variant="h6">{globalContext?.cart?.cart?.totalAmount?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
                         </ListItem>
@@ -205,7 +205,16 @@ export default function CartTotalComponent(
                                                 <Typography variant="h6">  Model Name: {cartItem?.productId?.name}</Typography>
                                                 {
                                                     (globalContext?.cart?.cart?.totalAmount == 0) ? (
-                                                        <Typography variant="h5">  <span> {cartItem?.productId?.price?.toFixed(globalContext.priceToFixed)} </span>  0  {globalContext.currencySymbol}  </Typography>
+                                                        <Typography variant="h5">
+                                                            <span> {cartItem?.productId?.price?.toFixed(globalContext.priceToFixed)} </span>
+                                                            <b>
+                                                                {
+                                                                    parseFloat(cartItem?.productId?.price?.toFixed(globalContext.priceToFixed)) - parseFloat(globalContext.cart?.cart?.coupon?.find((x: any) => x.productId == cartItem?.productId?._id)?.couponId?.amount)
+                                                                }
+                                                            </b>
+                                                            &nbsp;
+                                                            {globalContext.currencySymbol}
+                                                        </Typography>
                                                     ) : (
                                                         <Typography variant="h5"> {cartItem?.productId?.price?.toFixed(globalContext.priceToFixed)}  {globalContext.currencySymbol}  </Typography>
                                                     )
@@ -239,17 +248,17 @@ export default function CartTotalComponent(
                                 (shippingMethods && shippingMethods.length > 0) ? (
                                     shippingMethods?.map((method: any, index: any) => (
                                         <ListItem
-                                            onClick={(e) => handleClickShippingType(method?.shippingMethod)}
+                                            onClick={(e) => { (shippingType !== method?.shippingMethod?._id) ? handleClickShippingType(method?.shippingMethod?._id) : "" }}
                                             key={index}
-                                            className={`${shippingType === method?.shippingMethod ? styles.active : ''
+                                            className={`${shippingType === method?.shippingMethod?._id ? styles.active : ''
                                                 } cursor-pointer`}
                                         >
                                             <FormControlLabel
-                                                value={method?.shippingMethod}
+                                                value={method?.shippingMethod?._id}
                                                 control={
                                                     <Radio
                                                         size="small"
-                                                        checked={shippingType === method?.shippingMethod}
+                                                        checked={shippingType === method?.shippingMethod?._id}
                                                     />
                                                 }
                                                 label={method.name}

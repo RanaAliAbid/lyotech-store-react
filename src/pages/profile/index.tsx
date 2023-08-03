@@ -28,6 +28,8 @@ import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
 import countries from '../../../data/countries.json';
 
+import { FaEyeSlash, FaEye } from "react-icons/fa";
+
 import {
   replaceSpecialChar,
   validateEmail
@@ -54,6 +56,8 @@ export default function Profile() {
   const [lastname, setLastname] = React.useState<string>("");
   const [phone, setPhone] = React.useState<string>("");
   const [email, setEmail] = React.useState<string>("");
+
+  const [passwordVisible, setPasswordVisible] = React.useState<boolean>(true);
 
   const authContext = useAuthContext();
   const globalContext = useGlobalContext();
@@ -84,10 +88,10 @@ export default function Profile() {
     dataValidate.lastName = replaceSpecialChar(postData[1].value) == '' ? false : true;
     dataValidate.email = !validateEmail(postData[2].value ?? "") ? false : true;
     dataValidate.mobileNumber = postData[5].value == '' ? false : true;
-    dataValidate.oldPassword = postData[8].value == '' ? false : true;
-    dataValidate.oldPassword = !validatePassword(postData[8].value)
-      ? false
-      : true;
+    dataValidate.oldPassword = postData[8].value == '' ? true : true;
+    // dataValidate.oldPassword = !validatePassword(postData[8].value)
+    //   ? false
+    //   : true;
 
     if (postData[9].value != null && postData[9].value.length > 0) {
       dataValidate.newPassword = postData[9]?.value == '' ? false : true;
@@ -360,18 +364,23 @@ export default function Profile() {
                         <div className={styles.wrapSubTitle}>
                           <Typography variant="h4">{t('Security')}</Typography>
                         </div>
+
                         <div className={styles.boxInfoBody}>
-                          <div className={styles.formControl}>
+                          <div className={`${styles.formControl} position-relative`}>
                             <label className={styles.formLabel}>
                               {' '}
                               {t('Old-Password')}{' '}
-                              <span className="text-danger">*</span>
                             </label>
                             <Input
-                              type="password"
+                              type={`${(!passwordVisible) ? "text" : "password"}`}
                               className={styles.formInput}
                               placeholder={t('Enter-Old-Password')}
                             />
+                            <span className='passwordEye' onClick={(e) => setPasswordVisible(!passwordVisible)}>
+                              {
+                                (!passwordVisible) ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>
+                              }
+                            </span>
                           </div>
                           {validator && !validator.oldPassword && (
                             <Alert severity="error">
@@ -382,28 +391,38 @@ export default function Profile() {
                           )}
 
                           <div className={styles.inline}>
-                            <div className={styles.formControl}>
+                            <div className={`${styles.formControl} position-relative`}>
                               <label className={styles.formLabel}>
                                 {' '}
                                 {t('New-Password')}{' '}
                               </label>
                               <Input
-                                type="password"
+                                type={`${(!passwordVisible) ? "text" : "password"}`}
                                 className={styles.formInput}
                                 placeholder={t('Enter-New-Password')}
                               />
+                              <span className='passwordEye' onClick={(e) => setPasswordVisible(!passwordVisible)}>
+                                {
+                                  (!passwordVisible) ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>
+                                }
+                              </span>
                             </div>
 
-                            <div className={styles.formControl}>
+                            <div className={`${styles.formControl} position-relative`}>
                               <label className={styles.formLabel}>
                                 {' '}
                                 {t('Confirm-Password')}{' '}
                               </label>
                               <Input
-                                type="password"
+                                type={`${(!passwordVisible) ? "text" : "password"}`}
                                 className={styles.formInput}
                                 placeholder={t('Enter-New-Password')}
                               />
+                              <span className='passwordEye' onClick={(e) => setPasswordVisible(!passwordVisible)}>
+                                {
+                                  (!passwordVisible) ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>
+                                }
+                              </span>
                             </div>
                           </div>
 
@@ -431,6 +450,7 @@ export default function Profile() {
                             </div>
                           </div>
                         </div>
+
                       </div>
                       <Button
                         type="submit"

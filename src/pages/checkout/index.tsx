@@ -175,6 +175,7 @@ export default function Checkout() {
     if (!authContext.userConnected && formAddress && formAddress?.shippingAddress?.email?.length > 5) {
       setLocalStorage("checkoutAddress", JSON.stringify(formAddress));
     }
+    console.log("🚀 ~ file: index.tsx:176 ~ React.useEffect ~ formAddress:", formAddress)
   }, [formAddress])
 
 
@@ -273,7 +274,7 @@ export default function Checkout() {
     <>
       <ThemeProvider theme={theme}>
         <main className={styles.main}>
-          <Header title={`Cart (${globalContext.cart?.cart?.products?.length} Items)`} />
+          <Header title={`Cart (${globalContext?.cartQtyProduct} Items)`} />
           <div className={styles.paddingTB60}>
             <Container className={styles.containerBox}>
               <Grid container spacing={3}>

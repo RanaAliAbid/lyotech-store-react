@@ -123,6 +123,16 @@ export const feesType = (name: string) => {
   }
 }
 
-export const showAlert = ({}: {}) => {
-  return ("")
+export function trimStringData(stringData: string | undefined, length: number) {
+  if (!stringData) return;
+  return stringData.slice(0, length / 2) + "..." + stringData.slice(-length / 2);
+}
+
+export const copyTextToClipboard = (text) => { // Copy text to Clipboard
+  if (navigator.clipboard) {
+      navigator.clipboard.writeText(text)
+      return true
+  } else {
+      return false
+  }
 }

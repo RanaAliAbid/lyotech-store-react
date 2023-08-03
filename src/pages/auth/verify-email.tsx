@@ -63,9 +63,13 @@ export default function VerifyEmailOtp({
 
       if (_token != null && _key != null) {
         setOtpToken(_token);
-        setKeyToken(window.atob(_key));
         setOtp(_otp ?? '');
+        setKeyToken(window.atob(_key));
         setRedirectTo(_redirectTo ?? "");
+
+        if (_otp != null) {
+          proceedSubmitOtp();
+        }
       }
     } catch (error) {
       // console.log(error);

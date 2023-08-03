@@ -9,7 +9,6 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import Link from '@mui/material/Link';
 
 import productImg from '../../img/productImg.png';
 import styles from '@/styles/Home.module.css';
@@ -25,6 +24,8 @@ import { useAuthContext } from '@/contexts/AuthContext';
 
 import { generatePaymentLink } from '@/services/orders/order.service';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { trimStringData } from '@/utils/app.utils';
 
 export default function AllOrders() {
   const { t } = useTranslation('order');
@@ -37,6 +38,7 @@ export default function AllOrders() {
 
   const globalContext = useGlobalContext();
   const authContext = useAuthContext();
+  const router = useRouter();
 
   const [orders, setOrders] = React.useState([]);
 
@@ -93,6 +95,10 @@ export default function AllOrders() {
     handleGetOrders();
   }, []);
 
+  const openOrderDetails = (id: string, status: string) => {
+    router.push("/orders/view?id=" + id);
+  }
+
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -116,12 +122,12 @@ export default function AllOrders() {
                           orders?.map((order: any) => (
                             <ListItem className={styles.ordersList}>
                               <div className={styles.orderHead}>
-                                <div>
+                                <div className='cursor-pointer'>
                                   <Typography variant="h5">
                                     {t('order-id')} :
                                   </Typography>
-                                  <Typography variant="h6">
-                                    {order?._id}
+                                  <Typography variant="h6" onClick={() => { globalContext?.copyToClipboard(order?._id) }}>
+                                    {trimStringData(order?._id, 15)}
                                   </Typography>
                                 </div>
 
@@ -179,10 +185,6 @@ export default function AllOrders() {
                                                 </Typography>
                                               </div>
                                             </div>
-
-                                            {/* <Link href="#" variant="h6">
-                                  {t('write-review')}
-                                </Link> */}
                                           </div>
                                         </ListItem>
                                       ))
@@ -196,7 +198,7 @@ export default function AllOrders() {
 
                               <div className={styles.foot}>
                                 <Button
-                                  onClick={(e) => { cancelUserOrder(order?._id) }}
+                                  onClick={(e) => { openOrderDetails(order?._id, order?.status?.toLowerCase()) }}
                                   variant="outlined"
                                   size='small'
                                   className={``}
@@ -212,7 +214,7 @@ export default function AllOrders() {
                                         onClick={(e) => { cancelUserOrder(order?._id) }}
                                         variant="outlined"
                                         size='small'
-                                        className={`text-danger`}
+                                        color='error'
                                       >
                                         {t('Cancel')}
                                       </Button>

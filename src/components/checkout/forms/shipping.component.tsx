@@ -21,6 +21,7 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
     const [countryCode, setCountryCode] = React.useState<string>("+971");
     const [countryCodeName, setCountryCodeName] = React.useState<string>("");
     const [stateList, setStateList] = React.useState<any>([]);
+    const [hideStateList, setHideStateList] = React.useState<boolean>(false);
 
     const globalContext = useGlobalContext();
     const authContext = useAuthContext();
@@ -62,20 +63,39 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
         }
     };
 
+    const handleChangeCountryName = async (name: string) => {
+        let currentAddress = formAddress
+        currentAddress.shippingAddress.country = name;
+        currentAddress.shippingAddress.city = "";
+        currentAddress.shippingAddress.state = "";
+
+        setFormAddress(currentAddress)
+        setCityList([])
+        setStateList([])
+    }
+
     const getStateDetailsOfCountry = async (value: any, autoLoadCity: boolean = false, currentAddress: any = null) => {
         try {
             const result = await getStateDetails(value);
-            setStateList(result?.data?.data?.states ?? []);
 
-            if (autoLoadCity) {
-                const state = result?.data?.data?.states?.find((x: any) => x?.name === currentAddress?.state ?? "")?._id
-
-                if (state) {
-                    await getCityDetailsOfState(state)
-                }
+            if (result?.data?.data?.cities) {
+                setCityList(result?.data?.data?.cities);
+                setHideStateList(true);
+                setFormAddress({ ...formAddress, shippingAddress: { ...formAddress.shippingAddress, state: "" } })
             } else {
-                // setFormAddress({ ...formAddress, shippingAddress: { ...formAddress.shippingAddress, state: "" } })
+                setHideStateList(false);
+
+                setStateList(result?.data?.data?.states ?? []);
+
+                if (autoLoadCity) {
+                    const state = result?.data?.data?.states?.find((x: any) => x?.name === currentAddress?.state ?? "")?._id
+
+                    if (state) {
+                        await getCityDetailsOfState(state)
+                    }
+                }
             }
+
         } catch (error) { }
     }
 
@@ -159,9 +179,9 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                                     <MenuItem
                                         key={index}
                                         value={country.name}
-                                        onClick={(e) => {
+                                        onClick={async (e) => {
+                                            await handleChangeCountryName(country.name);
                                             getStateDetailsOfCountry(country._id);
-                                            setFormAddress({ ...formAddress, shippingAddress: { ...formAddress.shippingAddress, country: country.name } })
                                             setCountryCodeName(country.name);
                                             handleChangeCountryType(country._id);
                                         }}
@@ -194,6 +214,7 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                             className={styles.formTextField}
                             value={formAddress?.shippingAddress?.state ?? ""}
                             size='small'
+                            disabled={hideStateList}
                         >
                             <MenuItem value={formAddress?.shippingAddress?.state ?? ""} disabled>
                                 Select a State/Region

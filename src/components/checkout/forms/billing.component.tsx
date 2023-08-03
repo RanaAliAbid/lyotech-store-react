@@ -21,6 +21,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
     const [countryCode, setCountryCode] = React.useState<string>("+971");
     const [countryCodeName, setCountryCodeName] = React.useState<string>("");
     const [stateList, setStateList] = React.useState<any>([]);
+    const [hideStateList, setHideStateList] = React.useState<boolean>(false);
 
     const globalContext = useGlobalContext();
     const authContext = useAuthContext();
@@ -45,20 +46,40 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
         } catch (error) { }
     }
 
+    const handleChangeCountryName = async (name: string) => {
+        let currentAddress = formAddress
+        currentAddress.billingAddress.country = name;
+        currentAddress.billingAddress.city = "";
+        currentAddress.billingAddress.state = "";
+
+        setFormAddress(currentAddress)
+        setCityList([])
+        setStateList([])
+    }
+
     const getStateDetailsOfCountry = async (value: any, autoLoadCity: boolean = false, currentAddress: any = null) => {
         try {
+            setFormAddress({ ...formAddress, billingAddress: { ...formAddress.billingAddress, state: "" } })
+            setFormAddress({ ...formAddress, billingAddress: { ...formAddress.billingAddress, city: "" } })
+
             const result = await getStateDetails(value);
-            setStateList(result?.data?.data?.states ?? []);
 
-            if (autoLoadCity) {
-                const state = result?.data?.data?.states?.find((x: any) => x?.name === currentAddress?.state ?? "")?._id
-
-                if (state) {
-                    await getCityDetailsOfState(state)
-                }
+            if (result?.data?.data?.cities) {
+                setCityList(result?.data?.data?.cities);
+                setHideStateList(true);
+                setFormAddress({ ...formAddress, billingAddress: { ...formAddress.billingAddress, state: "" } })
             } else {
-                // setFormAddress({ ...formAddress, billingAddress: { ...formAddress.billingAddress, state: "" } })
+                setStateList(result?.data?.data?.states ?? []);
+
+                if (autoLoadCity) {
+                    const state = result?.data?.data?.states?.find((x: any) => x?.name === currentAddress?.state ?? "")?._id
+
+                    if (state) {
+                        await getCityDetailsOfState(state)
+                    }
+                }
             }
+
         } catch (error) { }
     }
 
@@ -142,9 +163,10 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                                     <MenuItem
                                         key={index}
                                         value={country.name}
-                                        onClick={(e) => {
+                                        onClick={async (e) => {
+                                            await handleChangeCountryName(country.name)
                                             getStateDetailsOfCountry(country._id);
-                                            setFormAddress({ ...formAddress, billingAddress: { ...formAddress.billingAddress, country: country.name } })
+                                            // setFormAddress({ ...formAddress, billingAddress: { ...formAddress.billingAddress, country: country.name } })
                                             setCountryCodeName(country.name);
                                         }}
                                     >
@@ -176,6 +198,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                             className={styles.formTextField}
                             value={formAddress?.billingAddress?.state ?? ""}
                             size='small'
+                            disabled={hideStateList}
                         >
                             <MenuItem value={formAddress?.shippingAddress?.state ?? ""} disabled>
                                 Select a State/Region

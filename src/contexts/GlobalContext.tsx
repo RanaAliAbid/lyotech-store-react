@@ -8,7 +8,7 @@ import {
 const GlobalContext = createContext<any>({});
 import { useRouter } from "next/router";
 import { addToCart, getUserCart, removeCartProduct, updateCart } from '@/services/cart/cart.service';
-import { priceSymbol } from '@/utils/app.utils';
+import { copyTextToClipboard, priceSymbol } from '@/utils/app.utils';
 import AlertComponent from '../common/alert';
 import { SweetAlertOptions } from 'sweetalert2';
 
@@ -29,6 +29,7 @@ export function GlobalWrapper({
   const [loadComponents, setLoadComponents] = useState<boolean>(false);
   const [homeProduct, setHomeProduct] = useState<any>(null);
   const [screenWitdh, setScreenWidth] = useState<number>(0);
+  const [cartQtyProduct, setCartQtyProduct] = useState<any>(0);
 
   const [alertProps, setAlertProps] = useState<SweetAlertOptions & { show: boolean, callback?: any }>({ show: false });
 
@@ -110,6 +111,12 @@ export function GlobalWrapper({
     try {
       const result = await getUserCart();
       setCart(result?.data?.data);
+
+      let count = 0;
+      result?.data?.data?.cart?.products?.map((cartItem: any, index: any) => {
+        count += cartItem?.quantity ?? 0
+        setCartQtyProduct(count);
+      })
 
       return result?.data?.data ?? null;
     } catch (error) {
@@ -257,6 +264,31 @@ export function GlobalWrapper({
     })
   }
 
+  const copyToClipboard = (text: string) => {
+    if (copyTextToClipboard(text)) {
+      setAlertProps({
+        show: true,
+        title: "Your text has been copied to clipboard",
+        text: "",
+        toast: true,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        callback: closeAlert
+      })
+    } else {
+      setAlertProps({
+        show: true,
+        title: "Couldn't copy to clipboard",
+        text: "",
+        toast: true,
+        background: "#8B0000",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        callback: closeAlert
+      })
+    }
+  }
+
   const globalData = {
     updateLocale,
     globalLoading, setGlobalLoading,
@@ -268,7 +300,9 @@ export function GlobalWrapper({
     updateCartCoupon,
     homeProduct, setHomeProduct,
     screenWitdh, setScreenWidth,
-    alertProps, setAlertProps, closeAlert
+    alertProps, setAlertProps, closeAlert,
+    copyToClipboard,
+    cartQtyProduct, setCartQtyProduct
   };
 
   return (

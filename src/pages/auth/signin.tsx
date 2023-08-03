@@ -99,7 +99,7 @@ export default function SignIn() {
         if (result?.data?.data?.otpVerificationToken) {
           router.push(
             `/${locale}/auth/verify-email?token=${result?.data?.data?.token
-            }&key=${window.btoa(result?.data?.data?.otpVerificationToken)}${(redirectTo.length >= 5) && `&redirectTo=${redirectTo}`}`
+            }&key=${window.btoa(result?.data?.data?.otpVerificationToken)}${(redirectTo.length >= 5) ? `&redirectTo=${redirectTo}` : ""}`
           );
           return;
         }

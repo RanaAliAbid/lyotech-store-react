@@ -164,7 +164,7 @@ export default function Cart({
     <>
       <ThemeProvider theme={theme}>
         <main className={styles.main}>
-          <Header title={`Cart (${globalContext.cart?.cart?.products?.length} Items)`} />
+          <Header title={`Cart (${globalContext?.cartQtyProduct} Items)`} />
           <div className={styles.paddingTB60}>
             <Container className={styles.containerBox}>
               <Grid container spacing={3}>
@@ -172,7 +172,7 @@ export default function Cart({
                   <div className={styles.wrapTitle}>
                     <Typography variant="h4">{t('header1')}</Typography>
 
-                    <Typography variant="h6">({globalContext.cart?.cart?.products?.length} {t('items')})</Typography>
+                    <Typography variant="h6">({globalContext?.cartQtyProduct} {t('items')})</Typography>
                   </div>
 
                   {
@@ -340,8 +340,6 @@ export const getServerSideProps: GetServerSideProps<{ userJwt: any, message: any
         productId: parseInt(product_id),
         voucher: voucher
       });
-
-      console.log("🚀 ~ file: index.tsx:339 ~ result:", result)
 
       if (!result?.data || result?.data?.length < 9) {
         return {

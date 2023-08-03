@@ -19,13 +19,13 @@ const isUserAuthenticated = async (request: NextRequest) => {
                 return true
             }
 
-            // if(request.nextUrl.pathname.startsWith('/cart')) {
-            //     return true
-            // }
+            if(request.nextUrl.pathname.startsWith('/orders')) {
+                return true
+            }
 
-            // if(request.nextUrl.pathname.startsWith('/checkout')) {
-            //     return true
-            // }
+            if(request.nextUrl.pathname.startsWith('/trackorder')) {
+                return true
+            }
 
             if(request.nextUrl.pathname.startsWith('/wishlist')) {
                 return true

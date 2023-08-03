@@ -2,22 +2,16 @@ import * as React from 'react';
 
 import Footer from '@/common/footer';
 import Header from '@/common/header';
-import Sidebar from '../../../common/sidebar';
+import Sidebar from '../../common/sidebar';
 
 import styles from '@/styles/Home.module.css';
 import { Container, Grid, ThemeProvider, Typography, createTheme } from '@mui/material';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
 import Link from '@mui/material/Link';
-import Image from 'next/image';
-import productImg from '../../../img/productImg.png';
-
-import errorImg from '../../../img/false.png';
-
+import productImg from '../../img/productImg.png';
+import successImg from '../../img/success.png';
 
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
@@ -25,8 +19,8 @@ import useTranslation from 'next-translate/useTranslation';
 import { IncomingMessage, ServerResponse } from 'http';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { generatePaymentLink, verifyOrderDetails } from '@/services/orders/order.service';
-import { FaCalendar, FaInfoCircle, FaMailBulk, FaMoneyBill, FaPhoneAlt, FaShippingFast, FaUser, FaWallet } from 'react-icons/fa';
 import moment from 'moment';
+
 export default function PaymentSuccessComponent({ order }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
     const theme = createTheme({
@@ -38,6 +32,19 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
     const globalContext = useGlobalContext();
     const authContext = useAuthContext();
     const { t } = useTranslation('cart');
+
+    const downloadInvoice = () => {
+        globalContext.setAlertProps({
+            show: true,
+            title: "Under maintenance please retry later",
+            text: "",
+            toast: true,
+            background: '#8B0000',
+            showConfirmButton: false,
+            timerProgressBar: true,
+            callback: globalContext.closeAlert
+        })
+    }
 
     const goToPaymentPage = async () => {
         try {
@@ -80,23 +87,67 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
                                 <div className={`${styles['wrapBox']} ${styles['ordersPlaceSec']}`}>
                                     <div className={styles.orderHeadStatus}>
                                         <div className={styles.titles}>
-                                            <div className={styles.statusImg}>
-                                                <img src={errorImg.src} alt="logo" />
-                                            </div>
-                                            <div className={styles.statusText}>
-                                                <Typography variant="h5">
-                                                    Your Orders has not been placed
-                                                </Typography>
 
-                                                <Typography variant="h6">
-                                                    Placed on {order?.details?.createdAt && moment(order.details.createdAt).format("DD MMM YYYY")}
-                                                </Typography>
-                                            </div>
+                                            {
+                                                (["cancelled", "expired", "failed"].includes(order.status.toLowerCase())) && (
+                                                    <>
+                                                        <div className={styles.statusImg}>
+                                                            <img src={successImg.src} alt="logo" />
+                                                        </div>
+                                                        <div className={styles.statusText}>
+                                                            <Typography variant="h5">
+                                                                Your Order has not been placed
+                                                            </Typography>
+
+                                                            <Typography variant="h6">
+                                                                Created on {order?.details?.createdAt && moment(order.details.createdAt).format("DD MMM YYYY")}
+                                                            </Typography>
+                                                        </div>
+                                                    </>
+                                                )
+                                            }
+
+                                            {
+                                                (["pending"].includes(order.status.toLowerCase())) && (
+                                                    <>
+                                                        <div className={styles.statusText}>
+                                                            <Typography variant="h5">
+                                                                Your Order is waiting for payment
+                                                            </Typography>
+
+                                                            <Typography variant="h6">
+                                                                Created on {order?.details?.createdAt && moment(order.details.createdAt).format("DD MMM YYYY")}
+                                                            </Typography>
+                                                        </div>
+                                                    </>
+                                                )
+                                            }
+
+                                            {
+                                                (!["cancelled", "expired", "failed", "pending"].includes(order.status.toLowerCase())) && (
+                                                    <>
+                                                        <div className={styles.statusImg}>
+                                                            <img src={successImg.src} alt="logo" />
+                                                        </div>
+                                                        <div className={styles.statusText}>
+
+                                                            <Typography variant="h5">
+                                                                Your Order has been placed
+                                                            </Typography>
+
+                                                            <Typography variant="h6">
+                                                                Placed on {order?.details?.createdAt && moment(order.details.createdAt).format("DD MMM YYYY")}
+                                                            </Typography>
+                                                        </div>
+                                                    </>
+                                                )
+                                            }
+
                                         </div>
                                         <div className={styles.invoiceLinks}>
 
-                                            <Link href="#" onClick={(e) => goToPaymentPage()}>
-                                                Payment Page
+                                            <Link href="#" onClick={(e) => downloadInvoice()}>
+                                                Download invoice
                                             </Link>
 
                                         </div>
@@ -209,7 +260,7 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
                                                     </Typography>
 
                                                     <Typography variant="h5">
-                                                        {order?.totalAmount} {globalContext.currencySymbol}
+                                                        {order?.totalAmount?.toFixed(2)} {globalContext.currencySymbol}
                                                     </Typography>
                                                 </div>
                                             </div>
@@ -226,8 +277,19 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
 
                                                 <div className={styles.orderBody}>
                                                     <Typography variant="h6">
-                                                        Your Orders is {order?.status}
+                                                        Your order is {order?.status}
                                                     </Typography>
+
+                                                    {
+                                                        (order?.status?.toLowerCase() === 'pending') && (
+                                                            <div className={styles.invoiceLinks}>
+                                                                <Link href="#" onClick={(e) => goToPaymentPage()}>
+                                                                    Payment Page
+                                                                </Link>
+
+                                                            </div>
+                                                        )
+                                                    }
                                                 </div>
                                             </div>
                                         </Grid>
@@ -257,16 +319,16 @@ export const getServerSideProps: GetServerSideProps<{ order: any }> = async ({
 
     if (currentUrl) {
         const urlParams = new URLSearchParams(currentUrl);
-        const orderid = urlParams.get('invoiceNumber') ?? '';
+        const orderid = urlParams.get('id') ?? '';
 
         if (orderid?.length >= 1) {
 
             result = await verifyOrderDetails({ id: orderid });
 
-            if (!result || result?.isCancelled || !["pending", "failed"].includes(result?.status?.toLowerCase())) {
+            if (!result || result?.length == 0) {
                 return {
                     redirect: {
-                        destination: `/`,
+                        destination: `/?error=${btoa("No product found with that id.")}`,
                         permanent: false,
                     },
                 };
