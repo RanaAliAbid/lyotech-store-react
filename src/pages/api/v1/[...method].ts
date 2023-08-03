@@ -3,6 +3,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ApiData, ApiError } from '../types';
 import { AuthUser } from '@/contexts/auth.types';
+// import requestIp from 'request-ip';
 import AuthHandler from './_auth/method';
 import CartHandler from './_cart/method';
 import UserHandler from './_users/method';
@@ -19,6 +20,8 @@ export default async function handler(
 ) {
     const methods = req.query.method;
 
+    // const currentUserIp = requestIp.getClientIp(req)
+
     if (!methods) return res.status(400).json({ status: false, message: 'Unauthorized. Request' });
 
     try {
@@ -32,7 +35,9 @@ export default async function handler(
                 let params = req?.body ?? {}
                 delete params.hashKey;
 
-                const hashKey = await hash256(JSON.stringify(params));
+                const curentUserAgent = btoa(req?.headers['user-agent'] ?? "")
+
+                const hashKey = await hash256(JSON.stringify(params) + curentUserAgent);
 
                 if(hashKey === bodyKey) {
                     authorize = true;

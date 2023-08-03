@@ -80,7 +80,8 @@ const PutRequest = (url: string, data: any, token?: string) => {
 };
 
 const generateHashKey = async (requestBody: string) => {
-  const hashKey = await hash256(requestBody);
+  const userAgent = navigator?.userAgent
+  const hashKey = await hash256(requestBody + btoa(userAgent));
   let body: any = JSON.parse(requestBody)
   body.hashKey = hashKey
   return body;
