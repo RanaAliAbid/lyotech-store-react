@@ -88,14 +88,19 @@ export default function Profile() {
     dataValidate.lastName = replaceSpecialChar(postData[1].value) == '' ? false : true;
     dataValidate.email = !validateEmail(postData[2].value ?? "") ? false : true;
     dataValidate.mobileNumber = postData[5].value == '' ? false : true;
-    dataValidate.oldPassword = postData[8].value == '' ? true : true;
-    // dataValidate.oldPassword = !validatePassword(postData[8].value)
-    //   ? false
-    //   : true;
+    dataValidate.oldPassword = postData[8].value == '' ? false : true;
+
+    if (!authContext.connectedUser?.firstTimePassword) {
+      dataValidate.oldPassword = !validatePassword(postData[8].value)
+        ? false
+        : true;
+    } else {
+      dataValidate.oldPassword = true;
+    }
 
     if (postData[9].value != null && postData[9].value.length > 0) {
       dataValidate.newPassword = postData[9]?.value == '' ? false : true;
-      dataValidate.newPassword = !validatePassword(postData[7].value)
+      dataValidate.newPassword = !validatePassword(postData[9].value)
         ? false
         : true;
       dataValidate.confirm_password =
@@ -134,10 +139,41 @@ export default function Profile() {
         confirm_password: postData[10].value,
       });
 
+      if (result) {
+        globalContext.setAlertProps({
+          show: true,
+          title: "Your account has been updated successfully",
+          text: "",
+          toast: true,
+          showConfirmButton: false,
+          timerProgressBar: true,
+          callback: globalContext.closeAlert
+        })
+      }
+
       await authContext.checkUserSession();
 
       globalContext.setGlobalLoading(false);
-    } catch (error) {
+    } catch (error: any) {
+
+      const msg = error?.response?.data?.message.replace("\n", '')
+        .replace("[", '')
+        .replace("]", '')
+        .replace("{", '')
+        .replace("}", '')
+
+      globalContext.setAlertProps({
+        show: true,
+        title: msg,
+        text: "",
+        toast: true,
+        showConfirmButton: false,
+        background: "#8B0000",
+        timer: 6000,
+        timerProgressBar: true,
+        callback: globalContext.closeAlert
+      })
+
       globalContext.setGlobalLoading(false);
     }
   };

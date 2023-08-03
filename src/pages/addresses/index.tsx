@@ -224,7 +224,7 @@ export default function Addresses() {
   };
 
   const editAddress = async (address: any) => {
-    setUpdateAddressId(address?._id);
+    setUpdateAddressId(address?.addressId);
     globalContext.setGlobalLoading(true);
 
     await getStateDetailsOfCountry(countryList?.find((x: any) => x?.name === address?.country)?._id ?? "0", true, address);
@@ -330,24 +330,6 @@ export default function Addresses() {
                                     {userAddressList?.address?.defaultAddress?.country}<br />
                                     <span>{userAddressList?.address?.defaultAddress?.code} {userAddressList?.address?.defaultAddress?.contact}</span>
                                   </Typography>
-
-                                  {/* <div className={styles.actionBtn}>
-                                    <Button
-                                      variant="outlined"
-                                      className={`${styles['btn']} ${styles['btn_outlined']}`}
-                                      onClick={(e) => editAddress(userAddressList?.address?.defaultAddress)}
-                                    >
-                                      {' '}
-                                      {t('edit-btn')}{' '}
-                                    </Button>
-                                    <Button
-                                      variant="text"
-                                      className={`${styles['btn']} ${styles['btn_delete']}`}
-                                      onClick={(e) => removeUserAddress(userAddressList?.address?.defaultAddress?.addressId)}
-                                    >
-                                      {t('delete-btn')}
-                                    </Button>
-                                  </div> */}
                                 </>
                                 :
                                 <Typography variant="body1">

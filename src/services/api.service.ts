@@ -83,10 +83,9 @@ const PutRequest = (url: string, data: any, authToken?: string, isGuest = false)
   }
 };
 
-const ApiResponseError = (error: any) => {
+const ApiResponseError = (error: any, msg?: any) => {
   return {
-    message:
-      error?.response?.data?.msg ??
+    message: msg ?? JSON.stringify(error?.response?.data?.errors?.fields) ?? error?.response?.data?.msg ??
       '' + ' ' + error?.response?.data?.errors?.msg ??
       '',
     status: false,
