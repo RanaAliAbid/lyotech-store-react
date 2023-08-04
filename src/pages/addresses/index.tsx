@@ -167,14 +167,14 @@ export default function Addresses() {
     };
 
     dataValidate.country = replaceSpecialChar(postData[1].value) == '' ? false : true;
-    dataValidate.state = replaceSpecialChar(postData[3].value) == '' ? false : true;
-    dataValidate.city = replaceSpecialChar(postData[5].value) == '' ? false : true;
+    dataValidate.state = replaceSpecialChar(postData[3].value) == '' ? true : true;
+    dataValidate.city = replaceSpecialChar(postData[4].value) == '' ? false : true;
     dataValidate.type = replaceSpecialChar(postData[0].value) == '' ? false : true;
-    dataValidate.address = replaceSpecialChar(postData[7].value) == '' ? false : true;
-    dataValidate.code = replaceSpecialChar(postData[9].value) == '' ? false : true;
-    dataValidate.contact = replaceSpecialChar(postData[11].value) == '' ? false : true;
+    dataValidate.address = replaceSpecialChar(postData[5].value) == '' ? false : true;
+    dataValidate.code = replaceSpecialChar(postData[7].value) == '' ? false : true;
+    dataValidate.contact = replaceSpecialChar(postData[9].value) == '' ? false : true;
 
-    if (postData[11].value.length != phoneLength) {
+    if (postData[9].value.length != phoneLength) {
       dataValidate.contact = false;
     }
 
@@ -196,12 +196,12 @@ export default function Addresses() {
 
       const data = {
         country: replaceSpecialChar(postData[1].value),
-        state: replaceSpecialChar(postData[3].value),
-        city: replaceSpecialChar(postData[5].value),
+        state: replaceSpecialChar(postData[3].value ?? ""),
+        city: replaceSpecialChar(postData[4].value),
         type: replaceSpecialChar(postData[0].value),
-        address: replaceSpecialChar(postData[7].value), //postData[8].value
+        address: replaceSpecialChar(postData[5].value), //postData[8].value
         code: countryCodeByCountryName(postData[1].value) ?? "+971",//postData[9].value,
-        contact: replaceSpecialChar(postData[11].value),
+        contact: replaceSpecialChar(postData[9].value),
         latitude: 0,
         longitude: 0
       };
@@ -506,8 +506,16 @@ export default function Addresses() {
                     </div>
 
                     <div className={styles.formControl}>
-                      <label className={styles.formLabel}> State / Region <span className="text-danger">*</span></label>
-                      {
+                      <label className={styles.formLabel}> State / Region
+                        {/* <span className="text-danger">*</span> */}
+                      </label>
+                      <Input
+                        className={styles.formInput}
+                        placeholder="State/Region"
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
+                      />
+                      {/* {
                         <Select
                           label="States"
                           className={styles.formTextField}
@@ -533,7 +541,7 @@ export default function Addresses() {
                             : "Select a state"
                           }
                         </Select>
-                      }
+                      } */}
                       <div className={styles.inline}>
                         <div className={`${styles.formControl} w-100`}>
                           <span className="alert-field">
@@ -552,7 +560,13 @@ export default function Addresses() {
                         {' '}
                         Town / City <span className="text-danger">*</span>{' '}
                       </label>
-                      {
+                      <Input
+                        className={styles.formInput}
+                        placeholder="City"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                      />
+                      {/* {
                         <Select
                           label="City"
                           className={styles.formTextField}
@@ -577,7 +591,7 @@ export default function Addresses() {
                             : "Select a city"
                           }
                         </Select>
-                      }
+                      } */}
                       <div className={styles.inline}>
                         <div className={`${styles.formControl} w-100`}>
                           <span className="alert-field">
