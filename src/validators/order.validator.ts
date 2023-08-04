@@ -1,11 +1,19 @@
 const stringRegex = /[&\/\\#,+()@$~%.'":*?!<>{}]/g;
 
 export const validateSpacialChar = (text: string): boolean => {
-    return stringRegex.test(text);
+    try {
+        return stringRegex.test(text);
+    } catch (error) {
+        return false;
+    }
 };
 
 export const replaceSpecialChar = (text: string): string => {
-    return text.replaceAll(stringRegex, '');
+    try {
+        return text.replaceAll(stringRegex, '');
+    } catch (error) {
+        return text;
+    }
 };
 
 export const formCheckEmptyFields = (
