@@ -175,7 +175,7 @@ export default function Checkout() {
     if (!authContext.userConnected && formAddress && formAddress?.shippingAddress?.email?.length > 5) {
       setLocalStorage("checkoutAddress", JSON.stringify(formAddress));
     }
-    console.log("🚀 ~ file: index.tsx:176 ~ React.useEffect ~ formAddress:", formAddress)
+    // console.log("🚀 ~ file: index.tsx:176 ~ React.useEffect ~ formAddress:", formAddress)
   }, [formAddress])
 
 
