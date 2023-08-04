@@ -32,13 +32,13 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
         try {
             const result = await getCountry();
 
-            if (formAddress?.billingAddress?.country) {
-                getStateDetailsOfCountry(
-                    result?.data?.data?.country?.find((x: any) => x.name === formAddress?.billingAddress?.country ?? "")?._id,
-                    true,
-                    formAddress?.billingAddress
-                );
-            }
+            // if (formAddress?.billingAddress?.country) {
+            //     getStateDetailsOfCountry(
+            //         result?.data?.data?.country?.find((x: any) => x.name === formAddress?.billingAddress?.country ?? "")?._id,
+            //         true,
+            //         formAddress?.billingAddress
+            //     );
+            // }
 
             setCountryList(result?.data?.data?.country);
 
@@ -49,15 +49,16 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
     const handleChangeCountryName = async (name: string) => {
         let currentAddress = formAddress
         currentAddress.billingAddress.country = name;
-        currentAddress.billingAddress.city = "";
-        currentAddress.billingAddress.state = "";
+        // currentAddress.billingAddress.city = "";
+        // currentAddress.billingAddress.state = "";
 
         setFormAddress(currentAddress)
-        setCityList([])
-        setStateList([])
+        // setCityList([])
+        // setStateList([])
     }
 
     const getStateDetailsOfCountry = async (value: any, autoLoadCity: boolean = false, currentAddress: any = null) => {
+        return;
         try {
             setFormAddress({ ...formAddress, billingAddress: { ...formAddress.billingAddress, state: "" } })
             setFormAddress({ ...formAddress, billingAddress: { ...formAddress.billingAddress, city: "" } })
@@ -84,6 +85,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
     }
 
     const getCityDetailsOfState = async (value: any) => {
+        return;
         try {
             const result = await getCityDetails(value);
             setCityList(result?.data?.data?.cities);
@@ -191,8 +193,16 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                 </div>
 
                 <div className={styles.formControl}>
-                    <label className={styles.formLabel}> State / Region <span className="text-danger">*</span></label>
-                    {
+                    <label className={styles.formLabel}> State / Region
+                        {/* <span className="text-danger">*</span> */}
+                    </label>
+                    <Input
+                        className={styles.formInput}
+                        value={formAddress?.shippingAddress?.state ?? ""}
+                        placeholder="State / Region"
+                        onChange={(e) => setFormAddress({ ...formAddress, billingAddress: { ...formAddress.billingAddress, state: e.target.value } })}
+                    />
+                    {/* {
                         <Select
                             label="States"
                             className={styles.formTextField}
@@ -219,7 +229,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                                 : "Select a state"
                             }
                         </Select>
-                    }
+                    } */}
                     <div className={styles.inline}>
                         <div className={styles.formControl}>
                             <span className="alert-field">
@@ -238,7 +248,13 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                         {' '}
                         Town / City  <span className="text-danger">*</span>{' '}
                     </label>
-                    {
+                    <Input
+                        className={styles.formInput}
+                        value={formAddress?.shippingAddress?.city ?? ""}
+                        placeholder="City "
+                        onChange={(e) => setFormAddress({ ...formAddress, billingAddress: { ...formAddress.billingAddress, city: e.target.value } })}
+                    />
+                    {/* {
                         <Select
                             label="City"
                             className={styles.formTextField}
@@ -263,7 +279,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                                 : "Select a city"
                             }
                         </Select>
-                    }
+                    } */}
                     <div className={styles.inline}>
                         <div className={styles.formControl}>
                             <span className="alert-field">

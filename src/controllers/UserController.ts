@@ -325,11 +325,11 @@ export const removeAddress = async (
   res.setHeader('Allow', 'PUT');
 
   try {
-      const data = {
-        addressId : req.query.id
-      }
+      // const data = {
+      //   addressId : req.query.id
+      // }
     
-      const result = await ApiService.PutRequest(API_HOST + '/v1/user/address', data, `Bearer ${req.cookies?.authToken}`);
+      const result = await ApiService.DeleteRequest(API_HOST + '/v1/user/address/remove/'+req.query.id, `Bearer ${req.cookies?.authToken}`);
 
       res.status(200).json(ApiService.ApiResponseSuccess(result?.data, ''));
 

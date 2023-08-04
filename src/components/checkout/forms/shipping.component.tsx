@@ -66,16 +66,17 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
     const handleChangeCountryName = async (name: string) => {
         let currentAddress = formAddress
         currentAddress.shippingAddress.country = name;
-        currentAddress.shippingAddress.city = "";
-        currentAddress.shippingAddress.state = "";
+        // currentAddress.shippingAddress.city = "";
+        // currentAddress.shippingAddress.state = "";
 
         setFormAddress(currentAddress)
-        setCityList([])
-        setStateList([])
+        // setCityList([])
+        // setStateList([])
     }
 
     const getStateDetailsOfCountry = async (value: any, autoLoadCity: boolean = false, currentAddress: any = null) => {
         try {
+            return;
             const result = await getStateDetails(value);
 
             if (result?.data?.data?.cities) {
@@ -101,6 +102,7 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
 
     const getCityDetailsOfState = async (value: any) => {
         try {
+            return;
             const result = await getCityDetails(value);
             setCityList(result?.data?.data?.cities);
         } catch (error) { }
@@ -207,8 +209,17 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                 </div>
 
                 <div className={styles.formControl}>
-                    <label className={styles.formLabel}> State / Region  <span className="text-danger">*</span></label>
-                    {
+                    <label className={styles.formLabel}> State / Region
+                        {/* <span className="text-danger">*</span> */}
+                    </label>
+                    <Input
+                        className={styles.formInput}
+                        value={formAddress?.shippingAddress?.state ?? ""}
+                        placeholder="State / Region"
+                        onChange={(e) => setFormAddress({ ...formAddress, shippingAddress: { ...formAddress.shippingAddress, state: e.target.value } })}
+                    />
+
+                    {/* {
                         <Select
                             label="States"
                             className={styles.formTextField}
@@ -235,7 +246,7 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                                 : "Select a state"
                             }
                         </Select>
-                    }
+                    } */}
                     <div className={styles.inline}>
                         <div className={styles.formControl}>
                             <span className="alert-field">
@@ -254,7 +265,13 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                         {' '}
                         Town / City  <span className="text-danger">*</span>{' '}
                     </label>
-                    {
+                    <Input
+                        className={styles.formInput}
+                        value={formAddress?.shippingAddress?.city ?? ""}
+                        placeholder="City "
+                        onChange={(e) => setFormAddress({ ...formAddress, shippingAddress: { ...formAddress.shippingAddress, city: e.target.value } })}
+                    />
+                    {/* {
                         <Select
                             label="City"
                             className={styles.formTextField}
@@ -262,9 +279,10 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                             size='small'
                         >
                             <MenuItem value={formAddress?.shippingAddress?.city ?? ""}>
-                                Select a state/region
-                            </MenuItem>
-                            {cityList && cityList.length > 0 ?
+                                Select a city
+                            </MenuItem> */}
+
+                    {/* {cityList && cityList.length > 0 ?
                                 cityList.map((city: any, index: any) => (
                                     <MenuItem
                                         key={index}
@@ -277,9 +295,9 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                                     </MenuItem>
                                 ))
                                 : "Select a city"
-                            }
-                        </Select>
-                    }
+                            } */}
+                    {/* </Select>
+                    } */}
                     <div className={styles.inline}>
                         <div className={styles.formControl}>
                             <span className="alert-field">
