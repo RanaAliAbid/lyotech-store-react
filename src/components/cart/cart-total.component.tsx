@@ -291,14 +291,14 @@ export default function CartTotalComponent(
                         }
 
                         {
-                            (cartVat?.amount?.length > 0) && (
+                            (cartVat?.amount) ? (
                                 <ListItem>
                                     <Typography variant="h6">
                                         {t('VAT')} {cartVat?.percentage}%
                                     </Typography>
-                                    <Typography variant="h6">{cartVat?.amount?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
+                                    <Typography variant="h6">{cartVat.amount.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
                                 </ListItem>
-                            )
+                            ) : <></>
                         }
 
                     </List>
