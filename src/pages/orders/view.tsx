@@ -12,6 +12,7 @@ import ListItem from '@mui/material/ListItem';
 import Link from '@mui/material/Link';
 import productImg from '../../img/productImg.png';
 import successImg from '../../img/success.png';
+import errorImg from '../../img/false.png';
 
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
@@ -92,7 +93,7 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
                                                 (["cancelled", "expired", "failed"].includes(order.status.toLowerCase())) && (
                                                     <>
                                                         <div className={styles.statusImg}>
-                                                            <img src={successImg.src} alt="logo" />
+                                                            <img src={errorImg.src} alt="logo" />
                                                         </div>
                                                         <div className={styles.statusText}>
                                                             <Typography variant="h5">
