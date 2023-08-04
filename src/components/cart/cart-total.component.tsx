@@ -230,7 +230,7 @@ export default function CartTotalComponent(
                         }
 
                         <ListItem>
-                            <Typography variant="h6">{t('Shipping')}</Typography>
+                            <Typography variant="h6"><b>{t('Shipping Methods')}</b></Typography>
                             {/* <Typography variant="h6">
                                 <Link>Details</Link>
                             </Typography> */}
