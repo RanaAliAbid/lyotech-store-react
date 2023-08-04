@@ -5,7 +5,7 @@ import {
   SignUpDataValidator,
 } from '@/services/auth/auth.types';
 
-const passwordRegex:any = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+const passwordRegex: any = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 const stringRegex = /[&\/\\#,+()@$~%.'":*?!<>{}]/g;
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
@@ -18,7 +18,11 @@ export const validateSpacialChar = (text: string): boolean => {
 };
 
 export const replaceSpecialChar = (text: string): string => {
-  return text.replaceAll(stringRegex, '');
+  try {
+    return text.replaceAll(stringRegex, '');
+  } catch (error) {
+    return text;
+  }
 };
 
 export const validateEmail = (email: string): boolean => {
