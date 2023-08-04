@@ -71,7 +71,7 @@ export default function ChangePassword() {
 
     React.useEffect(() => {
         if (!authContext.isChangePassword) {
-            router.push(`/${locale}`)
+            // router.push(`/${locale}`)
 
             setTimeout(() => {
                 setLoading(false);

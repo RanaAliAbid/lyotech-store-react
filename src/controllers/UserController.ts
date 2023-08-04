@@ -233,6 +233,7 @@ export const changePassword = async (
 
   try {
     let data = req.body;
+    data.token = req.cookies?.token
 
     const result = await ApiService.PostRequest(API_HOST + '/v1/user/create-password', data, `Bearer ${req.cookies?.otpToken}`);
 

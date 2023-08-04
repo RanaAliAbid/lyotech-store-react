@@ -56,10 +56,18 @@ export default function VerifyEmailOtp({
   React.useEffect(() => {
     try {
       const urlParams = new URLSearchParams(window.location.search);
+
+      let _reset_password = urlParams.get('reset-password') ?? authContext.isChangePassword;
+      authContext.setIsChangePassword(_reset_password);
       const _token = urlParams.get('token');
       const _otp = urlParams.get('code');
       const _key = urlParams.get('key');
+
       const _redirectTo = urlParams.get('redirectTo');
+
+      if (_reset_password == "true") {
+        _reset_password = true;
+      }
 
       if (_token != null && _key != null) {
         setOtpToken(_token);
@@ -68,7 +76,7 @@ export default function VerifyEmailOtp({
         setRedirectTo(_redirectTo ?? "");
 
         if (_otp != null) {
-          proceedSubmitOtp();
+          proceedSubmitOtp(_reset_password);
         }
       }
     } catch (error) {
@@ -76,15 +84,15 @@ export default function VerifyEmailOtp({
     }
   }, []);
 
-  const proceedSubmitOtp = async () => {
+  const proceedSubmitOtp = async (resetPassword: boolean) => {
     if (otp.length < 6) return false;
 
     setLoading(true);
 
     try {
-      const result = await validateUserEmailOtp(otpToken, otp, keyToken, authContext.isChangePassword);
+      const result = await validateUserEmailOtp(otpToken, otp, keyToken, resetPassword);
 
-      if (authContext.isChangePassword) {
+      if (resetPassword) {
         router.push(`/${locale}/auth/change-password`);
         setTimeout(() => {
           setLoading(false);
@@ -113,7 +121,7 @@ export default function VerifyEmailOtp({
 
   React.useEffect(() => {
     if (otp.length >= 6) {
-      proceedSubmitOtp();
+      proceedSubmitOtp(authContext.isChangePassword);
     }
   }, [otp]);
 
@@ -200,7 +208,7 @@ export default function VerifyEmailOtp({
                       </div>
 
                       <Button
-                        onClick={(e) => proceedSubmitOtp()}
+                        onClick={(e) => proceedSubmitOtp(authContext.isChangePassword)}
                         type="button"
                         variant="contained"
                         fullWidth
