@@ -208,7 +208,7 @@ export const cartCurrencyRate = async (req: NextApiRequest, res: NextApiResponse
             requestParams = `AED/USD`
             result = await ApiService.GetRequest(`${API_HOST}/v1/currency/get-conversion-rate/${requestParams}`, ``);
 
-            rate = (rate * parseFloat(result?.data?.data?.ConversionRate ?? "1") - 0.015)
+            rate = (rate * parseFloat(result?.data?.data?.ConversionRate ?? "1"))
         }
 
         res.status(200).json(ApiService.ApiResponseSuccess(rate, ''));
