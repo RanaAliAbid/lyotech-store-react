@@ -188,7 +188,7 @@ export default function CartTotalComponent(
                             <Typography variant="h6">
                                 {t('Subtotal')} ({globalContext?.cartQtyProduct} {t('items')})
                             </Typography>
-                            <Typography variant="h6">{globalContext?.cart?.cart?.totalAmount?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
+                            <Typography variant="h6">{(globalContext?.cart?.cart?.totalAmount * globalContext.conversionRate)?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
                         </ListItem>
 
                         {
@@ -206,17 +206,17 @@ export default function CartTotalComponent(
                                                 {
                                                     (globalContext?.cart?.cart?.totalAmount == 0) ? (
                                                         <Typography variant="h5">
-                                                            <span> {cartItem?.productId?.price?.toFixed(globalContext.priceToFixed)} </span>
+                                                            <span> {(cartItem?.productId?.price * globalContext.conversionRate)?.toFixed(globalContext.priceToFixed)} </span>
                                                             <b>
                                                                 {
-                                                                    parseFloat(cartItem?.productId?.price?.toFixed(globalContext.priceToFixed)) - parseFloat(globalContext.cart?.cart?.coupon?.find((x: any) => x.productId == cartItem?.productId?._id)?.couponId?.amount)
+                                                                    (parseFloat(cartItem?.productId?.price?.toFixed(globalContext.priceToFixed)) - parseFloat(globalContext.cart?.cart?.coupon?.find((x: any) => x.productId == cartItem?.productId?._id)?.couponId?.amount)) * globalContext.conversionRate
                                                                 }
                                                             </b>
                                                             &nbsp;
                                                             {globalContext.currencySymbol}
                                                         </Typography>
                                                     ) : (
-                                                        <Typography variant="h5"> {cartItem?.productId?.price?.toFixed(globalContext.priceToFixed)}  {globalContext.currencySymbol}  </Typography>
+                                                        <Typography variant="h5"> {(cartItem?.productId?.price * globalContext.conversionRate)?.toFixed(globalContext.priceToFixed)}  {globalContext.currencySymbol}  </Typography>
                                                     )
                                                 }
 
@@ -263,7 +263,7 @@ export default function CartTotalComponent(
                                                 }
                                                 label={method.name}
                                             />
-                                            <Typography variant="h6">{method?.amount} {globalContext.currencySymbol}</Typography>
+                                            <Typography variant="h6">{(method?.amount * globalContext.conversionRate)?.toFixed(2)} {globalContext.currencySymbol}</Typography>
                                         </ListItem>
                                     ))
                                 ) : (
@@ -283,7 +283,7 @@ export default function CartTotalComponent(
                                             <Typography variant="h6">
                                                 {t(feesType(item.type))}
                                             </Typography>
-                                            <Typography variant="h6">{item?.fee?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
+                                            <Typography variant="h6">{(item?.fee * globalContext.conversionRate)?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
                                         </ListItem>
                                     )
                                 ))
@@ -296,7 +296,7 @@ export default function CartTotalComponent(
                                     <Typography variant="h6">
                                         {t('VAT')} {cartVat?.percentage}%
                                     </Typography>
-                                    <Typography variant="h6">{cartVat.amount.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
+                                    <Typography variant="h6">{(cartVat.amount * globalContext.conversionRate).toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
                                 </ListItem>
                             ) : <></>
                         }
@@ -312,7 +312,7 @@ export default function CartTotalComponent(
                                             <Typography variant="h6">
                                                 {t(feesType(item.type))}
                                             </Typography>
-                                            <Typography variant="h6">{item?.fee?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
+                                            <Typography variant="h6">{(item?.fee * globalContext.conversionRate)?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
                                         </ListItem>
                                     )
                                 ))
@@ -339,7 +339,7 @@ export default function CartTotalComponent(
                                                     {t(feesType(item.type))}
                                                 </Typography>
                                             </div>
-                                            <Typography variant="h6">{item?.fee?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
+                                            <Typography variant="h6">{(item?.fee * globalContext.conversionRate)?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
                                         </ListItem>
                                     )
                                 ))
@@ -350,7 +350,14 @@ export default function CartTotalComponent(
                     <List>
                         <ListItem className={styles.summaryfoot}>
                             <Typography variant="h5">{t('Total')}</Typography>
-                            <Typography variant="h5">{globalContext?.cart?.cart?.totalIncludingFees?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
+                            <Typography variant="h5">
+                                {
+                                    (globalContext.selectedCurrency != "euro") && (
+                                        <>&#8909;&nbsp;</>
+                                    )
+                                }
+
+                                {(globalContext?.cart?.cart?.totalIncludingFees * globalContext.conversionRate)?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}</Typography>
                         </ListItem>
                     </List>
 

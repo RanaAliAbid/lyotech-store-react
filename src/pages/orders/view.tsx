@@ -183,7 +183,7 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
                                                                     Quantity: {product?.quantity}
                                                                 </Typography>
                                                                 <Typography variant="h5">
-                                                                    Price: {product?.orderPrice}
+                                                                    Price: {product?.orderPrice * globalContext.conversionRate}
                                                                 </Typography>
                                                                 <Typography variant="h5">
                                                                     {t('order-id')} : {order?._id}
@@ -261,7 +261,7 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
                                                     </Typography>
 
                                                     <Typography variant="h5">
-                                                        {order?.totalAmount?.toFixed(2)} {globalContext.currencySymbol}
+                                                        {(order?.totalAmount * globalContext.conversionRate)?.toFixed(2)} {globalContext.currencySymbol}
                                                     </Typography>
                                                 </div>
                                             </div>

@@ -183,3 +183,38 @@ export const cartUpdate = async (
         res.status(400).json(ApiService.ApiResponseError(error));
     }
 };
+
+export const cartCurrencyRate = async (req: NextApiRequest, res: NextApiResponse<ApiData | ApiError>) => {
+    res.setHeader('Allow', 'POST');
+
+    try {
+        const currencyCode: string = req?.body?.currencyCode ?? ""
+
+        let rate = 1;
+
+        let requestParams = ""
+
+        if(currencyCode == "dollar"){
+            requestParams = `USD/EUR`
+        }else if(currencyCode == "dirahm"){
+            requestParams = `USD/EUR`
+        }
+
+        let result = await ApiService.GetRequest(`${API_HOST}/v1/currency/get-conversion-rate/${requestParams}`, ``);
+
+        rate = parseFloat(result?.data?.data?.ConversionRate ?? "1")
+
+        if(currencyCode == "dirahm") {
+            requestParams = `AED/USD`
+            result = await ApiService.GetRequest(`${API_HOST}/v1/currency/get-conversion-rate/${requestParams}`, ``);
+
+            rate = (rate * parseFloat(result?.data?.data?.ConversionRate ?? "1") - 0.015)
+        }
+
+        res.status(200).json(ApiService.ApiResponseSuccess(rate, ''));
+
+    } catch (error: any) {
+        console.log('Catch error cart shipping method ', error?.response?.data);
+        res.status(400).json(ApiService.ApiResponseError(error));
+    }
+}

@@ -5,7 +5,8 @@ import {
   userRemoveToCart,
   userEmptyCart,
   cartShippingMethods,
-  cartUpdate
+  cartUpdate,
+  cartCurrencyRate
 } from '@/controllers/CartController';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ApiData, ApiError } from '../../types';
@@ -34,5 +35,7 @@ export default async function CartHandler(
       return cartShippingMethods(req, res);
     case 'update-cart':
       return cartUpdate(req, res);
+    case 'currency-rate': 
+      return cartCurrencyRate(req, res);
   }
 }

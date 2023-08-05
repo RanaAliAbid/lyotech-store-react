@@ -42,3 +42,12 @@ export const updateCart = async (data: any) => {
         return null;
     }
 };
+
+export const getCartCurrencyRate = async (data: any) => {
+    try {
+        const body = await ProxyService.generateHashKey(JSON.stringify(data))
+        return ProxyService.PostRequest(PROXY_HOST + '/api/v1/currency-rate', body);
+    } catch (error) {
+        return null;
+    }
+};

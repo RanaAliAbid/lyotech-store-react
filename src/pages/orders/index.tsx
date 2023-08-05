@@ -154,7 +154,7 @@ export default function AllOrders() {
                                     variant="h6"
                                     className={styles.textBlue}
                                   >
-                                    {order?.totalAmount?.toFixed(globalContext.priceToFixed)}
+                                    {(order?.totalAmount * globalContext.conversionRate)?.toFixed(globalContext.priceToFixed)}
                                     {globalContext?.currencySymbol}
                                   </Typography>
                                 </div>

@@ -7,7 +7,7 @@ import {
 
 const GlobalContext = createContext<any>({});
 import { useRouter } from "next/router";
-import { addToCart, getUserCart, removeCartProduct, updateCart } from '@/services/cart/cart.service';
+import { addToCart, getCartCurrencyRate, getUserCart, removeCartProduct, updateCart } from '@/services/cart/cart.service';
 import { copyTextToClipboard, priceSymbol } from '@/utils/app.utils';
 import AlertComponent from '../common/alert';
 import { SweetAlertOptions } from 'sweetalert2';
@@ -17,26 +17,35 @@ export function GlobalWrapper({
 }: {
   children: JSX.Element | JSX.Element[];
 }) {
+
   const updateLocale = (current = 'en') => {
     Cookies.set('lang', current);
+  };
+
+  const updateCurrency = (current = 'euro') => {
+    Cookies.set('currency', current);
   };
 
   const router = useRouter();
   const [globalLoading, setGlobalLoading] = useState<boolean>(false);
   const [cart, setCart] = useState<any>([]);
   const [currencySymbol, setCurrencySymbol] = useState<string>(".");
+  const [selectedCurrency, setSelectedCurrency] = useState<string>("euro");
   const priceToFixed: number = 2;
   const [loadComponents, setLoadComponents] = useState<boolean>(false);
   const [homeProduct, setHomeProduct] = useState<any>(null);
   const [screenWitdh, setScreenWidth] = useState<number>(0);
   const [cartQtyProduct, setCartQtyProduct] = useState<any>(0);
+  const [conversionRate, setConversionRate] = useState<number>(1);
 
   const [alertProps, setAlertProps] = useState<SweetAlertOptions & { show: boolean, callback?: any }>({ show: false });
 
   useEffect(() => {
-    setCurrencySymbol(priceSymbol("euro"))
     router.events.on('routeChangeStart', handleRouteChange);
     router.events.on('routeChangeComplete', handleRouteChangeComplete);
+
+    const currentCurrency = Cookies.get('currency') ?? "euro";
+    getCurrencyRate(currentCurrency)
 
     if (window) {
       setScreenWidth(window.innerWidth)
@@ -55,6 +64,33 @@ export function GlobalWrapper({
 
   const handleRouteChangeComplete = () => {
     setGlobalLoading(false)
+  }
+
+  const getCurrencyRate = async (name: string) => {
+    try {
+
+      setSelectedCurrency(name)
+      setCurrencySymbol(priceSymbol(name))
+      updateCurrency(name)
+
+      if (name == "euro") {
+        setConversionRate(1)
+        return;
+      }
+
+      const data = {
+        currencyCode: name
+      }
+
+      setGlobalLoading(true);
+      const result = await getCartCurrencyRate(data);
+      setConversionRate(result?.data?.data ?? 1);
+      setGlobalLoading(false);
+
+      return result;
+    } catch (error) {
+      return null;
+    }
   }
 
   const deleteCart = async (id: string, qty: number) => {
@@ -302,7 +338,9 @@ export function GlobalWrapper({
     screenWitdh, setScreenWidth,
     alertProps, setAlertProps, closeAlert,
     copyToClipboard,
-    cartQtyProduct, setCartQtyProduct
+    cartQtyProduct, setCartQtyProduct,
+    getCurrencyRate,
+    selectedCurrency, setSelectedCurrency, conversionRate
   };
 
   return (

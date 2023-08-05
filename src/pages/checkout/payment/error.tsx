@@ -9,15 +9,9 @@ import { Container, Grid, ThemeProvider, Typography, createTheme } from '@mui/ma
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
 import Link from '@mui/material/Link';
-import Image from 'next/image';
 import productImg from '../../../img/productImg.png';
-
 import errorImg from '../../../img/false.png';
-
 
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
@@ -25,7 +19,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { IncomingMessage, ServerResponse } from 'http';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { generatePaymentLink, verifyOrderDetails } from '@/services/orders/order.service';
-import { FaCalendar, FaInfoCircle, FaMailBulk, FaMoneyBill, FaPhoneAlt, FaShippingFast, FaUser, FaWallet } from 'react-icons/fa';
 import moment from 'moment';
 export default function PaymentSuccessComponent({ order }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 
@@ -131,7 +124,7 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
                                                                     Quantity: {product?.quantity}
                                                                 </Typography>
                                                                 <Typography variant="h5">
-                                                                    Price: {product?.orderPrice}
+                                                                    Price: {product?.orderPrice * globalContext.conversionRate}
                                                                 </Typography>
                                                                 <Typography variant="h5">
                                                                     {t('order-id')} : {order?._id}
@@ -209,7 +202,7 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
                                                     </Typography>
 
                                                     <Typography variant="h5">
-                                                        {order?.totalAmount} {globalContext.currencySymbol}
+                                                        {(order?.totalAmount * globalContext.conversionRate)?.toFixed(2)} {globalContext.currencySymbol}
                                                     </Typography>
                                                 </div>
                                             </div>
@@ -258,6 +251,7 @@ export const getServerSideProps: GetServerSideProps<{ order: any }> = async ({
     if (currentUrl) {
         const urlParams = new URLSearchParams(currentUrl);
         const orderid = urlParams.get('invoiceNumber') ?? '';
+        const transId = urlParams.get('transID') ?? '';
 
         if (orderid?.length >= 1) {
 
@@ -267,6 +261,15 @@ export const getServerSideProps: GetServerSideProps<{ order: any }> = async ({
                 return {
                     redirect: {
                         destination: `/`,
+                        permanent: false,
+                    },
+                };
+            }
+
+            if (transId?.length > 0) {
+                return {
+                    redirect: {
+                        destination: `/checkout/payment/error?invoiceNumber=${orderid}`,
                         permanent: false,
                     },
                 };

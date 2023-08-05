@@ -213,7 +213,7 @@ export default function Cart({
                                     variant="h3"
                                     className={styles.productPrice}
                                   >
-                                    {cartItem?.productId?.price?.toFixed(globalContext.priceToFixed)} €
+                                    {(cartItem?.productId?.price * globalContext.conversionRate)?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}
                                   </Typography>
                                 </div>
                               </div>

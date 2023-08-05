@@ -111,6 +111,15 @@ export const priceSymbol = (name: string) => {
   }
 }
 
+export const priceShortName = (name: string) => {
+  switch (name) {
+    case "euro": return "EUR";
+    case "dollar": return "USD";
+    case "dirahm": return "AED";
+    default: return "EUR";
+  }
+}
+
 export const feesType = (name: string) => {
   switch (name) {
     case "activation": return "Activation-Fee";
@@ -128,7 +137,7 @@ export function trimStringData(stringData: string | undefined, length: number) {
   return stringData.slice(0, length / 2) + "..." + stringData.slice(-length / 2);
 }
 
-export const copyTextToClipboard = (text) => { // Copy text to Clipboard
+export const copyTextToClipboard = (text: any) => { // Copy text to Clipboard
   if (navigator.clipboard) {
       navigator.clipboard.writeText(text)
       return true

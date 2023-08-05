@@ -38,6 +38,7 @@ import {
   Backdrop
 } from '@mui/material';
 import { APP_HOST } from '../../app.config';
+import { priceShortName, priceSymbol } from '@/utils/app.utils';
 
 export default function Header({ title = 'Home' }: { title: string }) {
   const router = useRouter();
@@ -113,6 +114,17 @@ export default function Header({ title = 'Home' }: { title: string }) {
 
   const handleLangClose = () => {
     setAnchorLang(null);
+  };
+
+  const [anchorCurrency, setAnchorCurrency] = React.useState<null | HTMLElement>(null);
+  const currencyOpen = Boolean(anchorCurrency);
+
+  const handleCurrencyClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorCurrency(event.currentTarget);
+  };
+
+  const handleCurrencyClose = () => {
+    setAnchorCurrency(null);
   };
 
   const handleLogout = async (e: any) => {
@@ -349,7 +361,7 @@ export default function Header({ title = 'Home' }: { title: string }) {
                               variant="h6"
                               className={styles.productPrice}
                             >
-                              {((cartItem?.quantity ?? 0) * cartItem.productId?.price).toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}
+                              {((cartItem?.quantity ?? 0) * cartItem.productId?.price * globalContext.conversionRate).toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}
                             </Typography>
                           </div>
                           <span onClick={(e) => deletFromCart(cartItem?.productId?._id)}><CloseIcon /></span>
@@ -407,7 +419,7 @@ export default function Header({ title = 'Home' }: { title: string }) {
                         height={20}
                       />
                     </span>
-                    {locale}
+                    <span className='xs-d-none'>{locale}</span>
                   </Button>
                   <Menu
                     id="basic-menu"
@@ -448,6 +460,71 @@ export default function Header({ title = 'Home' }: { title: string }) {
                             />
                           </span>{' '}
                           Italian
+                        </>{' '}
+                      </Link>
+                    </MenuItem>
+                  </Menu>
+                </div>
+              )
+            }
+
+            {
+              (process.env.CURRENCY_CHANGE != "false") && (
+                <div>
+                  <Button
+                    id="basic-button2"
+                    aria-controls={currencyOpen ? 'basic-menu-currency' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={currencyOpen ? 'true' : undefined}
+                    onClick={handleCurrencyClick}
+                    variant="text"
+                    className={styles.myAccount}
+                  >
+                    {priceSymbol(globalContext.selectedCurrency)}
+                    <span className='xs-d-none'>
+                      &nbsp; | {priceShortName(globalContext.selectedCurrency)}
+                    </span>
+                  </Button>
+                  <Menu
+                    id="basic-menu-currency"
+                    anchorEl={anchorCurrency}
+                    open={currencyOpen}
+                    onClose={handleCurrencyClose}
+                    MenuListProps={{
+                      'aria-labelledby': 'basic-button2',
+                    }}
+                    className={styles.myAccountMenu}
+                  >
+                    <MenuItem onClick={handleCurrencyClose}>
+                      <Link href={"#"} onClick={(e) => globalContext.getCurrencyRate('euro')}>
+                        {' '}
+                        <>
+                          <span className="flag-img">
+                            {priceSymbol("euro")} |
+                          </span>{' '}
+                          {priceShortName("euro")}
+                        </>{' '}
+                      </Link>
+                    </MenuItem>
+                    <MenuItem onClick={handleCurrencyClose}>
+                      <Link href={"#"} onClick={(e) => globalContext.getCurrencyRate('dollar')}>
+                        {' '}
+                        <>
+                          <span className="flag-img">
+                            {priceSymbol("dollar")} |
+                          </span>{' '}
+                          {priceShortName("dollar")}
+                        </>{' '}
+                      </Link>
+                    </MenuItem>
+                    <MenuItem onClick={handleCurrencyClose}>
+                      <Link href={"#"} onClick={(e) => globalContext.getCurrencyRate('dirahm')}>
+                        {' '}
+                        <>
+                          <span className="flag-img">
+                            {priceSymbol("dirahm")} |
+                          </span>{' '}
+                          {priceShortName("dirahm")}
                         </>{' '}
                       </Link>
                     </MenuItem>
