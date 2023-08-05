@@ -158,7 +158,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                                 value={formAddress?.billingAddress?.country}
                                 size='small'
                             >
-                                <MenuItem value={formAddress?.shippingAddress?.country ?? ""} disabled>
+                                <MenuItem value={formAddress?.billingAddress?.country ?? ""} disabled>
                                     Select a Country
                                 </MenuItem>
                                 {countryList.map((country: any, index: any) => (
@@ -198,7 +198,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                     </label>
                     <Input
                         className={styles.formInput}
-                        value={formAddress?.shippingAddress?.state ?? ""}
+                        value={formAddress?.billingAddress?.state ?? ""}
                         placeholder="State / Region"
                         onChange={(e) => setFormAddress({ ...formAddress, billingAddress: { ...formAddress.billingAddress, state: e.target.value } })}
                     />
@@ -210,7 +210,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                             size='small'
                             disabled={hideStateList}
                         >
-                            <MenuItem value={formAddress?.shippingAddress?.state ?? ""} disabled>
+                            <MenuItem value={formAddress?.billingAddress?.state ?? ""} disabled>
                                 Select a State/Region
                             </MenuItem>
                             {stateList && stateList.length > 0 ?
@@ -250,7 +250,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                     </label>
                     <Input
                         className={styles.formInput}
-                        value={formAddress?.shippingAddress?.city ?? ""}
+                        value={formAddress?.billingAddress?.city ?? ""}
                         placeholder="City "
                         onChange={(e) => setFormAddress({ ...formAddress, billingAddress: { ...formAddress.billingAddress, city: e.target.value } })}
                     />
@@ -261,7 +261,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                             value={formAddress?.billingAddress?.city ?? ""}
                             size='small'
                         >
-                            <MenuItem value={formAddress?.shippingAddress?.city ?? ""}>
+                            <MenuItem value={formAddress?.billingAddress?.city ?? ""}>
                                 Select a state/region
                             </MenuItem>
                             {cityList && cityList.length > 0 ?
