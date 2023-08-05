@@ -378,7 +378,7 @@ export default function Header({ title = 'Home' }: { title: string }) {
                   </Typography>
 
                   <Typography variant="h6" className={styles.productPrice}>
-                    {globalContext.cart?.cart?.totalAmount?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}
+                    {(globalContext.cart?.cart?.totalAmount * globalContext.conversionRate)?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}
                   </Typography>
                 </div>
 
