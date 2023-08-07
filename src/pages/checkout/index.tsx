@@ -28,6 +28,7 @@ import { formCheckEmptyFields } from '@/validators/order.validator';
 import { countryCodeByCountryName, getLocalStorage, setLocalStorage } from '@/utils/app.utils';
 import { FaArrowLeft } from 'react-icons/fa';
 import DefaultAddressComponent from '@/components/checkout/address.component';
+import MastercardCheckoutComponent from '@/components/checkout/paymentMethods/mastercardCheckout.component';
 
 export default function Checkout() {
   const theme = createTheme({
@@ -45,6 +46,7 @@ export default function Checkout() {
   const [formValidation, setFormValidation] = React.useState(null);
   const [enablePlaceOrder, setEnablePlaceOrder] = React.useState(false);
   const [displayAddress, setDisplayAddress] = React.useState(false);
+  const [sessionId, setSessionId] = React.useState('');
 
 
   const globalContext = useGlobalContext();
@@ -258,12 +260,18 @@ export default function Checkout() {
       }
 
       const result = await saveUserOrder(data);
+      console.log("🚀 ~ file: index.tsx:261 ~ handlePlaceOrder ~ result:", result)
 
+      if (result?.data?.data?.data?.masterCardSession) {
+          console.log("open checkout page")
+          setSessionId(result?.data?.data?.data?.masterCardSession.sessionId)
+      }
       if (result?.data?.data?.data?.paymentLink) {
         window.location.href = result?.data?.data?.data?.paymentLink;
       } else {
         globalContext.setGlobalLoading(false);
       }
+      // setSessionId("SESSION0002985332044E9352799E31")
 
     } catch (error) {
       globalContext.setGlobalLoading(false);
@@ -374,7 +382,7 @@ export default function Checkout() {
 
                         {/* //payment method */}
                         <PaymentMethodComponent paymentType={paymentType} handleChangePayment={handleChangePayment}></PaymentMethodComponent>
-
+                        {sessionId && <MastercardCheckoutComponent sessionId={sessionId}/>}
                       </>
                     )
                   }
