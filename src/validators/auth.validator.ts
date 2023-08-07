@@ -8,7 +8,7 @@ import {
 const passwordRegex: any = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 const stringRegex = /[&\/\\#,+()@$~%.'":*?!<>{}]/g;
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
+ 
 export const validatePassword = (password: string): boolean => {
   return passwordRegex.test(password);
 };

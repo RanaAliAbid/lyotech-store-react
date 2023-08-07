@@ -73,6 +73,13 @@ export const userAddToCart = async (
 
     } catch (error: any) {
         console.log('Catch error add to cart ', error?.response?.data);
+
+        if(error?.response?.data?.code == '401') {
+            res.setHeader("Set-Cookie", [
+                `guestId=deleted; HttpOnly; Max-Age=0;`
+            ]);
+        }
+        
         return res.status(400).json(ApiService.ApiResponseError(error));
     }
 };

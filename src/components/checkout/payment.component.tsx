@@ -131,7 +131,7 @@ export default function PaymentMethodComponent({ paymentType, handleChangePaymen
                                     </div>
                                 </div>
                                 <div className={styles.payInfoBox}>
-                                    <Grid item md={12} xs={12}>
+                                    {/* <Grid item md={12} xs={12}>
                                         <div className={styles.formControl}>
                                             <label> Card Number </label>
                                             <Input
@@ -159,14 +159,14 @@ export default function PaymentMethodComponent({ paymentType, handleChangePaymen
                                                 />
                                             </div>
                                         </Grid>
-                                    </Grid>
-                                    <FormControlLabel
+                                    </Grid> */}
+                                    {/* <FormControlLabel
                                         control={<Checkbox size="small" defaultChecked />}
                                         label="Save payment information to my account for future purchases."
-                                    />
+                                    /> */}
                                     <div className={styles.note}>
                                         <Typography variant="h5">
-                                            Pay with your credit card via Stripe. TEST MODE
+                                            Pay with your credit card. TEST MODE
                                             ENABLED. In test mode, you can use the card number
                                             4242424242424242 with any CVC and a valid
                                             expiration date or check the Testing Stripe
