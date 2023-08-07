@@ -63,6 +63,7 @@ import { useAuthContext } from '@/contexts/AuthContext';
 import { getHomePageProducts } from '@/services/products/product.service';
 
 import { getLocalStorage, homePageProducts, lfi_one_smartphone, lyo_tab, lyo_watch, setLocalStorage } from '@/utils/app.utils';
+import Link from 'next/link';
 
 export default function Home({ products }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const theme = createTheme({
@@ -166,12 +167,14 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                           {t('subheader1')}
                         </Typography>
 
-                        <Button
-                          variant="contained"
-                          className={`${styles['btn']} ${styles['btn_primary']}`}
-                        >
-                          {t('banner-btn-title')}
-                        </Button>
+                        <Link href="#deviceSection">
+                          <Button
+                            variant="contained"
+                            className={`${styles['btn']} ${styles['btn_primary']}`}
+                          >
+                            {t('banner-btn-title')}
+                          </Button>
+                        </Link>
                       </motion.div>
                     </Grid>
 
