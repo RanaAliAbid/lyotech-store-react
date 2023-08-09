@@ -330,7 +330,8 @@ export default function CoProducts({ products }: InferGetServerSidePropsType<typ
                                         <br />
 
                                         <Typography variant="h5">
-                                            1,397.00 €
+                                            {(1397.00 * globalContext.conversionRate)?.toFixed(globalContext.priceToFixed)}
+                                            &nbsp;{globalContext.currencySymbol}
                                         </Typography>
                                         <Typography variant="h4">
                                             Specifications
@@ -501,108 +502,108 @@ export default function CoProducts({ products }: InferGetServerSidePropsType<typ
 
 
 
-                             {/* Partners Section Start */}
+                        {/* Partners Section Start */}
 
-            <div className={styles.partersWrap}>
-              <Container className={styles.containerBox}>
-                <Grid container spacing={3}>
-                  <Grid item md={12} sm={12}>
-                    <div className={styles.sectionHeading}>
-                      <Typography variant="h2">
-                        product certification
-                      </Typography>
-                    </div>
+                        <div className={styles.partersWrap}>
+                            <Container className={styles.containerBox}>
+                                <Grid container spacing={3}>
+                                    <Grid item md={12} sm={12}>
+                                        <div className={styles.sectionHeading}>
+                                            <Typography variant="h2">
+                                                product certification
+                                            </Typography>
+                                        </div>
 
-                    <br></br>
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                        x: '-100%',
-                        visibility: 'hidden',
-                      }}
-                      whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                      // animate={mainControls}
-                      transition={{ duration: 0.3, delay: 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      <div className={styles.partnersImg}>
-                        <img src={certificate01.src} alt="Certification Logo" />
-                        <img src={certificate02.src} alt="Certification Logo" />
-                        <img src={certificate03.src} alt="Certification Logo" />
-                        <img src={certificate04.src} alt="Certification Logo" />
-                        <img src={certificate05.src} alt="Certification Logo" />
-                        <img src={certificate06.src} alt="Certification Logo" />
-                        <img src={certificate07.src} alt="Certification Logo" />
-                        <img src={certificate08.src} alt="Certification Logo" />
-                        <img src={certificate09.src} alt="Certification Logo" />
-                        <img src={certificate10.src} alt="Certification Logo" />
-                        <img src={certificate11.src} alt="Certification Logo" />
-                        <img src={certificate12.src} alt="Certification Logo" />
-                        <img src={certificate13.src} alt="Certification Logo" />
-                      </div>
-                    </motion.div>
-                  </Grid>
+                                        <br></br>
+                                        <motion.div
+                                            initial={{
+                                                opacity: 0,
+                                                x: '-100%',
+                                                visibility: 'hidden',
+                                            }}
+                                            whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
+                                            // animate={mainControls}
+                                            transition={{ duration: 0.3, delay: 0.1 }}
+                                            viewport={{ once: true }}
+                                        >
+                                            <div className={styles.partnersImg}>
+                                                <img src={certificate01.src} alt="Certification Logo" />
+                                                <img src={certificate02.src} alt="Certification Logo" />
+                                                <img src={certificate03.src} alt="Certification Logo" />
+                                                <img src={certificate04.src} alt="Certification Logo" />
+                                                <img src={certificate05.src} alt="Certification Logo" />
+                                                <img src={certificate06.src} alt="Certification Logo" />
+                                                <img src={certificate07.src} alt="Certification Logo" />
+                                                <img src={certificate08.src} alt="Certification Logo" />
+                                                <img src={certificate09.src} alt="Certification Logo" />
+                                                <img src={certificate10.src} alt="Certification Logo" />
+                                                <img src={certificate11.src} alt="Certification Logo" />
+                                                <img src={certificate12.src} alt="Certification Logo" />
+                                                <img src={certificate13.src} alt="Certification Logo" />
+                                            </div>
+                                        </motion.div>
+                                    </Grid>
 
-                  <Grid item md={12} sm={12}>
-                    <div className={styles.sectionHeading}>
-                      <Typography variant="h2">
-                        We Are
-                      </Typography>
-                    </div>
-                    <br></br>
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                        x: '100%',
-                        visibility: 'hidden',
-                      }}
-                      whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                      // animate={mainControls}
-                      transition={{ duration: 0.3, delay: 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      <div className={styles.partnersImg}>
-                        <img src={we01.src} alt="We Are Logo" />
-                        <img src={we02.src} alt="We Are Logo" />
-                        <img src={we03.src} alt="We Are Logo" />
-                        <img src={we04.src} alt="We Are Logo" />
-                        <img src={we05.src} alt="We Are Logo" />
-                      </div>
-                    </motion.div>
-                  </Grid>
-
-
-                  <Grid item md={12} sm={12}>
-                    <div className={styles.sectionHeading}>
-                      <Typography variant="h2">
-                        Our Partners
-                      </Typography>
-                    </div>
-                    <br></br>
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                        x: '100%',
-                        visibility: 'hidden',
-                      }}
-                      whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
-                      // animate={mainControls}
-                      transition={{ duration: 0.3, delay: 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      <div className={styles.partnersImg03}>
-                        <img src={partner01.src} alt="Partner Logo" />
-                        <img src={partner02.src} alt="Partner Logo" />
-                      </div>
-                    </motion.div>
-                  </Grid>
+                                    <Grid item md={12} sm={12}>
+                                        <div className={styles.sectionHeading}>
+                                            <Typography variant="h2">
+                                                We Are
+                                            </Typography>
+                                        </div>
+                                        <br></br>
+                                        <motion.div
+                                            initial={{
+                                                opacity: 0,
+                                                x: '100%',
+                                                visibility: 'hidden',
+                                            }}
+                                            whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
+                                            // animate={mainControls}
+                                            transition={{ duration: 0.3, delay: 0.1 }}
+                                            viewport={{ once: true }}
+                                        >
+                                            <div className={styles.partnersImg}>
+                                                <img src={we01.src} alt="We Are Logo" />
+                                                <img src={we02.src} alt="We Are Logo" />
+                                                <img src={we03.src} alt="We Are Logo" />
+                                                <img src={we04.src} alt="We Are Logo" />
+                                                <img src={we05.src} alt="We Are Logo" />
+                                            </div>
+                                        </motion.div>
+                                    </Grid>
 
 
-                </Grid>
-              </Container>
-            </div>
+                                    <Grid item md={12} sm={12}>
+                                        <div className={styles.sectionHeading}>
+                                            <Typography variant="h2">
+                                                Our Partners
+                                            </Typography>
+                                        </div>
+                                        <br></br>
+                                        <motion.div
+                                            initial={{
+                                                opacity: 0,
+                                                x: '100%',
+                                                visibility: 'hidden',
+                                            }}
+                                            whileInView={{ opacity: 1, x: 0, visibility: 'visible' }}
+                                            // animate={mainControls}
+                                            transition={{ duration: 0.3, delay: 0.1 }}
+                                            viewport={{ once: true }}
+                                        >
+                                            <div className={styles.partnersImg03}>
+                                                <img src={partner01.src} alt="Partner Logo" />
+                                                <img src={partner02.src} alt="Partner Logo" />
+                                            </div>
+                                        </motion.div>
+                                    </Grid>
 
-            {/* Partners Section End */}
+
+                                </Grid>
+                            </Container>
+                        </div>
+
+                        {/* Partners Section End */}
 
 
 
