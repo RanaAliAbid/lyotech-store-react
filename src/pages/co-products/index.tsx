@@ -625,7 +625,7 @@ export const getServerSideProps: GetServerSideProps<{ products: any }> = async (
 }) => {
     let result = null;
 
-    result = await getHomePageProducts();
+    result = []//await getHomePageProducts();
 
     const products = result;
     return { props: { products } };

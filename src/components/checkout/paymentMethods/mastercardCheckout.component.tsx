@@ -1,6 +1,4 @@
-import { Button } from '@mui/material';
 import * as React from 'react';
-import { useForm } from "react-hook-form";
 
 export default function MastercardCheckoutComponent({ sessionId }: { sessionId: string }) {
 
@@ -32,7 +30,7 @@ export default function MastercardCheckoutComponent({ sessionId }: { sessionId: 
 
         setTimeout(() => {
             window.Checkout.showPaymentPage()
-        }, 5000)
+        }, 2000)
     }
 
     return (

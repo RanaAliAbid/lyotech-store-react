@@ -108,7 +108,7 @@ export default function PaymentMethodComponent({ paymentType, handleChangePaymen
                     }
 
                     {
-                        (paymentMethods?.length > 0 && paymentMethods?.findIndex((x: any) => x?.name?.toLowerCase() === "mastercard") != -1) && (
+                        (paymentMethods?.length > 0 && process.env.ENABLE_CC_PAYMENT == "true" && paymentMethods?.findIndex((x: any) => x?.name?.toLowerCase() === "mastercard") != -1) && (
                             <ListItem
                                 className={`${paymentType === 'mastercard' ? styles.show : ''
                                     }`}
