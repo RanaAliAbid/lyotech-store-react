@@ -260,11 +260,11 @@ export default function Checkout() {
       }
 
       const result = await saveUserOrder(data);
-      console.log("🚀 ~ file: index.tsx:261 ~ handlePlaceOrder ~ result:", result)
+      // console.log("🚀 ~ file: index.tsx:261 ~ handlePlaceOrder ~ result:", result)
 
       if (result?.data?.data?.data?.masterCardSession) {
-          console.log("open checkout page")
-          setSessionId(result?.data?.data?.data?.masterCardSession.sessionId)
+        // console.log("open checkout page")
+        setSessionId(result?.data?.data?.data?.masterCardSession.sessionId)
       }
       if (result?.data?.data?.data?.paymentLink) {
         window.location.href = result?.data?.data?.data?.paymentLink;
@@ -382,7 +382,7 @@ export default function Checkout() {
 
                         {/* //payment method */}
                         <PaymentMethodComponent paymentType={paymentType} handleChangePayment={handleChangePayment}></PaymentMethodComponent>
-                        {sessionId && <MastercardCheckoutComponent sessionId={sessionId}/>}
+                        {sessionId && <MastercardCheckoutComponent sessionId={sessionId} />}
                       </>
                     )
                   }
