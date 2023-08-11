@@ -62,10 +62,19 @@ import { useRouter } from 'next/router';
 import { useAuthContext } from '@/contexts/AuthContext';
 import { getHomePageProducts } from '@/services/products/product.service';
 
-import { getLocalStorage, homePageProducts, lfi_one_smartphone, lyo_tab, lyo_watch, setLocalStorage } from '@/utils/app.utils';
+import {
+  getLocalStorage,
+  homePageProducts,
+  lfi_one_smartphone,
+  lyo_tab,
+  lyo_watch,
+  setLocalStorage,
+} from '@/utils/app.utils';
 import Link from 'next/link';
 
-export default function Home({ products }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Home({
+  products,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const theme = createTheme({
     typography: {
       fontFamily: ['Work Sans'].join(','),
@@ -79,34 +88,46 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
 
   const addProductToCart = async (id: string) => {
     try {
-      if (!id) return;
+      if (!id) {
+        globalContext.setAlertProps({
+          show: true,
+          title: `Coming Soon...`,
+          text: '',
+          toast: true,
+          showConfirmButton: false,
+          background: '#8B0000',
+          timer: 6000,
+          timerProgressBar: true,
+          callback: globalContext.closeAlert,
+        });
+
+        return;
+      }
 
       const result = await globalContext.addCart(id, 1);
 
-      if (result) return router.push("/cart");
+      if (result) return router.push('/cart');
 
       globalContext.setGlobalLoading(false);
-
     } catch (error) {
       globalContext.setGlobalLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    let localProd: any = getLocalStorage("productsId") ?? "";
+    let localProd: any = getLocalStorage('productsId') ?? '';
 
     if (products?.LFI_ONE_Smartphone?.length > 3) {
-      setLocalStorage("productsId", JSON.stringify(products));
+      setLocalStorage('productsId', JSON.stringify(products));
       globalContext.setHomeProduct(products);
-
     } else {
       if (localProd.length > 3) {
-        localProd = JSON.parse(localProd)
+        localProd = JSON.parse(localProd);
 
         globalContext.setHomeProduct(localProd);
       }
     }
-  }, [products])
+  }, [products]);
 
   React.useEffect(() => {
     try {
@@ -114,27 +135,25 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
       const _errorMessage = urlParams.get('error');
 
       if (_errorMessage != null) {
-
         globalContext.setAlertProps({
           show: true,
           title: atob(_errorMessage),
-          text: "",
+          text: '',
           toast: true,
           showConfirmButton: false,
-          background: "#8B0000",
+          background: '#8B0000',
           timer: 6000,
           timerProgressBar: true,
-          callback: globalContext.closeAlert
-        })
+          callback: globalContext.closeAlert,
+        });
 
-        router.push("/")
+        router.push('/');
       }
-    } catch (error) { }
-  }, [])
+    } catch (error) {}
+  }, []);
 
   return (
     <>
-
       <div>
         <ThemeProvider theme={theme}>
           <main className={styles.main}>
@@ -211,7 +230,7 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
             {/* Banner Section End */}
 
             {/* Services Section Start */}
-            <div className={styles.homeServicesWrap} id='serviceSection'>
+            <div className={styles.homeServicesWrap} id="serviceSection">
               <Container className={styles.containerBox}>
                 <Grid container spacing={3}>
                   <Grid item md={3} sm={6} xs={12}>
@@ -450,7 +469,7 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
               </Container>
             </div>
 
-            <div className={styles.productsWrap} id='deviceSection'>
+            <div className={styles.productsWrap} id="deviceSection">
               <div
                 className={`${styles['productItemWrap']} ${styles['bgShape01']}`}
               >
@@ -519,7 +538,6 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                             <Typography variant="h6">
                               OctaCore MTK 2.4 Ghz
                             </Typography>
-
                           </motion.div>
                         </Grid>
                         <Grid item md={6}>
@@ -547,7 +565,6 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                             <Typography variant="h6">
                               Sony 64MPX Main Camera with Macro and Zoom
                             </Typography>
-
                           </motion.div>
                         </Grid>
 
@@ -574,7 +591,6 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               <RamIcon /> &nbsp;
                             </span>
                             <Typography variant="h6">12GB RAM</Typography>
-
                           </motion.div>
                         </Grid>
 
@@ -603,7 +619,6 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                             <Typography variant="h6">
                               6100 mAh Battery Power
                             </Typography>
-
                           </motion.div>
                         </Grid>
 
@@ -632,7 +647,6 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                             <Typography variant="h6">
                               IPS 6.78” FHD+ @ 120Hz 396 DPI
                             </Typography>
-
                           </motion.div>
                         </Grid>
 
@@ -661,7 +675,6 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                             <Typography variant="h6">
                               Mobile Minting App Native
                             </Typography>
-
                           </motion.div>
                         </Grid>
                       </Grid>
@@ -685,7 +698,11 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                         viewport={{ once: true }}
                       >
                         <Button
-                          onClick={(e) => addProductToCart(globalContext?.homeProduct?.LFI_ONE_Smartphone)}
+                          onClick={(e) =>
+                            addProductToCart(
+                              globalContext?.homeProduct?.LFI_ONE_Smartphone
+                            )
+                          }
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
@@ -744,9 +761,7 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               <Typography variant="h6">
                                 {t('product-item2-carac1')}
                               </Typography>
-
                             </div>
-
                           </Grid>
                           <Grid item md={12}>
                             <div className={styles.productItemSpec}>
@@ -756,7 +771,6 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               <Typography variant="h6">
                                 {t('product-item2-carac2')}
                               </Typography>
-
                             </div>
                           </Grid>
                           <Grid item md={12}>
@@ -767,7 +781,6 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               <Typography variant="h6">
                                 {t('product-item2-carac3')}
                               </Typography>
-
                             </div>
                           </Grid>
                         </Grid>
@@ -841,11 +854,16 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                           viewport={{ once: true }}
                         >
                           <Button
-                            onClick={(e) => addProductToCart(globalContext?.homeProduct?.LYO_Watch)}
+                            onClick={(e) =>
+                              addProductToCart(
+                                globalContext?.homeProduct?.LYO_Watch
+                              )
+                            }
                             variant="contained"
                             className={`${styles['btn']} ${styles['btn_primary']}`}
                           >
-                            {t('product-btn2-shop')}
+                            {/* {t('product-btn2-shop')} */}
+                            Coming Soon...
                           </Button>
                         </motion.div>
                       </motion.div>
@@ -900,7 +918,6 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                             <Typography variant="h6">
                               OctaCore MTK 2.4 Ghz
                             </Typography>
-
                           </motion.div>
                         </Grid>
                         <Grid item md={6}>
@@ -928,7 +945,6 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                             <Typography variant="h6">
                               Sony 64MPX Main Camera with Macro and Zoom
                             </Typography>
-
                           </motion.div>
                         </Grid>
 
@@ -955,7 +971,6 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                               <RamIcon />
                             </span>
                             <Typography variant="h6">12GB RAM</Typography>
-
                           </motion.div>
                         </Grid>
 
@@ -984,7 +999,6 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                             <Typography variant="h6">
                               6100 mAh Battery Power
                             </Typography>
-
                           </motion.div>
                         </Grid>
 
@@ -1013,7 +1027,6 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                             <Typography variant="h6">
                               10.1″ Full-HD Display
                             </Typography>
-
                           </motion.div>
                         </Grid>
 
@@ -1042,7 +1055,6 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                             <Typography variant="h6">
                               Minting App Native
                             </Typography>
-
                           </motion.div>
                         </Grid>
                       </Grid>
@@ -1062,11 +1074,16 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                         viewport={{ once: true }}
                       >
                         <Button
-                          onClick={(e) => addProductToCart(globalContext?.homeProduct?.LYO_Tab)}
+                          onClick={(e) =>
+                            addProductToCart(
+                              globalContext?.homeProduct?.LYO_Tab
+                            )
+                          }
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
-                          {t('product-btn3-shop')}
+                          {/* {t('product-btn3-shop')} */}
+                          Coming Soon...
                         </Button>
                       </motion.div>
                     </Grid>
@@ -1142,9 +1159,7 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
 
                   <Grid item md={12} sm={12}>
                     <div className={styles.sectionHeading}>
-                      <Typography variant="h2">
-                        We Are
-                      </Typography>
+                      <Typography variant="h2">We Are</Typography>
                     </div>
                     <br></br>
                     <motion.div
@@ -1168,12 +1183,9 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                     </motion.div>
                   </Grid>
 
-
                   <Grid item md={12} sm={12}>
                     <div className={styles.sectionHeading}>
-                      <Typography variant="h2">
-                        Our Partners
-                      </Typography>
+                      <Typography variant="h2">Our Partners</Typography>
                     </div>
                     <br></br>
                     <motion.div
@@ -1193,8 +1205,6 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
                       </div>
                     </motion.div>
                   </Grid>
-
-
                 </Grid>
               </Container>
             </div>
@@ -1227,23 +1237,22 @@ export default function Home({ products }: InferGetServerSidePropsType<typeof ge
   );
 }
 
-
-export const getServerSideProps: GetServerSideProps<{ products: any }> = async ({
-  req,
-  res,
-}: {
-  req: IncomingMessage;
-  res: ServerResponse;
-}) => {
+export const getServerSideProps: GetServerSideProps<{
+  products: any;
+}> = async ({ req, res }: { req: IncomingMessage; res: ServerResponse }) => {
   let result = null;
 
   result = await getHomePageProducts(homePageProducts);
 
   let productsId = homePageProducts;
 
-  productsId.LFI_ONE_Smartphone = result?.data?.data.find((x: any) => x.productKey === lfi_one_smartphone)?._id ?? "";
-  productsId.LYO_Watch = result?.data?.data.find((x: any) => x.productKey === lyo_watch)?._id ?? "";
-  productsId.LYO_Tab = result?.data?.data.find((x: any) => x.productKey === lyo_tab)?._id ?? "";
+  productsId.LFI_ONE_Smartphone =
+    result?.data?.data.find((x: any) => x.productKey === lfi_one_smartphone)
+      ?._id ?? '';
+  productsId.LYO_Watch =
+    result?.data?.data.find((x: any) => x.productKey === lyo_watch)?._id ?? '';
+  productsId.LYO_Tab =
+    result?.data?.data.find((x: any) => x.productKey === lyo_tab)?._id ?? '';
 
   const products = productsId;
   return { props: { products } };

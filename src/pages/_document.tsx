@@ -17,7 +17,14 @@ export default function Document() {
           rel="stylesheet"
         />
         {/* <script src={`https://ap-gateway.mastercard.com/form/version/72/merchant/${process.env.MC_MERCHANT_ID}/session.js`}></script> */}
-        <script src={"https://ap-gateway.mastercard.com/static/checkout/checkout.min.js"} data-error="errorCallback" data-cancel="cancelCallback"></script>
+        <script
+          src={
+            'https://ap-gateway.mastercard.com/static/checkout/checkout.min.js'
+          }
+          data-error="errorCallback"
+          data-cancel="https://api.lyotechlabs.com/cc_payment_webhook"
+          data-timeout="https://api.lyotechlabs.com/cc_payment_webhook"
+        ></script>
         <link rel="shortcut icon" href="/logo.png" type="image/png" />
       </Head>
       <body>

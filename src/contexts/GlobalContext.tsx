@@ -1,13 +1,16 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
-import {
-  Backdrop,
-  CircularProgress
-} from '@mui/material';
+import { Backdrop, CircularProgress } from '@mui/material';
 
 const GlobalContext = createContext<any>({});
-import { useRouter } from "next/router";
-import { addToCart, getCartCurrencyRate, getUserCart, removeCartProduct, updateCart } from '@/services/cart/cart.service';
+import { useRouter } from 'next/router';
+import {
+  addToCart,
+  getCartCurrencyRate,
+  getUserCart,
+  removeCartProduct,
+  updateCart,
+} from '@/services/cart/cart.service';
 import { copyTextToClipboard, priceSymbol } from '@/utils/app.utils';
 import AlertComponent from '../common/alert';
 import { SweetAlertOptions } from 'sweetalert2';
@@ -17,7 +20,6 @@ export function GlobalWrapper({
 }: {
   children: JSX.Element | JSX.Element[];
 }) {
-
   const updateLocale = (current = 'en') => {
     Cookies.set('lang', current);
   };
@@ -29,8 +31,8 @@ export function GlobalWrapper({
   const router = useRouter();
   const [globalLoading, setGlobalLoading] = useState<boolean>(false);
   const [cart, setCart] = useState<any>([]);
-  const [currencySymbol, setCurrencySymbol] = useState<string>(".");
-  const [selectedCurrency, setSelectedCurrency] = useState<string>("euro");
+  const [currencySymbol, setCurrencySymbol] = useState<string>('.');
+  const [selectedCurrency, setSelectedCurrency] = useState<string>('euro');
   const priceToFixed: number = 2;
   const [loadComponents, setLoadComponents] = useState<boolean>(false);
   const [homeProduct, setHomeProduct] = useState<any>(null);
@@ -38,49 +40,50 @@ export function GlobalWrapper({
   const [cartQtyProduct, setCartQtyProduct] = useState<any>(0);
   const [conversionRate, setConversionRate] = useState<number>(1);
 
-  const [alertProps, setAlertProps] = useState<SweetAlertOptions & { show: boolean, callback?: any }>({ show: false });
+  const [alertProps, setAlertProps] = useState<
+    SweetAlertOptions & { show: boolean; callback?: any }
+  >({ show: false });
 
   useEffect(() => {
     router.events.on('routeChangeStart', handleRouteChange);
     router.events.on('routeChangeComplete', handleRouteChangeComplete);
 
-    const currentCurrency = Cookies.get('currency') ?? "euro";
-    getCurrencyRate(currentCurrency)
+    const currentCurrency = Cookies.get('currency') ?? 'euro';
+    getCurrencyRate(currentCurrency);
 
     if (window) {
-      setScreenWidth(window.innerWidth)
+      setScreenWidth(window.innerWidth);
     }
 
     window.addEventListener('resize', handleResizeScreen);
-  }, [])
+  }, []);
 
   const handleResizeScreen = () => {
-    setScreenWidth(window.innerWidth)
-  }
+    setScreenWidth(window.innerWidth);
+  };
 
   const handleRouteChange = () => {
-    setGlobalLoading(true)
-  }
+    setGlobalLoading(true);
+  };
 
   const handleRouteChangeComplete = () => {
-    setGlobalLoading(false)
-  }
+    setGlobalLoading(false);
+  };
 
   const getCurrencyRate = async (name: string) => {
     try {
+      setSelectedCurrency(name);
+      setCurrencySymbol(priceSymbol(name));
+      updateCurrency(name);
 
-      setSelectedCurrency(name)
-      setCurrencySymbol(priceSymbol(name))
-      updateCurrency(name)
-
-      if (name == "euro") {
-        setConversionRate(1)
+      if (name == 'euro') {
+        setConversionRate(1);
         return;
       }
 
       const data = {
-        currencyCode: name
-      }
+        currencyCode: name,
+      };
 
       setGlobalLoading(true);
       const result = await getCartCurrencyRate(data);
@@ -89,9 +92,10 @@ export function GlobalWrapper({
 
       return result;
     } catch (error) {
+      setGlobalLoading(false);
       return null;
     }
-  }
+  };
 
   const deleteCart = async (id: string, qty: number) => {
     try {
@@ -104,44 +108,43 @@ export function GlobalWrapper({
     } catch (error) {
       return null;
     }
-  }
+  };
 
   const addCart = async (id: string, qty: number) => {
     try {
       setGlobalLoading(true);
       const result = await addToCart({
         productId: id,
-        quantity: qty
+        quantity: qty,
       });
       await getCart();
       setGlobalLoading(false);
 
       setAlertProps({
         show: true,
-        title: "Your cart product has been added",
-        text: "",
+        title: 'Your cart product has been added',
+        text: '',
         toast: true,
         showConfirmButton: false,
         timerProgressBar: true,
-        callback: closeAlert
-      })
+        callback: closeAlert,
+      });
 
       return result;
     } catch (error: any) {
-
       setAlertProps({
         show: true,
         title: error?.response?.data?.message,
-        text: "",
+        text: '',
         toast: true,
-        background: "#8B0000",
+        background: '#8B0000',
         showConfirmButton: false,
         timerProgressBar: true,
-        callback: closeAlert
-      })
+        callback: closeAlert,
+      });
       return null;
     }
-  }
+  };
 
   const getCart = async () => {
     try {
@@ -150,25 +153,25 @@ export function GlobalWrapper({
 
       let count = 0;
       result?.data?.data?.cart?.products?.map((cartItem: any, index: any) => {
-        count += cartItem?.quantity ?? 0
+        count += cartItem?.quantity ?? 0;
         setCartQtyProduct(count);
-      })
+      });
 
       return result?.data?.data ?? null;
     } catch (error) {
       setCart([]);
       return null;
     }
-  }
+  };
 
   const updateCartOneCare = async (id: string, status: boolean = true) => {
     try {
       setGlobalLoading(true);
       const result = await updateCart({
         oneCare: {
-          "productId": id,
-          "purchase": status
-        }
+          productId: id,
+          purchase: status,
+        },
       });
       await getCart();
       setGlobalLoading(false);
@@ -177,13 +180,13 @@ export function GlobalWrapper({
     } catch (error) {
       return null;
     }
-  }
+  };
 
   const updateCartShippingMethod = async (id: string) => {
     try {
       setGlobalLoading(true);
       const result = await updateCart({
-        shippingMethodId: id
+        shippingMethodId: id,
       });
       await getCart();
       setGlobalLoading(false);
@@ -192,50 +195,49 @@ export function GlobalWrapper({
     } catch (error) {
       return null;
     }
-  }
+  };
 
   const updateCartCountry = async (id: string) => {
     try {
       setGlobalLoading(true);
       const result = await updateCart({
-        countryId: id
+        countryId: id,
       });
       await getCart();
       setGlobalLoading(false);
 
       setAlertProps({
         show: true,
-        title: "Your cart country has been updated",
-        text: "",
+        title: 'Your cart country has been updated',
+        text: '',
         toast: true,
         showConfirmButton: false,
         timerProgressBar: true,
-        callback: closeAlert
-      })
+        callback: closeAlert,
+      });
 
       return result;
     } catch (error) {
-
       setAlertProps({
         show: true,
         title: "Can't add the product to your cart",
-        text: "",
+        text: '',
         toast: true,
         showConfirmButton: false,
-        background: "#8B0000",
+        background: '#8B0000',
         timerProgressBar: true,
-        callback: closeAlert
-      })
+        callback: closeAlert,
+      });
 
       return null;
     }
-  }
+  };
 
   const updateCartPaymentMethod = async (id: string) => {
     try {
       setGlobalLoading(true);
       const result = await updateCart({
-        paymentMethodId: id
+        paymentMethodId: id,
       });
       await getCart();
       setGlobalLoading(false);
@@ -244,108 +246,125 @@ export function GlobalWrapper({
     } catch (error) {
       return null;
     }
-  }
+  };
 
   const updateCartCoupon = async (code: string, apply: boolean = true) => {
     try {
       setGlobalLoading(true);
       const result = await updateCart({
         oneCare: {
-          "code": code,
-          "apply": apply
-        }
+          code: code,
+          apply: apply,
+        },
       });
       await getCart();
       setGlobalLoading(false);
 
       setAlertProps({
         show: true,
-        title: "Your coupon code has been applied",
-        text: "",
+        title: 'Your coupon code has been applied',
+        text: '',
         toast: true,
         showConfirmButton: false,
         timerProgressBar: true,
-        callback: closeAlert
-      })
+        callback: closeAlert,
+      });
 
       return result;
     } catch (error) {
       return null;
     }
-  }
+  };
 
   useEffect(() => {
     cartFirstLoad();
-  }, [router])
+  }, [router]);
 
   const cartFirstLoad = async () => {
     const data: any = await getCart();
-    if ((!data?.cart?.products || data?.cart?.products?.length == 0)
-      && (router.pathname.startsWith("/checkout") || router.pathname.startsWith("/cart"))) {
-      if (!router.pathname.includes("payment")) {
-        router.push("/");
+    if (
+      (!data?.cart?.products || data?.cart?.products?.length == 0) &&
+      (router.pathname.startsWith('/checkout') ||
+        router.pathname.startsWith('/cart'))
+    ) {
+      if (!router.pathname.includes('payment')) {
+        router.push('/');
       } else {
         setLoadComponents(true);
       }
     } else {
       setLoadComponents(true);
     }
-  }
+  };
 
   const closeAlert = () => {
     setAlertProps({
       show: false,
-      title: "",
-      text: ""
-    })
-  }
+      title: '',
+      text: '',
+    });
+  };
 
   const copyToClipboard = (text: string) => {
     if (copyTextToClipboard(text)) {
       setAlertProps({
         show: true,
-        title: "Your text has been copied to clipboard",
-        text: "",
+        title: 'Your text has been copied to clipboard',
+        text: '',
         toast: true,
         showConfirmButton: false,
         timerProgressBar: true,
-        callback: closeAlert
-      })
+        callback: closeAlert,
+      });
     } else {
       setAlertProps({
         show: true,
         title: "Couldn't copy to clipboard",
-        text: "",
+        text: '',
         toast: true,
-        background: "#8B0000",
+        background: '#8B0000',
         showConfirmButton: false,
         timerProgressBar: true,
-        callback: closeAlert
-      })
+        callback: closeAlert,
+      });
     }
-  }
+  };
 
   const globalData = {
     updateLocale,
-    globalLoading, setGlobalLoading,
-    cart, setCart, deleteCart, addCart, getCart,
-    currencySymbol, setCurrencySymbol,
+    globalLoading,
+    setGlobalLoading,
+    cart,
+    setCart,
+    deleteCart,
+    addCart,
+    getCart,
+    currencySymbol,
+    setCurrencySymbol,
     priceToFixed,
-    updateCartOneCare, updateCartShippingMethod,
-    updateCartCountry, updateCartPaymentMethod,
+    updateCartOneCare,
+    updateCartShippingMethod,
+    updateCartCountry,
+    updateCartPaymentMethod,
     updateCartCoupon,
-    homeProduct, setHomeProduct,
-    screenWitdh, setScreenWidth,
-    alertProps, setAlertProps, closeAlert,
+    homeProduct,
+    setHomeProduct,
+    screenWitdh,
+    setScreenWidth,
+    alertProps,
+    setAlertProps,
+    closeAlert,
     copyToClipboard,
-    cartQtyProduct, setCartQtyProduct,
+    cartQtyProduct,
+    setCartQtyProduct,
     getCurrencyRate,
-    selectedCurrency, setSelectedCurrency, conversionRate
+    selectedCurrency,
+    setSelectedCurrency,
+    conversionRate,
   };
 
   return (
     <GlobalContext.Provider value={globalData}>
-
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 5 }}
         open={globalLoading}
@@ -353,13 +372,9 @@ export function GlobalWrapper({
         <CircularProgress color="inherit" />
       </Backdrop>
 
-      {
-        (loadComponents) && <AlertComponent {...alertProps}></AlertComponent>
-      }
+      {loadComponents && <AlertComponent {...alertProps}></AlertComponent>}
 
-      {
-        loadComponents && children
-      }
+      {loadComponents && children}
     </GlobalContext.Provider>
   );
 }
