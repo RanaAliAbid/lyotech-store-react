@@ -19,6 +19,7 @@ export const verifyUserHandover = async (params: PartnerLinkData) => {
       data: result?.data?.data?.jwtToken,
     };
   } catch (error: any) {
+    console.log("🚀 ~ file: auth.service.ts:22 ~ verifyUserHandover ~ error:", error)
     return {
       success: false,
       message: error?.response?.data?.msg?.message ?? "An error occured please try again later",

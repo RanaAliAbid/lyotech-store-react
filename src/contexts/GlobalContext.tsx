@@ -24,7 +24,9 @@ export function GlobalWrapper({
     Cookies.set('lang', current);
   };
 
-  const updateCurrency = (current = 'euro') => {
+  const defaultCurrency = 'dirahm';
+
+  const updateCurrency = (current = defaultCurrency) => {
     Cookies.set('currency', current);
   };
 
@@ -32,7 +34,8 @@ export function GlobalWrapper({
   const [globalLoading, setGlobalLoading] = useState<boolean>(false);
   const [cart, setCart] = useState<any>([]);
   const [currencySymbol, setCurrencySymbol] = useState<string>('.');
-  const [selectedCurrency, setSelectedCurrency] = useState<string>('euro');
+  const [selectedCurrency, setSelectedCurrency] =
+    useState<string>(defaultCurrency);
   const priceToFixed: number = 2;
   const [loadComponents, setLoadComponents] = useState<boolean>(false);
   const [homeProduct, setHomeProduct] = useState<any>(null);
@@ -48,7 +51,7 @@ export function GlobalWrapper({
     router.events.on('routeChangeStart', handleRouteChange);
     router.events.on('routeChangeComplete', handleRouteChangeComplete);
 
-    const currentCurrency = Cookies.get('currency') ?? 'euro';
+    const currentCurrency = Cookies.get('currency') ?? defaultCurrency;
     getCurrencyRate(currentCurrency);
 
     if (window) {

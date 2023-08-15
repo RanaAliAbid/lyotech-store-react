@@ -13,7 +13,6 @@ import darkLogo from '../img/dark-logo.png';
 
 import styles from '@/styles/Home.module.css';
 
-
 import useTranslation from 'next-translate/useTranslation';
 
 import footerCard01 from '../img/footerCard01.png';
@@ -35,10 +34,7 @@ export default function Footer() {
           <Grid container spacing={1}>
             <Grid item md={3} xs={12}>
               <div className={`${styles['footBox']} ${styles['footerInfo']}`}>
-                <img
-                  src={darkLogo.src}
-                  alt="logo"
-                />
+                <img src={darkLogo.src} alt="logo" />
                 <Typography variant="h5">
                   Lyotech labs electronics trading l.L.C
                 </Typography>
@@ -48,11 +44,15 @@ export default function Footer() {
                 </Typography>
 
                 <Typography variant="h5">
-                  WHP2-BLOCK-T COMMERCIAL Area: Saih Shuaib 3, Dubai, UAE PO BOX: 33306
+                  WHP2-BLOCK-T COMMERCIAL Area: Saih Shuaib 3, Dubai, UAE PO
+                  BOX: 33306
                 </Typography>
 
                 <Typography variant="h4">
-                  If you have any question. please contact us <a href="https://support.lyotechlabs.com" target="_blank"><b></b> create ticket</a>
+                  If you have any question. please contact us{' '}
+                  <a href="https://support.lyotechlabs.com" target="_blank">
+                    <b></b> create ticket
+                  </a>
                 </Typography>
 
                 <Typography variant="h4">
@@ -63,8 +63,6 @@ export default function Footer() {
                   <img src={footerCard02.src} alt="Card" />
                   <img src={footerCard03.src} alt="Card" />
                 </div>
-
-
               </div>
             </Grid>
 
@@ -76,27 +74,32 @@ export default function Footer() {
 
                 <List>
                   <ListItem className={styles.item}>
-                    <Link href="/privacy-policy">{t('footer-section2-item1')}</Link>
+                    <Link href="/privacy-policy">
+                      {t('footer-section2-item1')}
+                    </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="/terms">Terms & Condition</Link>
+                    <Link href="/terms">Terms & Conditions</Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="/delivery-shipping-policy">Delivery & Shipping Policy</Link>
+                    <Link href="/delivery-shipping-policy">
+                      Delivery & Shipping Policy
+                    </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="/return-refund-policy">Refund/Return Policy</Link>
+                    <Link href="/return-refund-policy">
+                      Refund/Return Policy
+                    </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="/cancellation-replacement-policy">Cancellation & Replacement Policy</Link>
+                    <Link href="/cancellation-replacement-policy">
+                      Cancellation & Replacement Policy
+                    </Link>
                   </ListItem>
-
-
-
                 </List>
               </div>
             </Grid>
@@ -127,28 +130,24 @@ export default function Footer() {
             </Grid>
 
             <Grid item md={4} xs={12}>
-              <div className={`${styles['footBox']} ${styles['footerAddresses']}`}>
-                <Typography variant="h4">
-                  Address
-                </Typography>
+              <div
+                className={`${styles['footBox']} ${styles['footerAddresses']}`}
+              >
+                <Typography variant="h4">Address</Typography>
 
                 <Typography className={styles.uaeAddress} variant="h5">
                   <span> Lyotech Labs LLC </span>
-                  WHP2-BLOCK-T COMMERCIAL
-                  Area: Saih Shuaib 3, Dubai, UAE
+                  WHP2-BLOCK-T COMMERCIAL Area: Saih Shuaib 3, Dubai, UAE
                 </Typography>
 
                 <Typography className={styles.doverAddress} variant="h5">
-                  <span> Lyotech Labs LLC </span>
-                  8 The Green, Suite R in the City
-                  of Dover, Zip code - 19901
+                  <span> Lyotech Labs LLC </span>8 The Green, Suite R in the
+                  City of Dover, Zip code - 19901
                 </Typography>
-
 
                 <Typography className={styles.hongKongAddress} variant="h5">
                   <span> Lyotech labs Limited</span>
-                  Room 1104, Crawford House, 70
-                  Queen's Rd. Centra, Central,
+                  Room 1104, Crawford House, 70 Queen's Rd. Centra, Central,
                   Hong Kong
                 </Typography>
               </div>
@@ -175,7 +174,6 @@ export default function Footer() {
             </Grid>
           </Grid>
         </Container>
-
       </div>
 
       <CookiesComponent></CookiesComponent>
