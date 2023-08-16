@@ -6,220 +6,299 @@ import Input from '@mui/material/Input';
 import { Alert, MenuItem, Select } from '@mui/material';
 
 import { AddressDataValidator } from '@/services/addresses/addresses.types';
-import { getCityDetails, getCountry, getStateDetails } from '@/services/country/country.service';
+import {
+  getCityDetails,
+  getCountry,
+  getStateDetails,
+} from '@/services/country/country.service';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
 
-export default function ShippingFormComponent({ localAddress, formAddress, setFormAddress }: { localAddress: any, formAddress: any, setFormAddress: any }) {
+export default function ShippingFormComponent({
+  localAddress,
+  formAddress,
+  setFormAddress,
+}: {
+  localAddress: any;
+  formAddress: any;
+  setFormAddress: any;
+}) {
+  const [validator, setValidator] = React.useState<AddressDataValidator>();
+  const [cityList, setCityList] = React.useState<any>([]);
+  const [countryList, setCountryList] = React.useState<any>([]);
+  const [state, setState] = React.useState<any>('');
+  const [city, setCity] = React.useState<any>('');
+  const [countryCode, setCountryCode] = React.useState<string>('+971');
+  const [countryCodeName, setCountryCodeName] = React.useState<string>('');
+  const [stateList, setStateList] = React.useState<any>([]);
+  const [hideStateList, setHideStateList] = React.useState<boolean>(false);
 
-    const [validator, setValidator] = React.useState<AddressDataValidator>();
-    const [cityList, setCityList] = React.useState<any>([]);
-    const [countryList, setCountryList] = React.useState<any>([]);
-    const [state, setState] = React.useState<any>("");
-    const [city, setCity] = React.useState<any>("");
-    const [countryCode, setCountryCode] = React.useState<string>("+971");
-    const [countryCodeName, setCountryCodeName] = React.useState<string>("");
-    const [stateList, setStateList] = React.useState<any>([]);
-    const [hideStateList, setHideStateList] = React.useState<boolean>(false);
+  const globalContext = useGlobalContext();
+  const authContext = useAuthContext();
+  const { t } = useTranslation('cart');
 
-    const globalContext = useGlobalContext();
-    const authContext = useAuthContext();
-    const { t } = useTranslation('cart');
+  const getCountryList = async () => {
+    try {
+      const result = await getCountry();
 
+      if (formAddress?.shippingAddress?.country) {
+        getStateDetailsOfCountry(
+          result?.data?.data?.country?.find(
+            (x: any) => x.name === formAddress?.shippingAddress?.country ?? ''
+          )?._id,
+          true,
+          formAddress?.shippingAddress
+        );
+      }
 
-    const getCountryList = async () => {
-        try {
-            const result = await getCountry();
+      setCountryList(result?.data?.data?.country);
 
-            if (formAddress?.shippingAddress?.country) {
-                getStateDetailsOfCountry(
-                    result?.data?.data?.country?.find((x: any) => x.name === formAddress?.shippingAddress?.country ?? "")?._id,
-                    true,
-                    formAddress?.shippingAddress
-                );
-            }
+      globalContext.setGlobalLoading(false);
+    } catch (error) {}
+  };
 
-            setCountryList(result?.data?.data?.country);
+  const handleChangeCountryType = async (countryId: string) => {
+    try {
+      globalContext.setGlobalLoading(true);
 
-            globalContext.setGlobalLoading(false);
-        } catch (error) { }
+      const result = await globalContext.updateCartCountry(countryId);
+
+      if (!result) {
+        globalContext.setGlobalLoading(false);
+      }
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
     }
+  };
 
-    const handleChangeCountryType = async (
-        countryId: string
-    ) => {
-        try {
-            globalContext.setGlobalLoading(true);
+  const handleChangeCountryName = async (name: string) => {
+    let currentAddress = formAddress;
+    currentAddress.shippingAddress.country = name;
+    // currentAddress.shippingAddress.city = "";
+    // currentAddress.shippingAddress.state = "";
 
-            const result = await globalContext.updateCartCountry(countryId);
+    setFormAddress(currentAddress);
+    // setCityList([])
+    // setStateList([])
+  };
 
-            if (!result) {
-                globalContext.setGlobalLoading(false);
-            }
+  const getStateDetailsOfCountry = async (
+    value: any,
+    autoLoadCity: boolean = false,
+    currentAddress: any = null
+  ) => {
+    try {
+      return;
+      const result = await getStateDetails(value);
 
-        } catch (error) {
-            globalContext.setGlobalLoading(false);
+      if (result?.data?.data?.cities) {
+        setCityList(result?.data?.data?.cities);
+        setHideStateList(true);
+        setFormAddress({
+          ...formAddress,
+          shippingAddress: { ...formAddress.shippingAddress, state: '' },
+        });
+      } else {
+        setHideStateList(false);
+
+        setStateList(result?.data?.data?.states ?? []);
+
+        if (autoLoadCity) {
+          const state = result?.data?.data?.states?.find(
+            (x: any) => x?.name === currentAddress?.state ?? ''
+          )?._id;
+
+          if (state) {
+            await getCityDetailsOfState(state);
+          }
         }
-    };
+      }
+    } catch (error) {}
+  };
 
-    const handleChangeCountryName = async (name: string) => {
-        let currentAddress = formAddress
-        currentAddress.shippingAddress.country = name;
-        // currentAddress.shippingAddress.city = "";
-        // currentAddress.shippingAddress.state = "";
+  const getCityDetailsOfState = async (value: any) => {
+    try {
+      return;
+      const result = await getCityDetails(value);
+      setCityList(result?.data?.data?.cities);
+    } catch (error) {}
+  };
 
-        setFormAddress(currentAddress)
-        // setCityList([])
-        // setStateList([])
+  React.useEffect(() => {
+    getCountryList();
+  }, [localAddress]);
+
+  React.useEffect(() => {
+    if (countryList && countryList.length > 0) {
+      const countryId =
+        countryList.find(
+          (country: any) =>
+            country.name === formAddress?.shippingAddress?.country
+        )?._id ?? 'United Arab Emirates';
+
+      if (countryId.length > 5) {
+        handleChangeCountryType(countryId);
+      }
     }
+  }, [countryList]);
 
-    const getStateDetailsOfCountry = async (value: any, autoLoadCity: boolean = false, currentAddress: any = null) => {
-        try {
-            return;
-            const result = await getStateDetails(value);
-
-            if (result?.data?.data?.cities) {
-                setCityList(result?.data?.data?.cities);
-                setHideStateList(true);
-                setFormAddress({ ...formAddress, shippingAddress: { ...formAddress.shippingAddress, state: "" } })
-            } else {
-                setHideStateList(false);
-
-                setStateList(result?.data?.data?.states ?? []);
-
-                if (autoLoadCity) {
-                    const state = result?.data?.data?.states?.find((x: any) => x?.name === currentAddress?.state ?? "")?._id
-
-                    if (state) {
-                        await getCityDetailsOfState(state)
-                    }
-                }
+  return (
+    <>
+      <div className={styles.flexBox}>
+        <div className={styles.formControl}>
+          <label className={styles.formLabel}>
+            {' '}
+            First name <span className="text-danger">*</span>{' '}
+          </label>
+          <Input
+            className={styles.formInput}
+            placeholder="First name"
+            value={formAddress?.shippingAddress?.firstName}
+            onChange={(e: any) =>
+              setFormAddress({
+                ...formAddress,
+                shippingAddress: {
+                  ...formAddress.shippingAddress,
+                  firstName: e.target.value,
+                },
+              })
             }
+          />
+        </div>
 
-        } catch (error) { }
-    }
+        <div className={styles.formControl}>
+          <label className={styles.formLabel}>
+            {' '}
+            Last name <span className="text-danger">*</span>{' '}
+          </label>
+          <Input
+            className={styles.formInput}
+            placeholder="Last name"
+            value={formAddress?.shippingAddress?.lastName}
+            onChange={(e: any) =>
+              setFormAddress({
+                ...formAddress,
+                shippingAddress: {
+                  ...formAddress.shippingAddress,
+                  lastName: e.target.value,
+                },
+              })
+            }
+          />
+        </div>
 
-    const getCityDetailsOfState = async (value: any) => {
-        try {
-            return;
-            const result = await getCityDetails(value);
-            setCityList(result?.data?.data?.cities);
-        } catch (error) { }
-    }
+        <div className={styles.formControl}>
+          <label className={styles.formLabel}>
+            {' '}
+            Email Address <span className="text-danger">*</span>{' '}
+          </label>
+          <Input
+            className={styles.formInput}
+            placeholder="Email Address"
+            value={formAddress?.shippingAddress?.email}
+            onChange={(e: any) =>
+              setFormAddress({
+                ...formAddress,
+                shippingAddress: {
+                  ...formAddress.shippingAddress,
+                  email: e.target.value,
+                },
+              })
+            }
+          />
+        </div>
 
-    React.useEffect(() => {
-        getCountryList()
-    }, [localAddress])
+        <div className={styles.formControl}>
+          <label className={styles.formLabel}>
+            {' '}
+            Phone <span className="text-danger">*</span>
+          </label>
+          <Input
+            className={styles.formInput}
+            placeholder="Phone Number"
+            value={formAddress?.shippingAddress?.phone}
+            onChange={(e: any) =>
+              setFormAddress({
+                ...formAddress,
+                shippingAddress: {
+                  ...formAddress.shippingAddress,
+                  phone: e.target.value,
+                },
+              })
+            }
+          />
+        </div>
 
-    return (
-        <>
-            <div className={styles.flexBox}>
-                <div className={styles.formControl}>
-                    <label className={styles.formLabel}>
-                        {' '}
-                        First name  <span className="text-danger">*</span>{' '}
-                    </label>
-                    <Input
-                        className={styles.formInput}
-                        placeholder="First name"
-                        value={formAddress?.shippingAddress?.firstName}
-                        onChange={(e: any) => setFormAddress({ ...formAddress, shippingAddress: { ...formAddress.shippingAddress, firstName: e.target.value } })} />
-                </div>
+        <div className={styles.formControl}>
+          <label className={styles.formLabel}>
+            {' '}
+            Country <span className="text-danger">*</span>{' '}
+          </label>
 
-                <div className={styles.formControl}>
-                    <label className={styles.formLabel}>
-                        {' '}
-                        Last name  <span className="text-danger">*</span>{' '}
-                    </label>
-                    <Input
-                        className={styles.formInput}
-                        placeholder="Last name"
-                        value={formAddress?.shippingAddress?.lastName}
-                        onChange={(e: any) => setFormAddress({ ...formAddress, shippingAddress: { ...formAddress.shippingAddress, lastName: e.target.value } })} />
-                </div>
+          {countryList && countryList.length > 0 && (
+            <Select
+              label="Country"
+              className={`${styles.formTextField} formSelect`}
+              value={formAddress?.shippingAddress?.country ?? ''}
+              size="small"
+            >
+              <MenuItem
+                value={formAddress?.shippingAddress?.country ?? ''}
+                disabled
+              >
+                Select a Country
+              </MenuItem>
+              {countryList.map((country: any, index: any) => (
+                <MenuItem
+                  key={index}
+                  value={country.name}
+                  onClick={async (e) => {
+                    await handleChangeCountryName(country.name);
+                    getStateDetailsOfCountry(country._id);
+                    setCountryCodeName(country.name);
+                    handleChangeCountryType(country._id);
+                  }}
+                >
+                  {country.name}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
 
-                <div className={styles.formControl}>
-                    <label className={styles.formLabel}>
-                        {' '}
-                        Email Address  <span className="text-danger">*</span>{' '}
-                    </label>
-                    <Input
-                        className={styles.formInput}
-                        placeholder="Email Address"
-                        value={formAddress?.shippingAddress?.email}
-                        onChange={(e: any) => setFormAddress({ ...formAddress, shippingAddress: { ...formAddress.shippingAddress, email: e.target.value } })} />
-                </div>
+          <div className={styles.inline}>
+            <div className={styles.formControl}>
+              <span className="alert-field">
+                {validator && !validator.country && (
+                  <Alert severity="error">{t('required-field-error')}</Alert>
+                )}
+              </span>
+            </div>
+          </div>
+        </div>
 
-                <div className={styles.formControl}>
-                    <label className={styles.formLabel}> Phone <span className="text-danger">*</span></label>
-                    <Input
-                        className={styles.formInput}
-                        placeholder="Phone Number"
-                        value={formAddress?.shippingAddress?.phone}
-                        onChange={(e: any) => setFormAddress({ ...formAddress, shippingAddress: { ...formAddress.shippingAddress, phone: e.target.value } })} />
-                </div>
+        <div className={styles.formControl}>
+          <label className={styles.formLabel}>
+            {' '}
+            State / Region
+            {/* <span className="text-danger">*</span> */}
+          </label>
+          <Input
+            className={styles.formInput}
+            value={formAddress?.shippingAddress?.state ?? ''}
+            placeholder="State / Region"
+            onChange={(e) =>
+              setFormAddress({
+                ...formAddress,
+                shippingAddress: {
+                  ...formAddress.shippingAddress,
+                  state: e.target.value,
+                },
+              })
+            }
+          />
 
-                <div className={styles.formControl}>
-                    <label className={styles.formLabel}>
-                        {' '}
-                        Country  <span className="text-danger">*</span>{' '}
-                    </label>
-
-                    {
-                        (countryList && countryList.length > 0) && (
-                            <Select
-                                label="Country"
-                                className={`${styles.formTextField} formSelect`}
-                                value={formAddress?.shippingAddress?.country ?? ""}
-                                size='small'
-                            >
-                                <MenuItem value={formAddress?.shippingAddress?.country ?? ""} disabled>
-                                    Select a Country
-                                </MenuItem>
-                                {countryList.map((country: any, index: any) => (
-                                    <MenuItem
-                                        key={index}
-                                        value={country.name}
-                                        onClick={async (e) => {
-                                            await handleChangeCountryName(country.name);
-                                            getStateDetailsOfCountry(country._id);
-                                            setCountryCodeName(country.name);
-                                            handleChangeCountryType(country._id);
-                                        }}
-                                    >
-                                        {country.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        )
-                    }
-
-                    <div className={styles.inline}>
-                        <div className={styles.formControl}>
-                            <span className="alert-field">
-                                {validator && !validator.country && (
-                                    <Alert severity="error">
-                                        {t('required-field-error')}
-                                    </Alert>
-                                )}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div className={styles.formControl}>
-                    <label className={styles.formLabel}> State / Region
-                        {/* <span className="text-danger">*</span> */}
-                    </label>
-                    <Input
-                        className={styles.formInput}
-                        value={formAddress?.shippingAddress?.state ?? ""}
-                        placeholder="State / Region"
-                        onChange={(e) => setFormAddress({ ...formAddress, shippingAddress: { ...formAddress.shippingAddress, state: e.target.value } })}
-                    />
-
-                    {/* {
+          {/* {
                         <Select
                             label="States"
                             className={styles.formTextField}
@@ -247,31 +326,37 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                             }
                         </Select>
                     } */}
-                    <div className={styles.inline}>
-                        <div className={styles.formControl}>
-                            <span className="alert-field">
-                                {validator && !validator.state && (
-                                    <Alert severity="error">
-                                        {t('required-field-error')}
-                                    </Alert>
-                                )}
-                            </span>
-                        </div>
-                    </div>
-                </div>
+          <div className={styles.inline}>
+            <div className={styles.formControl}>
+              <span className="alert-field">
+                {validator && !validator.state && (
+                  <Alert severity="error">{t('required-field-error')}</Alert>
+                )}
+              </span>
+            </div>
+          </div>
+        </div>
 
-                <div className={styles.formControl}>
-                    <label className={styles.formLabel}>
-                        {' '}
-                        Town / City  <span className="text-danger">*</span>{' '}
-                    </label>
-                    <Input
-                        className={styles.formInput}
-                        value={formAddress?.shippingAddress?.city ?? ""}
-                        placeholder="City "
-                        onChange={(e) => setFormAddress({ ...formAddress, shippingAddress: { ...formAddress.shippingAddress, city: e.target.value } })}
-                    />
-                    {/* {
+        <div className={styles.formControl}>
+          <label className={styles.formLabel}>
+            {' '}
+            Town / City <span className="text-danger">*</span>{' '}
+          </label>
+          <Input
+            className={styles.formInput}
+            value={formAddress?.shippingAddress?.city ?? ''}
+            placeholder="City "
+            onChange={(e) =>
+              setFormAddress({
+                ...formAddress,
+                shippingAddress: {
+                  ...formAddress.shippingAddress,
+                  city: e.target.value,
+                },
+              })
+            }
+          />
+          {/* {
                         <Select
                             label="City"
                             className={styles.formTextField}
@@ -282,7 +367,7 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                                 Select a city
                             </MenuItem> */}
 
-                    {/* {cityList && cityList.length > 0 ?
+          {/* {cityList && cityList.length > 0 ?
                                 cityList.map((city: any, index: any) => (
                                     <MenuItem
                                         key={index}
@@ -296,58 +381,62 @@ export default function ShippingFormComponent({ localAddress, formAddress, setFo
                                 ))
                                 : "Select a city"
                             } */}
-                    {/* </Select>
+          {/* </Select>
                     } */}
-                    <div className={styles.inline}>
-                        <div className={styles.formControl}>
-                            <span className="alert-field">
-                                {validator && !validator.city && (
-                                    <Alert severity="error">
-                                        {t('required-field-error')}
-                                    </Alert>
-                                )}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div className={styles.formControl}>
-                    <label className={styles.formLabel}>
-                        {' '}
-                        Partner User ID {' '}
-                    </label>
-                    <Input
-                        className={styles.formInput}
-                        disabled
-                        value={authContext?.connectedUser?.licNumber ?? ""}
-                        placeholder="Partner User ID "
-                    />
-                </div>
-
-                <div className={styles.formControl}>
-                    <label className={styles.formLabel}>
-                        {' '}
-                        Address  <span className="text-danger">*</span>{' '}
-                    </label>
-                    <Input
-                        className={styles.formInput}
-                        placeholder="Address Street, Area, ..."
-                        value={formAddress?.shippingAddress?.address}
-                        onChange={(e: any) => setFormAddress({ ...formAddress, shippingAddress: { ...formAddress.shippingAddress, address: e.target.value } })} />
-                </div>
-
-                <div className={styles.formControl}>
-                    <label className={styles.formLabel}>
-                        {' '}
-                        Order notes {' '}
-                    </label>
-                    <Input
-                        className={styles.formInput}
-                        placeholder="Order notes (optional)"
-                        value={formAddress?.notes}
-                        onChange={(e: any) => setFormAddress({ ...formAddress, notes: e.target.value })} />
-                </div>
+          <div className={styles.inline}>
+            <div className={styles.formControl}>
+              <span className="alert-field">
+                {validator && !validator.city && (
+                  <Alert severity="error">{t('required-field-error')}</Alert>
+                )}
+              </span>
             </div>
-        </>
-    );
+          </div>
+        </div>
+
+        <div className={styles.formControl}>
+          <label className={styles.formLabel}> Partner User ID </label>
+          <Input
+            className={styles.formInput}
+            disabled
+            value={authContext?.connectedUser?.licNumber ?? ''}
+            placeholder="Partner User ID "
+          />
+        </div>
+
+        <div className={styles.formControl}>
+          <label className={styles.formLabel}>
+            {' '}
+            Address <span className="text-danger">*</span>{' '}
+          </label>
+          <Input
+            className={styles.formInput}
+            placeholder="Address Street, Area, ..."
+            value={formAddress?.shippingAddress?.address}
+            onChange={(e: any) =>
+              setFormAddress({
+                ...formAddress,
+                shippingAddress: {
+                  ...formAddress.shippingAddress,
+                  address: e.target.value,
+                },
+              })
+            }
+          />
+        </div>
+
+        <div className={styles.formControl}>
+          <label className={styles.formLabel}> Order notes </label>
+          <Input
+            className={styles.formInput}
+            placeholder="Order notes (optional)"
+            value={formAddress?.notes}
+            onChange={(e: any) =>
+              setFormAddress({ ...formAddress, notes: e.target.value })
+            }
+          />
+        </div>
+      </div>
+    </>
+  );
 }

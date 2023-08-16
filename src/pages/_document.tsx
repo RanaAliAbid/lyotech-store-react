@@ -22,8 +22,6 @@ export default function Document() {
             'https://ap-gateway.mastercard.com/static/checkout/checkout.min.js'
           }
           data-error="errorCallback"
-          data-cancel="https://api.lyotechlabs.com/cc_payment_webhook"
-          data-timeout="https://api.lyotechlabs.com/cc_payment_webhook"
         ></script>
         <link rel="shortcut icon" href="/logo.png" type="image/png" />
       </Head>
