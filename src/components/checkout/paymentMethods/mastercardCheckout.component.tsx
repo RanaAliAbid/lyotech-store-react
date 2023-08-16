@@ -1,3 +1,4 @@
+import { useGlobalContext } from '@/contexts/GlobalContext';
 import * as React from 'react';
 
 export default function MastercardCheckoutComponent({
@@ -5,6 +6,8 @@ export default function MastercardCheckoutComponent({
 }: {
   sessionId: string;
 }) {
+  const globalContext = useGlobalContext();
+
   React.useEffect(() => {
     configureSession();
   }, [sessionId]);
@@ -18,12 +21,15 @@ export default function MastercardCheckoutComponent({
     }
 
     window.Checkout.configure({
-      session: sessionId,
+      session: {
+        id: sessionId,
+      },
     });
 
     setTimeout(() => {
+      sessionId && globalContext.setGlobalLoading(false);
       window.Checkout.showPaymentPage();
-    }, 300);
+    }, 200);
   };
 
   return (
