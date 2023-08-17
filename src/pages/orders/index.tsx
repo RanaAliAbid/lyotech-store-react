@@ -18,7 +18,10 @@ const workSans = Work_Sans({ subsets: ['latin'] });
 
 import { createTheme, ThemeProvider, Button } from '@mui/material';
 import useTranslation from 'next-translate/useTranslation';
-import { deleteUserOrders, getUserOrders } from '@/services/orders/order.service';
+import {
+  deleteUserOrders,
+  getUserOrders,
+} from '@/services/orders/order.service';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
 
@@ -26,6 +29,8 @@ import { generatePaymentLink } from '@/services/orders/order.service';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { trimStringData } from '@/utils/app.utils';
+import PaginationComponent from '@/common/pagination';
+import MastercardCheckoutComponent from '@/components/checkout/paymentMethods/mastercardCheckout.component';
 
 export default function AllOrders() {
   const { t } = useTranslation('order');
@@ -39,23 +44,51 @@ export default function AllOrders() {
   const globalContext = useGlobalContext();
   const authContext = useAuthContext();
   const router = useRouter();
-
+  const [pageNumber, setPageNumber] = React.useState(1);
+  const [sessionId, setSessionId] = React.useState('');
   const [orders, setOrders] = React.useState([]);
+
+  const [pagination, setPagination] = React.useState<any>({
+    totalPages: 0,
+    currentPage: 0,
+    pagingCounter: 0,
+    hasPrevPage: false,
+    hasNextPage: false,
+    nextPage: null,
+    prevPage: null,
+  });
+
+  const fetchOrderPaginate = (page: any) => {
+    setPageNumber(page);
+  };
+
+  React.useEffect(() => {
+    handleGetOrders();
+  }, [pageNumber]);
 
   const handleGetOrders = async () => {
     try {
       globalContext.setGlobalLoading(true);
 
-      const result = await getUserOrders();
+      const result = await getUserOrders({ page: pageNumber });
 
-      setOrders(result?.data?.data?.data);
+      setOrders(result?.data?.data?.data?.docs);
+
+      setPagination({
+        totalPages: result?.data?.data?.data?.totalPages,
+        currentPage: result?.data?.data?.data?.page,
+        pagingCounter: result?.data?.data?.data?.pagingCounter,
+        hasPrevPage: result?.data?.data?.data?.hasPrevPage,
+        hasNextPage: result?.data?.data?.data?.hasNextPage,
+        nextPage: result?.data?.data?.data?.nextPage,
+        prevPage: result?.data?.data?.data?.prevPage,
+      });
 
       globalContext.setGlobalLoading(false);
-
     } catch (error) {
       globalContext.setGlobalLoading(false);
     }
-  }
+  };
 
   const cancelUserOrder = async (id: string) => {
     if (!id) return;
@@ -67,11 +100,10 @@ export default function AllOrders() {
       await handleGetOrders();
 
       globalContext.setGlobalLoading(false);
-
     } catch (error) {
       globalContext.setGlobalLoading(false);
     }
-  }
+  };
 
   const placeOrderNow = async (id: string) => {
     if (!id) return;
@@ -80,24 +112,28 @@ export default function AllOrders() {
 
       const result = await generatePaymentLink(id);
 
-      if (result?.data?.data?.data?.paymentLink) {
+      if (result?.data?.data?.data?.masterCardSession) {
+        //
+        setSessionId(result?.data?.data?.data?.masterCardSession.sessionId);
+      } else if (result?.data?.data?.data?.paymentLink) {
+        //
         window.location.href = result?.data?.data?.data?.paymentLink;
       } else {
+        //
         globalContext.setGlobalLoading(false);
       }
-
     } catch (error) {
       globalContext.setGlobalLoading(false);
     }
-  }
+  };
 
   React.useEffect(() => {
     handleGetOrders();
   }, []);
 
   const openOrderDetails = (id: string, status: string) => {
-    router.push("/orders/view?id=" + id);
-  }
+    router.push('/orders/view?id=' + id);
+  };
 
   return (
     <>
@@ -116,17 +152,26 @@ export default function AllOrders() {
                   </div>
                   <div className={`${styles['wrapBox']}`}>
                     <List>
-
-                      {
-                        (orders && orders?.length > 0) ? (
-                          orders?.map((order: any) => (
-                            <ListItem className={styles.ordersList}>
+                      {orders && orders?.length > 0 ? (
+                        <>
+                          {orders?.map((order: any, index: any) => (
+                            <ListItem
+                              key={index}
+                              className={`${styles.ordersList}`}
+                            >
                               <div className={styles.orderHead}>
-                                <div className='cursor-pointer'>
+                                <div className="cursor-pointer">
                                   <Typography variant="h5">
                                     {t('order-id')} :
                                   </Typography>
-                                  <Typography variant="h6" onClick={() => { globalContext?.copyToClipboard(order?._id) }}>
+                                  <Typography
+                                    variant="h6"
+                                    onClick={() => {
+                                      globalContext?.copyToClipboard(
+                                        order?._id
+                                      );
+                                    }}
+                                  >
                                     {trimStringData(order?._id, 15)}
                                   </Typography>
                                 </div>
@@ -137,9 +182,13 @@ export default function AllOrders() {
                                   </Typography>
                                   <Typography
                                     variant="h6"
-                                    className={
-                                      `${(order?.status == 'cancelled') ? 'text-danger' :
-                                        ((order?.status == 'pending') ? 'text-primary' : styles.textgreen)}
+                                    className={`${
+                                      order?.status == 'cancelled'
+                                        ? 'text-danger'
+                                        : order?.status == 'pending'
+                                        ? 'text-primary'
+                                        : styles.textgreen
+                                    }
                                     `}
                                   >
                                     {order?.status}
@@ -154,108 +203,141 @@ export default function AllOrders() {
                                     variant="h6"
                                     className={styles.textBlue}
                                   >
-                                    {(order?.totalAmount * globalContext.conversionRate)?.toFixed(globalContext.priceToFixed)}
+                                    {(
+                                      order?.totalAmount *
+                                      globalContext.conversionRate
+                                    )?.toFixed(globalContext.priceToFixed)}
                                     {globalContext?.currencySymbol}
                                   </Typography>
                                 </div>
                               </div>
 
-                              <div className={styles.orderBody}>
+                              <div className={`${styles.orderBody} w-100`}>
                                 <List>
+                                  {order?.products &&
+                                  order?.products?.length > 0 ? (
+                                    order?.products.map((product: any) => (
+                                      <ListItem
+                                        className={`${styles.productItem} w-100`}
+                                      >
+                                        <div className={`${styles.productImg}`}>
+                                          <img
+                                            src={productImg.src}
+                                            alt="logo"
+                                            style={{
+                                              maxWidth: '100px',
+                                              objectFit: `cover`,
+                                            }}
+                                          />
+                                        </div>
+                                        <div
+                                          className={`${styles.productDetails} w-100`}
+                                        >
+                                          <div className={styles.productName}>
+                                            <div>
+                                              <Typography
+                                                variant="h4"
+                                                className={styles.productitle}
+                                              >
+                                                {product.productId?.name}
+                                              </Typography>
 
-                                  {
-                                    (order?.products && order?.products?.length > 0) ? (
-                                      order?.products.map((product: any) => (
-                                        <ListItem className={`${styles.productItem} w-100`}>
-                                          <div className={styles.productImg}>
-                                            <img src={productImg.src} alt="logo" />
-                                          </div>
-                                          <div className={styles.productDetails}>
-                                            <div className={styles.productName}>
-                                              <div>
-                                                <Typography
-                                                  variant="h4"
-                                                  className={styles.productitle}
-                                                >
-                                                  {product.productId?.name}
-                                                </Typography>
-
-                                                <Typography variant="body1">
-                                                  Model Name: LFI ONE
-                                                </Typography>
-                                              </div>
+                                              <Typography variant="body1">
+                                                Model Name: LFI ONE
+                                              </Typography>
                                             </div>
                                           </div>
-                                        </ListItem>
-                                      ))
-                                    ) : (
-                                      <></>
-                                    )
-                                  }
-
+                                        </div>
+                                      </ListItem>
+                                    ))
+                                  ) : (
+                                    <></>
+                                  )}
                                 </List>
                               </div>
 
                               <div className={styles.foot}>
                                 <Button
-                                  onClick={(e) => { openOrderDetails(order?._id, order?.status?.toLowerCase()) }}
+                                  onClick={(e) => {
+                                    openOrderDetails(
+                                      order?._id,
+                                      order?.status?.toLowerCase()
+                                    );
+                                  }}
                                   variant="outlined"
-                                  size='small'
+                                  size="small"
                                   className={``}
                                 >
                                   {t('order-view-details')}
                                 </Button>
 
-                                {
-                                  (order?.status?.toLowerCase() == "pending") && (
-                                    <>
-                                      &nbsp;&nbsp;&nbsp;&nbsp;
-                                      <Button
-                                        onClick={(e) => { cancelUserOrder(order?._id) }}
-                                        variant="outlined"
-                                        size='small'
-                                        color='error'
-                                      >
-                                        {t('Cancel')}
-                                      </Button>
-                                      &nbsp;&nbsp;&nbsp;&nbsp;
-                                      <Button
-                                        onClick={(e) => { placeOrderNow(order?._id) }}
-                                        variant="outlined"
-                                        size='small'
-                                        className={``}
-                                      >
-                                        {t('Pay now')}
-                                      </Button>
-                                    </>
-                                  )
-                                }
+                                {order?.status?.toLowerCase() == 'pending' && (
+                                  <>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <Button
+                                      onClick={(e) => {
+                                        cancelUserOrder(order?._id);
+                                      }}
+                                      variant="outlined"
+                                      size="small"
+                                      color="error"
+                                    >
+                                      {t('Cancel')}
+                                    </Button>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <Button
+                                      onClick={(e) => {
+                                        placeOrderNow(order?._id);
+                                      }}
+                                      variant="outlined"
+                                      size="small"
+                                      className={``}
+                                    >
+                                      {t('Pay now')}
+                                    </Button>
+                                  </>
+                                )}
                               </div>
                             </ListItem>
-                          ))
-                        ) : (
-                          <>
-                            <div className='w-100 text-center'>
-                              <div className="notfound"><Image src={"/not-found.gif"} alt='Not Found' fill={true} /></div>
+                          ))}
+                          <div style={{ padding: '12px' }}>
+                            <br />
+                            <PaginationComponent
+                              pagination={pagination}
+                              onSelect={fetchOrderPaginate}
+                            />
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="w-100 text-center">
+                            <div className="notfound">
+                              <Image
+                                src={'/not-found.gif'}
+                                alt="Not Found"
+                                fill={true}
+                              />
                             </div>
-                            <div className='w-100 text-center'>
-                              <Typography
-                                variant="h4"
-                                className={styles.productitle}
-                              >
-                                No Order Found
-                              </Typography>
-                            </div>
-                          </>
-                        )
-                      }
-
+                          </div>
+                          <div className="w-100 text-center">
+                            <Typography
+                              variant="h4"
+                              className={styles.productitle}
+                            >
+                              No Order Found
+                            </Typography>
+                          </div>
+                        </>
+                      )}
                     </List>
                   </div>
                 </Grid>
               </Grid>
             </Container>
           </div>
+
+          {sessionId && <MastercardCheckoutComponent sessionId={sessionId} />}
+
           <Footer />
         </main>
       </ThemeProvider>
