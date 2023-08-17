@@ -16,6 +16,7 @@ import {
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Link from '@mui/material/Link';
+import { Alert } from '@mui/material';
 import productImg from '../../../img/productImg.png';
 
 import successImg from '../../../img/success.png';
@@ -61,31 +62,71 @@ export default function PaymentSuccessComponent({
                 <div
                   className={`${styles['wrapBox']} ${styles['ordersPlaceSec']}`}
                 >
-                  <div className={styles.orderHeadStatus}>
-                    <div className={styles.titles}>
-                      <div className={styles.statusImg}>
-                        <img src={successImg.src} alt="logo" />
-                      </div>
-                      <div className={styles.statusText}>
-                        <Typography variant="h5">
-                          Your Orders Successfully placed
-                        </Typography>
+                  {['pending'].includes(order?.status?.toLowerCase()) &&
+                  ['mastercard'].includes(
+                    order?.paymentMethod?.name.toLowerCase()
+                  ) ? (
+                    <div className={styles.orderHeadStatus}>
+                      <div className={styles.titles}>
+                        <div className={styles.statusText}>
+                          <Typography variant="h5">
+                            Your order is pending for payment
+                          </Typography>
 
-                        <Typography variant="h6">
-                          Placed on{' '}
-                          {order?.details?.createdAt &&
-                            moment(order.details.createdAt).format(
-                              'DD MMM YYYY'
-                            )}
-                        </Typography>
+                          <Typography variant="h6">
+                            Placed on{' '}
+                            {order?.details?.createdAt &&
+                              moment(order.details.createdAt).format(
+                                'DD MMM YYYY'
+                              )}
+                          </Typography>
+
+                          <div className="alert alert-primary">
+                            <Typography variant="h6">
+                              <br />
+
+                              <Alert severity="info">
+                                {t(
+                                  'If you already made the payment please wait for a few minutes & refresh...'
+                                )}
+                              </Alert>
+                            </Typography>
+                          </div>
+                        </div>
+                      </div>
+                      {/* <div className={styles.invoiceLinks}>
+                        <Link href="#">View invoice</Link>
+
+                        <Link href="#">Download invoice</Link>
+                      </div> */}
+                    </div>
+                  ) : (
+                    <div className={styles.orderHeadStatus}>
+                      <div className={styles.titles}>
+                        <div className={styles.statusImg}>
+                          <img src={successImg.src} alt="logo" />
+                        </div>
+                        <div className={styles.statusText}>
+                          <Typography variant="h5">
+                            Your Order Successfully placed
+                          </Typography>
+
+                          <Typography variant="h6">
+                            Placed on{' '}
+                            {order?.details?.createdAt &&
+                              moment(order.details.createdAt).format(
+                                'DD MMM YYYY'
+                              )}
+                          </Typography>
+                        </div>
+                      </div>
+                      <div className={styles.invoiceLinks}>
+                        <Link href="#">View invoice</Link>
+
+                        <Link href="#">Download invoice</Link>
                       </div>
                     </div>
-                    <div className={styles.invoiceLinks}>
-                      <Link href="#">View invoice</Link>
-
-                      <Link href="#">Download invoice</Link>
-                    </div>
-                  </div>
+                  )}
 
                   <Grid container spacing={3}>
                     <Grid item md={7} xs={12}>
@@ -211,7 +252,35 @@ export default function PaymentSuccessComponent({
 
                         <div className={styles.orderBody}>
                           <Typography variant="h6">
-                            Your Orders Successfully placed
+                            {['pending'].includes(
+                              order?.status?.toLowerCase()
+                            ) &&
+                            ['mastercard'].includes(
+                              order?.paymentMethod?.name.toLowerCase()
+                            ) ? (
+                              <>
+                                <Alert severity="info">
+                                  {t(
+                                    'If you already made the payment please wait for a few minutes...'
+                                  )}
+                                </Alert>
+                                <br />
+                                <br />
+                                <span
+                                  className="cursor-pointer text-primary"
+                                  onClick={() => {
+                                    window.open(
+                                      `https://support.lyotechlabs.com/`,
+                                      '_blank'
+                                    );
+                                  }}
+                                >
+                                  Contact the Support
+                                </span>
+                              </>
+                            ) : (
+                              <>Your Orders Successfully placed</>
+                            )}
                           </Typography>
                         </div>
                       </div>
@@ -247,13 +316,11 @@ export const getServerSideProps: GetServerSideProps<{ order: any }> = async ({
 
     if (orderid?.length >= 1) {
       result = await verifyOrderDetails({ id: orderid });
-
+      // paymentMethod
       if (
         !result ||
         result?.isCancelled ||
-        ['pending', 'failed', 'cancelled'].includes(
-          result?.status?.toLowerCase()
-        )
+        ['failed', 'cancelled'].includes(result?.status?.toLowerCase())
       )
         return {
           redirect: {
@@ -261,6 +328,18 @@ export const getServerSideProps: GetServerSideProps<{ order: any }> = async ({
             permanent: false,
           },
         };
+
+      if (
+        ['pending'].includes(result?.status?.toLowerCase()) &&
+        !['mastercard'].includes(result?.paymentMethod?.name.toLowerCase())
+      ) {
+        return {
+          redirect: {
+            destination: `/`,
+            permanent: false,
+          },
+        };
+      }
 
       if (transId?.length > 0 || resultIndicator?.length > 0) {
         return {
