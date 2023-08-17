@@ -34,12 +34,22 @@ const nextConfig = nextTranslate({
     // This is a list of locale domains and the default locale they
     // should handle (these are only required when setting up domain routing)
     // Note: subdomains must be included in the domain value to be matched e.g. "fr.example.com".
-    domains: [
+    // domains: [
+    //   {
+    //     domain: `sandbox-shop.lyotechlabs.com`,
+    //     defaultLocale: 'en',
+    //   },
+    // ],
+  },
+
+  async redirects() {
+    return [
       {
-        domain: 'lyotechlabs.com',
-        defaultLocale: 'en',
+        source: '/checkout/payment/success/cc/:orderId',
+        destination: '/checkout/payment/success?invoiceNumber=:orderId',
+        permanent: false,
       },
-    ],
+    ];
   },
 });
 
