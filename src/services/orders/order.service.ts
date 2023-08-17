@@ -17,10 +17,6 @@ export const verifyOrderDetails = async ({ id }: { id: any }) => {
       `${API_HOST}/v1/order/info/${id}`
     );
 
-    console.log(
-      '🚀 ~ file: order.service.ts:18 ~ verifyOrderDetails ~ result:',
-      result?.data?.data
-    );
     return result?.data?.data;
   } catch (error: any) {
     console.log(
