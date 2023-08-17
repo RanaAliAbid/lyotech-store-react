@@ -37,9 +37,9 @@ export const generatePaymentLink = async (id: string) => {
   }
 };
 
-export const getUserOrders = async () => {
+export const getUserOrders = async ({ page }: { page: any }) => {
   try {
-    return ProxyService.GetRequest(PROXY_HOST + '/api/v1/orders');
+    return ProxyService.GetRequest(PROXY_HOST + '/api/v1/orders?page=' + page);
   } catch (error) {
     return null;
   }
