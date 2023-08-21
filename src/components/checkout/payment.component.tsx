@@ -135,7 +135,7 @@ export default function PaymentMethodComponent({
                     <img src={creditCard.src} alt="" />
                   </div>
                 </div>
-                <div className={styles.payInfoBox}>
+                <div className={`${styles.payInfoBox} w-100`}>
                   <div className={styles.note}>
                     <Typography variant="h5">
                       Pay with your credit or debit card.
