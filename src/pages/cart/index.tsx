@@ -20,7 +20,10 @@ import styles from '@/styles/Home.module.css';
 import { Work_Sans } from 'next/font/google';
 
 import { createTheme, ThemeProvider } from '@mui/material';
-import { verifyUserHandover } from '@/services/auth/auth.service';
+import {
+  verifyUserCheckoutToken,
+  verifyUserHandover,
+} from '@/services/auth/auth.service';
 import useTranslation from 'next-translate/useTranslation';
 
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
@@ -34,9 +37,8 @@ import CartTotalComponent from '@/components/cart/cart-total.component';
 
 export default function Cart({
   userJwt,
-  message
+  message,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-
   const { t } = useTranslation('cart');
 
   const theme = createTheme({
@@ -50,29 +52,38 @@ export default function Cart({
 
   const addIntoCart = async (id: string) => {
     try {
-      const currentQty = globalContext.cart?.cart?.products?.find((x: any) => x.productId?._id === id)?.quantity ?? 0;
-      const inputQty = document.getElementById(`cartProduct-${id}`) as HTMLInputElement;
+      const currentQty =
+        globalContext.cart?.cart?.products?.find(
+          (x: any) => x.productId?._id === id
+        )?.quantity ?? 0;
+      const inputQty = document.getElementById(
+        `cartProduct-${id}`
+      ) as HTMLInputElement;
       if (!inputQty) return;
       let quantityToAdd = parseInt(inputQty.value) - currentQty;
       if (quantityToAdd == 0) {
-        quantityToAdd = 1
+        quantityToAdd = 1;
       }
       if (quantityToAdd < 0) return;
 
       await globalContext.addCart(id, quantityToAdd);
-
     } catch (error) {
       globalContext.setGlobalLoading(false);
     }
-  }
+  };
 
   const deleteFromCart = async (id: string, qty?: number) => {
     try {
       let quantityToRemove = qty;
 
       if (!qty) {
-        const currentQty = globalContext.cart?.cart?.products?.find((x: any) => x.productId?._id === id)?.quantity ?? 0;
-        const inputQty = document.getElementById(`cartProduct-${id}`) as HTMLInputElement;
+        const currentQty =
+          globalContext.cart?.cart?.products?.find(
+            (x: any) => x.productId?._id === id
+          )?.quantity ?? 0;
+        const inputQty = document.getElementById(
+          `cartProduct-${id}`
+        ) as HTMLInputElement;
         if (!inputQty) return;
         const inputQuantity = parseInt(inputQty.value);
 
@@ -80,7 +91,6 @@ export default function Cart({
 
         if (inputQuantity == currentQty) {
           quantityToRemove = 1;
-
         } else if (inputQuantity < currentQty) {
           quantityToRemove = currentQty - inputQuantity;
         }
@@ -93,59 +103,56 @@ export default function Cart({
       } else {
         globalContext.setAlertProps({
           show: true,
-          title: "Your cart product has been remove",
-          text: "",
+          title: 'Your cart product has been remove',
+          text: '',
           toast: true,
           showConfirmButton: false,
           timerProgressBar: true,
-          callback: globalContext.closeAlert
-        })
+          callback: globalContext.closeAlert,
+        });
       }
-
     } catch (error) {
       globalContext.setGlobalLoading(false);
 
       globalContext.setAlertProps({
         show: true,
-        title: "Sorry an error occured.",
-        text: "",
+        title: 'Sorry an error occured.',
+        text: '',
         toast: true,
         showConfirmButton: false,
         background: '#8B0000',
         timerProgressBar: true,
-        callback: globalContext.closeAlert
-      })
-
+        callback: globalContext.closeAlert,
+      });
     }
-  }
+  };
 
   const addProductToWishList = async (id: string) => {
     try {
-
       if (!authContext.userConnected) return;
 
       globalContext.setGlobalLoading(true);
 
       const data = {
-        productId: id
-      }
+        productId: id,
+      };
       const result = await addUserWishList(data);
 
       globalContext.setAlertProps({
         show: true,
-        title: "Your whishlist has been added",
-        text: "",
+        title: 'Your whishlist has been added',
+        text: '',
         toast: true,
         showConfirmButton: false,
         timerProgressBar: true,
-        callback: globalContext.closeAlert
-      })
+        callback: globalContext.closeAlert,
+      });
 
       globalContext.setGlobalLoading(false);
     } catch (error) {
       globalContext.setGlobalLoading(false);
     }
-  }
+  };
 
   React.useEffect(() => {
     try {
@@ -157,7 +164,7 @@ export default function Cart({
       if (user_handover && product_id) {
         // getUserCart(user_handover, parseInt(product_id))
       }
-    } catch (error) { }
+    } catch (error) {}
   }, []);
 
   return (
@@ -172,20 +179,32 @@ export default function Cart({
                   <div className={styles.wrapTitle}>
                     <Typography variant="h4">{t('header1')}</Typography>
 
-                    <Typography variant="h6">({globalContext?.cartQtyProduct} {t('items')})</Typography>
+                    <Typography variant="h6">
+                      ({globalContext?.cartQtyProduct} {t('items')})
+                    </Typography>
                   </div>
 
-                  {
-                    globalContext.cart?.cart?.products?.map((cartItem: any, index: any) => (
+                  {globalContext.cart?.cart?.products?.map(
+                    (cartItem: any, index: any) => (
                       // <>
-                      <List className={`${styles.productsList} mb-1`} key={index}>
+                      <List
+                        className={`${styles.productsList} mb-1`}
+                        key={index}
+                      >
                         <ListItem
                           className={`${styles['wrapBox']} ${styles['productItem']}`}
                         >
                           <div
                             className={`${styles['productImg']} ${styles['forDesktop']}`}
                           >
-                            <img src={cartItem?.productId?.images[0]?.link ?? productImg.src} alt="logo" className='product_cart_image' />
+                            <img
+                              src={
+                                cartItem?.productId?.images[0]?.link ??
+                                productImg.src
+                              }
+                              alt="logo"
+                              className="product_cart_image"
+                            />
                           </div>
 
                           <div className={styles.productDetails}>
@@ -193,7 +212,13 @@ export default function Cart({
                               <div
                                 className={`${styles['productImg']} ${styles['forMobile']}`}
                               >
-                                <img src={cartItem?.productId?.images[0]?.link ?? productImg.src} alt="logo" />
+                                <img
+                                  src={
+                                    cartItem?.productId?.images[0]?.link ??
+                                    productImg.src
+                                  }
+                                  alt="logo"
+                                />
                               </div>
                               <div className={styles.productHead}>
                                 <div>
@@ -205,7 +230,8 @@ export default function Cart({
                                   </Typography>
 
                                   <Typography variant="body1">
-                                    {t('Model-Name')}: {cartItem?.productId?.name}
+                                    {t('Model-Name')}:{' '}
+                                    {cartItem?.productId?.name}
                                   </Typography>
                                 </div>
                                 <div>
@@ -213,7 +239,11 @@ export default function Cart({
                                     variant="h3"
                                     className={styles.productPrice}
                                   >
-                                    {(cartItem?.productId?.price * globalContext.conversionRate)?.toFixed(globalContext.priceToFixed)} {globalContext.currencySymbol}
+                                    {(
+                                      cartItem?.productId?.price *
+                                      globalContext.conversionRate
+                                    )?.toFixed(globalContext.priceToFixed)}{' '}
+                                    {globalContext.currencySymbol}
                                   </Typography>
                                 </div>
                               </div>
@@ -235,46 +265,69 @@ export default function Cart({
                                   {t('Quantity')}
                                 </Typography>
                                 <div className={styles.productQty}>
-                                  <div className={styles.qtyBtn} onClick={(e) => deleteFromCart(cartItem?.productId?._id)}>
+                                  <div
+                                    className={styles.qtyBtn}
+                                    onClick={(e) =>
+                                      deleteFromCart(cartItem?.productId?._id)
+                                    }
+                                  >
                                     {' '}
                                     <RemoveIcon />{' '}
                                   </div>
-                                  {
-                                    (!globalContext.globalLoading) ? (
-                                      <Input
-                                        id={`cartProduct-${cartItem?.productId?._id}`}
-                                        className={styles.formControl}
-                                        defaultValue={cartItem?.quantity}
-                                      />
-                                    ) : (
-                                      <div
-                                        className={`${styles.formControl}`}
-                                        style={{ border: "1px solid #f5f5f5", height: "28px", borderRadius: "25px" }}>
-                                        {/* // */}
-                                      </div>
-                                    )
-                                  }
-                                  <div className={styles.qtyBtn} onClick={(e) => addIntoCart(cartItem?.productId?._id)}>
+                                  {!globalContext.globalLoading ? (
+                                    <Input
+                                      id={`cartProduct-${cartItem?.productId?._id}`}
+                                      className={styles.formControl}
+                                      defaultValue={cartItem?.quantity}
+                                    />
+                                  ) : (
+                                    <div
+                                      className={`${styles.formControl}`}
+                                      style={{
+                                        border: '1px solid #f5f5f5',
+                                        height: '28px',
+                                        borderRadius: '25px',
+                                      }}
+                                    >
+                                      {/* // */}
+                                    </div>
+                                  )}
+                                  <div
+                                    className={styles.qtyBtn}
+                                    onClick={(e) =>
+                                      addIntoCart(cartItem?.productId?._id)
+                                    }
+                                  >
                                     {' '}
                                     <AddIcon />{' '}
                                   </div>
                                 </div>
                               </ListItem>
 
-                              {
-                                (authContext.userConnected) && (
-                                  <ListItem className={styles.item} onClick={(e) => addProductToWishList(cartItem?.productId?._id)}>
-                                    <Link href="#" className={styles.wishlist}>
-                                      <FavoriteBorderIcon />
-                                      <Typography variant="h6">
-                                        {t('Move-to-Wishlist')}
-                                      </Typography>
-                                    </Link>
-                                  </ListItem>
-                                )
-                              }
+                              {authContext.userConnected && (
+                                <ListItem
+                                  className={styles.item}
+                                  onClick={(e) =>
+                                    addProductToWishList(
+                                      cartItem?.productId?._id
+                                    )
+                                  }
+                                >
+                                  <Link href="#" className={styles.wishlist}>
+                                    <FavoriteBorderIcon />
+                                    <Typography variant="h6">
+                                      {t('Move-to-Wishlist')}
+                                    </Typography>
+                                  </Link>
+                                </ListItem>
+                              )}
 
-                              <ListItem className={styles.item} onClick={(e) => deleteFromCart(cartItem?.productId?._id, 0)}>
+                              <ListItem
+                                className={styles.item}
+                                onClick={(e) =>
+                                  deleteFromCart(cartItem?.productId?._id, 0)
+                                }
+                              >
                                 <Link href="#" className={styles.remove}>
                                   <DeleteOutlineIcon />
                                   <Typography variant="h6">
@@ -287,26 +340,26 @@ export default function Cart({
                         </ListItem>
                       </List>
                       // </>
-                    ))
-                  }
-
-                  {
-                    (globalContext?.cart?.length == 0) && (
-                      <div className='w-100 text-center position-relative'>
-                        <div className="notfound">
-                          <Image src={"/not-found.gif"} alt='Not Found' fill={true} />
-                        </div>
-                        <h4 className='bold-900'>Your cart is empty</h4>
-                      </div>
                     )
-                  }
+                  )}
 
+                  {globalContext?.cart?.length == 0 && (
+                    <div className="w-100 text-center position-relative">
+                      <div className="notfound">
+                        <Image
+                          src={'/not-found.gif'}
+                          alt="Not Found"
+                          fill={true}
+                        />
+                      </div>
+                      <h4 className="bold-900">Your cart is empty</h4>
+                    </div>
+                  )}
                 </Grid>
 
                 <Grid item md={4} xs={12}>
                   <CartTotalComponent isCheckout={false}></CartTotalComponent>
                 </Grid>
-
               </Grid>
             </Container>
           </div>
@@ -318,27 +371,26 @@ export default function Cart({
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{ userJwt: any, message: any }> = async ({
-  req,
-  res,
-}: {
-  req: IncomingMessage;
-  res: ServerResponse;
-}) => {
+export const getServerSideProps: GetServerSideProps<{
+  userJwt: any;
+  message: any;
+}> = async ({ req, res }: { req: IncomingMessage; res: ServerResponse }) => {
   let currentUrl = req.url?.split('?')[1] ?? '';
   let result = null;
 
   if (currentUrl) {
     const urlParams = new URLSearchParams(currentUrl);
+
     const product_id = urlParams.get('product_id') ?? '';
     const user_handover = urlParams.get('user_handover') ?? '';
     const voucher = urlParams.get('voucher') ?? '';
+    const checkout_token = urlParams.get('checkout_token') ?? '';
 
     if (product_id?.length >= 1 && user_handover?.length >= 1) {
       result = await verifyUserHandover({
         handoverToken: user_handover,
         productId: parseInt(product_id),
-        voucher: voucher
+        voucher: voucher,
       });
 
       if (!result?.data || result?.data?.length < 9) {
@@ -351,8 +403,39 @@ export const getServerSideProps: GetServerSideProps<{ userJwt: any, message: any
       }
 
       if (result?.data?.length > 10) {
-        res.setHeader("set-Cookie", [
-          `userConnected=${"true"}; Max-Age=36000; path: '/';`,
+        res.setHeader('set-Cookie', [
+          `userConnected=${'true'}; Max-Age=36000; path: '/';`,
+          `partnerToken=${result?.data}; HttpOnly; Max-Age=20; path: '/';`,
+          `otpToken=deleted; HttpOnly; Max-Age=0;`,
+          `token=deleted; HttpOnly; Max-Age=0;`,
+        ]);
+
+        return {
+          redirect: {
+            destination: `/checkout`,
+            permanent: false,
+          },
+        };
+      }
+    }
+
+    if (checkout_token?.length > 0) {
+      result = await verifyUserCheckoutToken({
+        token: checkout_token,
+      });
+
+      if (!result?.data || result?.data?.length < 9) {
+        return {
+          redirect: {
+            destination: `/?error=${btoa(result?.message)}`,
+            permanent: false,
+          },
+        };
+      }
+
+      if (result?.data?.length > 10) {
+        res.setHeader('set-Cookie', [
+          `userConnected=${'true'}; Max-Age=36000; path: '/';`,
           `partnerToken=${result?.data}; HttpOnly; Max-Age=20; path: '/';`,
           `otpToken=deleted; HttpOnly; Max-Age=0;`,
           `token=deleted; HttpOnly; Max-Age=0;`,
@@ -368,6 +451,6 @@ export const getServerSideProps: GetServerSideProps<{ userJwt: any, message: any
     }
   }
   const userJwt = result;
-  const message = result?.message ?? "";
+  const message = result?.message ?? '';
   return { props: { userJwt, message } };
 };

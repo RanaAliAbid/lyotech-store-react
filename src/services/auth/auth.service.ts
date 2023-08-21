@@ -10,21 +10,53 @@ import { ApiService } from '../api.service';
 
 export const verifyUserHandover = async (params: PartnerLinkData) => {
   try {
+    const result = await ApiService.GetRequest(
+      `${API_HOST}/v1/user/auth/${params?.productId}/${params?.handoverToken}/${params?.voucher}`
+    );
 
-    const result = await ApiService.GetRequest(`${API_HOST}/v1/user/auth/${params?.productId}/${params?.handoverToken}/${params?.voucher}`);
-    
     return {
       success: true,
-      message: "Product added to cart",
+      message: 'Product added to cart',
       data: result?.data?.data?.jwtToken,
     };
   } catch (error: any) {
-    console.log("🚀 ~ file: auth.service.ts:22 ~ verifyUserHandover ~ error:", error)
+    console.log(
+      '🚀 ~ file: auth.service.ts:22 ~ verifyUserHandover ~ error:',
+      error
+    );
     return {
       success: false,
-      message: error?.response?.data?.msg?.message ?? "An error occured please try again later",
-      data: null
-    }
+      message:
+        error?.response?.data?.msg?.message ??
+        'An error occured please try again later',
+      data: null,
+    };
+  }
+};
+
+export const verifyUserCheckoutToken = async ({ token }: { token: string }) => {
+  try {
+    const result = await ApiService.GetRequest(
+      `${API_HOST}/v1/user/user-partner/checkout/${atob(token)}`
+    );
+
+    return {
+      success: true,
+      message: 'Product added to cart',
+      data: result?.data?.data?.accessToken,
+    };
+  } catch (error: any) {
+    console.log(
+      '🚀 ~ file: auth.service.ts:22 ~ verifyUserCheckoutToken ~ error:',
+      error
+    );
+    return {
+      success: false,
+      message:
+        error?.response?.data?.msg?.message ??
+        'An error occured please try again later',
+      data: null,
+    };
   }
 };
 
@@ -38,7 +70,7 @@ export const validateUserSession = async () => {
 
 export const signInUser = async (params: SignInData) => {
   try {
-    const body = await ProxyService.generateHashKey(JSON.stringify(params))
+    const body = await ProxyService.generateHashKey(JSON.stringify(params));
     return ProxyService.PostRequest(PROXY_HOST + '/api/v1/signin', body);
   } catch (error) {
     return null;
@@ -47,7 +79,7 @@ export const signInUser = async (params: SignInData) => {
 
 export const signUpUser = async (params: SignUpData | undefined) => {
   try {
-    const body = await ProxyService.generateHashKey(JSON.stringify(params))
+    const body = await ProxyService.generateHashKey(JSON.stringify(params));
     return ProxyService.PostRequest(PROXY_HOST + '/api/v1/signup', body);
   } catch (error) {
     return null;
@@ -62,7 +94,7 @@ export const validateUserEmailOtp = async (
 ) => {
   try {
     const params = { token: token, otp: parseInt(otp), session: !session };
-    const body = await ProxyService.generateHashKey(JSON.stringify(params))
+    const body = await ProxyService.generateHashKey(JSON.stringify(params));
     return ProxyService.PostRequest(
       PROXY_HOST + '/api/v1/verify-email-otp',
       body,
@@ -73,13 +105,10 @@ export const validateUserEmailOtp = async (
   }
 };
 
-export const resendUserEmailOtp = async (
-  token: string,
-  keyToken: string
-) => {
+export const resendUserEmailOtp = async (token: string, keyToken: string) => {
   try {
     const params = { token: token };
-    const body = await ProxyService.generateHashKey(JSON.stringify(params))
+    const body = await ProxyService.generateHashKey(JSON.stringify(params));
     return ProxyService.PostRequest(
       PROXY_HOST + '/api/v1/resend-email-otp',
       body,
@@ -92,7 +121,7 @@ export const resendUserEmailOtp = async (
 
 export const fogotPasswordUser = async (params: ForgotPasswordData) => {
   try {
-    const body = await ProxyService.generateHashKey(JSON.stringify(params))
+    const body = await ProxyService.generateHashKey(JSON.stringify(params));
     return ProxyService.PostRequest(
       PROXY_HOST + '/api/v1/forgot-password',
       body
@@ -104,7 +133,7 @@ export const fogotPasswordUser = async (params: ForgotPasswordData) => {
 
 export const changePasswordUser = async (params: any) => {
   try {
-    const body = await ProxyService.generateHashKey(JSON.stringify(params))
+    const body = await ProxyService.generateHashKey(JSON.stringify(params));
     return ProxyService.PostRequest(
       PROXY_HOST + '/api/v1/change-password',
       body
