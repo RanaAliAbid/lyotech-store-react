@@ -54,3 +54,19 @@ export const deleteUserOrders = async (id: string) => {
     return null;
   }
 };
+
+export const getPartnerRediectionLink = async (id: string) => {
+  try {
+    const result = await ApiService.GetRequest(
+      `${API_HOST}/v1/user/user-partner/partner-details/${id}`
+    );
+
+    return result?.data?.data;
+  } catch (error: any) {
+    console.log(
+      '🚀 ~ file: order.service.ts:26 ~ getPartnerRediectionLink ~ error:',
+      error
+    );
+    return null;
+  }
+};

@@ -26,7 +26,10 @@ import { useAuthContext } from '@/contexts/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
 import { IncomingMessage, ServerResponse } from 'http';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { verifyOrderDetails } from '@/services/orders/order.service';
+import {
+  getPartnerRediectionLink,
+  verifyOrderDetails,
+} from '@/services/orders/order.service';
 import moment from 'moment';
 
 export default function PaymentSuccessComponent({
@@ -321,13 +324,24 @@ export const getServerSideProps: GetServerSideProps<{ order: any }> = async ({
         !result ||
         result?.isCancelled ||
         ['failed', 'cancelled'].includes(result?.status?.toLowerCase())
-      )
+      ) {
+        if (result?.partner) {
+          const rs = await validatePartnerAndRediredct({
+            id: result.partner,
+            orderid: orderid,
+            success: false,
+          });
+          return {
+            redirect: rs.redirect,
+          };
+        }
         return {
           redirect: {
             destination: `/`,
             permanent: false,
           },
         };
+      }
 
       if (
         ['pending'].includes(result?.status?.toLowerCase()) &&
@@ -342,6 +356,17 @@ export const getServerSideProps: GetServerSideProps<{ order: any }> = async ({
       }
 
       if (transId?.length > 0 || resultIndicator?.length > 0) {
+        if (result?.partner) {
+          const rs = await validatePartnerAndRediredct({
+            id: result.partner,
+            orderid: orderid,
+            success: true,
+          });
+          return {
+            redirect: rs.redirect,
+          };
+        }
+
         return {
           redirect: {
             destination: `/checkout/payment/success?invoiceNumber=${orderid}`,
@@ -353,4 +378,45 @@ export const getServerSideProps: GetServerSideProps<{ order: any }> = async ({
   }
   const order = result;
   return { props: { order } };
+};
+
+export const validatePartnerAndRediredct = async ({
+  id,
+  success = false,
+  orderid,
+}: {
+  id: string;
+  success: boolean;
+  orderid: string;
+}) => {
+  try {
+    const partnerDetails = await getPartnerRediectionLink(id);
+
+    if (!partnerDetails) {
+      return {
+        redirect: {
+          destination: `/`,
+          permanent: false,
+        },
+      };
+    }
+
+    return {
+      redirect: {
+        destination: `${
+          success
+            ? `${partnerDetails?.successUrl}?order=${orderid}`
+            : `${partnerDetails?.errorUrl}?order=${orderid}`
+        }`,
+        permanent: false,
+      },
+    };
+  } catch (error) {
+    return {
+      redirect: {
+        destination: `/`,
+        permanent: false,
+      },
+    };
+  }
 };

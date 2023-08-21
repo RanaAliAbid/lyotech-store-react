@@ -359,12 +359,12 @@ export default function CoProducts({
                     </Typography>
                     <br />
 
-                    <Typography variant="h5">
+                    {/* <Typography variant="h5">
                       {(1397.0 * globalContext.conversionRate)?.toFixed(
                         globalContext.priceToFixed
                       )}
                       &nbsp;{globalContext.currencySymbol}
-                    </Typography>
+                    </Typography> */}
                     <Typography variant="h4">Specifications</Typography>
 
                     <Typography variant="h6">ARM Cortex 3GHz</Typography>
@@ -381,24 +381,26 @@ export default function CoProducts({
 
                     <div className={styles.BuyLfiPhone}>
                       <Button
-                        onClick={(e) =>
-                          addProductToCart(
-                            globalContext?.homeProduct?.LFI_ONE_Smartphone
-                          )
+                        onClick={
+                          (e) => {}
+                          // addProductToCart(
+                          //   globalContext?.homeProduct?.LFI_ONE_Smartphone
+                          // )
                         }
                         variant="contained"
                         className={`${styles['btn']} ${styles['btn_primary']}`}
                       >
-                        Buy Now
+                        Available Soon...
+                        {/* Buy Now */}
                       </Button>
 
-                      <Button
+                      {/* <Button
                         onClick={(e) => handleBuyFromPartner()}
                         variant="contained"
                         className={`${styles['btn']} ${styles['btn_primary']}`}
                       >
                         Buy from Partners
-                      </Button>
+                      </Button> */}
                     </div>
 
                     <Typography variant="h6" className={styles.needHelp}>
