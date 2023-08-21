@@ -465,6 +465,7 @@ export default function Checkout() {
                       <PaymentMethodComponent
                         paymentType={paymentType}
                         handleChangePayment={handleChangePayment}
+                        setPaymentType={setPaymentType}
                       ></PaymentMethodComponent>
                     </>
                   )}

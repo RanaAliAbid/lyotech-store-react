@@ -16,9 +16,11 @@ import useTranslation from 'next-translate/useTranslation';
 export default function PaymentMethodComponent({
   paymentType,
   handleChangePayment,
+  setPaymentType,
 }: {
   paymentType: any;
   handleChangePayment: any;
+  setPaymentType: any;
 }) {
   const [paymentMethods, setPaymentMethods] = React.useState<any>([]);
 
@@ -31,6 +33,17 @@ export default function PaymentMethodComponent({
       const result = await getPaymentMethods();
 
       setPaymentMethods(result?.data?.data);
+
+      if (globalContext.cart?.cart?.paymentMethod) {
+        setPaymentType(
+          result?.data?.data
+            ?.find(
+              (paymentMethod: any) =>
+                paymentMethod?._id == globalContext.cart?.cart?.paymentMethod
+            )
+            ?.name?.toLowerCase()
+        );
+      }
 
       globalContext.setGlobalLoading(false);
     } catch (error) {

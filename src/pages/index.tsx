@@ -504,10 +504,10 @@ export default function Home({
 
                       <Typography variant="h5">
                         <b>
-                          {(1397.0 * globalContext.conversionRate)?.toFixed(
+                          {/* {(1397.0 * globalContext.conversionRate)?.toFixed(
                             globalContext.priceToFixed
                           )}
-                          &nbsp;{globalContext.currencySymbol}
+                          &nbsp;{globalContext.currencySymbol} */}
                         </b>
                       </Typography>
                       <br />
@@ -710,15 +710,17 @@ export default function Home({
                         viewport={{ once: true }}
                       >
                         <Button
-                          onClick={(e) =>
-                            addProductToCart(
-                              globalContext?.homeProduct?.LFI_ONE_Smartphone
-                            )
+                          onClick={
+                            (e) => {}
+                            // addProductToCart(
+                            //   globalContext?.homeProduct?.LFI_ONE_Smartphone
+                            // )
                           }
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
-                          {t('product-btn1-shop')}
+                          Available Soon...
+                          {/* {t('product-btn1-shop')} */}
                         </Button>
                       </motion.div>
                     </Grid>
