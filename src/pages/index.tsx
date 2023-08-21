@@ -500,6 +500,15 @@ export default function Home({
                         <span>LFi</span> ONE {t('product-item1-header')}
                       </Typography>
 
+                      <br />
+
+                      <Typography variant="h5">
+                        {(1397.0 * globalContext.conversionRate)?.toFixed(
+                          globalContext.priceToFixed
+                        )}
+                        &nbsp;{globalContext.currencySymbol}
+                      </Typography>
+
                       <Typography variant="h6">
                         {t('product-item1-desc')}
                       </Typography>
