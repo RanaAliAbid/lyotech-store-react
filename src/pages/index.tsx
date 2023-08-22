@@ -1214,7 +1214,7 @@ export default function Home({
                       viewport={{ once: true }}
                     >
                       <div className={styles.partnersImg03}>
-                        <img src={partner01.src} alt="Partner Logo" />
+                        {/* <img src={partner01.src} alt="Partner Logo" /> */}
                         <img src={partner02.src} alt="Partner Logo" />
                       </div>
                     </motion.div>
