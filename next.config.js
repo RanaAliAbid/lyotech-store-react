@@ -49,6 +49,11 @@ const nextConfig = nextTranslate({
         destination: '/checkout/payment/success?invoiceNumber=:orderId',
         permanent: false,
       },
+      {
+        source: '/product/lfi-smartphone',
+        destination: '/co-products',
+        permanent: false,
+      },
     ];
   },
 });
