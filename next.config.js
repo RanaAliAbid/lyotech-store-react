@@ -51,7 +51,7 @@ const nextConfig = nextTranslate({
       },
       {
         source: '/product/lfi-smartphone',
-        destination: '/',
+        destination: '/co-products',
         permanent: false,
       },
     ];
