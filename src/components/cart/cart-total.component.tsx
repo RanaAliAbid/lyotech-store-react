@@ -88,7 +88,11 @@ export default function CartTotalComponent({
   React.useEffect(() => {
     setShippingMethods(globalContext?.cart?.shippingMethods ?? []);
     setCartFees(globalContext?.cart?.cart?.fees ?? []);
-    setCartVat(globalContext?.cart?.appliedTax ?? null);
+    setCartVat(
+      globalContext?.cart?.appliedTax ??
+        globalContext?.cart?.cart?.appliedTax ??
+        null
+    );
   }, [globalContext.cart]);
 
   const [shippingType, setShippingType] = React.useState<string>('');
@@ -347,6 +351,7 @@ export default function CartTotalComponent({
             {cartFees?.length > 0 &&
               cartFees.map(
                 (item: any, index: any) =>
+                  parseFloat(item?.fee) > 0 &&
                   !['oneCare', 'payment'].includes(item.type) && (
                     <ListItem key={index}>
                       <Typography variant="h6">
@@ -365,7 +370,7 @@ export default function CartTotalComponent({
             {cartVat?.amount ? (
               <ListItem>
                 <Typography variant="h6">
-                  {t('VAT')} {cartVat?.percentage}%
+                  {t('VAT')} {cartVat?.percentage ?? cartVat?.value}%
                 </Typography>
                 <Typography variant="h6">
                   {(cartVat.amount * globalContext.conversionRate).toFixed(
@@ -383,6 +388,7 @@ export default function CartTotalComponent({
             {cartFees?.length > 0 &&
               cartFees.map(
                 (item: any, index: any) =>
+                  parseFloat(item?.fee) > 0 &&
                   ['payment'].includes(item.type) && (
                     <ListItem key={index}>
                       <Typography variant="h6">
@@ -403,6 +409,7 @@ export default function CartTotalComponent({
             {cartFees?.length > 0 &&
               cartFees.map(
                 (item: any, index: any) =>
+                  parseFloat(item?.fee) > 0 &&
                   ['oneCare'].includes(item.type) && (
                     <ListItem key={index}>
                       <div className={styles.allCenter}>

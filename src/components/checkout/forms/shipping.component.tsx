@@ -19,10 +19,12 @@ export default function ShippingFormComponent({
   localAddress,
   formAddress,
   setFormAddress,
+  partnerCheckout,
 }: {
   localAddress: any;
   formAddress: any;
   setFormAddress: any;
+  partnerCheckout: boolean;
 }) {
   const [validator, setValidator] = React.useState<AddressDataValidator>();
   const [cityList, setCityList] = React.useState<any>([]);
@@ -136,7 +138,7 @@ export default function ShippingFormComponent({
           (country: any) =>
             country.name === formAddress?.shippingAddress?.country
         )?._id ?? 'United Arab Emirates';
-
+      // && !globalContext.cart?.cart?.partner
       if (countryId.length > 5) {
         handleChangeCountryType(countryId);
       }
@@ -277,28 +279,30 @@ export default function ShippingFormComponent({
           </div>
         </div>
 
-        <div className={styles.formControl}>
-          <label className={styles.formLabel}>
-            {' '}
-            State / Region
-            {/* <span className="text-danger">*</span> */}
-          </label>
-          <Input
-            className={styles.formInput}
-            value={formAddress?.shippingAddress?.state ?? ''}
-            placeholder="State / Region"
-            onChange={(e) =>
-              setFormAddress({
-                ...formAddress,
-                shippingAddress: {
-                  ...formAddress.shippingAddress,
-                  state: e.target.value,
-                },
-              })
-            }
-          />
+        {!partnerCheckout && (
+          <>
+            <div className={styles.formControl}>
+              <label className={styles.formLabel}>
+                {' '}
+                State / Region
+                {/* <span className="text-danger">*</span> */}
+              </label>
+              <Input
+                className={styles.formInput}
+                value={formAddress?.shippingAddress?.state ?? ''}
+                placeholder="State / Region"
+                onChange={(e) =>
+                  setFormAddress({
+                    ...formAddress,
+                    shippingAddress: {
+                      ...formAddress.shippingAddress,
+                      state: e.target.value,
+                    },
+                  })
+                }
+              />
 
-          {/* {
+              {/* {
                         <Select
                             label="States"
                             className={styles.formTextField}
@@ -326,37 +330,39 @@ export default function ShippingFormComponent({
                             }
                         </Select>
                     } */}
-          <div className={styles.inline}>
-            <div className={styles.formControl}>
-              <span className="alert-field">
-                {validator && !validator.state && (
-                  <Alert severity="error">{t('required-field-error')}</Alert>
-                )}
-              </span>
+              <div className={styles.inline}>
+                <div className={styles.formControl}>
+                  <span className="alert-field">
+                    {validator && !validator.state && (
+                      <Alert severity="error">
+                        {t('required-field-error')}
+                      </Alert>
+                    )}
+                  </span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div className={styles.formControl}>
-          <label className={styles.formLabel}>
-            {' '}
-            Town / City <span className="text-danger">*</span>{' '}
-          </label>
-          <Input
-            className={styles.formInput}
-            value={formAddress?.shippingAddress?.city ?? ''}
-            placeholder="City "
-            onChange={(e) =>
-              setFormAddress({
-                ...formAddress,
-                shippingAddress: {
-                  ...formAddress.shippingAddress,
-                  city: e.target.value,
-                },
-              })
-            }
-          />
-          {/* {
+            <div className={styles.formControl}>
+              <label className={styles.formLabel}>
+                {' '}
+                Town / City <span className="text-danger">*</span>{' '}
+              </label>
+              <Input
+                className={styles.formInput}
+                value={formAddress?.shippingAddress?.city ?? ''}
+                placeholder="City "
+                onChange={(e) =>
+                  setFormAddress({
+                    ...formAddress,
+                    shippingAddress: {
+                      ...formAddress.shippingAddress,
+                      city: e.target.value,
+                    },
+                  })
+                }
+              />
+              {/* {
                         <Select
                             label="City"
                             className={styles.formTextField}
@@ -367,7 +373,7 @@ export default function ShippingFormComponent({
                                 Select a city
                             </MenuItem> */}
 
-          {/* {cityList && cityList.length > 0 ?
+              {/* {cityList && cityList.length > 0 ?
                                 cityList.map((city: any, index: any) => (
                                     <MenuItem
                                         key={index}
@@ -381,49 +387,53 @@ export default function ShippingFormComponent({
                                 ))
                                 : "Select a city"
                             } */}
-          {/* </Select>
+              {/* </Select>
                     } */}
-          <div className={styles.inline}>
-            <div className={styles.formControl}>
-              <span className="alert-field">
-                {validator && !validator.city && (
-                  <Alert severity="error">{t('required-field-error')}</Alert>
-                )}
-              </span>
+              <div className={styles.inline}>
+                <div className={styles.formControl}>
+                  <span className="alert-field">
+                    {validator && !validator.city && (
+                      <Alert severity="error">
+                        {t('required-field-error')}
+                      </Alert>
+                    )}
+                  </span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div className={styles.formControl}>
-          <label className={styles.formLabel}> Partner User ID </label>
-          <Input
-            className={styles.formInput}
-            disabled
-            value={authContext?.connectedUser?.licNumber ?? ''}
-            placeholder="Partner User ID "
-          />
-        </div>
+            <div className={styles.formControl}>
+              <label className={styles.formLabel}> Partner User ID </label>
+              <Input
+                className={styles.formInput}
+                disabled
+                value={authContext?.connectedUser?.licNumber ?? ''}
+                placeholder="Partner User ID "
+              />
+            </div>
 
-        <div className={styles.formControl}>
-          <label className={styles.formLabel}>
-            {' '}
-            Address <span className="text-danger">*</span>{' '}
-          </label>
-          <Input
-            className={styles.formInput}
-            placeholder="Address Street, Area, ..."
-            value={formAddress?.shippingAddress?.address}
-            onChange={(e: any) =>
-              setFormAddress({
-                ...formAddress,
-                shippingAddress: {
-                  ...formAddress.shippingAddress,
-                  address: e.target.value,
-                },
-              })
-            }
-          />
-        </div>
+            <div className={styles.formControl}>
+              <label className={styles.formLabel}>
+                {' '}
+                Address <span className="text-danger">*</span>{' '}
+              </label>
+              <Input
+                className={styles.formInput}
+                placeholder="Address Street, Area, ..."
+                value={formAddress?.shippingAddress?.address}
+                onChange={(e: any) =>
+                  setFormAddress({
+                    ...formAddress,
+                    shippingAddress: {
+                      ...formAddress.shippingAddress,
+                      address: e.target.value,
+                    },
+                  })
+                }
+              />
+            </div>
+          </>
+        )}
 
         <div className={styles.formControl}>
           <label className={styles.formLabel}> Order notes </label>

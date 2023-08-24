@@ -151,6 +151,8 @@ export const feesType = (name: string) => {
       return 'Shipping Fee';
     case 'vat':
       return 'VAT';
+    case 'platform':
+      return 'Platform Processing Fee';
     default:
       return '';
   }

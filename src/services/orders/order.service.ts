@@ -60,6 +60,10 @@ export const getPartnerRediectionLink = async (id: string) => {
     const result = await ApiService.GetRequest(
       `${API_HOST}/v1/user/user-partner/partner-details/${id}`
     );
+    console.log(
+      '🚀 ~ file: order.service.ts:63 ~ getPartnerRediectionLink ~ result:',
+      result
+    );
 
     return result?.data?.data;
   } catch (error: any) {

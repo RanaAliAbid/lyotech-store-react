@@ -20,7 +20,7 @@ export default function PaymentMethodComponent({
 }: {
   paymentType: any;
   handleChangePayment: any;
-  setPaymentType: any;
+  setPaymentType?: any;
 }) {
   const [paymentMethods, setPaymentMethods] = React.useState<any>([]);
 
