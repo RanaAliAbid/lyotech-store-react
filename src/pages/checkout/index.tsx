@@ -62,7 +62,7 @@ export default function Checkout() {
   const [enablePlaceOrder, setEnablePlaceOrder] = React.useState(false);
   const [displayAddress, setDisplayAddress] = React.useState(false);
   const [sessionId, setSessionId] = React.useState('');
-
+  const [partnerCheckout, setPartnerCheckout] = React.useState<boolean>(false);
   const globalContext = useGlobalContext();
   const authContext = useAuthContext();
 
@@ -98,6 +98,12 @@ export default function Checkout() {
     if (!authContext.userConnected) {
       setChangeAddress(true);
     }
+
+    if (globalContext?.cart?.cart?.partner) {
+      setPartnerCheckout(true);
+    } else {
+      setPartnerCheckout(false);
+    }
   }, [globalContext.cart]);
 
   React.useEffect(() => {
@@ -109,9 +115,9 @@ export default function Checkout() {
 
     if (
       !checkForm.shippingAddress.country ||
-      !checkForm.shippingAddress.city ||
-      !checkForm.shippingAddress.type ||
-      !checkForm.shippingAddress.address ||
+      (!checkForm.shippingAddress.city && !partnerCheckout) ||
+      (!checkForm.shippingAddress.type && !partnerCheckout) ||
+      (!checkForm.shippingAddress.address && !partnerCheckout) ||
       !checkForm.shippingAddress.phone ||
       !checkForm.shippingAddress.firstName ||
       !checkForm.shippingAddress.lastName ||
@@ -122,8 +128,8 @@ export default function Checkout() {
       if (!shippingSameBilling) {
         if (
           !checkForm.billingAddress.country ||
-          !checkForm.billingAddress.city ||
-          !checkForm.billingAddress.address ||
+          (!checkForm.billingAddress.city && !partnerCheckout) ||
+          (!checkForm.billingAddress.address && !partnerCheckout) ||
           !checkForm.billingAddress.phone ||
           !checkForm.billingAddress.firstName ||
           !checkForm.billingAddress.lastName ||
@@ -389,37 +395,44 @@ export default function Checkout() {
                       <div className={styles.wrapBox}>
                         {/* // shipping address form  */}
                         <ShippingFormComponent
+                          partnerCheckout={partnerCheckout}
                           localAddress={localAddress}
                           formAddress={formAddress}
                           setFormAddress={setFormAddress}
                         ></ShippingFormComponent>
 
-                        <div className={styles.addressBox}>
-                          <FormControlLabel
-                            control={
-                              <Checkbox
-                                size="small"
-                                onChange={(e) =>
-                                  setShippingSameBilling(!shippingSameBilling)
+                        {!partnerCheckout && (
+                          <>
+                            <div className={styles.addressBox}>
+                              <FormControlLabel
+                                control={
+                                  <Checkbox
+                                    size="small"
+                                    onChange={(e) =>
+                                      setShippingSameBilling(
+                                        !shippingSameBilling
+                                      )
+                                    }
+                                    checked={shippingSameBilling}
+                                  />
                                 }
-                                checked={shippingSameBilling}
+                                label="Billing Address same as shipping address."
                               />
-                            }
-                            label="Billing Address same as shipping address."
-                          />
 
-                          {authContext.userConnected && (
-                            <Typography variant="h6">
-                              <Link
-                                href="#"
-                                onClick={(e) => saveShippingAddress()}
-                              >
-                                {' '}
-                                Save this address{' '}
-                              </Link>
-                            </Typography>
-                          )}
-                        </div>
+                              {authContext.userConnected && (
+                                <Typography variant="h6">
+                                  <Link
+                                    href="#"
+                                    onClick={(e) => saveShippingAddress()}
+                                  >
+                                    {' '}
+                                    Save this address{' '}
+                                  </Link>
+                                </Typography>
+                              )}
+                            </div>
+                          </>
+                        )}
                       </div>
 
                       {!shippingSameBilling && (
