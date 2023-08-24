@@ -5,12 +5,13 @@ import Image from 'next/image';
 import Header from '../../common/header';
 import Footer from '../../common/footer';
 import AlertComponent from '../../common/alert';
+import { List, ListItem, ListItemText } from '@mui/material';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import lfiProducts from '../../img/lfi-products.png';
+import lfiProducts from '../../img/3d_base_hardware.png';
 import device1000 from '../../img/device1000.png';
 import device5000 from '../../img/device5000.png';
 
@@ -33,6 +34,12 @@ import certificate10 from '../../img/certification-logo/certificat10.png';
 import certificate11 from '../../img/certification-logo/certificat11.png';
 import certificate12 from '../../img/certification-logo/certificat12.png';
 import certificate13 from '../../img/certification-logo/certificat13.png';
+
+import minter500 from '../../img/minter-500.png';
+import minter1000 from '../../img/minter-1000.png';
+import minter10000 from '../../img/minter-10000.png';
+import minter5000 from '../../img/minter-5000.png';
+import minterValidator from '../../img/minter-Validator.png';
 
 import we01 from '../../img/we-are/we01.png';
 import we02 from '../../img/we-are/we02.png';
@@ -136,7 +143,7 @@ export default function CoProducts({
               <div className={`${styles['mainBannerLfi']}`}>
                 <Container className={styles.containerBox}>
                   <Grid container spacing={3} className={styles.bannerWrap}>
-                    <Grid item md={12} xs={12}>
+                    <Grid item md={6} xs={12}>
                       <motion.div
                         initial={{
                           opacity: 0,
@@ -172,7 +179,7 @@ export default function CoProducts({
                       </motion.div>
                     </Grid>
 
-                    <Grid item md={12} xs={12}>
+                    <Grid item md={6} xs={12}>
                       <motion.div
                         initial={{
                           opacity: 0,
@@ -193,7 +200,7 @@ export default function CoProducts({
                             height={'523'}
                             style={{ width: '100%', height: 'auto' }}
                             src={lfiProducts.src}
-                            alt="logo"
+                            alt="Banner"
                           />
                         </div>
                       </motion.div>
@@ -443,7 +450,50 @@ export default function CoProducts({
                     transition={{ duration: 0.3, delay: 0.25 }}
                     viewport={{ once: true }}
                   >
-                    <Typography variant="h4">XLFi Computer 1000</Typography>
+                    <Typography variant="h1">
+                      <strong> xLFi 500 </strong>
+                    </Typography>
+
+                    <Typography variant="h3">
+                      Start the journey as a LFi Minter
+                    </Typography>
+
+                    <Typography variant="h5">
+                      XLFi 500 is the entry point in the amazing world of LFi
+                      Minting platform. Enjoy its compact design and its
+                      performances.{' '}
+                    </Typography>
+
+                    <Typography variant="h4">
+                        <strong>Features: </strong>
+                      </Typography>
+
+                    <div className={styles.devicInfoList}>
+                  
+                      <span>
+                        <Typography variant="h5">2.4Ghz / 5Ghz</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">1 WAN 1 LAN</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">
+                          External 12V power Adapter
+                        </Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">14x13x6 cm</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">
+                          Premium Plastic Case
+                        </Typography>
+                     </span>
+                   </div>
 
                     <Button
                       variant="contained"
@@ -470,7 +520,7 @@ export default function CoProducts({
                       transition={{ duration: 0.3, delay: 0.25 }}
                       viewport={{ once: true }}
                     >
-                      <img src={device1000.src} alt="Device" />
+                      <img src={minter500.src} alt="Device" />
                     </motion.div>
                   </div>
                 </Grid>
@@ -493,7 +543,7 @@ export default function CoProducts({
                       transition={{ duration: 0.3, delay: 0.25 }}
                       viewport={{ once: true }}
                     >
-                      <img src={device5000.src} alt="Device" />
+                      <img src={minter1000.src} alt="Device" />
                     </motion.div>
                   </div>
                 </Grid>
@@ -512,7 +562,44 @@ export default function CoProducts({
                     transition={{ duration: 0.3, delay: 0.25 }}
                     viewport={{ once: true }}
                   >
-                    <Typography variant="h4">XLFi Computer 5000</Typography>
+                    <Typography variant="h1">
+                      <strong> xLFi 1000 </strong>
+                    </Typography>
+
+                    <Typography variant="h3">
+                      Upgrade your level with more power.
+                    </Typography>
+
+                    <Typography variant="h5">
+                      XLFi 1000 is the first born of Aluminum Aeronautic Grade
+                      Minters with great power and sleek design.
+                    </Typography>
+
+                    <Typography variant="h4">
+                        <strong>Features: </strong>
+                      </Typography>
+                    <div className={styles.devicInfoList}>
+                     
+                      <span>
+                        <Typography variant="h5">2.4Ghz / 5Ghz</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">1 WAN 1 LAN</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">110-220V</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">14x13x6 cm</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">Aluminum Case</Typography>
+                     </span>
+                   </div>
 
                     <Button
                       variant="contained"
@@ -521,6 +608,276 @@ export default function CoProducts({
                       Coming Soon
                     </Button>
                   </motion.div>
+                </Grid>
+              </Grid>
+
+              <Grid container spacing={0} className={styles.DeviceInfoWrap}>
+                <Grid item md={6} xs={12} className={styles.DeviceInfo}>
+                  <motion.div
+                    initial={{
+                      opacity: 0,
+                      x: '-100%',
+                      visibility: 'hidden',
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      x: 0,
+                      visibility: 'visible',
+                    }}
+                    transition={{ duration: 0.3, delay: 0.25 }}
+                    viewport={{ once: true }}
+                  >
+                    <Typography variant="h1">
+                      <strong>xLFi 5000 </strong>
+                    </Typography>
+
+                    <Typography variant="h3">
+                      You chose to be a protagonist in the LFi Projects
+                    </Typography>
+
+                    <Typography variant="h5">
+                      XLFi 5000 increase your minting power, keeping its
+                      distinctive sign with a sleek Aluminum Aeronautic Grade
+                      case: power with style.
+                    </Typography>
+
+                    <Typography variant="h4">
+                        <strong>Features: </strong>
+                      </Typography>
+
+                    <div className={styles.devicInfoList}>
+                     
+                      <span>
+                        <Typography variant="h5">2.4Ghz / 5Ghz</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">1 WAN 1 LAN</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">110-220V</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">16x14x8 cm</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">Aluminum Case</Typography>
+                     </span>
+                   </div>
+
+                    <Button
+                      variant="contained"
+                      className={`${styles['btn']} ${styles['btn_primary']}`}
+                    >
+                      Coming Soon
+                    </Button>
+                  </motion.div>
+                </Grid>
+
+                <Grid item md={6} xs={12}>
+                  <div className={styles.LfiDeviceImg}>
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                        x: '100%',
+                        visibility: 'hidden',
+                      }}
+                      whileInView={{
+                        opacity: 1,
+                        x: 0,
+                        visibility: 'visible',
+                      }}
+                      transition={{ duration: 0.3, delay: 0.25 }}
+                      viewport={{ once: true }}
+                    >
+                      <img src={minter5000.src} alt="Device" />
+                    </motion.div>
+                  </div>
+                </Grid>
+              </Grid>
+
+              <Grid container spacing={0}>
+                <Grid item md={6} xs={12}>
+                  <div className={styles.LfiDeviceImg}>
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                        x: '-100%',
+                        visibility: 'hidden',
+                      }}
+                      whileInView={{
+                        opacity: 1,
+                        x: 0,
+                        visibility: 'visible',
+                      }}
+                      transition={{ duration: 0.3, delay: 0.25 }}
+                      viewport={{ once: true }}
+                    >
+                      <img src={minter10000.src} alt="Device" />
+                    </motion.div>
+                  </div>
+                </Grid>
+                <Grid item md={6} xs={12} className={styles.DeviceInfo}>
+                  <motion.div
+                    initial={{
+                      opacity: 0,
+                      x: '100%',
+                      visibility: 'hidden',
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      x: 0,
+                      visibility: 'visible',
+                    }}
+                    transition={{ duration: 0.3, delay: 0.25 }}
+                    viewport={{ once: true }}
+                  >
+                    <Typography variant="h1">
+                      <strong>xLFi 10000 </strong>
+                    </Typography>
+
+                    <Typography variant="h3">
+                      Bring the game to another level and raise your minting
+                      power.
+                    </Typography>
+
+                    <Typography variant="h5">
+                      XLFi 10000 is designed for who want the maximum and the
+                      best. Elevate your minting power to the top, keeping its
+                      distinctive sign with a sleek Aluminum Aeronautic Grade
+                      case: power with style.
+                    </Typography>
+
+                    <Typography variant="h4">
+                        <strong>Features: </strong>
+                      </Typography>
+
+                    <div className={styles.devicInfoList}>
+                     
+                      <span>
+                        <Typography variant="h5">2.4Ghz / 5Ghz</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">1 WAN 1 LAN</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">110-220V</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">20x15x10 cm</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">Aluminum Case</Typography>
+                     </span>
+                   </div>
+
+                    <Button
+                      variant="contained"
+                      className={`${styles['btn']} ${styles['btn_primary']}`}
+                    >
+                      Coming Soon
+                    </Button>
+                  </motion.div>
+                </Grid>
+              </Grid>
+
+              <Grid container spacing={0}>
+                <Grid item md={6} xs={12} className={styles.DeviceInfo}>
+                  <motion.div
+                    initial={{
+                      opacity: 0,
+                      x: '100%',
+                      visibility: 'hidden',
+                    }}
+                    whileInView={{
+                      opacity: 1,
+                      x: 0,
+                      visibility: 'visible',
+                    }}
+                    transition={{ duration: 0.3, delay: 0.25 }}
+                    viewport={{ once: true }}
+                  >
+                    <Typography variant="h1">
+                      <strong>xLFi Validator</strong>
+                    </Typography>
+
+                    <Typography variant="h3">
+                      When power it's not enough and you want to rule the
+                      Minting Game: be a validator.
+                    </Typography>
+
+                    <Typography variant="h5">
+                      XLFi Validator is the one you can't miss, the real game
+                      changer. Become a validatore node-point and take the
+                      maximum with performance peak and power output. Enjoy the
+                      unique Black Aluminum Aeronautic Grade case: minting with
+                      style.
+                    </Typography>
+
+                    <Typography variant="h4">
+                        <strong>Features: </strong>
+                      </Typography>
+
+                    <div className={styles.devicInfoList}>
+                     
+                      <span>
+                        <Typography variant="h5">2.4Ghz / 5Ghz</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">1 WAN 1 LAN</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">110-220V</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">20x15x10 cm</Typography>
+                     </span>
+
+                      <span>
+                        <Typography variant="h5">
+                          Black Aluminum Case
+                        </Typography>
+                     </span>
+                   </div>
+
+                    <Button
+                      variant="contained"
+                      className={`${styles['btn']} ${styles['btn_primary']}`}
+                    >
+                      Coming Soon
+                    </Button>
+                  </motion.div>
+                </Grid>
+
+                <Grid item md={6} xs={12}>
+                  <div className={styles.LfiDeviceImg}>
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                        x: '-100%',
+                        visibility: 'hidden',
+                      }}
+                      whileInView={{
+                        opacity: 1,
+                        x: 0,
+                        visibility: 'visible',
+                      }}
+                      transition={{ duration: 0.3, delay: 0.25 }}
+                      viewport={{ once: true }}
+                    >
+                      <img src={minterValidator.src} alt="Device" />
+                    </motion.div>
+                  </div>
                 </Grid>
               </Grid>
             </div>
