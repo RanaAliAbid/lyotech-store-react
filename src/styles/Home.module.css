@@ -550,8 +550,8 @@
 	justify-content: space-between;
 	align-items: center;
 	align-content: center;
-	padding: 60px 0 0px;
-	text-align: center;
+	padding: 30px 0 30px;
+	text-align: left;
 	color: #fff;
 }
 
@@ -2731,15 +2731,50 @@ ul.wishlists,
 
 .DeviceInfo {
 	width: 100%;
-	padding: 4% 8%;
+	padding: 3% 8%;
 	display: flex;
 	align-items: center;
 	background: #f7f7f7 !important;
 }
 
 .DeviceInfo h4 {
-	font-size: 30px;
+	margin: 30px 0 20px;
 }
+
+.DeviceInfo h1{
+	color: #038beb;
+}
+
+.DeviceInfo h3{
+	font-size: 18px;
+    font-weight: 500;
+    margin: 4px 0 20px;
+    line-height: 26px;
+}
+
+.devicInfoList{
+	display: flex;
+	justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 30px;
+    /* flex-direction: row; */
+
+}
+
+.devicInfoList span{
+	list-style: none !important;
+    display: inline !important;
+    float: left;
+    text-wrap: nowrap;
+    padding-left: 26px !important;
+	background: url(../img/featureCheck.png) no-repeat left center;
+	background-size: 20px;
+}
+
+.devicInfoList span h5{
+	font-weight: 500;
+}
+
 
 .LfiDeviceImg {
 	background: url(../img/lfi-pro-bg.png) no-repeat center;
@@ -2748,13 +2783,12 @@ ul.wishlists,
 	align-items: center;
 	padding: 4% 0;
 	overflow: hidden;
+	background-size: cover;
 }
-
 .LfiDeviceImg img {
 	width: 100%;
-	max-width: 600px;
+	max-width: 474px;
 }
-
 .mainBanner,
 .homeServicesWrap,
 .serverWrap,
