@@ -710,17 +710,16 @@ export default function Home({
                         viewport={{ once: true }}
                       >
                         <Button
-                          onClick={
-                            (e) => {}
-                            // addProductToCart(
-                            //   globalContext?.homeProduct?.LFI_ONE_Smartphone
-                            // )
+                          onClick={(e) =>
+                            addProductToCart(
+                              globalContext?.homeProduct?.LFI_ONE_Smartphone
+                            )
                           }
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
-                          Available Soon...
-                          {/* {t('product-btn1-shop')} */}
+                          {/* Available Soon... */}
+                          {t('product-btn1-shop')}
                         </Button>
                       </motion.div>
                     </Grid>
@@ -1096,8 +1095,8 @@ export default function Home({
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
-                          {/* {t('product-btn3-shop')} */}
-                          Coming Soon...
+                          {t('product-btn3-shop')}
+                          {/* Coming Soon... */}
                         </Button>
                       </motion.div>
                     </Grid>
@@ -1265,6 +1264,9 @@ export const getServerSideProps: GetServerSideProps<{
       ?._id ?? '';
   productsId.LYO_Watch =
     result?.data?.data.find((x: any) => x.productKey === lyo_watch)?._id ?? '';
+  productsId.LYO_Tab =
+    result?.data?.data.find((x: any) => x.productKey === lyo_tab)?._id ?? '';
+
   productsId.LYO_Tab =
     result?.data?.data.find((x: any) => x.productKey === lyo_tab)?._id ?? '';
 
