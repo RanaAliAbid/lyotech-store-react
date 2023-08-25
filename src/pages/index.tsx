@@ -868,10 +868,11 @@ export default function Home({
                           viewport={{ once: true }}
                         >
                           <Button
-                            onClick={(e) =>
-                              addProductToCart(
-                                globalContext?.homeProduct?.LYO_Watch
-                              )
+                            onClick={
+                              (e) => {}
+                              // addProductToCart(
+                              //   globalContext?.homeProduct?.LYO_Watch
+                              // )
                             }
                             variant="contained"
                             className={`${styles['btn']} ${styles['btn_primary']}`}
@@ -1088,10 +1089,11 @@ export default function Home({
                         viewport={{ once: true }}
                       >
                         <Button
-                          onClick={(e) =>
-                            addProductToCart(
-                              globalContext?.homeProduct?.LYO_Tab
-                            )
+                          onClick={
+                            (e) => {}
+                            // addProductToCart(
+                            //   globalContext?.homeProduct?.LYO_Tab
+                            // )
                           }
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
@@ -1265,6 +1267,9 @@ export const getServerSideProps: GetServerSideProps<{
       ?._id ?? '';
   productsId.LYO_Watch =
     result?.data?.data.find((x: any) => x.productKey === lyo_watch)?._id ?? '';
+  productsId.LYO_Tab =
+    result?.data?.data.find((x: any) => x.productKey === lyo_tab)?._id ?? '';
+
   productsId.LYO_Tab =
     result?.data?.data.find((x: any) => x.productKey === lyo_tab)?._id ?? '';
 

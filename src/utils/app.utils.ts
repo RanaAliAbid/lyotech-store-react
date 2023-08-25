@@ -7,11 +7,15 @@ import { withSwal } from 'react-sweetalert2';
 export const lfi_one_smartphone = 'lfiphone';
 export const lyo_watch = 'lyowatch';
 export const lyo_tab = 'lyotab';
+export const lyo_special_phone1 = 'lyo_special_phone1';
+export const lyo_special_phone2 = 'lyo_special_phone2';
 
 export const homePageProducts = {
   LFI_ONE_Smartphone: lfi_one_smartphone,
   LYO_Watch: lyo_watch,
-  LYO_Tab: lyo_watch,
+  LYO_Tab: lyo_tab,
+  LYO_Special_phone1: lyo_special_phone1,
+  LYO_Special_phone2: lyo_special_phone2,
 };
 
 export const _defaultHomePageProducts = homePageProducts;
