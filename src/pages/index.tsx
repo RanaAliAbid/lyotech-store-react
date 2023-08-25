@@ -710,16 +710,17 @@ export default function Home({
                         viewport={{ once: true }}
                       >
                         <Button
-                          onClick={(e) =>
-                            addProductToCart(
-                              globalContext?.homeProduct?.LFI_ONE_Smartphone
-                            )
+                          onClick={
+                            (e) => {}
+                            // addProductToCart(
+                            //   globalContext?.homeProduct?.LFI_ONE_Smartphone
+                            // )
                           }
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
-                          {/* Available Soon... */}
-                          {t('product-btn1-shop')}
+                          Available Soon...
+                          {/* {t('product-btn1-shop')} */}
                         </Button>
                       </motion.div>
                     </Grid>
@@ -867,10 +868,11 @@ export default function Home({
                           viewport={{ once: true }}
                         >
                           <Button
-                            onClick={(e) =>
-                              addProductToCart(
-                                globalContext?.homeProduct?.LYO_Watch
-                              )
+                            onClick={
+                              (e) => {}
+                              // addProductToCart(
+                              //   globalContext?.homeProduct?.LYO_Watch
+                              // )
                             }
                             variant="contained"
                             className={`${styles['btn']} ${styles['btn_primary']}`}
@@ -1087,16 +1089,17 @@ export default function Home({
                         viewport={{ once: true }}
                       >
                         <Button
-                          onClick={(e) =>
-                            addProductToCart(
-                              globalContext?.homeProduct?.LYO_Tab
-                            )
+                          onClick={
+                            (e) => {}
+                            // addProductToCart(
+                            //   globalContext?.homeProduct?.LYO_Tab
+                            // )
                           }
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
-                          {t('product-btn3-shop')}
-                          {/* Coming Soon... */}
+                          {/* {t('product-btn3-shop')} */}
+                          Coming Soon...
                         </Button>
                       </motion.div>
                     </Grid>
