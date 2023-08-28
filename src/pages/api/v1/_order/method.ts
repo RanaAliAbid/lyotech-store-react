@@ -2,7 +2,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ApiData, ApiError } from '../../types';
 import { AuthUser } from '@/contexts/auth.types';
-import { getOrders, getPaymentLink, placeUserOrder, deleteOrder } from '@/controllers/OrderController';
+import {
+  getOrders,
+  getPaymentLink,
+  placeUserOrder,
+  deleteOrder,
+  createCustomPayment,
+} from '@/controllers/OrderController';
 
 export default async function OrderHandler(
   req: NextApiRequest,
@@ -10,18 +16,23 @@ export default async function OrderHandler(
 ) {
   const methods = req.query.method;
 
-  if (!methods) return res.status(400).json({ status: false, message: 'Unauthorized Request.' });
+  if (!methods)
+    return res
+      .status(400)
+      .json({ status: false, message: 'Unauthorized Request.' });
 
-  const method = methods[0] ?? "";
+  const method = methods[0] ?? '';
 
   switch (method) {
     case 'place-order':
       return placeUserOrder(req, res);
-    case 'get-payment-link': 
+    case 'get-payment-link':
       return getPaymentLink(req, res);
-    case 'orders': 
+    case 'orders':
       return getOrders(req, res);
     case 'delete-order':
       return deleteOrder(req, res);
+    case 'custom-payment':
+      return createCustomPayment(req, res);
   }
 }

@@ -161,3 +161,42 @@ export const getPaymentLink = async (
     return res.status(400).json(ApiService.ApiResponseError(error));
   }
 };
+
+export const createCustomPayment = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  res.setHeader('Allow', 'POST');
+
+  try {
+    let data = req.body;
+
+    const token = req.cookies?.authToken ?? null;
+    const guestId = req.cookies?.guestId ?? null;
+    const orderId = req.query?.id ?? '';
+
+    let result;
+
+    if (token) {
+      result = await ApiService.PostRequest(
+        API_HOST + '/v1/order/custom/',
+        data,
+        `Bearer ${token}`
+      );
+    } else {
+      result = await ApiService.PostRequest(
+        API_HOST + '/v1/order/custom',
+        data,
+        `${guestId}`,
+        true
+      );
+    }
+
+    return res
+      .status(200)
+      .json(ApiService.ApiResponseSuccess(result?.data, ''));
+  } catch (error: any) {
+    console.log('Catch error add to cart ', error?.response?.data);
+    return res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};

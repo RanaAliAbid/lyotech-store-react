@@ -43,6 +43,8 @@ import {
   setLocalStorage,
 } from '@/utils/app.utils';
 import Link from 'next/link';
+import { createCustomPayment } from '@/services/cart/cart.service';
+import MastercardCheckoutComponent from '@/components/checkout/paymentMethods/mastercardCheckout.component';
 
 export default function HomePrivate({
   products,
@@ -59,6 +61,9 @@ export default function HomePrivate({
   const router = useRouter();
   const [accessPassword, setAccessPassword] = React.useState<string>('');
   const [validPassword, setValidPassword] = React.useState<boolean>(false);
+  const [customAmount, setCustomAmount] = React.useState<number>(0);
+  const [customId, setCustomId] = React.useState<string>('');
+  const [session, setSession] = React.useState<string>('');
 
   useEffect(() => {
     if (accessPassword === process.env.SPECIAL_PRODUCT_PASSWORD) {
@@ -89,6 +94,27 @@ export default function HomePrivate({
       const result = await globalContext.addCart(id, 1);
 
       if (result) return router.push('/cart');
+
+      globalContext.setGlobalLoading(false);
+    } catch (error) {
+      globalContext.setGlobalLoading(false);
+    }
+  };
+
+  const createCustomLink = async () => {
+    try {
+      const result = await createCustomPayment({
+        id: customId,
+        amount: customAmount,
+      });
+
+      if (result?.data?.data?.data?.masterCardSession) {
+        console.log(
+          'open checkout page',
+          result?.data?.data?.data?.masterCardSession.sessionId
+        );
+        setSession(result?.data?.data?.data?.masterCardSession.sessionId);
+      }
 
       globalContext.setGlobalLoading(false);
     } catch (error) {
@@ -646,8 +672,50 @@ export default function HomePrivate({
                     </Grid>
                   </Grid>
                 </Container>
+
+                <Container className={styles.containerBox}>
+                  <Grid container spacing={3}>
+                    <Grid item md={3} sm={12}></Grid>
+                    <Grid item md={6} sm={12}>
+                      {' '}
+                      <div className={styles.inline}>
+                        <Input
+                          onChange={(e: any) =>
+                            setCustomAmount(parseFloat(e.target.value ?? '0'))
+                          }
+                          type="number"
+                          className={`${styles.formInput} w-100`}
+                          placeholder={t('Custom Amount')}
+                          value={customAmount}
+                        />
+                      </div>
+                      <div className={styles.inline}>
+                        <Input
+                          onChange={(e: any) => setCustomId(e.target.value)}
+                          type="text"
+                          className={`${styles.formInput} w-100`}
+                          placeholder={t('Custom Id')}
+                          value={customId}
+                        />
+                      </div>
+                      <Button
+                        onClick={(e: any) => createCustomLink()}
+                        type="button"
+                        variant="contained"
+                        fullWidth
+                        className={`${styles['btn']} ${styles['btn_primary']}`}
+                      >
+                        {'Create Payment Link'}
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Container>
               </div>
             </div>
+
+            {session && session.length > 5 && (
+              <MastercardCheckoutComponent sessionId={session} />
+            )}
 
             {/* Content Section End */}
 
