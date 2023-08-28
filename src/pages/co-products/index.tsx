@@ -366,12 +366,12 @@ export default function CoProducts({
                     </Typography>
                     <br />
 
-                    {/* <Typography variant="h5">
+                    <Typography variant="h5">
                       {(1397.0 * globalContext.conversionRate)?.toFixed(
                         globalContext.priceToFixed
                       )}
                       &nbsp;{globalContext.currencySymbol}
-                    </Typography> */}
+                    </Typography>
                     <Typography variant="h4">Specifications</Typography>
 
                     <Typography variant="h6">ARM Cortex 3GHz</Typography>
@@ -388,17 +388,16 @@ export default function CoProducts({
 
                     <div className={styles.BuyLfiPhone}>
                       <Button
-                        onClick={
-                          (e) => {}
-                          // addProductToCart(
-                          //   globalContext?.homeProduct?.LFI_ONE_Smartphone
-                          // )
+                        onClick={(e) =>
+                          addProductToCart(
+                            globalContext?.homeProduct?.LFI_ONE_Smartphone
+                          )
                         }
                         variant="contained"
                         className={`${styles['btn']} ${styles['btn_primary']}`}
                       >
-                        Available Soon...
-                        {/* Buy Now */}
+                        {/* Available Soon... */}
+                        Buy Now
                       </Button>
 
                       {/* <Button
@@ -465,35 +464,34 @@ export default function CoProducts({
                     </Typography>
 
                     <Typography variant="h4">
-                        <strong>Features: </strong>
-                      </Typography>
+                      <strong>Features: </strong>
+                    </Typography>
 
                     <div className={styles.devicInfoList}>
-                  
                       <span>
                         <Typography variant="h5">2.4Ghz / 5Ghz</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">1 WAN 1 LAN</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">
                           External 12V power Adapter
                         </Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">14x13x6 cm</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">
                           Premium Plastic Case
                         </Typography>
-                     </span>
-                   </div>
+                      </span>
+                    </div>
 
                     <Button
                       variant="contained"
@@ -576,30 +574,29 @@ export default function CoProducts({
                     </Typography>
 
                     <Typography variant="h4">
-                        <strong>Features: </strong>
-                      </Typography>
+                      <strong>Features: </strong>
+                    </Typography>
                     <div className={styles.devicInfoList}>
-                     
                       <span>
                         <Typography variant="h5">2.4Ghz / 5Ghz</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">1 WAN 1 LAN</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">110-220V</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">14x13x6 cm</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">Aluminum Case</Typography>
-                     </span>
-                   </div>
+                      </span>
+                    </div>
 
                     <Button
                       variant="contained"
@@ -642,31 +639,30 @@ export default function CoProducts({
                     </Typography>
 
                     <Typography variant="h4">
-                        <strong>Features: </strong>
-                      </Typography>
+                      <strong>Features: </strong>
+                    </Typography>
 
                     <div className={styles.devicInfoList}>
-                     
                       <span>
                         <Typography variant="h5">2.4Ghz / 5Ghz</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">1 WAN 1 LAN</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">110-220V</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">16x14x8 cm</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">Aluminum Case</Typography>
-                     </span>
-                   </div>
+                      </span>
+                    </div>
 
                     <Button
                       variant="contained"
@@ -752,31 +748,30 @@ export default function CoProducts({
                     </Typography>
 
                     <Typography variant="h4">
-                        <strong>Features: </strong>
-                      </Typography>
+                      <strong>Features: </strong>
+                    </Typography>
 
                     <div className={styles.devicInfoList}>
-                     
                       <span>
                         <Typography variant="h5">2.4Ghz / 5Ghz</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">1 WAN 1 LAN</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">110-220V</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">20x15x10 cm</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">Aluminum Case</Typography>
-                     </span>
-                   </div>
+                      </span>
+                    </div>
 
                     <Button
                       variant="contained"
@@ -822,33 +817,32 @@ export default function CoProducts({
                     </Typography>
 
                     <Typography variant="h4">
-                        <strong>Features: </strong>
-                      </Typography>
+                      <strong>Features: </strong>
+                    </Typography>
 
                     <div className={styles.devicInfoList}>
-                     
                       <span>
                         <Typography variant="h5">2.4Ghz / 5Ghz</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">1 WAN 1 LAN</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">110-220V</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">20x15x10 cm</Typography>
-                     </span>
+                      </span>
 
                       <span>
                         <Typography variant="h5">
                           Black Aluminum Case
                         </Typography>
-                     </span>
-                   </div>
+                      </span>
+                    </div>
 
                     <Button
                       variant="contained"
