@@ -45,6 +45,11 @@ const nextConfig = nextTranslate({
   async redirects() {
     return [
       {
+        source: '/api(^$|/v1)',
+        destination: '/',
+        permanent: true,
+      },
+      {
         source: '/checkout/payment/success/cc/:orderId',
         destination: '/checkout/payment/success?invoiceNumber=:orderId',
         permanent: false,
