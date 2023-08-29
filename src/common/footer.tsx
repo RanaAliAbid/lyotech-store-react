@@ -136,17 +136,17 @@ export default function Footer() {
                 <Typography variant="h4">Address</Typography>
 
                 <Typography className={styles.uaeAddress} variant="h5">
-                  <span> Lyotech Labs Electronics Trading LLC </span>
+                  <span> LYOTECH LABS ELECTRONICS TRADING L.L.C. </span>
                   WHP2-BLOCK-T COMMERCIAL Area: Saih Shuaib 3, Dubai, UAE
                 </Typography>
 
                 <Typography className={styles.doverAddress} variant="h5">
-                  <span> Lyotech Labs LLC </span>8 The Green, Suite R in the
+                  <span> LYOTECH LABS LLC </span>8 The Green, Suite R in the
                   City of Dover, Zip code - 19901
                 </Typography>
 
                 <Typography className={styles.hongKongAddress} variant="h5">
-                  <span> Lyotech labs Limited</span>
+                  <span> LYOTECH LABS Limited</span>
                   Room 1104, Crawford House, 70 Queen's Rd. Centra, Central,
                   Hong Kong
                 </Typography>
