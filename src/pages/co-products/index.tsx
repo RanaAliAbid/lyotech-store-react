@@ -322,7 +322,7 @@ export default function CoProducts({
                         </Typography>
                         <Typography variant="h6">
                           Our datacentres are ISO 27001-certified, PCI DDS3,
-                          GPDR Data Protection and Storage protected.
+                          GDPR Data Protection and Storage protected.
                         </Typography>
                       </div>
                     </motion.div>
