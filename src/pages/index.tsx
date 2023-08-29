@@ -513,7 +513,8 @@ export default function Home({
                       <br />
 
                       <Typography variant="h6">
-                        {t('product-item1-desc')}
+                        {/* {t('product-item1-desc')} */}
+                        LYOTECH LABS ELECTRONICS TRADING L.L.C.
                       </Typography>
 
                       <Typography variant="h4">
@@ -1066,9 +1067,7 @@ export default function Home({
                             <span>
                               <MintingIcon />
                             </span>
-                            <Typography variant="h6">
-                               App Native
-                            </Typography>
+                            <Typography variant="h6">App Native</Typography>
                           </motion.div>
                         </Grid>
                       </Grid>
