@@ -253,7 +253,7 @@ export default function Private() {
                                                     <ListItem>
                                                         <Typography variant="h5">
                                                         Full details of our delivery terms can be found in our Delivery Condition which can be found here 
-                                                        <a href="https://lyotechlabs.com/delivery-policy"> Delivery policy </a> and is duly incorporated into these Terms by reference should you purchase Hardware, and is subject to change at the sole discretion of LYOTECH LABS ELECTRONICS TRADING L.L.C. It is the Customers responsibility to regularly check these changes, especially at the time of purchase.
+                                                        <a href="https://lyotechlabs.com/delivery-shipping-policy"> Delivery policy </a> and is duly incorporated into these Terms by reference should you purchase Hardware, and is subject to change at the sole discretion of LYOTECH LABS ELECTRONICS TRADING L.L.C. It is the Customers responsibility to regularly check these changes, especially at the time of purchase.
                                                         </Typography>
                                                     </ListItem>
                                                 </List>
