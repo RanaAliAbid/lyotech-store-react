@@ -685,7 +685,7 @@ export default function Home({
                               <MintingIcon /> &nbsp;
                             </span>
                             <Typography variant="h6">
-                              Mobile Minting App Native
+                              Mobile App Native
                             </Typography>
                           </motion.div>
                         </Grid>
@@ -1067,7 +1067,7 @@ export default function Home({
                               <MintingIcon />
                             </span>
                             <Typography variant="h6">
-                              Minting App Native
+                               App Native
                             </Typography>
                           </motion.div>
                         </Grid>

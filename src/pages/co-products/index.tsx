@@ -362,7 +362,7 @@ export default function CoProducts({
 
                   <Grid item md={6} sm={12} className={styles.phoneInfo}>
                     <Typography variant="h2">
-                      <span>LFi</span> Smartphone
+                      <span>LFi One</span> Smartphone
                     </Typography>
                     <br />
 
@@ -454,14 +454,14 @@ export default function CoProducts({
                     </Typography>
 
                     <Typography variant="h3">
-                      Start the journey as a LFi Minter
+                      Start the journey as a LFi Computer
                     </Typography>
 
-                    <Typography variant="h5">
+                    {/* <Typography variant="h5">
                       XLFi 500 is the entry point in the amazing world of LFi
                       Minting platform. Enjoy its compact design and its
                       performances.{' '}
-                    </Typography>
+                    </Typography> */}
 
                     <Typography variant="h4">
                       <strong>Features: </strong>
@@ -568,10 +568,10 @@ export default function CoProducts({
                       Upgrade your level with more power.
                     </Typography>
 
-                    <Typography variant="h5">
+                    {/*<Typography variant="h5">
                       XLFi 1000 is the first born of Aluminum Aeronautic Grade
                       Minters with great power and sleek design.
-                    </Typography>
+                    </Typography> */}
 
                     <Typography variant="h4">
                       <strong>Features: </strong>
@@ -631,12 +631,12 @@ export default function CoProducts({
                     <Typography variant="h3">
                       You chose to be a protagonist in the LFi Projects
                     </Typography>
-
+                    {/* 
                     <Typography variant="h5">
                       XLFi 5000 increase your minting power, keeping its
                       distinctive sign with a sleek Aluminum Aeronautic Grade
                       case: power with style.
-                    </Typography>
+                    </Typography> */}
 
                     <Typography variant="h4">
                       <strong>Features: </strong>
@@ -736,16 +736,15 @@ export default function CoProducts({
                     </Typography>
 
                     <Typography variant="h3">
-                      Bring the game to another level and raise your minting
-                      power.
+                      Bring the game to another level and raise your LFi power.
                     </Typography>
 
-                    <Typography variant="h5">
+                    {/* <Typography variant="h5">
                       XLFi 10000 is designed for who want the maximum and the
                       best. Elevate your minting power to the top, keeping its
                       distinctive sign with a sleek Aluminum Aeronautic Grade
                       case: power with style.
-                    </Typography>
+                    </Typography> */}
 
                     <Typography variant="h4">
                       <strong>Features: </strong>
@@ -804,17 +803,17 @@ export default function CoProducts({
                     </Typography>
 
                     <Typography variant="h3">
-                      When power it's not enough and you want to rule the
-                      Minting Game: be a validator.
+                      When power it's not enough and you want to rule the LFi
+                      Game: be a validator.
                     </Typography>
 
-                    <Typography variant="h5">
+                    {/* <Typography variant="h5">
                       XLFi Validator is the one you can't miss, the real game
                       changer. Become a validatore node-point and take the
                       maximum with performance peak and power output. Enjoy the
                       unique Black Aluminum Aeronautic Grade case: minting with
                       style.
-                    </Typography>
+                    </Typography> */}
 
                     <Typography variant="h4">
                       <strong>Features: </strong>
