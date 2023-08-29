@@ -362,7 +362,7 @@ export default function CoProducts({
 
                   <Grid item md={6} sm={12} className={styles.phoneInfo}>
                     <Typography variant="h2">
-                      <span>LFi One</span> Smartphone
+                      <span>LFi ONE</span> Smartphone
                     </Typography>
                     <br />
 

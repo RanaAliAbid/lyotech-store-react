@@ -36,7 +36,7 @@ export default function Footer() {
               <div className={`${styles['footBox']} ${styles['footerInfo']}`}>
                 <img src={darkLogo.src} alt="logo" />
                 <Typography variant="h5">
-                  Lyotech Labs Electronics Trading l.L.C
+                  LYOTECH LABS ELECTRONICS TRADING L.L.C.
                 </Typography>
 
                 <Typography variant="h5">
