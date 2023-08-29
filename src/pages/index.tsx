@@ -1154,9 +1154,9 @@ export default function Home({
                       viewport={{ once: true }}
                     >
                       <div className={styles.partnersImg}>
-                        <img src={certificate01.src} alt="Certification Logo" />
-                        <img src={certificate02.src} alt="Certification Logo" />
-                        <img src={certificate03.src} alt="Certification Logo" />
+                        {/* <img src={certificate01.src} alt="Certification Logo" />
+                        <img src={certificate02.src} alt="Certification Logo" /> */}
+
                         <img src={certificate04.src} alt="Certification Logo" />
                         <img src={certificate05.src} alt="Certification Logo" />
                         <img src={certificate06.src} alt="Certification Logo" />
@@ -1167,6 +1167,7 @@ export default function Home({
                         <img src={certificate11.src} alt="Certification Logo" />
                         <img src={certificate12.src} alt="Certification Logo" />
                         <img src={certificate13.src} alt="Certification Logo" />
+                        <img src={we05.src} alt="We Are Logo" />
                       </div>
                     </motion.div>
                   </Grid>
@@ -1192,7 +1193,7 @@ export default function Home({
                         <img src={we02.src} alt="We Are Logo" />
                         <img src={we03.src} alt="We Are Logo" />
                         <img src={we04.src} alt="We Are Logo" />
-                        <img src={we05.src} alt="We Are Logo" />
+                        <img src={certificate03.src} alt="Certification Logo" />
                       </div>
                     </motion.div>
                   </Grid>
