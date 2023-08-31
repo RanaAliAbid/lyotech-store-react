@@ -289,12 +289,17 @@ export function GlobalWrapper({
     const urlParams = new URLSearchParams(window.location.search);
     const sessionId = urlParams.get('s')?.toString() ?? null;
 
+    if (sessionId) {
+      setLoadComponents(true);
+      return;
+    }
+
     if (
-      (!!data?.cart?.products || data?.cart?.products?.length == 0) &&
+      (!data?.cart?.products || data?.cart?.products?.length == 0) &&
       (router.pathname.startsWith('/checkout') ||
         router.pathname.startsWith('/cart'))
     ) {
-      if (!router.pathname.includes('payment') && !sessionId) {
+      if (!router.pathname.includes('payment')) {
         router.push('/');
       } else {
         setLoadComponents(true);
