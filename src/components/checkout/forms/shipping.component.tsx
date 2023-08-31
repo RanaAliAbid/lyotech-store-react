@@ -133,13 +133,14 @@ export default function ShippingFormComponent({
 
   React.useEffect(() => {
     if (countryList && countryList.length > 0) {
-      const countryId =
-        countryList.find(
-          (country: any) =>
-            country.name === formAddress?.shippingAddress?.country
-        )?._id ?? 'United Arab Emirates';
+      const countryId = countryList.find(
+        (country: any) =>
+          country.name.toLowerCase() ===
+            formAddress?.shippingAddress?.country?.toLowerCase() ??
+          'united arab emirates'
+      )?._id;
       // && !globalContext.cart?.cart?.partner
-      if (countryId.length > 5) {
+      if (countryId?.length > 5) {
         handleChangeCountryType(countryId);
       }
     }

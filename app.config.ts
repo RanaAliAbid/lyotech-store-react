@@ -5,13 +5,12 @@ export const APP_HOST =
     ? process.env.APP_SANDBOX_HOST
     : process.env.APP_LIVE_HOST;
 
-export const PROXY_HOST = './';
-// export const PROXY_HOST =
-//   process.env.PROXY_ENV_TYPE == 'dev'
-//     ? process.env.APP_DEV_HOST
-//     : process.env.PROXY_ENV_TYPE == 'sandbox'
-//     ? process.env.APP_SANDBOX_HOST
-//     : process.env.APP_LIVE_HOST;
+export const PROXY_HOST = '';
+// process.env.PROXY_ENV_TYPE == 'dev'
+//   ? process.env.APP_DEV_HOST
+//   : process.env.PROXY_ENV_TYPE == 'sandbox'
+//   ? process.env.APP_SANDBOX_HOST
+//   : process.env.APP_LIVE_HOST;
 
 export const API_HOST =
   process.env.API_ENV_TYPE == 'dev'

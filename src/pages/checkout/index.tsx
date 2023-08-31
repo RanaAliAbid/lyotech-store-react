@@ -44,8 +44,14 @@ import {
 import { FaArrowLeft } from 'react-icons/fa';
 import DefaultAddressComponent from '@/components/checkout/address.component';
 import MastercardCheckoutComponent from '@/components/checkout/paymentMethods/mastercardCheckout.component';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { IncomingMessage, ServerResponse } from 'http';
+import { verifyUserCheckoutToken } from '@/services/auth/auth.service';
 
-export default function Checkout() {
+export default function Checkout({
+  paymentSessionId,
+  message,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const theme = createTheme({
     typography: {
       fontFamily: ['Work Sans'].join(','),
@@ -61,7 +67,7 @@ export default function Checkout() {
   const [formValidation, setFormValidation] = React.useState(null);
   const [enablePlaceOrder, setEnablePlaceOrder] = React.useState(false);
   const [displayAddress, setDisplayAddress] = React.useState(false);
-  const [sessionId, setSessionId] = React.useState('');
+  const [sessionId, setSessionId] = React.useState(paymentSessionId ?? '');
   const [partnerCheckout, setPartnerCheckout] = React.useState<boolean>(false);
   const globalContext = useGlobalContext();
   const authContext = useAuthContext();
@@ -91,6 +97,21 @@ export default function Checkout() {
       globalContext.setGlobalLoading(false);
     }
   };
+
+  React.useEffect(() => {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const sessionId = urlParams.get('s')?.toString() ?? null;
+
+      if (sessionId) {
+        globalContext.setGlobalLoading(true);
+        setSessionId(sessionId);
+        setTimeout(() => {
+          globalContext.setGlobalLoading(false);
+        }, 2000);
+      }
+    } catch (error) {}
+  }, []);
 
   React.useEffect(() => {
     getUserAddresses();
@@ -514,3 +535,54 @@ export default function Checkout() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<{
+  paymentSessionId: any;
+  message: string;
+}> = async ({ req, res }: { req: IncomingMessage; res: ServerResponse }) => {
+  let currentUrl = req.url?.split('?')[1] ?? '';
+  let result = null;
+  let sessionId = null;
+
+  if (currentUrl) {
+    const urlParams = new URLSearchParams(currentUrl);
+    const checkout_token = urlParams.get('token') ?? '';
+    sessionId = urlParams.get('s') ?? '';
+
+    if (checkout_token?.length > 0 && sessionId?.length > 0) {
+      result = await verifyUserCheckoutToken({
+        token: checkout_token,
+        payment: true,
+      });
+
+      if (!result?.data || result?.data?.length < 9) {
+        return {
+          redirect: {
+            destination: `/?error=${btoa(result?.message)}`,
+            permanent: false,
+          },
+        };
+      }
+
+      if (result?.data?.length > 10) {
+        res.setHeader('set-Cookie', [
+          `userConnected=${'true'}; Max-Age=36000; path: '/';`,
+          `partnerToken=${result?.data}; HttpOnly; Max-Age=20; path: '/';`,
+          `otpToken=deleted; HttpOnly; Max-Age=0;`,
+          `token=deleted; HttpOnly; Max-Age=0;`,
+        ]);
+
+        return {
+          redirect: {
+            destination: `/checkout?s=${sessionId}`,
+            permanent: false,
+          },
+        };
+      }
+    }
+  }
+
+  const paymentSessionId = sessionId;
+  const message = result?.message ?? '';
+  return { props: { paymentSessionId, message } };
+};

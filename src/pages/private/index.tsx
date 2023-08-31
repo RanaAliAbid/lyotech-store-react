@@ -6,6 +6,8 @@ import Header from '../../common/header';
 import Footer from '../../common/footer';
 
 import Container from '@mui/material/Container';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -61,9 +63,18 @@ export default function HomePrivate({
   const router = useRouter();
   const [accessPassword, setAccessPassword] = React.useState<string>('');
   const [validPassword, setValidPassword] = React.useState<boolean>(false);
-  const [customAmount, setCustomAmount] = React.useState<number>(0);
+  const [customAmount, setCustomAmount] = React.useState<any>('');
   const [customId, setCustomId] = React.useState<string>('');
   const [session, setSession] = React.useState<string>('');
+  const [paymentType, setPaymentType] = React.useState<string>('');
+
+  const paymentTypeOptions: string[] = [
+    'Phone Shipment',
+    'Shipping Cost',
+    'Deposit For Phones',
+    'Deposit for hardware',
+    'Other',
+  ];
 
   useEffect(() => {
     if (accessPassword === process.env.SPECIAL_PRODUCT_PASSWORD) {
@@ -138,6 +149,10 @@ export default function HomePrivate({
   }, [products]);
 
   React.useEffect(() => {
+    const date = new Date();
+    const id = `CP${date.getDay()}${date.getHours()}`;
+    setCustomId(id);
+
     try {
       const urlParams = new URLSearchParams(window.location.search);
       const _errorMessage = urlParams.get('error');
@@ -167,11 +182,11 @@ export default function HomePrivate({
           <main className={styles.main}>
             <Header title="Home" />
 
-            <div className={styles.productsWrap} id="deviceSection">
+            {/* <div className={styles.productsWrap} id="deviceSection">
               <div
                 className={`${styles['productItemWrap']} ${styles['bgShape01']}`}
-              >
-                <Container className={styles.containerBox}>
+              > */}
+            {/* <Container className={styles.containerBox}>
                   <Grid container spacing={3}>
                     <Grid item md={6} sm={12}>
                       <div className={styles.productItemImg}>
@@ -411,21 +426,21 @@ export default function HomePrivate({
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
-                          {/* Available Soon... */}
+                          {/* Available Soon... 
                           {t('product-btn1-shop')}
                         </Button>
                       </motion.div>
                     </Grid>
                   </Grid>
-                </Container>
-              </div>
-            </div>
+                </Container> */}
+            {/* </div>
+            </div> */}
 
             <div className={styles.productsWrap} id="deviceSection">
               <div
                 className={`${styles['productItemWrap']} ${styles['bgShape01']}`}
               >
-                <Container className={styles.containerBox}>
+                {/* <Container className={styles.containerBox}>
                   <Grid container spacing={3}>
                     <Grid item md={6} sm={12}>
                       <div className={styles.productItemImg}>
@@ -665,34 +680,62 @@ export default function HomePrivate({
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
-                          {/* Available Soon... */}
+                          {/* Available Soon... *
                           {t('product-btn1-shop')}
                         </Button>
                       </motion.div>
                     </Grid>
                   </Grid>
-                </Container>
+                </Container> */}
 
                 <Container className={styles.containerBox}>
                   <Grid container spacing={3}>
                     <Grid item md={3} sm={12}></Grid>
                     <Grid item md={6} sm={12}>
-                      {' '}
+                      <Typography>{'Choose a Payment Type '}</Typography>
+                      <Select
+                        label="Payment Type"
+                        className={`${styles.formTextField} formSelect w-100`}
+                        value={paymentType}
+                        size="small"
+                      >
+                        <MenuItem value={paymentType} disabled>
+                          Payment Type
+                        </MenuItem>
+                        {paymentTypeOptions.map((type: string, index: any) => (
+                          <MenuItem
+                            key={index}
+                            value={type}
+                            onClick={async (e) => {
+                              setPaymentType(type);
+                            }}
+                          >
+                            {type}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                      <br />
+                      <br />
+                      <Typography>{'Amount in euro '}</Typography>
                       <div className={styles.inline}>
                         <Input
                           onChange={(e: any) =>
-                            setCustomAmount(parseFloat(e.target.value ?? '0'))
+                            setCustomAmount(parseFloat(e.target.value ?? ''))
                           }
                           type="number"
                           className={`${styles.formInput} w-100`}
-                          placeholder={t('Custom Amount')}
+                          placeholder={t('Amount In Euro')}
                           value={customAmount}
                         />
                       </div>
+                      <br />
+                      <br />
+                      <Typography>{`Invoice Id`}</Typography>
                       <div className={styles.inline}>
                         <Input
                           onChange={(e: any) => setCustomId(e.target.value)}
                           type="text"
+                          readOnly
                           className={`${styles.formInput} w-100`}
                           placeholder={t('Custom Id')}
                           value={customId}

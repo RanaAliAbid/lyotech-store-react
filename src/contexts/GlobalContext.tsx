@@ -24,7 +24,7 @@ export function GlobalWrapper({
     Cookies.set('lang', current);
   };
 
-  const defaultCurrency = 'dirahm';
+  const defaultCurrency = process.env.DEFAULT_CURRENCY ?? 'dirahm';
 
   const updateCurrency = (current = defaultCurrency) => {
     Cookies.set('currency', current);
@@ -285,12 +285,16 @@ export function GlobalWrapper({
 
   const cartFirstLoad = async () => {
     const data: any = await getCart();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionId = urlParams.get('s')?.toString() ?? null;
+
     if (
-      (!data?.cart?.products || data?.cart?.products?.length == 0) &&
+      (!!data?.cart?.products || data?.cart?.products?.length == 0) &&
       (router.pathname.startsWith('/checkout') ||
         router.pathname.startsWith('/cart'))
     ) {
-      if (!router.pathname.includes('payment')) {
+      if (!router.pathname.includes('payment') && !sessionId) {
         router.push('/');
       } else {
         setLoadComponents(true);

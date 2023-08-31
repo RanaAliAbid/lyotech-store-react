@@ -34,7 +34,13 @@ export const verifyUserHandover = async (params: PartnerLinkData) => {
   }
 };
 
-export const verifyUserCheckoutToken = async ({ token }: { token: string }) => {
+export const verifyUserCheckoutToken = async ({
+  token,
+  payment = false,
+}: {
+  token: string;
+  payment: boolean;
+}) => {
   try {
     const result = await ApiService.GetRequest(
       `${API_HOST}/v1/user/user-partner/checkout/${atob(token)}`
