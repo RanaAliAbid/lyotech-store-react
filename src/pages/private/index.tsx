@@ -12,13 +12,6 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
-import lfiPhone from '../../img/lfiPhone.png';
-import OctaCoreIcon from '../../img/octaCoreIcon.svg';
-import MintingIcon from '../../img/mintingIcon.svg';
-import DpiIcon from '../../img/dpiIcon.svg';
-import BatteryIcon from '../../img/batteryIcon.svg';
-import ZoomIcon from '../../img/zoomIcon.svg';
-import RamIcon from '../../img/ramIcon.svg';
 
 import styles from '@/styles/Home.module.css';
 import { Work_Sans } from 'next/font/google';
@@ -29,10 +22,9 @@ import { IncomingMessage, ServerResponse } from 'http';
 const workSans = Work_Sans({ subsets: ['latin'] });
 import { createTheme, ThemeProvider } from '@mui/material';
 import useTranslation from 'next-translate/useTranslation';
-import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useRouter } from 'next/router';
-import { useAuthContext } from '@/contexts/AuthContext';
-import { getHomePageProducts } from '@/services/products/product.service';
+import { useAuthContext } from '../../contexts/AuthContext';
+import { getHomePageProducts } from '../../services/products/product.service';
 
 import {
   getLocalStorage,
@@ -43,10 +35,12 @@ import {
   lyo_tab,
   lyo_watch,
   setLocalStorage,
-} from '@/utils/app.utils';
+} from '../../utils/app.utils';
 import Link from 'next/link';
-import { createCustomPayment } from '@/services/cart/cart.service';
-import MastercardCheckoutComponent from '@/components/checkout/paymentMethods/mastercardCheckout.component';
+import { createCustomPayment } from '../../services/cart/cart.service';
+import MastercardCheckoutComponent from '../../components/checkout/paymentMethods/mastercardCheckout.component';
+import { useGlobalContext } from '../../contexts/GlobalContext';
+import { generateVoucherCode } from '../../utils/generateVoucherCode';
 
 export default function HomePrivate({
   products,
@@ -67,6 +61,7 @@ export default function HomePrivate({
   const [customId, setCustomId] = React.useState<string>('');
   const [session, setSession] = React.useState<string>('');
   const [paymentType, setPaymentType] = React.useState<string>('');
+  const [orderData, setOrderData] = React.useState<any>([]);
 
   const paymentTypeOptions: string[] = [
     'Phone Shipment',
@@ -114,9 +109,21 @@ export default function HomePrivate({
 
   const createCustomLink = async () => {
     try {
+      if (
+        paymentType.length == 0 ||
+        customId.length == 0 ||
+        isNaN(customAmount) ||
+        parseFloat(customAmount ?? '0') == 0
+      ) {
+        return;
+      }
+
+      globalContext.setGlobalLoading(true);
+
       const result = await createCustomPayment({
         id: customId,
-        amount: customAmount,
+        amount: parseFloat(customAmount ?? '0'),
+        paymentType: paymentType,
       });
 
       if (result?.data?.data?.data?.masterCardSession) {
@@ -124,6 +131,7 @@ export default function HomePrivate({
           'open checkout page',
           result?.data?.data?.data?.masterCardSession.sessionId
         );
+        // setOrderData(result?.data?.data?.data);
         setSession(result?.data?.data?.data?.masterCardSession.sessionId);
       }
 
@@ -150,7 +158,7 @@ export default function HomePrivate({
 
   React.useEffect(() => {
     const date = new Date();
-    const id = `CP${date.getDay()}${date.getHours()}`;
+    const id = generateVoucherCode()?.code;
     setCustomId(id);
 
     try {
@@ -750,6 +758,34 @@ export default function HomePrivate({
                       >
                         {'Create Payment Link'}
                       </Button>
+                      <br />
+                      <br />
+                      <br />
+
+                      {/* {orderData && (
+                        <div className="">
+                          <Button
+                            onClick={(e: any) => createCustomLink()}
+                            type="button"
+                            variant="contained"
+                            fullWidth
+                            className={`${styles['btn']} ${styles['btn_primary']}`}
+                          >
+                            {'Send by Email'}
+                          </Button>
+                          <Button
+                            onClick={(e: any) =>
+                              setSession(orderData.masterCardSession.sessionId)
+                            }
+                            type="button"
+                            variant="contained"
+                            fullWidth
+                            className={`${styles['btn']} ${styles['btn_primary']}`}
+                          >
+                            {'Open & copy the Link'}
+                          </Button>
+                        </div>
+                      )} */}
                     </Grid>
                   </Grid>
                 </Container>
@@ -814,7 +850,7 @@ export default function HomePrivate({
 export const getServerSideProps: GetServerSideProps<{
   products: any;
 }> = async ({ req, res }: { req: IncomingMessage; res: ServerResponse }) => {
-  let result = null;
+  let result: any = null;
 
   if (process.env.SPECIAL_PRODUCT_ENABLE != 'true') {
     return {

@@ -179,7 +179,7 @@ export const createCustomPayment = async (
 
     if (token) {
       result = await ApiService.PostRequest(
-        API_HOST + '/v1/order/custom/',
+        API_HOST + '/v1/order/custom',
         data,
         `Bearer ${token}`
       );

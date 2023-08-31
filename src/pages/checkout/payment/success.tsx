@@ -406,7 +406,11 @@ export const validatePartnerAndRediredct = async ({
       redirect: {
         destination: `${
           success
-            ? `${partnerDetails?.successUrl}?order=${orderid}`
+            ? `${
+                process.env.APP_ENV_TYPE === 'dev'
+                  ? `${process.env.CLOUDX_URL}/shop/checkout`
+                  : partnerDetails?.successUrl
+              }?order=${orderid}`
             : `${partnerDetails?.errorUrl}?order=${orderid}`
         }`,
         permanent: false,

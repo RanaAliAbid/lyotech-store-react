@@ -57,7 +57,10 @@ export const getCartCurrencyRate = async (data: any) => {
 export const createCustomPayment = async (data: any) => {
   try {
     const body = await ProxyService.generateHashKey(JSON.stringify(data));
-    return ProxyService.PostRequest(PROXY_HOST + '/api/v1/custom-payment', body);
+    return ProxyService.PostRequest(
+      PROXY_HOST + '/api/v1/custom-payment',
+      body
+    );
   } catch (error) {
     return null;
   }
