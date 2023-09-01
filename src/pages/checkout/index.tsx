@@ -345,7 +345,10 @@ export default function Checkout({
       };
 
       const result = await saveUserOrder(data);
-      // console.log("🚀 ~ file: index.tsx:261 ~ handlePlaceOrder ~ result:", result)
+      console.log(
+        '🚀 ~ file: index.tsx:261 ~ handlePlaceOrder ~ result:',
+        result
+      );
 
       if (result?.data?.data?.data?.masterCardSession) {
         console.log(

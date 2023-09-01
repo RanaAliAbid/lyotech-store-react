@@ -7,7 +7,7 @@ const GetRequest = (url: string, token?: string) => {
       method: 'GET',
       url: url,
       withCredentials: true,
-      signal: AbortSignal.timeout(5000),
+      signal: AbortSignal.timeout(60000),
       headers: {
         'Content-Type': 'application/json',
         // token: token,
@@ -27,7 +27,7 @@ const PostRequest = (url: string, data: any, token?: string) => {
       url: url,
       data: JSON.stringify(data),
       withCredentials: true,
-      signal: AbortSignal.timeout(5000),
+      signal: AbortSignal.timeout(60000),
       headers: {
         'Content-Type': 'application/json',
         // token: token,
@@ -45,7 +45,7 @@ const DeleteRequest = (url: string, token?: string) => {
     const config = {
       method: 'DELETE',
       withCredentials: true,
-      signal: AbortSignal.timeout(5000),
+      signal: AbortSignal.timeout(60000),
       url: url,
       headers: {
         'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ const PutRequest = (url: string, data: any, token?: string) => {
       url: url,
       data: JSON.stringify(data),
       withCredentials: true,
-      signal: AbortSignal.timeout(5000),
+      signal: AbortSignal.timeout(60000),
       headers: {
         'Content-Type': 'application/json',
         // token: token,
@@ -80,17 +80,17 @@ const PutRequest = (url: string, data: any, token?: string) => {
 };
 
 const generateHashKey = async (requestBody: string) => {
-  const userAgent = navigator?.userAgent
+  const userAgent = navigator?.userAgent;
   const hashKey = await hash256(requestBody + btoa(userAgent));
-  let body: any = JSON.parse(requestBody)
-  body.hashKey = hashKey
+  let body: any = JSON.parse(requestBody);
+  body.hashKey = hashKey;
   return body;
-}
+};
 
 export const ProxyService = {
   GetRequest,
   PostRequest,
   PutRequest,
   DeleteRequest,
-  generateHashKey
+  generateHashKey,
 };
