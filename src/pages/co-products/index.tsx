@@ -86,6 +86,7 @@ export default function CoProducts({
   const router = useRouter();
 
   const addProductToCart = async (id: string) => {
+    return;
     try {
       if (!id) {
         globalContext.setAlertProps({
@@ -396,8 +397,8 @@ export default function CoProducts({
                         variant="contained"
                         className={`${styles['btn']} ${styles['btn_primary']}`}
                       >
-                        {/* Available Soon... */}
-                        Buy Now
+                        Available Soon...
+                        {/* Buy Now */}
                       </Button>
 
                       {/* <Button
