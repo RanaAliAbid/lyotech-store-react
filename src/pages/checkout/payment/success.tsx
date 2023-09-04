@@ -319,7 +319,7 @@ export const getServerSideProps: GetServerSideProps<{ order: any }> = async ({
 
     if (orderid?.length >= 1) {
       result = await verifyOrderDetails({ id: orderid });
-      console.log('🚀 ~ file: success.tsx:322 ~ result:', result);
+      // console.log('🚀 ~ file: success.tsx:322 ~ result:', result);
       // paymentMethod
       if (
         !result ||
