@@ -321,3 +321,20 @@ body > div,
   right: 10px;
   height: 60%;
 }
+
+.paymentSessionIdBackDrop {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40vh;
+  z-index: 9999;
+  text-align: center;
+  background: #030e1d;
+  color: #fff;
+  padding-top: 100px;
+}
+
+.paymentSessionIdBackDrop p{
+  font-size: 30px;
+}

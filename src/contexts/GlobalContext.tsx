@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
-import { Backdrop, CircularProgress } from '@mui/material';
+import { Backdrop, CircularProgress, Typography } from '@mui/material';
 
 const GlobalContext = createContext<any>({});
 import { useRouter } from 'next/router';
@@ -42,6 +42,8 @@ export function GlobalWrapper({
   const [screenWitdh, setScreenWidth] = useState<number>(0);
   const [cartQtyProduct, setCartQtyProduct] = useState<any>(0);
   const [conversionRate, setConversionRate] = useState<number>(1);
+  const [paymentSessionFound, setPaymentSessionFound] =
+    useState<boolean>(false);
 
   const [alertProps, setAlertProps] = useState<
     SweetAlertOptions & { show: boolean; callback?: any }
@@ -290,6 +292,7 @@ export function GlobalWrapper({
     const sessionId = urlParams.get('s')?.toString() ?? null;
 
     if (sessionId) {
+      setPaymentSessionFound(true);
       setLoadComponents(true);
       return;
     }
@@ -385,6 +388,14 @@ export function GlobalWrapper({
       </Backdrop>
 
       {loadComponents && <AlertComponent {...alertProps}></AlertComponent>}
+
+      {paymentSessionFound && (
+        <div className="paymentSessionIdBackDrop">
+          <Typography>
+            Loading Payment <br /> Please wait...
+          </Typography>
+        </div>
+      )}
 
       {loadComponents && children}
     </GlobalContext.Provider>
