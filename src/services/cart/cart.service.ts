@@ -18,10 +18,14 @@ export const addToCart = async (data: any) => {
   }
 };
 
-export const removeCartProduct = async (id: string, qty: number) => {
+export const removeCartProduct = async (
+  id: string,
+  qty: number,
+  oneCare: number = 1
+) => {
   try {
     return ProxyService.DeleteRequest(
-      `${PROXY_HOST}/api/v1/remove-cart?id=${id}&qty=${qty}`
+      `${PROXY_HOST}/api/v1/remove-cart?id=${id}&qty=${qty}&oneCare=${oneCare}`
     );
   } catch (error) {
     return null;

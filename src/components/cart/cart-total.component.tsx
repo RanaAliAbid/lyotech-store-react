@@ -157,6 +157,13 @@ export default function CartTotalComponent({
     force = false
   ) => {
     try {
+      // if (
+      //   globalContext?.cart?.cart?.oneCare?.length > 1 &&
+      //   globalContext?.cart?.cart?.partner?.length > 0
+      // ) {
+      //   return;
+      // }
+
       if (!status && !force) {
         setShowOneCareModal(true);
         return;
@@ -414,6 +421,10 @@ export default function CartTotalComponent({
                     <ListItem key={index}>
                       <div className={styles.allCenter}>
                         <Checkbox
+                          disabled={
+                            globalContext?.cart?.cart?.oneCare?.length > 1 &&
+                            globalContext?.cart?.cart?.partner?.length > 0
+                          }
                           checked={
                             globalContext?.cart?.cart?.oneCare?.findIndex(
                               (x: any) =>

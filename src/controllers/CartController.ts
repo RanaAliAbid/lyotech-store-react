@@ -105,6 +105,7 @@ export const userRemoveToCart = async (
       product: {
         productId: req.query.id ?? '',
         quantity: req.query.qty ?? 0,
+        oneCare: req.query?.oneCare ?? 1,
       },
     };
 

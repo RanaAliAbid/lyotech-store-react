@@ -102,10 +102,10 @@ export function GlobalWrapper({
     }
   };
 
-  const deleteCart = async (id: string, qty: number) => {
+  const deleteCart = async (id: string, qty: number, oneCare: number = 1) => {
     try {
       setGlobalLoading(true);
-      const result = await removeCartProduct(id, qty);
+      const result = await removeCartProduct(id, qty, oneCare);
       await getCart();
       setGlobalLoading(false);
 
@@ -115,12 +115,13 @@ export function GlobalWrapper({
     }
   };
 
-  const addCart = async (id: string, qty: number) => {
+  const addCart = async (id: string, qty: number, oneCare: number = 1) => {
     try {
       setGlobalLoading(true);
       const result = await addToCart({
         productId: id,
         quantity: qty,
+        oneCare: oneCare,
       });
       await getCart();
       setGlobalLoading(false);

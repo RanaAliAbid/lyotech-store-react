@@ -52,6 +52,10 @@ export default function Cart({
 
   const addIntoCart = async (id: string) => {
     try {
+      // if (globalContext?.cart?.cart?.partner?.length > 0) {
+      //   return;
+      // }
+
       const currentQty =
         globalContext.cart?.cart?.products?.find(
           (x: any) => x.productId?._id === id
@@ -66,7 +70,15 @@ export default function Cart({
       }
       if (quantityToAdd < 0) return;
 
-      await globalContext.addCart(id, quantityToAdd);
+      await globalContext.addCart(
+        id,
+        quantityToAdd,
+        globalContext?.cart?.cart?.oneCare?.findIndex(
+          (oneCare: any) => oneCare.productId === id
+        ) !== -1
+          ? 1
+          : 0
+      );
     } catch (error) {
       globalContext.setGlobalLoading(false);
     }
@@ -74,6 +86,10 @@ export default function Cart({
 
   const deleteFromCart = async (id: string, qty?: number) => {
     try {
+      // if (globalContext?.cart?.cart?.partner?.length > 0) {
+      //   return;
+      // }
+
       let quantityToRemove = qty;
 
       if (!qty) {
@@ -96,7 +112,15 @@ export default function Cart({
         }
       }
 
-      const result = await globalContext.deleteCart(id, quantityToRemove);
+      const result = await globalContext.deleteCart(
+        id,
+        quantityToRemove,
+        globalContext?.cart?.cart?.oneCare?.findIndex(
+          (oneCare: any) => oneCare.productId === id
+        ) !== -1
+          ? 1
+          : 0
+      );
 
       if (!result) {
         globalContext.setGlobalLoading(false);
@@ -279,6 +303,10 @@ export default function Cart({
                                       id={`cartProduct-${cartItem?.productId?._id}`}
                                       className={styles.formControl}
                                       defaultValue={cartItem?.quantity}
+                                      // disabled={
+                                      //   globalContext?.cart?.cart?.partner
+                                      //     ?.length > 0
+                                      // }
                                     />
                                   ) : (
                                     <div
@@ -422,6 +450,7 @@ export const getServerSideProps: GetServerSideProps<{
     if (checkout_token?.length > 0) {
       result = await verifyUserCheckoutToken({
         token: checkout_token,
+        payment: true,
       });
 
       if (!result?.data || result?.data?.length < 9) {
