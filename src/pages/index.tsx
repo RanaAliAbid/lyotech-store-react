@@ -720,8 +720,8 @@ export default function Home({
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
-                          Available Soon...
-                          {/* {t('product-btn1-shop')} */}
+                          {/* Available Soon... */}
+                          {t('product-btn1-shop')}
                         </Button>
                       </motion.div>
                     </Grid>

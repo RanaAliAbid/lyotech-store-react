@@ -52,6 +52,19 @@ export default function ShippingFormComponent({
           true,
           formAddress?.shippingAddress
         );
+      } else {
+        //
+        const tmpCountry = result?.data?.data?.country?.find(
+          (x: any) => x._id === globalContext?.cart?.cart?.country ?? ''
+        )?.name;
+
+        setFormAddress({
+          ...formAddress,
+          shippingAddress: {
+            ...formAddress.shippingAddress,
+            country: tmpCountry,
+          },
+        });
       }
 
       setCountryList(result?.data?.data?.country);

@@ -104,6 +104,22 @@ export function GlobalWrapper({
 
   const deleteCart = async (id: string, qty: number, oneCare: number = 1) => {
     try {
+      if (cart?.cart?.partner?._id && cart?.cart?.products?.length > 0) {
+        if (!cart?.cart?.partner?.enableCartUpdate) {
+          setAlertProps({
+            show: true,
+            title: `Can't proceed. go to the partner platform to proceed this change.`,
+            text: '',
+            toast: true,
+            background: '#8B0000',
+            showConfirmButton: false,
+            timerProgressBar: true,
+            callback: closeAlert,
+          });
+          return;
+        }
+      }
+
       setGlobalLoading(true);
       const result = await removeCartProduct(id, qty, oneCare);
       await getCart();
@@ -117,6 +133,22 @@ export function GlobalWrapper({
 
   const addCart = async (id: string, qty: number, oneCare: number = 1) => {
     try {
+      if (cart?.cart?.partner?._id && cart?.cart?.products?.length > 0) {
+        if (!cart?.cart?.partner?.enableCartUpdate) {
+          setAlertProps({
+            show: true,
+            title: `Can't proceed. go to the partner platform to proceed this change.`,
+            text: '',
+            toast: true,
+            background: '#8B0000',
+            showConfirmButton: false,
+            timerProgressBar: true,
+            callback: closeAlert,
+          });
+          return;
+        }
+      }
+
       setGlobalLoading(true);
       const result = await addToCart({
         productId: id,
@@ -172,6 +204,21 @@ export function GlobalWrapper({
 
   const updateCartOneCare = async (id: string, status: boolean = true) => {
     try {
+      if (cart?.cart?.partner?._id) {
+        if (!cart?.cart?.partner?.enableCartUpdate) {
+          setAlertProps({
+            show: true,
+            title: `Can't proceed. go to the partner platform to proceed this change.`,
+            text: '',
+            toast: true,
+            background: '#8B0000',
+            showConfirmButton: false,
+            timerProgressBar: true,
+            callback: closeAlert,
+          });
+          return;
+        }
+      }
       setGlobalLoading(true);
       const result = await updateCart({
         oneCare: {
@@ -190,6 +237,22 @@ export function GlobalWrapper({
 
   const updateCartShippingMethod = async (id: string) => {
     try {
+      if (cart?.cart?.partner?._id) {
+        if (!cart?.cart?.partner?.enableCartUpdate) {
+          setAlertProps({
+            show: true,
+            title: `Can't proceed. go to the partner platform to proceed this change.`,
+            text: '',
+            toast: true,
+            background: '#8B0000',
+            showConfirmButton: false,
+            timerProgressBar: true,
+            callback: closeAlert,
+          });
+          return;
+        }
+      }
+
       setGlobalLoading(true);
       const result = await updateCart({
         shippingMethodId: id,
@@ -256,6 +319,22 @@ export function GlobalWrapper({
 
   const updateCartCoupon = async (code: string, apply: boolean = true) => {
     try {
+      if (cart?.cart?.partner?._id) {
+        if (!cart?.cart?.partner?.enableCartUpdate) {
+          setAlertProps({
+            show: true,
+            title: `Can't proceed. go to the partner platform to proceed this change.`,
+            text: '',
+            toast: true,
+            background: '#8B0000',
+            showConfirmButton: false,
+            timerProgressBar: true,
+            callback: closeAlert,
+          });
+          return;
+        }
+      }
+
       setGlobalLoading(true);
       const result = await updateCart({
         oneCare: {
