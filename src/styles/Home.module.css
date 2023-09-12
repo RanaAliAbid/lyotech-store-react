@@ -2803,6 +2803,7 @@ ul.wishlists,
 .semiBold{
 	font-weight: 600;
 }
+
 @media (max-width: 899px) {
 	.DeviceInfoWrap {
 		flex-direction: column-reverse;
@@ -2974,3 +2975,10 @@ ul.wishlists,
 	margin-top: 6px;
 }
 /* Co Products Css End */
+
+.docBtn {
+	color: var(--primary) !important;
+}
+.noMarginBottom{
+	margin-bottom: 0px !important;
+}
