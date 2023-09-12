@@ -2800,7 +2800,9 @@ ul.wishlists,
 .mainBannerLfi-Wrap {
 	overflow: hidden;
 }
-
+.semiBold{
+	font-weight: 600;
+}
 @media (max-width: 899px) {
 	.DeviceInfoWrap {
 		flex-direction: column-reverse;

@@ -35,8 +35,8 @@ export default function Footer() {
             <Grid item md={3} xs={12}>
               <div className={`${styles['footBox']} ${styles['footerInfo']}`}>
                 <img src={darkLogo.src} alt="logo" />
-                <Typography variant="h5">
-                  LYOTECH LABS ELECTRONICS TRADING L.L.C.
+                <Typography variant="h5" className='semiBold'>
+                 <strong> LYOTECH LABS ELECTRONICS TRADING L.L.C. </strong>
                 </Typography>
 
                 <Typography variant="h5">
@@ -137,18 +137,19 @@ export default function Footer() {
 
                 <Typography className={styles.uaeAddress} variant="h5">
                   <span> LYOTECH LABS ELECTRONICS TRADING L.L.C. </span>
-                  WHP2-BLOCK-T COMMERCIAL Area: Saih Shuaib 3, Dubai, UAE
+                  Whp2-block-T Commercial Saih Shuaib 3, Dubai, UAE
                 </Typography>
 
                 <Typography className={styles.doverAddress} variant="h5">
-                  <span> LYOTECH LABS LLC </span>8 The Green, Suite R in the
-                  City of Dover, Zip code - 19901
+                  <span> LYOTECH LABS LLC </span>
+                  8 The Green, Suite R in the City of Dover
+Delaware, USA. Zip Code: 19901
                 </Typography>
 
                 <Typography className={styles.hongKongAddress} variant="h5">
                   <span> LYOTECH LABS Limited</span>
-                  Room 1104, Crawford House, 70 Queen's Rd. Centra, Central,
-                  Hong Kong
+                  Room 104, Crawford House,
+70 Queen's Road Central, Central, HK.
                 </Typography>
               </div>
 
