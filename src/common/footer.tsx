@@ -74,29 +74,29 @@ export default function Footer() {
 
                 <List>
                   <ListItem className={styles.item}>
-                    <Link href="/privacy-policy">
+                    <Link href="https://docs.lyotechlabs.com/legal-documents/privacy-and-cookies-policy" target='_blank'>
                       {t('footer-section2-item1')}
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="/terms">Terms & Conditions</Link>
+                    <Link href="https://docs.lyotechlabs.com/legal-documents/terms-and-conditions" target='_blank'>Terms & Conditions</Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="/delivery-shipping-policy">
+                    <Link href="https://docs.lyotechlabs.com/legal-documents/delivery-policy" target='_blank'>
                       Delivery & Shipping Policy
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="/return-refund-policy">
+                    <Link href="https://docs.lyotechlabs.com/legal-documents/return-and-refund-policy" target='_blank'>
                       Refund/Return Policy
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="/cancellation-replacement-policy">
+                    <Link href="https://docs.lyotechlabs.com/legal-documents/cancellation-and-replacement-policy" target='_blank'>
                       Cancellation & Replacement Policy
                     </Link>
                   </ListItem>
