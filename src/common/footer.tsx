@@ -86,7 +86,7 @@ export default function Footer() {
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="https://docs.lyotechlabs.com/legal-documents/delivery-policy" target='_blank'>
+                    <Link href="https://docs.lyotechlabs.com/help-center/shipping-and-delivery" target='_blank'>
                       Delivery & Shipping Policy
                     </Link>
                   </ListItem>
