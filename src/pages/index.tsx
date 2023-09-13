@@ -299,6 +299,8 @@ export default function Home({
                       transition={{ duration: 0.4, delay: 0.7 }}
                       viewport={{ once: true }}
                     >
+
+                    <a href="#certification" className={styles.serviceLink}>
                       <div
                         className={`${styles['wrapBox']} ${styles['servicesItem']}`}
                       >
@@ -310,8 +312,10 @@ export default function Home({
                         </Typography>
                         <Typography variant="h6">
                           {t('service-desc3')}
+                          
                         </Typography>
                       </div>
+                      </a>
                     </motion.div>
                   </Grid>
 
@@ -1132,7 +1136,7 @@ export default function Home({
 
             {/* Partners Section Start */}
 
-            <div className={styles.partersWrap}>
+            <div className={styles.partersWrap} id="certification">
               <Container className={styles.containerBox}>
                 <Grid container spacing={3}>
                   <Grid item md={12} sm={12}>

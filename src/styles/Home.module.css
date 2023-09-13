@@ -2982,3 +2982,6 @@ ul.wishlists,
 .noMarginBottom{
 	margin-bottom: 0px !important;
 }
+.homeServicesWrap .serviceLink{
+	color: var(--black200);
+}

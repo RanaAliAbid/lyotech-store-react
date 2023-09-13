@@ -44,7 +44,7 @@ export default function Footer() {
                 </Typography>
 
                 <Typography variant="h5">
-                Whp2-block-T Commercial <br />Saih Shuaib 3, Dubai, UAE
+                Whp2-block-T Commercial <br />Saih Shuaib 3, Dubai, U.A.E.
                 </Typography>
 
                 <Typography variant="h4">
@@ -151,13 +151,13 @@ export default function Footer() {
 
                 <Typography className={styles.doverAddress} variant="h5">
                   <span> LYOTECH LABS LLC </span>
-                  8 The Green, Dover<br />DE 19901, USA
+                  8 The green Suite R, <br />19901 Dover DE, U.S.A.
                 </Typography>
 
                 <Typography className={styles.hongKongAddress} variant="h5">
                   <span> LYOTECH LABS Limited</span>
                   1104 Crawford House,<br />
-                  70 Queens Road Central, HK
+                  70 Queens Road Central, H.K.
                 </Typography>
               </div>
 
