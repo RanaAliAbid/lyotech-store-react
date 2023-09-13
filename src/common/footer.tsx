@@ -156,8 +156,8 @@ export default function Footer() {
 
                 <Typography className={styles.hongKongAddress} variant="h5">
                   <span> LYOTECH LABS Limited</span>
-                  Room 1104, Crawford House,<br />
-70 Queen's Road Central, <br />Central, HK.
+                  1104 Crawford House,<br />
+                  70 Queens Road Central, HK
                 </Typography>
               </div>
 
