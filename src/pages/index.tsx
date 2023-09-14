@@ -10,6 +10,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import bannerProduct from '../img/bannerProduct.png';
+import hardwareSoftware from '../img/hardwareSoftware.png';
 import supportIcon from '../img/supportIcon.png';
 import serversIcon from '../img/serversIcon.png';
 import testedIcon from '../img/testedIcon.png';
@@ -234,7 +235,36 @@ export default function Home({
             <div className={styles.homeServicesWrap} id="serviceSection">
               <Container className={styles.containerBox}>
                 <Grid container spacing={3}>
-                  <Grid item md={3} sm={6} xs={12}>
+                <Grid item md={4} sm={6} xs={12}>
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                        y: '100%',
+                        visibility: 'hidden',
+                      }}
+                      whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
+                      transition={{ duration: 0.2, delay: 0.5 }}
+                      viewport={{ once: true }}
+                    >
+                      <div
+                        className={`${styles['wrapBox']} ${styles['servicesItem']}`}
+                      >
+                        <div className={`${styles['servicesIcon']}`}>
+                          <img src={hardwareSoftware.src} alt="Icon" />
+                        </div>
+                        <Typography variant="h5">
+                        Hardware & Software Solutions
+                        </Typography>
+                        <Typography variant="h6">
+                        We Build Devices for Our Partners and Ship to 150+ Countries
+                        </Typography>
+                      </div>
+                    </motion.div>
+                  </Grid>
+
+
+
+                  <Grid item md={4} sm={6} xs={12}>
                     <motion.div
                       initial={{
                         opacity: 0,
@@ -261,7 +291,7 @@ export default function Home({
                     </motion.div>
                   </Grid>
 
-                  <Grid item md={3} sm={6} xs={12}>
+                  <Grid item md={4} sm={6} xs={12}>
                     <motion.div
                       initial={{
                         opacity: 0,
@@ -279,16 +309,19 @@ export default function Home({
                           <img src={serversIcon.src} alt="Icon" />
                         </div>
                         <Typography variant="h5">
-                          {t('service-header2')}
+                          {/* {t('service-header2')} */}
+                          Server Management
                         </Typography>
                         <Typography variant="h6">
-                          {t('service-desc2')}
+                          {/* {t('service-desc2')} */}
+                          We handle server maintenance, so you don't have to.
                         </Typography>
                       </div>
                     </motion.div>
                   </Grid>
+                  <Grid item md={2} sm={6} xs={12}></Grid>
 
-                  <Grid item md={3} sm={6} xs={12}>
+                  <Grid item md={4} sm={6} xs={12}>
                     <motion.div
                       initial={{
                         opacity: 0,
@@ -308,18 +341,21 @@ export default function Home({
                           <img src={testedIcon.src} alt="Icon" />
                         </div>
                         <Typography variant="h5">
-                          {t('service-header3')}
+                          {/* {t('service-header3')} */}
+                          Certified Hardware
                         </Typography>
                         <Typography variant="h6">
-                          {t('service-desc3')}
-                          
+                          {/* {t('service-desc3')} */}
+                          Products rigorously tested and certified for quality.
                         </Typography>
                       </div>
                       </a>
                     </motion.div>
                   </Grid>
 
-                  <Grid item md={3} sm={6} xs={12}>
+               
+
+                  <Grid item md={4} sm={6} xs={12}>
                     <motion.div
                       initial={{
                         opacity: 0,
@@ -337,10 +373,12 @@ export default function Home({
                           <img src={securityIcon.src} alt="Icon" />
                         </div>
                         <Typography variant="h5">
-                          {t('service-header4')}
+                          {/* {t('service-header4')} */}
+                          Top-Tier Data Security
                         </Typography>
                         <Typography variant="h6">
-                          {t('service-desc4')}
+                          {/* {t('service-desc4')} */}
+                          Data centers compliant with ISO 27001, PCI DDS3, and GDPR standards.
                         </Typography>
                       </div>
                     </motion.div>
