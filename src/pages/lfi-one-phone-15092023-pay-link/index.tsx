@@ -378,7 +378,8 @@ export default function HomeBis({
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
                           {/* Available Soon... */}
-                          {t('product-btn1-shop')}
+                          {/* {t('product-btn1-shop')} */}
+                          Shop Now
                         </Button>
                       </motion.div>
                     </Grid>
