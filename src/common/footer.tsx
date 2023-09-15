@@ -35,29 +35,28 @@ export default function Footer() {
             <Grid item md={3} xs={12}>
               <div className={`${styles['footBox']} ${styles['footerInfo']}`}>
                 <img src={darkLogo.src} alt="logo" />
-                <Typography variant="h5">
-                  LYOTECH LABS ELECTRONICS TRADING L.L.C.
+                <Typography variant="h5" className='semiBold'>
+                 <strong> LYOTECH LABS ELECTRONICS TRADING L.L.C. </strong>
+                </Typography>
+
+                <Typography variant="h5" className={styles.noMarginBottom}>
+                TLN: <span> 1150530 </span>
                 </Typography>
 
                 <Typography variant="h5">
-                  Licence Number. <span> 1150530 </span>
-                </Typography>
-
-                <Typography variant="h5">
-                  WHP2-BLOCK-T COMMERCIAL Area: Saih Shuaib 3, Dubai, UAE PO
-                  BOX: 33306
+                Whp2-block-T Commercial <br />Saih Shuaib 3, Dubai, U.A.E.
                 </Typography>
 
                 <Typography variant="h4">
-                  If you have any question. please contact us{' '}
+                 
                   <a href="https://support.lyotechlabs.com" target="_blank">
-                    <b></b> create ticket
+                    <b> Help & Support</b>
                   </a>
                 </Typography>
 
-                <Typography variant="h4">
+                {/* <Typography variant="h4">
                   Phone no. <a href="tel:+971 529988825">+971 52 998 8825</a>
-                </Typography>
+                </Typography> */}
                 <div className={styles.footerCards}>
                   <img src={footerCard01.src} alt="Card" />
                   <img src={footerCard02.src} alt="Card" />
@@ -68,47 +67,62 @@ export default function Footer() {
 
             <Grid item md={3} xs={12}>
               <div className={styles.footBox}>
-                <Typography variant="h4">
-                  {t('footer-section2-header')}
+              <Typography variant="h4">
+                  {t('footer-section3-header')}
                 </Typography>
 
                 <List>
+                <ListItem className={styles.item}>
+                    <Link href="https://docs.lyotechlabs.com/introduction/what-is-lyotech-labs">About Us</Link>
+                  </ListItem>
                   <ListItem className={styles.item}>
-                    <Link href="/privacy-policy">
+                    <Link href="https://docs.lyotechlabs.com/legal-documents/privacy-and-cookies-policy" target='_blank'>
                       {t('footer-section2-item1')}
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="/terms">Terms & Conditions</Link>
+                    <Link href="https://docs.lyotechlabs.com/legal-documents/terms-and-conditions" target='_blank'>Terms & Conditions</Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="/delivery-shipping-policy">
+                    <Link href="https://docs.lyotechlabs.com/help-center/shipping-and-delivery" target='_blank'>
                       Delivery & Shipping Policy
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="/return-refund-policy">
+                    <Link href="https://docs.lyotechlabs.com/legal-documents/return-and-refund-policy" target='_blank'>
                       Refund/Return Policy
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="/cancellation-replacement-policy">
+                    <Link href="https://docs.lyotechlabs.com/legal-documents/cancellation-and-replacement-policy" target='_blank'>
                       Cancellation & Replacement Policy
                     </Link>
                   </ListItem>
+
+                  <ListItem className={styles.item}>
+                    <Link className={styles.docBtn} href="https://docs.lyotechlabs.com" target='_blank'>
+                    Docs and Guides
+                    </Link>
+                  </ListItem>
+
+                  
+
+                 
                 </List>
               </div>
             </Grid>
 
             <Grid item md={2} xs={12}>
               <div className={styles.footBox}>
-                <Typography variant="h4">
-                  {t('footer-section3-header')}
+              <Typography variant="h4">
+                  {/* {t('footer-section2-header')} */}
+                  Products
                 </Typography>
+               
                 <List>
                   <ListItem className={styles.item}>
                     <Link href={`${APP_HOST}#serviceSection`}>Services</Link>
@@ -122,9 +136,7 @@ export default function Footer() {
                     <Link href="/co-products">Co-Products</Link>
                   </ListItem>
 
-                  <ListItem className={styles.item}>
-                    <Link href="/about">About Us</Link>
-                  </ListItem>
+              
                 </List>
               </div>
             </Grid>
@@ -133,22 +145,19 @@ export default function Footer() {
               <div
                 className={`${styles['footBox']} ${styles['footerAddresses']}`}
               >
-                <Typography variant="h4">Address</Typography>
+                <Typography variant="h4">Global Offices</Typography>
 
-                <Typography className={styles.uaeAddress} variant="h5">
-                  <span> LYOTECH LABS ELECTRONICS TRADING L.L.C. </span>
-                  WHP2-BLOCK-T COMMERCIAL Area: Saih Shuaib 3, Dubai, UAE
-                </Typography>
+               
 
                 <Typography className={styles.doverAddress} variant="h5">
-                  <span> LYOTECH LABS LLC </span>8 The Green, Suite R in the
-                  City of Dover, Zip code - 19901
+                  <span> LYOTECH LABS LLC </span>
+                  8 The green Suite R, <br />19901 Dover DE, U.S.A.
                 </Typography>
 
                 <Typography className={styles.hongKongAddress} variant="h5">
                   <span> LYOTECH LABS Limited</span>
-                  Room 1104, Crawford House, 70 Queen's Rd. Centra, Central,
-                  Hong Kong
+                  1104 Crawford House,<br />
+                  70 Queens Road Central, H.K.
                 </Typography>
               </div>
 

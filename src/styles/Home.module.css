@@ -592,7 +592,7 @@
 .servicesItem {
 	text-align: center;
 	margin: 20px 0 30px;
-	min-height: 205px;
+	min-height: 180px;
 }
 
 .servicesIcon {
@@ -2800,6 +2800,9 @@ ul.wishlists,
 .mainBannerLfi-Wrap {
 	overflow: hidden;
 }
+.semiBold{
+	font-weight: 600;
+}
 
 @media (max-width: 899px) {
 	.DeviceInfoWrap {
@@ -2972,3 +2975,13 @@ ul.wishlists,
 	margin-top: 6px;
 }
 /* Co Products Css End */
+
+.docBtn {
+	color: var(--primary) !important;
+}
+.noMarginBottom{
+	margin-bottom: 0px !important;
+}
+.homeServicesWrap .serviceLink{
+	color: var(--black200);
+}
