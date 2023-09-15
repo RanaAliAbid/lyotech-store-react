@@ -38,8 +38,9 @@ import {
   lyo_watch,
   setLocalStorage,
 } from '@/utils/app.utils';
+import Link from 'next/link';
 
-export default function Home({
+export default function HomeBis({
   products,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const theme = createTheme({
@@ -387,6 +388,8 @@ export default function Home({
             </div>
 
             {/* Content Section End */}
+
+            {/* Partners Section End */}
             <Footer />
           </main>
         </ThemeProvider>

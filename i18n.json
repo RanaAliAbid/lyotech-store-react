@@ -4,7 +4,7 @@
   "pages": {
     "*": ["common"],
     "/": ["home"],
-    "/shop-products": ["home"],
+    "/lfi-one-phone-15092023-pay-link": ["home"],
     "/private": ["home"],
     "/cart": ["cart"],
     "/checkout": ["cart"],
