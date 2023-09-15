@@ -4,6 +4,7 @@
   "pages": {
     "*": ["common"],
     "/": ["home"],
+    "/shop-products": ["home"],
     "/private": ["home"],
     "/cart": ["cart"],
     "/checkout": ["cart"],
