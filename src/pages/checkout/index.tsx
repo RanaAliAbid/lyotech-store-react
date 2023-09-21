@@ -60,7 +60,7 @@ export default function Checkout({
 
   const [paymentType, setPaymentType] = React.useState('lyomerchant');
   const [userAddressList, setUserAddressList] = React.useState<any>([]);
-  const [changeAddress, setChangeAddress] = React.useState(false);
+  const [changeAddress, setChangeAddress] = React.useState(true);
   const [formAddress, setFormAddress] = React.useState<any>(null);
   const [shippingSameBilling, setShippingSameBilling] = React.useState(true);
   const [localAddress, setLocalAddress] = React.useState<any>(null);
@@ -287,7 +287,7 @@ export default function Checkout({
 
       if (result?.data) {
         const addresses = result?.data?.data?.data?.address?.reverse();
-        setChangeAddress(false);
+        setChangeAddress(true);
         await setDefaultAddress(addresses[0]?.addressId ?? '');
 
         globalContext.setAlertProps({
