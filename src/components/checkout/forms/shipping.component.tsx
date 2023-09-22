@@ -54,15 +54,15 @@ export default function ShippingFormComponent({
       //   );
       // } else {
       //
-      const tmpCountry = result?.data?.data?.country?.find(
-        (x: any) => x._id === globalContext?.cart?.cart?.country ?? ''
-      )?.name;
+      // const tmpCountry = result?.data?.data?.country?.find(
+      //   (x: any) => x._id === globalContext?.cart?.cart?.country ?? ''
+      // )?.name;
 
       setFormAddress({
         ...formAddress,
         shippingAddress: {
           ...formAddress.shippingAddress,
-          country: tmpCountry,
+          country: '--',
         },
       });
       // }
@@ -142,7 +142,7 @@ export default function ShippingFormComponent({
 
   React.useEffect(() => {
     getCountryList();
-  }, [localAddress]);
+  }, [globalContext?.cart?.cart]);
 
   React.useEffect(() => {
     if (countryList && countryList.length > 0) {
@@ -246,7 +246,7 @@ export default function ShippingFormComponent({
           />
         </div>
 
-        <div className={styles.formControl}>
+        <div className={styles.formControl} style={{ display: 'none' }}>
           <label className={styles.formLabel}>
             {' '}
             Country <span className="text-danger">*</span>{' '}
@@ -449,7 +449,7 @@ export default function ShippingFormComponent({
           </>
         )}
 
-        <div className={styles.formControl}>
+        <div className={styles.formControl} style={{ width: '100%' }}>
           <label className={styles.formLabel}> Order notes </label>
           <Input
             className={styles.formInput}
