@@ -42,30 +42,30 @@ export default function ShippingFormComponent({
 
   const getCountryList = async () => {
     try {
-      const result = await getCountry();
+      const result: any = await getCountry();
 
-      if (formAddress?.shippingAddress?.country) {
-        getStateDetailsOfCountry(
-          result?.data?.data?.country?.find(
-            (x: any) => x.name === formAddress?.shippingAddress?.country ?? ''
-          )?._id,
-          true,
-          formAddress?.shippingAddress
-        );
-      } else {
-        //
-        const tmpCountry = result?.data?.data?.country?.find(
-          (x: any) => x._id === globalContext?.cart?.cart?.country ?? ''
-        )?.name;
+      // if (formAddress?.shippingAddress?.country) {
+      //   getStateDetailsOfCountry(
+      //     result?.data?.data?.country?.find(
+      //       (x: any) => x.name === formAddress?.shippingAddress?.country ?? ''
+      //     )?._id,
+      //     true,
+      //     formAddress?.shippingAddress
+      //   );
+      // } else {
+      //
+      const tmpCountry = result?.data?.data?.country?.find(
+        (x: any) => x._id === globalContext?.cart?.cart?.country ?? ''
+      )?.name;
 
-        setFormAddress({
-          ...formAddress,
-          shippingAddress: {
-            ...formAddress.shippingAddress,
-            country: tmpCountry,
-          },
-        });
-      }
+      setFormAddress({
+        ...formAddress,
+        shippingAddress: {
+          ...formAddress.shippingAddress,
+          country: tmpCountry,
+        },
+      });
+      // }
 
       setCountryList(result?.data?.data?.country);
 
