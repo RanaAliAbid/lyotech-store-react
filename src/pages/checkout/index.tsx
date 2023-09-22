@@ -90,7 +90,7 @@ export default function Checkout({
         setChangeAddress(true);
       }
 
-      setUserAddressList(result?.data?.data);
+      // setUserAddressList(result?.data?.data);
 
       globalContext.setGlobalLoading(false);
     } catch (error) {
