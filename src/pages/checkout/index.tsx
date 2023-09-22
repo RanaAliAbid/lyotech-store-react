@@ -60,7 +60,7 @@ export default function Checkout({
 
   const [paymentType, setPaymentType] = React.useState('lyomerchant');
   const [userAddressList, setUserAddressList] = React.useState<any>([]);
-  const [changeAddress, setChangeAddress] = React.useState(false);
+  const [changeAddress, setChangeAddress] = React.useState(true);
   const [formAddress, setFormAddress] = React.useState<any>(null);
   const [shippingSameBilling, setShippingSameBilling] = React.useState(true);
   const [localAddress, setLocalAddress] = React.useState<any>(null);
@@ -90,7 +90,7 @@ export default function Checkout({
         setChangeAddress(true);
       }
 
-      setUserAddressList(result?.data?.data);
+      // setUserAddressList(result?.data?.data);
 
       globalContext.setGlobalLoading(false);
     } catch (error) {
@@ -135,7 +135,7 @@ export default function Checkout({
     if (!checkForm) return;
 
     if (
-      !checkForm.shippingAddress.country ||
+      // !checkForm.shippingAddress.country ||
       (!checkForm.shippingAddress.city && !partnerCheckout) ||
       (!checkForm.shippingAddress.type && !partnerCheckout) ||
       (!checkForm.shippingAddress.address && !partnerCheckout) ||
@@ -148,7 +148,7 @@ export default function Checkout({
     } else {
       if (!shippingSameBilling) {
         if (
-          !checkForm.billingAddress.country ||
+          // !checkForm.billingAddress.country ||
           (!checkForm.billingAddress.city && !partnerCheckout) ||
           (!checkForm.billingAddress.address && !partnerCheckout) ||
           !checkForm.billingAddress.phone ||
@@ -204,7 +204,7 @@ export default function Checkout({
         country:
           userAddressList?.address?.defaultAddress?.country ??
           _localAddress?.shippingAddress?.country ??
-          '',
+          '-',
         state:
           userAddressList?.address?.defaultAddress?.state ??
           _localAddress?.shippingAddress?.state ??
@@ -242,7 +242,7 @@ export default function Checkout({
         country:
           userAddressList?.address?.defaultAddress?.country ??
           _localAddress?.shippingAddress?.country ??
-          '',
+          '-',
         state:
           userAddressList?.address?.defaultAddress?.state ??
           _localAddress?.shippingAddress?.state ??
@@ -287,7 +287,7 @@ export default function Checkout({
 
       if (result?.data) {
         const addresses = result?.data?.data?.data?.address?.reverse();
-        setChangeAddress(false);
+        setChangeAddress(true);
         await setDefaultAddress(addresses[0]?.addressId ?? '');
 
         globalContext.setAlertProps({
@@ -337,7 +337,10 @@ export default function Checkout({
 
       const data = {
         cartId: globalContext.cart?.cart?._id,
-        shippingAddress: formAddress.shippingAddress,
+        shippingAddress: {
+          ...formAddress.shippingAddress,
+          country: '-',
+        },
         billingAddress: shippingSameBilling
           ? formAddress.shippingAddress
           : formAddress.billingAddress,
