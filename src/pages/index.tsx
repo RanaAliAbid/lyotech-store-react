@@ -545,7 +545,7 @@ export default function Home({
 
                       <br />
 
-                      <Typography variant="h5">
+                      {/* <Typography variant="h5">
                         <b>
                           {(1397.0 * globalContext.conversionRate)?.toFixed(
                             globalContext.priceToFixed
@@ -553,7 +553,7 @@ export default function Home({
                           &nbsp;{globalContext.currencySymbol}
                         </b>
                       </Typography>
-                      <br />
+                      <br /> */}
 
                       <Typography variant="h6">
                         {/* {t('product-item1-desc')} */}
