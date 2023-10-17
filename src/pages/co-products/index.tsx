@@ -940,7 +940,6 @@ export default function CoProducts({
                       <div className={styles.partnersImg}>
                         <img src={we01.src} alt="We Are Logo" />
                         <img src={we02.src} alt="We Are Logo" />
-                        <img src={we03.src} alt="We Are Logo" />
                         <img src={we04.src} alt="We Are Logo" />
                         <img src={certificate03.src} alt="Certification Logo" />
                       </div>
