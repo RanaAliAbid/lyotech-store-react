@@ -110,7 +110,7 @@ export default function Checkout({
           globalContext.setGlobalLoading(false);
         }, 2000);
       }
-    } catch (error) {}
+    } catch (error) { }
   }, []);
 
   React.useEffect(() => {
@@ -313,7 +313,7 @@ export default function Checkout({
       if (result?.status === 200) {
         getUserAddresses();
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const handlePlaceOrder = async () => {
@@ -404,7 +404,7 @@ export default function Checkout({
                           >
                             <FaArrowLeft></FaArrowLeft> &nbsp;&nbsp;
                           </span>
-                          Shipping Address
+                          Billing Address
                         </Typography>
 
                         {userAddressList?.address?.defaultAddress && (
@@ -466,7 +466,7 @@ export default function Checkout({
                         <>
                           <div className={`${styles.wrapTitle} mt-2`}>
                             <Typography variant="h4">
-                              Billing Address
+                              Shipping Address
                             </Typography>
                           </div>
 
