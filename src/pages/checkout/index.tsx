@@ -135,7 +135,7 @@ export default function Checkout({
     if (!checkForm) return;
 
     if (
-      // !checkForm.shippingAddress.country ||
+      !checkForm.shippingAddress.country ||
       (!checkForm.shippingAddress.city && !partnerCheckout) ||
       (!checkForm.shippingAddress.type && !partnerCheckout) ||
       (!checkForm.shippingAddress.address && !partnerCheckout) ||
@@ -148,7 +148,7 @@ export default function Checkout({
     } else {
       if (!shippingSameBilling) {
         if (
-          // !checkForm.billingAddress.country ||
+          !checkForm.billingAddress.country ||
           (!checkForm.billingAddress.city && !partnerCheckout) ||
           (!checkForm.billingAddress.address && !partnerCheckout) ||
           !checkForm.billingAddress.phone ||
@@ -275,7 +275,7 @@ export default function Checkout({
       globalContext.setGlobalLoading(true);
 
       let data = formAddress.shippingAddress;
-      data.code = countryCodeByCountryName(data?.country) ?? '+971';
+      data.code = countryCodeByCountryName(data?.country) ?? 'United Arab Emirates';
       data.contact = data.phone;
       data.latitude = 0;
       data.longitude = 0;
