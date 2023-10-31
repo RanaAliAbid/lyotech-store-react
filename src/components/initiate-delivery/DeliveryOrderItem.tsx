@@ -4,6 +4,8 @@ import { List, ListItem, Typography, RadioGroup, FormControl, FormControlLabel, 
 import styles from '@/styles/Home.module.css';
 import ShippingAddressForm from './ShippingAddressForm';
 import StoreListDropDown from './StoreListDropDown';
+import { useGlobalContext } from '@/contexts/GlobalContext';
+import { updateDeliveryCartOrder } from '@/services/orders/order.service';
 const deliveryTypes = [
     {
         value: 'self-pickup',
@@ -19,20 +21,53 @@ export default function DeliveryOrderItem({
     productImage,
     selfPickupFee,
     shippingFee,
-    countryList
+    countryList,
+    orderId,
+    cartOrderId,
+    shippingAddress,
+    shippingCountry
 }: {
     productName: string;
     productImage: string;
+    cartOrderId: string;
+    shippingCountry: string;
+    orderId: string;
     selfPickupFee: number;
     shippingFee: number;
     countryList: any;
+    shippingAddress: any;
 }) {
     const [deliveryType, setDeliveryType] = React.useState(deliveryTypes[0]);
+    const [deliveryDetails, setDeliveryDetails] = React.useState({ country: shippingCountry });
+    const globalContext = useGlobalContext();
     const addressList = [
         { value: "Dubai Store 1", name: "Dubai Store 1" },
         { value: "Dubai Store 2", name: "Dubai Store 2" },
         { value: "Dubai Store 3", name: "Dubai Store 3" },
     ]
+
+    const updateDeliveryDetails = React.useCallback(async () => {
+        globalContext.setGlobalLoading(true);
+        const result = await updateDeliveryCartOrder({
+            cartOrderId: cartOrderId,
+            orderId: orderId,
+            data: deliveryDetails
+        });
+        globalContext.setGlobalLoading(false);
+    }, [cartOrderId, orderId, deliveryDetails, globalContext])
+
+    React.useEffect(() => {
+        updateDeliveryDetails();
+    }, [deliveryDetails.country, updateDeliveryDetails])
+
+    const handleChangePickUpStore = (store: string) => {
+        setDeliveryDetails(prevState => { return { ...prevState, store: store } })
+    }
+
+    const handleDeliveryAddress = (shippingAddress: any) => {
+        if (shippingAddress?.country) setDeliveryDetails(prevState => { return { ...prevState, country: shippingAddress.country } })
+        setDeliveryDetails(prevState => { return { ...prevState, shippingAddress: shippingAddress } })
+    }
 
     return (
         <>
@@ -89,8 +124,12 @@ export default function DeliveryOrderItem({
                             </FormControl>
                         </ListItem>
                         <ListItem className={styles.item}>
-                            {deliveryType.value === 'self-pickup' && <StoreListDropDown addressList={addressList} />}
-                            {deliveryType.value === 'shipping' && <ShippingAddressForm countryList={countryList} />}
+                            {deliveryType.value === 'self-pickup' && <StoreListDropDown addressList={addressList} onChange={(data: string) => handleChangePickUpStore(data)} />}
+                            {deliveryType.value === 'shipping' && <ShippingAddressForm
+                                countryList={countryList}
+                                shippingCountry={shippingCountry}
+                                address={shippingAddress}
+                                onChange={(data: string) => handleDeliveryAddress(data)} />}
                         </ListItem>
                         <ListItem className={styles.item}>
                             {deliveryType.value === 'self-pickup' && <div className={styles.fees}>

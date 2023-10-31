@@ -4,13 +4,17 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import styles from '@/styles/Home.module.css';
 
 export default function StoreListDropDown({
-    addressList
+    addressList,
+    onChange
 }: {
-    addressList: any
+    addressList: any,
+    onChange: Function
+
 }) {
     const [pickUpAddress, setPickUpAddress] = React.useState(addressList[0]);
     const handleChange = (event: SelectChangeEvent) => {
         setPickUpAddress(event.target);
+        // onChange(event.target)
     };
 
     return (

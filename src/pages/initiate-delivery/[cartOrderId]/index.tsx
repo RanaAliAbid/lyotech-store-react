@@ -78,13 +78,17 @@ export default function InitiateDelivery() {
 
                                     <div className={styles.initiateDeliveryBox}>
                                         <List className={`${styles.productsList} mb-1`}>
-                                            {cartOrder?.orders && cartOrder.orders.map((order) =>
+                                            {cartOrder?.orders && cartOrder?.orders.map((order) =>
                                                 <DeliveryOrderItem key={order.order._id}
                                                     productName={order.order.products[0].productId.name}
                                                     productImage={order.order.products[0].productId.featuredImage.link}
                                                     selfPickupFee={order.selfPickupFee}
                                                     shippingFee={order.shippingFee}
                                                     countryList={countryList}
+                                                    orderId={order.order._id}
+                                                    cartOrderId={cartOrder?.cartOrder?._id}
+                                                    shippingCountry={order.shippingCountry}
+                                                    shippingAddress={order.shippingAddress}
                                                 />
                                             )}
                                         </List>

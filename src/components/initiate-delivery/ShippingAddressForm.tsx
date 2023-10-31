@@ -5,13 +5,22 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import styles from '@/styles/Home.module.css';
 
 export default function ShippingAddressForm({
-    countryList
+    countryList,
+    address,
+    shippingCountry,
+    onChange
 }: {
     countryList: any
+    address: any
+    shippingCountry: string
+    onChange: Function
 }) {
-    const [country, setCountry] = React.useState(countryList[0]);
+    const [country, setCountry] = React.useState(countryList.find((item) => item._id === shippingCountry));
+    const [shippingAddress, setShippingAddress] = React.useState(address);
     const handleChange = (event: SelectChangeEvent) => {
         setCountry(event.target);
+        if (event.target?.code) setShippingAddress((prevState: any) => prevState.county = event.target.code)
+        if (event.target?._id) { onChange({ country: event.target._id }) }
     };
 
     return (
@@ -20,11 +29,38 @@ export default function ShippingAddressForm({
             <div>
                 <div className={styles.formControl}>
                     <Typography variant="h5">
-                        Shipping Address
+                        First Name
                     </Typography>
+
                     <Input
                         className={styles.formInput}
-                        placeholder="Address "
+                        placeholder="First Name"
+                        value={shippingAddress?.firstName}
+                        onChange={() => setShippingAddress((prevState: any) => { return { ...prevState, firstName: shippingAddress.firstName } })}
+                    />
+                </div>
+                <div className={styles.formControl}>
+                    <Typography variant="h5">
+                        Last Name
+                    </Typography>
+
+                    <Input
+                        className={styles.formInput}
+                        placeholder="Fist Name"
+                        value={shippingAddress?.address}
+                        onChange={() => setShippingAddress((prevState: any) => { return { ...prevState, address: shippingAddress.lastName } })}
+                    />
+                </div>
+                <div className={styles.formControl}>
+                    <Typography variant="h5">
+                        Shipping Address
+                    </Typography>
+
+                    <Input
+                        className={styles.formInput}
+                        placeholder="Address"
+                        value={shippingAddress?.address}
+                        onChange={() => setShippingAddress((prevState: any) => { return { ...prevState, address: shippingAddress.address } })}
                     />
                 </div>
 
@@ -38,7 +74,7 @@ export default function ShippingAddressForm({
                             displayEmpty
                             inputProps={{ 'aria-label': 'Without label' }}
                             onChange={handleChange}
-                            value={country?.value}
+                            value={country?._id}
                         >
                             {countryList?.map((item: any, index: number) =>
                                 <MenuItem value={item._id} key={index}> {item.name}</MenuItem>
@@ -54,6 +90,8 @@ export default function ShippingAddressForm({
                         <Input
                             className={styles.formInput}
                             placeholder="State"
+                            value={shippingAddress?.state}
+                            onChange={() => setShippingAddress((prevState: any) => { return { ...prevState, state: shippingAddress.state } })}
                         />
                     </div>
 
@@ -66,6 +104,8 @@ export default function ShippingAddressForm({
                     <Input
                         className={styles.formInput}
                         placeholder="City "
+                        value={shippingAddress?.city}
+                        onChange={() => setShippingAddress((prevState: any) => { return { ...prevState, state: shippingAddress.city } })}
                     />
                 </div>
 
@@ -76,6 +116,8 @@ export default function ShippingAddressForm({
                     <Input
                         className={styles.formInput}
                         placeholder="Postal Code"
+                        value={shippingAddress?.postalCode}
+                        onChange={() => setShippingAddress((prevState: any) => { return { ...prevState, state: shippingAddress.postalCode } })}
                     />
                 </div>
             </div>
