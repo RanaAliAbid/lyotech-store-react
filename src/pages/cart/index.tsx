@@ -414,6 +414,7 @@ export const getServerSideProps: GetServerSideProps<{
     const voucher = urlParams.get('voucher') ?? '';
     const checkout_token = urlParams.get('checkout_token') ?? '';
     const shipping_token = urlParams.get('shipping_token') ?? '';
+    const cart_id = urlParams.get('id') ?? null;
 
     if (product_id?.length >= 1 && user_handover?.length >= 1) {
       result = await verifyUserHandover({
@@ -455,8 +456,8 @@ export const getServerSideProps: GetServerSideProps<{
         destination = '/checkout';
         token = checkout_token;
       }
-      if (shipping_token?.length > 0) {
-        destination = '/initiate-delivery';
+      if (shipping_token?.length > 0 && cart_id) {
+        destination = `/initiate-delivery/${cart_id}`;
         token = shipping_token;
       }
 
