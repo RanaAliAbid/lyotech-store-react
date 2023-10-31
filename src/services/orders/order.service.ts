@@ -27,6 +27,17 @@ export const verifyOrderDetails = async ({ id }: { id: any }) => {
   }
 };
 
+export const getDeliveryCartOrder = async ({ id }: { id: any }) => {
+  try {
+    const result = await ApiService.GetRequest(
+      `${API_HOST}/v1/user/user-partner/order/initiate-shipping/${id}`
+    );
+    return result?.data?.data;
+  } catch (error: any) {
+    return null;
+  }
+};
+
 export const generatePaymentLink = async (id: string) => {
   try {
     return ProxyService.GetRequest(
