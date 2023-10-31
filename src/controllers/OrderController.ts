@@ -200,3 +200,32 @@ export const createCustomPayment = async (
     return res.status(400).json(ApiService.ApiResponseError(error));
   }
 };
+
+export const getInitiateShipping = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  res.setHeader('Allow', 'GET');
+
+  try {
+    const { cartOrderId } = req.query;
+    const token = req.cookies?.authToken ?? null;
+    let result;
+    if (token) {
+      result = await ApiService.GetRequest(
+        API_HOST +
+          `/v1/user/user-partner/order/initiate-shipping/${cartOrderId}`,
+        `Bearer ${token}`
+      );
+    }
+    return res
+      .status(200)
+      .json(ApiService.ApiResponseSuccess(result?.data?.data, ''));
+  } catch (error: any) {
+    console.log(
+      'Catch error get initiate shipping order',
+      error?.response?.data
+    );
+    return res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};

@@ -27,10 +27,14 @@ export const verifyOrderDetails = async ({ id }: { id: any }) => {
   }
 };
 
-export const getDeliveryCartOrder = async ({ id }: { id: any }) => {
+export const getDeliveryCartOrder = async ({
+  cartOrderId,
+}: {
+  cartOrderId: string;
+}) => {
   try {
-    const result = await ApiService.GetRequest(
-      `${API_HOST}/v1/user/user-partner/order/initiate-shipping/${id}`
+    const result = await ProxyService.GetRequest(
+      PROXY_HOST + `/api/v1/get-initiate-shipping?cartOrderId=${cartOrderId}`
     );
     return result?.data?.data;
   } catch (error: any) {

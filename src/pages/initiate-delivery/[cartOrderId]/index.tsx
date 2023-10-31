@@ -28,9 +28,9 @@ export default function InitiateDelivery() {
         getCartOrder(router.query.cartOrderId)
     }, [])
 
-    const getCartOrder = async (_id: any) => {
+    const getCartOrder = async (cartOrderId: any) => {
         globalContext.setGlobalLoading(true);
-        const res = await getDeliveryCartOrder({ id: _id })
+        const res = await getDeliveryCartOrder({ cartOrderId: cartOrderId })
         if (!res) {
             router.push('/')
             globalContext.setGlobalLoading(false);
@@ -54,7 +54,7 @@ export default function InitiateDelivery() {
 
                                         <div className={`${styles['orderIDdetails']} `}>
                                             <Typography variant="h5">
-                                                Order ID: #{cartOrder.invoiceId}
+                                                Order ID: #{cartOrder?.cartOrder?.invoiceId}
                                             </Typography>
 
                                             <Typography variant="body1">
