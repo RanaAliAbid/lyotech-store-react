@@ -42,6 +42,26 @@ export const getDeliveryCartOrder = async ({
   }
 };
 
+export const updateDeliveryCartOrder = async ({
+  data,
+  orderId,
+  cartOrderId,
+}: {
+  data: any;
+  orderId: string;
+  cartOrderId: string;
+}) => {
+  try {
+    const result = await ProxyService.PostRequest(
+      PROXY_HOST + `/api/v1/update-shipping-details`,
+      { data: data, orderId: orderId, cartOrderId: cartOrderId }
+    );
+    return result?.data?.data;
+  } catch (error: any) {
+    return null;
+  }
+};
+
 export const generatePaymentLink = async (id: string) => {
   try {
     return ProxyService.GetRequest(
