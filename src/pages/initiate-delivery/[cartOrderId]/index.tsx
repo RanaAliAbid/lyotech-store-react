@@ -13,9 +13,12 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import DeliveryOrderItem from '@/components/initiate-delivery/DeliveryOrderItem';
 import { getDeliveryCartOrder } from '@/services/orders/order.service';
 import { useGlobalContext } from '@/contexts/GlobalContext';
+import { getCountry } from '@/services/country/country.service';
 
 export default function InitiateDelivery() {
     const [cartOrder, setCartOrder] = React.useState({})
+    const [countryList, setCountryList] = React.useState([]);
+
     const router = useRouter();
     const globalContext = useGlobalContext();
     const theme = createTheme({
@@ -26,6 +29,7 @@ export default function InitiateDelivery() {
 
     React.useEffect(() => {
         getCartOrder(router.query.cartOrderId)
+        getCountryList()
     }, [])
 
     const getCartOrder = async (cartOrderId: any) => {
@@ -38,6 +42,12 @@ export default function InitiateDelivery() {
             setCartOrder(res)
             globalContext.setGlobalLoading(false);
         }
+    }
+    const getCountryList = async () => {
+        globalContext.setGlobalLoading(true);
+        const result = await getCountry();
+        setCountryList(result?.data?.data?.country);
+        globalContext.setGlobalLoading(false);
     }
 
     return (
@@ -74,6 +84,7 @@ export default function InitiateDelivery() {
                                                     productImage={order.order.products[0].productId.featuredImage.link}
                                                     selfPickupFee={order.selfPickupFee}
                                                     shippingFee={order.shippingFee}
+                                                    countryList={countryList}
                                                 />
                                             )}
                                         </List>

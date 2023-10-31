@@ -24,7 +24,7 @@ export default function ShippingAddressForm({
                     </Typography>
                     <Input
                         className={styles.formInput}
-                        placeholder="City "
+                        placeholder="Address "
                     />
                 </div>
 
@@ -41,7 +41,7 @@ export default function ShippingAddressForm({
                             value={country?.value}
                         >
                             {countryList?.map((item: any, index: number) =>
-                                <MenuItem value={item.value} key={index}> {item.name}</MenuItem>
+                                <MenuItem value={item._id} key={index}> {item.name}</MenuItem>
                             )}
                         </Select>
 
@@ -71,11 +71,11 @@ export default function ShippingAddressForm({
 
                 <div className={styles.formControl}>
                     <label className={styles.formLabel}>
-                        Pin Code
+                        Postal Code
                     </label>
                     <Input
                         className={styles.formInput}
-                        placeholder="Pin Code"
+                        placeholder="Postal Code"
                     />
                 </div>
             </div>

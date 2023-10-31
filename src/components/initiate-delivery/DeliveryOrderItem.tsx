@@ -18,23 +18,20 @@ export default function DeliveryOrderItem({
     productName,
     productImage,
     selfPickupFee,
-    shippingFee
+    shippingFee,
+    countryList
 }: {
     productName: string;
     productImage: string;
     selfPickupFee: number;
     shippingFee: number;
+    countryList: any;
 }) {
     const [deliveryType, setDeliveryType] = React.useState(deliveryTypes[0]);
     const addressList = [
         { value: "Dubai Store 1", name: "Dubai Store 1" },
         { value: "Dubai Store 2", name: "Dubai Store 2" },
         { value: "Dubai Store 3", name: "Dubai Store 3" },
-    ]
-    const countryList = [
-        { name: 'country 1', value: '_id124431' },
-        { name: 'country 2', value: '_id124433' },
-        { name: 'country 3', value: '_id124433' }
     ]
 
     return (
