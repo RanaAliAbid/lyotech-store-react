@@ -5,7 +5,7 @@ import styles from '@/styles/Home.module.css';
 import ShippingAddressForm from './ShippingAddressForm';
 import StoreListDropDown from './StoreListDropDown';
 import { useGlobalContext } from '@/contexts/GlobalContext';
-import { updateDeliveryCartOrder } from '@/services/orders/order.service';
+import { getPickUpStores, updateDeliveryCartOrder } from '@/services/orders/order.service';
 const deliveryTypes = [
     {
         value: 'pickup',
@@ -37,8 +37,8 @@ export default function DeliveryOrderItem({
     countryList: any;
     shippingAddress: any;
 }) {
-    console.log("🚀 ~ file: DeliveryOrderItem.tsx:40 ~ shippingCountry:>>>>>>>>>>>>>>>>>>>>>>", shippingCountry)
     const [deliveryType, setDeliveryType] = React.useState(deliveryTypes[0]);
+    const [storeList, setStoreList] = React.useState([]);
     const [deliveryDetails, setDeliveryDetails] = React.useState({ country: shippingCountry, shippingAddress: shippingAddress });
     const globalContext = useGlobalContext();
     const addressList = [
@@ -46,6 +46,14 @@ export default function DeliveryOrderItem({
         { value: "Dubai Store 2", name: "Dubai Store 2" },
         { value: "Dubai Store 3", name: "Dubai Store 3" },
     ]
+
+    React.useEffect(() => {
+        getStoreList();
+    }, [])
+
+    React.useEffect(() => {
+        updateDeliveryDetails();
+    }, [deliveryDetails.country])
 
     const updateDeliveryDetails = async () => {
         globalContext.setGlobalLoading(true);
@@ -57,9 +65,15 @@ export default function DeliveryOrderItem({
         globalContext.setGlobalLoading(false);
     }
 
-    React.useEffect(() => {
-        updateDeliveryDetails();
-    }, [deliveryDetails.country])
+    const getStoreList = async () => {
+        globalContext.setGlobalLoading(true);
+        const result = await getPickUpStores({
+            country: deliveryDetails.country
+        });
+        console.log("🚀 ~ file: DeliveryOrderItem.tsx:74 ~ getStoreList ~ result:", result)
+        setStoreList(result)
+        globalContext.setGlobalLoading(false);
+    }
 
     const handleChangePickUpStore = (store: string) => {
         setDeliveryDetails(prevState => { return { ...prevState, store: store } })
@@ -130,7 +144,7 @@ export default function DeliveryOrderItem({
                             </FormControl>
                         </ListItem>
                         <ListItem className={styles.item}>
-                            {deliveryType.value === 'pickup' && <StoreListDropDown addressList={addressList} onChange={(data: string) => handleChangePickUpStore(data)} />}
+                            {deliveryType.value === 'pickup' && <StoreListDropDown addressList={storeList} onChange={(data: string) => handleChangePickUpStore(data)} />}
                             {deliveryType.value === 'shipping' && <ShippingAddressForm
                                 countryList={countryList}
                                 shippingCountry={countryList.find((item: any) => item._id === deliveryDetails.country)}
