@@ -9,13 +9,13 @@ import { getPickUpStores, updateDeliveryCartOrder } from '@/services/orders/orde
 import { debounce } from '@/utils/app.utils';
 const deliveryTypes = [
     {
-        value: 'pickup',
+        value: 'shipping',
         label: 'Yes'
     },
     {
-        value: 'shipping',
+        value: 'pickup',
         label: 'No'
-    }
+    },
 ]
 export default function DeliveryOrderItem({
     productName,
@@ -76,9 +76,9 @@ export default function DeliveryOrderItem({
                 deliveryDetails.shippingAddress?.state?.length > 1 &&
                 deliveryDetails.shippingAddress?.phone?.length > 1 &&
                 deliveryDetails.shippingAddress?.postalCode?.length > 1 &&
-                deliveryDetails.shippingAddress?.country) {
+                (deliveryDetails.shippingAddress?.country || shippingCountry)) {
                 //
-                data.shippingAddress.country = deliveryDetails.shippingAddress?.country?.name ?? data.shippingAddress?.country
+                // data.shippingAddress.country = deliveryDetails.shippingAddress?.country?.name ?? data.shippingAddress?.country ?? shippingCountry
 
                 setDataLoading(true);
 
@@ -188,7 +188,7 @@ export default function DeliveryOrderItem({
                         <ListItem className={styles.item}>
                             <FormControl>
                                 <Typography variant="h5">
-                                    Self Pickup
+                                    Shipping
                                 </Typography>
                                 <RadioGroup
                                     row
