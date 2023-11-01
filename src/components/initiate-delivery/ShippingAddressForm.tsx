@@ -33,6 +33,11 @@ export default function ShippingAddressForm({
                 ...shippingAddress,
                 country: event.target.value
             })
+
+            setShippingAddress({ 
+                ...shippingAddress,
+                country: countryList?.find((x: any) => x._id === country)?.name
+            })
         }
     };
 
