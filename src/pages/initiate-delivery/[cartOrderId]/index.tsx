@@ -157,30 +157,40 @@ export default function InitiateDelivery() {
                                                 <Grid item md={4} sm={6} xs={12}>
                                                     <div className={`${styles.summaryDetails}`}>
                                                         <List>
-                                                            <ListItem>
-                                                                <Typography variant="h6">
-                                                                    Shipping Fee
-                                                                </Typography>
-                                                                <Typography variant="h6">
-                                                                    AED {cartOrder.totalShippingFee}
-                                                                </Typography>
-                                                            </ListItem>
-                                                            <ListItem>
-                                                                <Typography variant="h6">
-                                                                    Self-PickUp Fee
-                                                                </Typography>
-                                                                <Typography variant="h6">
-                                                                    AED {cartOrder.totalSelfPickupFee}
-                                                                </Typography>
-                                                            </ListItem>
-                                                            <ListItem>
-                                                                <Typography variant="h6">
-                                                                    Tax
-                                                                </Typography>
-                                                                <Typography variant="h6">
-                                                                    AED {cartOrder.totalAppliedTax}
-                                                                </Typography>
-                                                            </ListItem>
+                                                            {
+                                                                cartOrder.totalShippingFee > 0 && <ListItem>
+                                                                    <Typography variant="h6">
+                                                                        Shipping Fee
+                                                                    </Typography>
+                                                                    <Typography variant="h6">
+                                                                        AED {cartOrder.totalShippingFee}
+                                                                    </Typography>
+                                                                </ListItem>
+                                                            }
+
+                                                            {
+                                                                cartOrder.totalSelfPickupFee > 0 && <ListItem>
+                                                                    <Typography variant="h6">
+                                                                        Self-PickUp Fee
+                                                                    </Typography>
+                                                                    <Typography variant="h6">
+                                                                        AED {cartOrder.totalSelfPickupFee}
+                                                                    </Typography>
+                                                                </ListItem>
+                                                            }
+
+                                                            {
+                                                                cartOrder.totalAppliedTax > 0 && <ListItem>
+                                                                    <Typography variant="h6">
+                                                                        Tax
+                                                                    </Typography>
+                                                                    <Typography variant="h6">
+                                                                        AED {cartOrder.totalAppliedTax}
+                                                                    </Typography>
+                                                                </ListItem>
+                                                            }
+
+
 
                                                             <ListItem className={styles.summaryfoot}>
                                                                 <Typography variant="h5"> Total </Typography>
