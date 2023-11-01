@@ -37,6 +37,7 @@ export default function DeliveryOrderItem({
     countryList: any;
     shippingAddress: any;
 }) {
+    console.log("🚀 ~ file: DeliveryOrderItem.tsx:40 ~ shippingCountry:>>>>>>>>>>>>>>>>>>>>>>", shippingCountry)
     const [deliveryType, setDeliveryType] = React.useState(deliveryTypes[0]);
     const [deliveryDetails, setDeliveryDetails] = React.useState({ country: shippingCountry, shippingAddress: shippingAddress });
     const globalContext = useGlobalContext();
@@ -46,7 +47,7 @@ export default function DeliveryOrderItem({
         { value: "Dubai Store 3", name: "Dubai Store 3" },
     ]
 
-    const updateDeliveryDetails = React.useCallback(async () => {
+    const updateDeliveryDetails = async () => {
         globalContext.setGlobalLoading(true);
         const result = await updateDeliveryCartOrder({
             cartOrderId: cartOrderId,
@@ -54,11 +55,11 @@ export default function DeliveryOrderItem({
             data: deliveryDetails
         });
         globalContext.setGlobalLoading(false);
-    }, [cartOrderId, orderId, deliveryDetails, globalContext])
+    }
 
     React.useEffect(() => {
         updateDeliveryDetails();
-    }, [deliveryDetails.country, updateDeliveryDetails])
+    }, [deliveryDetails.country])
 
     const handleChangePickUpStore = (store: string) => {
         setDeliveryDetails(prevState => { return { ...prevState, store: store } })
@@ -70,7 +71,7 @@ export default function DeliveryOrderItem({
     }
 
     const handleDeliveryAddress = (data: any) => {
-        if (data?.shippingCountry) setDeliveryDetails(prevState => { return { ...prevState, shippingCountry: data.country } })
+        if (data?.shippingCountry) setDeliveryDetails(prevState => { return { ...prevState, shippingCountry: data.shippingCountry } })
         if (data?.shippingAddress) setDeliveryDetails(prevState => { return { ...prevState, shippingAddress: data.shippingAddress } })
     }
 
@@ -132,7 +133,7 @@ export default function DeliveryOrderItem({
                             {deliveryType.value === 'pickup' && <StoreListDropDown addressList={addressList} onChange={(data: string) => handleChangePickUpStore(data)} />}
                             {deliveryType.value === 'shipping' && <ShippingAddressForm
                                 countryList={countryList}
-                                shippingCountry={shippingCountry}
+                                shippingCountry={countryList.find((item: any) => item._id === deliveryDetails.country)}
                                 address={shippingAddress}
                                 onChange={(data: string) => handleDeliveryAddress(data)} />}
                         </ListItem>

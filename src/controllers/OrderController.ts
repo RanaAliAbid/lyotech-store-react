@@ -238,6 +238,12 @@ export const updateShippingDetails = async (
 
   try {
     let { data, orderId, cartOrderId } = req.body;
+    console.log(
+      '🚀 ~ file: OrderController.ts:241 ~ data, orderId, cartOrderId :',
+      data,
+      orderId,
+      cartOrderId
+    );
     const token = req.cookies?.authToken ?? null;
 
     let result;
@@ -245,7 +251,7 @@ export const updateShippingDetails = async (
     if (token) {
       result = await ApiService.PutRequest(
         API_HOST +
-          `/v1/user/user-partner/order/update-shipping/%${cartOrderId}/${orderId}`,
+          `/v1/user/user-partner/order/update-shipping/${cartOrderId}/${orderId}`,
         data,
         `Bearer ${token}`
       );
@@ -255,6 +261,7 @@ export const updateShippingDetails = async (
       .status(200)
       .json(ApiService.ApiResponseSuccess(result?.data?.data, ''));
   } catch (error: any) {
+    console.log('🚀 ~ file: OrderController.ts:258 ~ error:', error);
     console.log('Catch error add to cart ', error?.response?.data);
     return res.status(400).json(ApiService.ApiResponseError(error));
   }

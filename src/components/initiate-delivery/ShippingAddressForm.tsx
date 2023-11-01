@@ -29,7 +29,7 @@ export default function ShippingAddressForm({
 
     const handleChange = (event: SelectChangeEvent) => {
         setCountry(event.target.value);
-        if (event.target.value?.code) setShippingAddress((prevState: any) => prevState.county = event.target.value.code)
+        if (event.target.value?.code) setShippingAddress((prevState: any) => prevState.country = event.target.value?.code)
     };
 
 
