@@ -11,6 +11,15 @@ export const saveUserOrder = async (data: any) => {
   }
 };
 
+export const createShippingPaymentLink = async (data: any) => {
+  try {
+    const body = await ProxyService.generateHashKey(JSON.stringify(data));
+    return ProxyService.PostRequest(PROXY_HOST + '/api/v1/place-shipping-order', body);
+  } catch (error) {
+    return null;
+  }
+}
+
 export const verifyOrderDetails = async ({ id }: { id: any }) => {
   try {
     const result = await ApiService.GetRequest(
@@ -56,16 +65,19 @@ export const getPickUpStores = async ({ country }: { country: string }) => {
 export const updateDeliveryCartOrder = async ({
   data,
   orderId,
-  cartOrderId,
+  shippingId,
 }: {
   data: any;
   orderId: string;
-  cartOrderId: string;
+  shippingId: string;
 }) => {
   try {
+
+    const body = await ProxyService.generateHashKey(JSON.stringify({ data: data, orderId: orderId, shippingId: shippingId }));
+
     const result = await ProxyService.PostRequest(
       PROXY_HOST + `/api/v1/update-shipping-details`,
-      { data: data, orderId: orderId, cartOrderId: cartOrderId }
+      body
     );
     return result?.data?.data;
   } catch (error: any) {

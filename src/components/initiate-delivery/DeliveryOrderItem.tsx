@@ -6,6 +6,7 @@ import ShippingAddressForm from './ShippingAddressForm';
 import StoreListDropDown from './StoreListDropDown';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { getPickUpStores, updateDeliveryCartOrder } from '@/services/orders/order.service';
+import { debounce } from '@/utils/app.utils';
 const deliveryTypes = [
     {
         value: 'pickup',
@@ -23,9 +24,11 @@ export default function DeliveryOrderItem({
     shippingFee,
     countryList,
     orderId,
-    cartOrderId,
     shippingAddress,
-    shippingCountry
+    shippingCountry,
+    shippingId,
+    getCartOrder,
+    setDataLoading
 }: {
     productName: string;
     productImage: string;
@@ -36,47 +39,91 @@ export default function DeliveryOrderItem({
     shippingFee: number;
     countryList: any;
     shippingAddress: any;
+    shippingId: string;
+    getCartOrder: Function;
+    setDataLoading: any
 }) {
+
     const [deliveryType, setDeliveryType] = React.useState(deliveryTypes[0]);
     const [storeList, setStoreList] = React.useState([]);
-    const [deliveryDetails, setDeliveryDetails] = React.useState({ country: shippingCountry, shippingAddress: shippingAddress });
+    const [deliveryDetails, setDeliveryDetails] = React.useState({ country: shippingCountry, shippingType: deliveryTypes[0].value, storeId: null, shippingAddress: shippingAddress });
     const globalContext = useGlobalContext();
-    const addressList = [
-        { value: "Dubai Store 1", name: "Dubai Store 1" },
-        { value: "Dubai Store 2", name: "Dubai Store 2" },
-        { value: "Dubai Store 3", name: "Dubai Store 3" },
-    ]
+    const [loading, setLoading] = React.useState<boolean>(false);
 
     React.useEffect(() => {
-        getStoreList();
-    }, [])
+        let data = deliveryDetails
 
-    React.useEffect(() => {
-        updateDeliveryDetails();
-    }, [deliveryDetails.country])
+        deliveryDetails.shippingType = deliveryType.value
 
-    const updateDeliveryDetails = async () => {
-        globalContext.setGlobalLoading(true);
-        const result = await updateDeliveryCartOrder({
-            cartOrderId: cartOrderId,
-            orderId: orderId,
-            data: deliveryDetails
-        });
-        globalContext.setGlobalLoading(false);
+        if (deliveryType.value === 'pickup') {
+
+            if (deliveryDetails?.storeId) {
+                setDataLoading(true);
+
+                delete deliveryDetails.shippingAddress;
+
+                debounce(updateDeliveryDetails, 1000, {
+                    shippingId: shippingId,
+                    orderId: orderId,
+                    data: deliveryDetails,
+                })
+            }
+
+        } else {
+            if (deliveryDetails.shippingAddress?.firstName?.length > 1 &&
+                deliveryDetails.shippingAddress?.lastName?.length > 1 &&
+                deliveryDetails.shippingAddress?.city?.length > 1 &&
+                deliveryDetails.shippingAddress?.state?.length > 1 &&
+                deliveryDetails.shippingAddress?.phone?.length > 1 &&
+                deliveryDetails.shippingAddress?.postalCode?.length > 1 &&
+                deliveryDetails.shippingAddress?.country) {
+                //
+                data.shippingAddress.country = deliveryDetails.shippingAddress?.country?.name ?? data.shippingAddress?.country
+
+                setDataLoading(true);
+
+                debounce(updateDeliveryDetails, 2000, {
+                    shippingId: shippingId,
+                    orderId: orderId,
+                    data: {
+                        ...deliveryDetails,
+                        storeId: null
+                    }
+                })
+            }
+        }
+
+    }, [deliveryDetails])
+
+
+
+    const updateDeliveryDetails = async (data: any) => {
+        try {
+            setLoading(true);
+            setDataLoading(true);
+            const result = await updateDeliveryCartOrder(data);
+
+            if (!result) return;
+
+            getCartOrder && getCartOrder(false);
+        } catch (error) { }
+        setLoading(false);
     }
 
-    const getStoreList = async () => {
+    const getStoreList = async (country: string = '') => {
+
+        if (!country) return;
+
         globalContext.setGlobalLoading(true);
         const result = await getPickUpStores({
-            country: deliveryDetails.country
+            country: country
         });
-        console.log("🚀 ~ file: DeliveryOrderItem.tsx:74 ~ getStoreList ~ result:", result)
         setStoreList(result)
         globalContext.setGlobalLoading(false);
     }
 
-    const handleChangePickUpStore = (store: string) => {
-        setDeliveryDetails(prevState => { return { ...prevState, store: store } })
+    const handleChangePickUpStore = (data: any) => {
+        setDeliveryDetails(prevState => { return { ...prevState, storeId: data.store } })
     }
 
     const handleChangeShippingType = (type: any) => {
@@ -85,8 +132,22 @@ export default function DeliveryOrderItem({
     }
 
     const handleDeliveryAddress = (data: any) => {
-        if (data?.shippingCountry) setDeliveryDetails(prevState => { return { ...prevState, shippingCountry: data.shippingCountry } })
-        if (data?.shippingAddress) setDeliveryDetails(prevState => { return { ...prevState, shippingAddress: data.shippingAddress } })
+        setLoading(false);
+
+        if (deliveryType.value === 'pickup') {
+
+            setDeliveryDetails({
+                ...deliveryDetails,
+                country: data?.shippingCountry?._id ?? data?.shippingCountry,
+                storeId: null
+            })
+
+            getStoreList(data?.shippingCountry?._id ?? data?.shippingCountry)
+
+            return;
+        }
+
+        setDeliveryDetails(prevState => { return { ...prevState, shippingAddress: data?.shippingAddress, country: data?.shippingCountry?._id, storeId: null } })
     }
 
     return (
@@ -144,12 +205,17 @@ export default function DeliveryOrderItem({
                             </FormControl>
                         </ListItem>
                         <ListItem className={styles.item}>
-                            {deliveryType.value === 'pickup' && <StoreListDropDown addressList={storeList} onChange={(data: string) => handleChangePickUpStore(data)} />}
+                            {deliveryType.value === 'pickup' && <StoreListDropDown
+                                countryList={countryList}
+                                shippingCountry={countryList.find((item: any) => item._id == deliveryDetails.country)}
+                                addressList={storeList}
+                                onChange={handleChangePickUpStore}
+                                handleDeliveryAddress={handleDeliveryAddress} />}
                             {deliveryType.value === 'shipping' && <ShippingAddressForm
                                 countryList={countryList}
-                                shippingCountry={countryList.find((item: any) => item._id === deliveryDetails.country)}
+                                shippingCountry={countryList.find((item: any) => item._id == deliveryDetails.country)}
                                 address={shippingAddress}
-                                onChange={(data: string) => handleDeliveryAddress(data)} />}
+                                onChange={handleDeliveryAddress} />}
                         </ListItem>
                         <ListItem className={styles.item}>
                             {deliveryType.value === 'pickup' && <div className={styles.fees}>
@@ -168,6 +234,8 @@ export default function DeliveryOrderItem({
                                     AED {shippingFee}
                                 </Typography>
                             </div>}
+
+                            <p>{loading && <>Loading...</>}</p>
                         </ListItem>
                     </List>
                 </div>

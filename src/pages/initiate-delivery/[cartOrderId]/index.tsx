@@ -11,13 +11,18 @@ import Typography from '@mui/material/Typography';
 import styles from '@/styles/Home.module.css';
 import { createTheme, ThemeProvider } from '@mui/material';
 import DeliveryOrderItem from '@/components/initiate-delivery/DeliveryOrderItem';
-import { getDeliveryCartOrder } from '@/services/orders/order.service';
+import { getDeliveryCartOrder, createShippingPaymentLink } from '@/services/orders/order.service';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { getCountry } from '@/services/country/country.service';
+import MastercardCheckoutComponent from '@/components/checkout/paymentMethods/mastercardCheckout.component';
 
 export default function InitiateDelivery() {
-    const [cartOrder, setCartOrder] = React.useState({})
-    const [countryList, setCountryList] = React.useState([]);
+    //
+    const [cartOrder, setCartOrder] = React.useState<any>({})
+    const [countryList, setCountryList] = React.useState<any>([]);
+    const [loading, setLoading] = React.useState<boolean>(false);
+    const [enablePlaceOrder, setEnablePlaceOrder] = React.useState<boolean>(false)
+    const [sessionId, setSessionId] = React.useState('');
 
     const router = useRouter();
     const globalContext = useGlobalContext();
@@ -28,13 +33,22 @@ export default function InitiateDelivery() {
     });
 
     React.useEffect(() => {
-        getCartOrder(router.query.cartOrderId)
+        globalContext.setGlobalLoading(true);
+        getCartOrder(true)
         getCountryList()
     }, [])
 
-    const getCartOrder = async (cartOrderId: any) => {
-        globalContext.setGlobalLoading(true);
-        const res = await getDeliveryCartOrder({ cartOrderId: cartOrderId })
+    const getCartOrder = async (init: boolean) => {
+        //
+        if (!router.query?.cartOrderId) return;
+
+        if (!init) {
+            setLoading(true)
+        }
+
+        const id: any = router.query.cartOrderId
+
+        const res = await getDeliveryCartOrder({ cartOrderId: id })
         if (!res) {
             router.push('/')
             globalContext.setGlobalLoading(false);
@@ -42,6 +56,7 @@ export default function InitiateDelivery() {
             setCartOrder(res)
             globalContext.setGlobalLoading(false);
         }
+        setLoading(false)
     }
     const getCountryList = async () => {
         globalContext.setGlobalLoading(true);
@@ -49,6 +64,48 @@ export default function InitiateDelivery() {
         setCountryList(result?.data?.data?.country);
         globalContext.setGlobalLoading(false);
     }
+
+    const handlePlaceOrder = async (e: any, shippingId: string) => {
+        try {
+            e.preventDefault();
+
+            // if (!enablePlaceOrder) {
+            //     globalContext.setAlertProps({
+            //         show: true,
+            //         title: 'Please fill all required fields and retry',
+            //         text: '',
+            //         toast: true,
+            //         background: '#8B0000',
+            //         showConfirmButton: false,
+            //         timerProgressBar: true,
+            //         callback: globalContext.closeAlert,
+            //     });
+            //     return;
+            // }
+
+            globalContext.setGlobalLoading(true);
+
+            const data = {
+                shippingId: shippingId,
+            };
+
+            const result = await createShippingPaymentLink(data);
+
+            if (result?.data?.data?.data?.masterCardSession) {
+                console.log(
+                    'open checkout page',
+                    result?.data?.data?.data?.masterCardSession.sessionId
+                );
+                setSessionId(result?.data?.data?.data?.masterCardSession.sessionId);
+            } else if (result?.data?.data?.data?.paymentLink) {
+                window.location.href = result?.data?.data?.data?.paymentLink;
+            } else {
+                globalContext.setGlobalLoading(false);
+            }
+        } catch (error) {
+            globalContext.setGlobalLoading(false);
+        }
+    };
 
     return (
         <>
@@ -76,73 +133,89 @@ export default function InitiateDelivery() {
                                         </div>
                                     </div>
 
-                                    <div className={styles.initiateDeliveryBox}>
-                                        <List className={`${styles.productsList} mb-1`}>
-                                            {cartOrder?.orders && cartOrder?.orders.map((order) =>
-                                                <DeliveryOrderItem key={order.order._id}
-                                                    productName={order.order.products[0].productId.name}
-                                                    productImage={order.order.products[0].productId.featuredImage.link}
-                                                    selfPickupFee={order.selfPickupFee}
-                                                    shippingFee={order.shippingFee}
-                                                    countryList={countryList}
-                                                    orderId={order.order._id}
-                                                    cartOrderId={cartOrder?.cartOrder?._id}
-                                                    shippingCountry={order.shippingCountry}
-                                                    shippingAddress={order.shippingAddress}
-                                                />
-                                            )}
-                                        </List>
-                                        <Grid container spacing={3} justifyContent="flex-end">
-                                            <Grid item md={4} sm={6} xs={12}>
-                                                <div className={`${styles.summaryDetails}`}>
-                                                    <List>
-                                                        <ListItem>
-                                                            <Typography variant="h6">
-                                                                Shipping Fee
-                                                            </Typography>
-                                                            <Typography variant="h6">
-                                                                AED {cartOrder.totalShippingFee}
-                                                            </Typography>
-                                                        </ListItem>
-                                                        <ListItem>
-                                                            <Typography variant="h6">
-                                                                Self-PickUp Fee
-                                                            </Typography>
-                                                            <Typography variant="h6">
-                                                                AED {cartOrder.totalSelfPickupFee}
-                                                            </Typography>
-                                                        </ListItem>
-                                                        <ListItem>
-                                                            <Typography variant="h6">
-                                                                Tax
-                                                            </Typography>
-                                                            <Typography variant="h6">
-                                                                AED {cartOrder.totalAppliedTax}
-                                                            </Typography>
-                                                        </ListItem>
+                                    <form onSubmit={(e: any) => handlePlaceOrder(e, cartOrder?._id)}>
+                                        <div className={styles.initiateDeliveryBox}>
+                                            <List className={`${styles.productsList} mb-1`}>
+                                                {cartOrder?.orders && cartOrder?.orders.map((order: any) =>
+                                                    <DeliveryOrderItem key={order.order._id}
+                                                        productName={order.order.products[0].productId.name}
+                                                        productImage={order.order.products[0].productId.featuredImage.link}
+                                                        selfPickupFee={order.selfPickupFee}
+                                                        shippingFee={order.shippingFee}
+                                                        countryList={countryList}
+                                                        orderId={order.order._id}
+                                                        cartOrderId={cartOrder?.cartOrder?._id}
+                                                        shippingId={cartOrder?._id}
+                                                        shippingCountry={order.shippingCountry}
+                                                        shippingAddress={order.shippingAddress}
+                                                        getCartOrder={getCartOrder}
+                                                        setDataLoading={setLoading}
+                                                    />
+                                                )}
+                                            </List>
+                                            <Grid container spacing={3} justifyContent="flex-end">
+                                                <Grid item md={4} sm={6} xs={12}>
+                                                    <div className={`${styles.summaryDetails}`}>
+                                                        <List>
+                                                            <ListItem>
+                                                                <Typography variant="h6">
+                                                                    Shipping Fee
+                                                                </Typography>
+                                                                <Typography variant="h6">
+                                                                    AED {cartOrder.totalShippingFee}
+                                                                </Typography>
+                                                            </ListItem>
+                                                            <ListItem>
+                                                                <Typography variant="h6">
+                                                                    Self-PickUp Fee
+                                                                </Typography>
+                                                                <Typography variant="h6">
+                                                                    AED {cartOrder.totalSelfPickupFee}
+                                                                </Typography>
+                                                            </ListItem>
+                                                            <ListItem>
+                                                                <Typography variant="h6">
+                                                                    Tax
+                                                                </Typography>
+                                                                <Typography variant="h6">
+                                                                    AED {cartOrder.totalAppliedTax}
+                                                                </Typography>
+                                                            </ListItem>
 
-                                                        <ListItem className={styles.summaryfoot}>
-                                                            <Typography variant="h5"> Total </Typography>
-                                                            <Typography variant="h5"> AED {cartOrder.totalAmount} </Typography>
-                                                        </ListItem>
-                                                    </List>
+                                                            <ListItem className={styles.summaryfoot}>
+                                                                <Typography variant="h5"> Total </Typography>
+                                                                <Typography variant="h5"> AED {cartOrder.totalAmount} </Typography>
+                                                            </ListItem>
+                                                        </List>
 
-                                                    <Button
-                                                        variant="contained"
-                                                        fullWidth
-                                                        className={`${styles['btn']} ${styles['btn_primary']}`}
-                                                    >
-                                                        Proceed
-                                                    </Button>
-                                                </div>
+                                                        {
+                                                            loading ? <>Loading Amount...</> :
+                                                                <Button
+                                                                    variant="contained"
+                                                                    fullWidth
+                                                                    type='submit'
+                                                                    disabled={loading}
+                                                                    className={`${styles['btn']} ${styles['btn_primary']}`}
+                                                                >
+                                                                    Proceed
+                                                                </Button>
+                                                        }
+
+                                                    </div>
+                                                </Grid>
                                             </Grid>
-                                        </Grid>
-                                    </div>
+                                        </div>
+                                    </form>
 
                                 </Grid>
                             </Grid>
                         </Container>
                     </div>
+
+                    {sessionId && (
+                        <MastercardCheckoutComponent sessionId={sessionId} />
+                    )}
+
                     <Footer />
                 </main>
             </ThemeProvider>}

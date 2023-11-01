@@ -162,6 +162,34 @@ export const getPaymentLink = async (
   }
 };
 
+export const getShippingPaymentLink = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  res.setHeader('Allow', 'POST');
+
+  try {
+    const token = req.cookies?.authToken ?? null;
+    const shippingId = req.body?.shippingId ?? '';
+
+    let result;
+
+    if (token) {
+      result = await ApiService.GetRequest(
+        API_HOST + '/v1/user/user-partner/order/initiate-shipping-payment/' + shippingId,
+        `Bearer ${token}`
+      );
+    }
+
+    return res
+      .status(200)
+      .json(ApiService.ApiResponseSuccess(result?.data, ''));
+  } catch (error: any) {
+    console.log('Catch error get shipping pay link ', error?.response?.data);
+    return res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};
+
 export const createCustomPayment = async (
   req: NextApiRequest,
   res: NextApiResponse<ApiData | ApiError>
@@ -262,21 +290,18 @@ export const updateShippingDetails = async (
   res.setHeader('Allow', 'POST');
 
   try {
-    let { data, orderId, cartOrderId } = req.body;
-    console.log(
-      '🚀 ~ file: OrderController.ts:241 ~ data, orderId, cartOrderId :',
-      data,
-      orderId,
-      cartOrderId
-    );
+    let { data, orderId, shippingId } = req.body;
+
     const token = req.cookies?.authToken ?? null;
+
+    console.log("🚀 ~ file: OrderController.ts:268 ~ token:", data, orderId, shippingId)
 
     let result;
 
     if (token) {
       result = await ApiService.PutRequest(
         API_HOST +
-          `/v1/user/user-partner/order/update-shipping/${cartOrderId}/${orderId}`,
+          `/v1/user/user-partner/order/update-shipping/${shippingId}/${orderId}`,
         data,
         `Bearer ${token}`
       );
