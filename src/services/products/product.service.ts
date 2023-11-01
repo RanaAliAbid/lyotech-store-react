@@ -1,5 +1,6 @@
-import { API_HOST } from '../../../app.config';
+import { API_HOST, PROXY_HOST } from '../../../app.config';
 import { ApiService } from '../api.service';
+import { ProxyService } from '../proxy.service';
 
 export const getHomePageProducts = async (homePageProducts: any) => {
   try {
@@ -13,4 +14,15 @@ export const getHomePageProducts = async (homePageProducts: any) => {
   } catch (error: any) {
     return null;
   }
+};
+
+export const getProductById = async (id: string) => {
+	try {
+		return ProxyService.GetRequest(
+			`${PROXY_HOST}/api/v1/product?id=${id}`,
+			'',
+		);
+	} catch (error) {
+		return null;
+	}
 };
