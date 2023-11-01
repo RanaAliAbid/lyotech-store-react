@@ -365,14 +365,14 @@ export default function CoProducts({
                     <Typography variant="h2">
                       <span>LFi ONE</span> Smartphone
                     </Typography>
-                    <br />
+                    {/* <br /> */}
 
-                    <Typography variant="h5">
+                    {/* <Typography variant="h5">
                       {(1397.0 * globalContext.conversionRate)?.toFixed(
                         globalContext.priceToFixed
                       )}
                       &nbsp;{globalContext.currencySymbol}
-                    </Typography>
+                    </Typography> */}
                     <Typography variant="h4">Specifications</Typography>
 
                     <Typography variant="h6">ARM Cortex 3GHz</Typography>

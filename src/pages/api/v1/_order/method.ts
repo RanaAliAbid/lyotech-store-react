@@ -8,6 +8,8 @@ import {
   placeUserOrder,
   deleteOrder,
   createCustomPayment,
+  getInitiateShipping,
+  updateShippingDetails,
 } from '@/controllers/OrderController';
 
 export default async function OrderHandler(
@@ -34,5 +36,9 @@ export default async function OrderHandler(
       return deleteOrder(req, res);
     case 'custom-payment':
       return createCustomPayment(req, res);
+    case 'get-initiate-shipping':
+      return getInitiateShipping(req, res);
+    case 'update-shipping-details':
+      return updateShippingDetails(req, res);
   }
 }
