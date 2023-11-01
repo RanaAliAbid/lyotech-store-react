@@ -28,14 +28,14 @@ export default function DefaultAddressComponent({
   return (
     <>
       {authContext.userConnected &&
-      !changeAddress &&
-      !blockAddress &&
-      userAddressList?.address?.defaultAddress?._id ? (
+        !changeAddress &&
+        !blockAddress &&
+        userAddressList?.address?.defaultAddress?._id ? (
         <>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
               <div className={styles.wrapTitle}>
-                <Typography variant="h4">Shipping Address</Typography>
+                <Typography variant="h4">Billing Address</Typography>
 
                 <Typography variant="h6">
                   <Link
@@ -136,7 +136,7 @@ export default function DefaultAddressComponent({
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
               <div className={styles.wrapTitle}>
-                <Typography variant="h4">Shipping Address</Typography>
+                <Typography variant="h4">Billing Address</Typography>
               </div>
 
               <div

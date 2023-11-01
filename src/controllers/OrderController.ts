@@ -162,6 +162,34 @@ export const getPaymentLink = async (
   }
 };
 
+export const getShippingPaymentLink = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  res.setHeader('Allow', 'POST');
+
+  try {
+    const token = req.cookies?.authToken ?? null;
+    const shippingId = req.body?.shippingId ?? '';
+
+    let result;
+
+    if (token) {
+      result = await ApiService.GetRequest(
+        API_HOST + '/v1/user/user-partner/order/initiate-shipping-payment/' + shippingId,
+        `Bearer ${token}`
+      );
+    }
+
+    return res
+      .status(200)
+      .json(ApiService.ApiResponseSuccess(result?.data, ''));
+  } catch (error: any) {
+    console.log('Catch error get shipping pay link ', error?.response?.data);
+    return res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};
+
 export const createCustomPayment = async (
   req: NextApiRequest,
   res: NextApiResponse<ApiData | ApiError>
@@ -196,6 +224,94 @@ export const createCustomPayment = async (
       .status(200)
       .json(ApiService.ApiResponseSuccess(result?.data, ''));
   } catch (error: any) {
+    console.log('Catch error add to cart ', error?.response?.data);
+    return res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};
+
+export const getInitiateShipping = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  res.setHeader('Allow', 'GET');
+
+  try {
+    const { cartOrderId } = req.query;
+    const token = req.cookies?.authToken ?? null;
+    let result;
+    if (token) {
+      result = await ApiService.GetRequest(
+        API_HOST +
+          `/v1/user/user-partner/order/initiate-shipping/${cartOrderId}`,
+        `Bearer ${token}`
+      );
+    }
+    return res
+      .status(200)
+      .json(ApiService.ApiResponseSuccess(result?.data?.data, ''));
+  } catch (error: any) {
+    console.log(
+      'Catch error get initiate shipping order',
+      error?.response?.data
+    );
+    return res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};
+
+export const getPickUpStoreByCountry = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  res.setHeader('Allow', 'GET');
+
+  try {
+    const { country } = req.query;
+    const token = req.cookies?.authToken ?? null;
+    let result;
+    if (token) {
+      result = await ApiService.GetRequest(
+        API_HOST + `/v1/user/user-partner/order/${country}/pickup-stores`,
+        `Bearer ${token}`
+      );
+    }
+    return res
+      .status(200)
+      .json(ApiService.ApiResponseSuccess(result?.data?.data, ''));
+  } catch (error: any) {
+    console.log('Catch error get pickup stores', error?.response?.data);
+    return res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};
+
+export const updateShippingDetails = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+) => {
+  res.setHeader('Allow', 'POST');
+
+  try {
+    let { data, orderId, shippingId } = req.body;
+
+    const token = req.cookies?.authToken ?? null;
+
+    console.log("🚀 ~ file: OrderController.ts:268 ~ token:", data, orderId, shippingId)
+
+    let result;
+
+    if (token) {
+      result = await ApiService.PutRequest(
+        API_HOST +
+          `/v1/user/user-partner/order/update-shipping/${shippingId}/${orderId}`,
+        data,
+        `Bearer ${token}`
+      );
+    }
+
+    return res
+      .status(200)
+      .json(ApiService.ApiResponseSuccess(result?.data?.data, ''));
+  } catch (error: any) {
+    console.log('🚀 ~ file: OrderController.ts:258 ~ error:', error);
     console.log('Catch error add to cart ', error?.response?.data);
     return res.status(400).json(ApiService.ApiResponseError(error));
   }

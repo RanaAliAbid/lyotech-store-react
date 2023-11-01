@@ -10,6 +10,8 @@ export const lyo_tab = 'lyotab';
 export const lyo_special_phone1 = 'lyo_special_phone1';
 export const lyo_special_phone2 = 'lyo_special_phone2';
 
+let debounceTimer: any = null;
+
 export const homePageProducts = {
   LFI_ONE_Smartphone: lfi_one_smartphone,
   LYO_Watch: lyo_watch,
@@ -177,4 +179,15 @@ export const copyTextToClipboard = (text: any) => {
   } else {
     return false;
   }
+};
+
+
+export const debounce = (func: Function, delay: number, args?: any) => {
+	if (debounceTimer) {
+		clearTimeout(debounceTimer);
+	}
+	debounceTimer = setTimeout(() => {
+		func(args);
+		clearTimeout(debounceTimer);
+	}, delay);
 };

@@ -188,7 +188,7 @@ export default function Cart({
       if (user_handover && product_id) {
         // getUserCart(user_handover, parseInt(product_id))
       }
-    } catch (error) {}
+    } catch (error) { }
   }, []);
 
   return (
@@ -303,10 +303,10 @@ export default function Cart({
                                       id={`cartProduct-${cartItem?.productId?._id}`}
                                       className={styles.formControl}
                                       defaultValue={cartItem?.quantity}
-                                      // disabled={
-                                      //   globalContext?.cart?.cart?.partner
-                                      //     ?.length > 0
-                                      // }
+                                    // disabled={
+                                    //   globalContext?.cart?.cart?.partner
+                                    //     ?.length > 0
+                                    // }
                                     />
                                   ) : (
                                     <div
@@ -413,6 +413,8 @@ export const getServerSideProps: GetServerSideProps<{
     const user_handover = urlParams.get('user_handover') ?? '';
     const voucher = urlParams.get('voucher') ?? '';
     const checkout_token = urlParams.get('checkout_token') ?? '';
+    const shipping_token = urlParams.get('shipping_token') ?? '';
+    const cart_id = urlParams.get('id') ?? null;
 
     if (product_id?.length >= 1 && user_handover?.length >= 1) {
       result = await verifyUserHandover({
@@ -447,9 +449,20 @@ export const getServerSideProps: GetServerSideProps<{
       }
     }
 
-    if (checkout_token?.length > 0) {
+    if (checkout_token?.length > 0 || shipping_token?.length > 0) {
+      let destination = ''
+      let token = ''
+      if (checkout_token?.length > 0) {
+        destination = '/checkout';
+        token = checkout_token;
+      }
+      if (shipping_token?.length > 0 && cart_id) {
+        destination = `/initiate-delivery/${cart_id}`;
+        token = shipping_token;
+      }
+
       result = await verifyUserCheckoutToken({
-        token: checkout_token,
+        token: token,
         payment: true,
       });
 
@@ -472,7 +485,7 @@ export const getServerSideProps: GetServerSideProps<{
 
         return {
           redirect: {
-            destination: `/checkout`,
+            destination: destination,
             permanent: false,
           },
         };
