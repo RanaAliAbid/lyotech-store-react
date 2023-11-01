@@ -31,7 +31,7 @@ export default function StoreListDropDown({
                     inputProps={{ 'aria-label': 'Without label' }}
                 >
                     {addressList?.map((item: any, index: number) =>
-                        <MenuItem value={item.value} key={index}> {item.name}</MenuItem>
+                        <MenuItem value={item} key={index}> {item.address}</MenuItem>
                     )}
                 </Select>
             </FormControl>

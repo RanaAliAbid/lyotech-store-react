@@ -10,6 +10,7 @@ import {
   createCustomPayment,
   getInitiateShipping,
   updateShippingDetails,
+  getPickUpStoreByCountry,
 } from '@/controllers/OrderController';
 
 export default async function OrderHandler(
@@ -40,5 +41,7 @@ export default async function OrderHandler(
       return getInitiateShipping(req, res);
     case 'update-shipping-details':
       return updateShippingDetails(req, res);
+    case 'get-pickup-store':
+      return getPickUpStoreByCountry(req, res);
   }
 }
