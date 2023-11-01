@@ -91,12 +91,12 @@ export default function InitiateDelivery() {
 
             const result = await createShippingPaymentLink(data);
 
-            if (result?.data?.data?.data?.masterCardSession) {
+            if (result?.data?.data?.data) {
                 console.log(
                     'open checkout page',
-                    result?.data?.data?.data?.masterCardSession.sessionId
+                    result?.data?.data?.data?.sessionId
                 );
-                setSessionId(result?.data?.data?.data?.masterCardSession.sessionId);
+                setSessionId(result?.data?.data?.data?.sessionId);
             } else if (result?.data?.data?.data?.paymentLink) {
                 window.location.href = result?.data?.data?.data?.paymentLink;
             } else {
