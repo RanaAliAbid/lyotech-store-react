@@ -15,13 +15,19 @@ export default function ShippingAddressForm({
     shippingCountry: string
     onChange: Function
 }) {
-    const [country, setCountry] = React.useState(countryList.find((item) => item._id === shippingCountry));
+    const [country, setCountry] = React.useState(countryList.find((item: any) => item._id === shippingCountry));
     const [shippingAddress, setShippingAddress] = React.useState(address);
+
+
+    React.useEffect(() => {
+        onChange({ shippingAddress: shippingAddress, shippingCountry: country?._id });
+    }, [country, shippingAddress])
+
     const handleChange = (event: SelectChangeEvent) => {
         setCountry(event.target);
         if (event.target?.code) setShippingAddress((prevState: any) => prevState.county = event.target.code)
-        if (event.target?._id) { onChange({ country: event.target._id }) }
     };
+
 
     return (
         <>
@@ -36,7 +42,7 @@ export default function ShippingAddressForm({
                         className={styles.formInput}
                         placeholder="First Name"
                         value={shippingAddress?.firstName}
-                        onChange={() => setShippingAddress((prevState: any) => { return { ...prevState, firstName: shippingAddress.firstName } })}
+                        onChange={(e) => setShippingAddress((prevState: any) => { return { ...prevState, firstName: e.target.value } })}
                     />
                 </div>
                 <div className={styles.formControl}>
@@ -47,8 +53,8 @@ export default function ShippingAddressForm({
                     <Input
                         className={styles.formInput}
                         placeholder="Fist Name"
-                        value={shippingAddress?.address}
-                        onChange={() => setShippingAddress((prevState: any) => { return { ...prevState, address: shippingAddress.lastName } })}
+                        value={shippingAddress?.lastName}
+                        onChange={(e) => setShippingAddress((prevState: any) => { return { ...prevState, lastName: e.target.value } })}
                     />
                 </div>
                 <div className={styles.formControl}>
@@ -60,7 +66,7 @@ export default function ShippingAddressForm({
                         className={styles.formInput}
                         placeholder="Address"
                         value={shippingAddress?.address}
-                        onChange={() => setShippingAddress((prevState: any) => { return { ...prevState, address: shippingAddress.address } })}
+                        onChange={(e) => setShippingAddress((prevState: any) => { return { ...prevState, address: e.target.value } })}
                     />
                 </div>
 
@@ -91,7 +97,7 @@ export default function ShippingAddressForm({
                             className={styles.formInput}
                             placeholder="State"
                             value={shippingAddress?.state}
-                            onChange={() => setShippingAddress((prevState: any) => { return { ...prevState, state: shippingAddress.state } })}
+                            onChange={(e) => setShippingAddress((prevState: any) => { return { ...prevState, state: e.target.value } })}
                         />
                     </div>
 
@@ -105,7 +111,7 @@ export default function ShippingAddressForm({
                         className={styles.formInput}
                         placeholder="City "
                         value={shippingAddress?.city}
-                        onChange={() => setShippingAddress((prevState: any) => { return { ...prevState, state: shippingAddress.city } })}
+                        onChange={(e) => setShippingAddress((prevState: any) => { return { ...prevState, state: e.target.value } })}
                     />
                 </div>
 
@@ -117,7 +123,7 @@ export default function ShippingAddressForm({
                         className={styles.formInput}
                         placeholder="Postal Code"
                         value={shippingAddress?.postalCode}
-                        onChange={() => setShippingAddress((prevState: any) => { return { ...prevState, state: shippingAddress.postalCode } })}
+                        onChange={(e) => setShippingAddress((prevState: any) => { return { ...prevState, state: e.target.value } })}
                     />
                 </div>
             </div>

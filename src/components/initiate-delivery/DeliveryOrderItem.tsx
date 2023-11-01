@@ -8,7 +8,7 @@ import { useGlobalContext } from '@/contexts/GlobalContext';
 import { updateDeliveryCartOrder } from '@/services/orders/order.service';
 const deliveryTypes = [
     {
-        value: 'self-pickup',
+        value: 'pickup',
         label: 'Yes'
     },
     {
@@ -38,7 +38,7 @@ export default function DeliveryOrderItem({
     shippingAddress: any;
 }) {
     const [deliveryType, setDeliveryType] = React.useState(deliveryTypes[0]);
-    const [deliveryDetails, setDeliveryDetails] = React.useState({ country: shippingCountry });
+    const [deliveryDetails, setDeliveryDetails] = React.useState({ country: shippingCountry, shippingAddress: shippingAddress });
     const globalContext = useGlobalContext();
     const addressList = [
         { value: "Dubai Store 1", name: "Dubai Store 1" },
@@ -64,9 +64,14 @@ export default function DeliveryOrderItem({
         setDeliveryDetails(prevState => { return { ...prevState, store: store } })
     }
 
-    const handleDeliveryAddress = (shippingAddress: any) => {
-        if (shippingAddress?.country) setDeliveryDetails(prevState => { return { ...prevState, country: shippingAddress.country } })
-        setDeliveryDetails(prevState => { return { ...prevState, shippingAddress: shippingAddress } })
+    const handleChangeShippingType = (type: any) => {
+        setDeliveryType(type)
+        setDeliveryDetails(prevState => { return { ...prevState, shippingType: type.value } })
+    }
+
+    const handleDeliveryAddress = (data: any) => {
+        if (data?.shippingCountry) setDeliveryDetails(prevState => { return { ...prevState, shippingCountry: data.country } })
+        if (data?.shippingAddress) setDeliveryDetails(prevState => { return { ...prevState, shippingAddress: data.shippingAddress } })
     }
 
     return (
@@ -118,13 +123,13 @@ export default function DeliveryOrderItem({
                                 >
                                     {deliveryTypes.map((type, index) =>
                                         <FormControlLabel key={`radio-d-type-${type.value}${index}`} value={type.value} control={<Radio />} label={type.label}
-                                            onChange={() => setDeliveryType(type)} />
+                                            onChange={() => { handleChangeShippingType(type) }} />
                                     )}
                                 </RadioGroup>
                             </FormControl>
                         </ListItem>
                         <ListItem className={styles.item}>
-                            {deliveryType.value === 'self-pickup' && <StoreListDropDown addressList={addressList} onChange={(data: string) => handleChangePickUpStore(data)} />}
+                            {deliveryType.value === 'pickup' && <StoreListDropDown addressList={addressList} onChange={(data: string) => handleChangePickUpStore(data)} />}
                             {deliveryType.value === 'shipping' && <ShippingAddressForm
                                 countryList={countryList}
                                 shippingCountry={shippingCountry}
@@ -132,7 +137,7 @@ export default function DeliveryOrderItem({
                                 onChange={(data: string) => handleDeliveryAddress(data)} />}
                         </ListItem>
                         <ListItem className={styles.item}>
-                            {deliveryType.value === 'self-pickup' && <div className={styles.fees}>
+                            {deliveryType.value === 'pickup' && <div className={styles.fees}>
                                 <Typography variant="body1">
                                     Self-Pickup Fee: &nbsp;
                                 </Typography>
