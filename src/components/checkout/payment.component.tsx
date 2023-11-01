@@ -86,7 +86,7 @@ export default function PaymentMethodComponent({
         >
           {paymentMethods?.length > 0 &&
             paymentMethods?.findIndex(
-              (x: any) => x?.name?.toLowerCase() === 'lyomerchant'
+              (x: any) => x?.name?.toLowerCase() === 'lyomerchantxxxxxxxxxxx'
             ) != -1 && (
               <ListItem
                 className={`${
