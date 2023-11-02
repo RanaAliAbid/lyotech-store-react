@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { ApiData, ApiError } from '../../types';
 import { AuthUser } from '@/contexts/auth.types';
-import { addToWishList, getProducts, getWishList, removeFromWishList } from '@/controllers/ProductController';
+import { addToWishList, getProduct, getProducts, getWishList, removeFromWishList } from '@/controllers/ProductController';
 
 export default async function Producthandler(
   req: NextApiRequest,
@@ -23,5 +23,7 @@ export default async function Producthandler(
       return removeFromWishList(req, res);
     case 'wishlist':
       return getWishList(req, res);
+    case 'product':
+      return getProduct(req, res);
   }
 }
