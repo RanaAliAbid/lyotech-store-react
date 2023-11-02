@@ -36,6 +36,22 @@ export const verifyOrderDetails = async ({ id }: { id: any }) => {
   }
 };
 
+export const verifyOrderShippingDetails = async ({ id }: { id: any }) => {
+  try {
+    const result = await ApiService.GetRequest(
+      `${API_HOST}/v1/user/user-partner/order/cart-order-details/${id}`
+    );
+
+    return result?.data?.data;
+  } catch (error: any) {
+    console.log(
+      '🚀 ~ file: order.service.ts:48 ~ verifyOrderShippingDetails ~ error:',
+      error
+    );
+    return null;
+  }
+}
+
 export const getDeliveryCartOrder = async ({
   cartOrderId,
 }: {
@@ -117,10 +133,6 @@ export const getPartnerRediectionLink = async (id: string) => {
   try {
     const result = await ApiService.GetRequest(
       `${API_HOST}/v1/user/user-partner/partner-details/${id}`
-    );
-    console.log(
-      '🚀 ~ file: order.service.ts:63 ~ getPartnerRediectionLink ~ result:',
-      result
     );
 
     return result?.data?.data;

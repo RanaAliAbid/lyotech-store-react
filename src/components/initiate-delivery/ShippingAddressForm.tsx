@@ -18,10 +18,6 @@ export default function ShippingAddressForm({
     const [country, setCountry] = React.useState(shippingCountry);
     const [shippingAddress, setShippingAddress] = React.useState(address);
 
-    // React.useEffect(() => {
-    //     onChange({ shippingAddress: shippingAddress });
-    // }, [shippingAddress])
-
     React.useEffect(() => {
         onChange({ shippingCountry: country, shippingAddress: shippingAddress });
     }, [country, shippingAddress])
@@ -34,7 +30,7 @@ export default function ShippingAddressForm({
                 country: event.target.value
             })
 
-            setShippingAddress({ 
+            setShippingAddress({
                 ...shippingAddress,
                 country: countryList?.find((x: any) => x._id === country)?.name
             })

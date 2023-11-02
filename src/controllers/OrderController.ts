@@ -293,9 +293,7 @@ export const updateShippingDetails = async (
     let { data, orderId, shippingId } = req.body;
 
     const token = req.cookies?.authToken ?? null;
-
-    console.log("🚀 ~ file: OrderController.ts:268 ~ token:", data, orderId, shippingId)
-
+    
     let result;
 
     if (token) {

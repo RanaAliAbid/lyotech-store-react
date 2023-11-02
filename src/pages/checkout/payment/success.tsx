@@ -29,6 +29,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import {
   getPartnerRediectionLink,
   verifyOrderDetails,
+  verifyOrderShippingDetails
 } from '@/services/orders/order.service';
 import moment from 'moment';
 
@@ -66,9 +67,9 @@ export default function PaymentSuccessComponent({
                   className={`${styles['wrapBox']} ${styles['ordersPlaceSec']}`}
                 >
                   {['pending'].includes(order?.status?.toLowerCase()) &&
-                  ['mastercard'].includes(
-                    order?.paymentMethod?.name.toLowerCase()
-                  ) ? (
+                    ['mastercard'].includes(
+                      order?.paymentMethod?.name.toLowerCase()
+                    ) ? (
                     <div className={styles.orderHeadStatus}>
                       <div className={styles.titles}>
                         <div className={styles.statusText}>
@@ -258,9 +259,9 @@ export default function PaymentSuccessComponent({
                             {['pending'].includes(
                               order?.status?.toLowerCase()
                             ) &&
-                            ['mastercard'].includes(
-                              order?.paymentMethod?.name.toLowerCase()
-                            ) ? (
+                              ['mastercard'].includes(
+                                order?.paymentMethod?.name.toLowerCase()
+                              ) ? (
                               <>
                                 <Alert severity="info">
                                   {t(
@@ -319,8 +320,23 @@ export const getServerSideProps: GetServerSideProps<{ order: any }> = async ({
 
     if (orderid?.length >= 1) {
       result = await verifyOrderDetails({ id: orderid });
-      // console.log('🚀 ~ file: success.tsx:322 ~ result:', result);
-      // paymentMethod
+
+      if (!result || result.length === 0) {
+        const cartOrder = await verifyOrderShippingDetails({ id: orderid });
+
+        if (cartOrder) {
+          const rs = await validatePartnerAndRediredct({
+            id: cartOrder.partner,
+            orderid: cartOrder.cartOrderId,
+            success: true,
+          });
+          return {
+            redirect: rs.redirect,
+          };
+        }
+      }
+
+
       if (
         !result ||
         result?.isCancelled ||
@@ -404,15 +420,13 @@ export const validatePartnerAndRediredct = async ({
 
     return {
       redirect: {
-        destination: `${
-          success
-            ? `${
-                process.env.APP_ENV_TYPE === 'dev'
-                  ? `${process.env.CLOUDX_URL}/shop/checkout`
-                  : partnerDetails?.successUrl
-              }?order=${orderid}`
-            : `${partnerDetails?.errorUrl}?order=${orderid}`
-        }`,
+        destination: `${success
+          ? `${process.env.APP_ENV_TYPE === 'dev'
+            ? `${process.env.CLOUDX_URL}/shop/checkout`
+            : partnerDetails?.successUrl
+          }?order=${orderid}`
+          : `${partnerDetails?.errorUrl}?order=${orderid}`
+          }`,
         permanent: false,
       },
     };
