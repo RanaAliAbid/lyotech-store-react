@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { List, ListItem, Typography, RadioGroup, FormControl, FormControlLabel, Radio } from '@mui/material';
+import { List, ListItem, Typography, RadioGroup, FormControl, FormControlLabel, Radio, CircularProgress } from '@mui/material';
 
 import styles from '@/styles/Home.module.css';
 import ShippingAddressForm from './ShippingAddressForm';
@@ -28,7 +28,8 @@ export default function DeliveryOrderItem({
     shippingCountry,
     shippingId,
     getCartOrder,
-    setDataLoading
+    setDataLoading,
+    orderShippingType
 }: {
     productName: string;
     productImage: string;
@@ -41,10 +42,11 @@ export default function DeliveryOrderItem({
     shippingAddress: any;
     shippingId: string;
     getCartOrder: Function;
-    setDataLoading: any
+    setDataLoading: any;
+    orderShippingType: string
 }) {
 
-    const [deliveryType, setDeliveryType] = React.useState(deliveryTypes[0]);
+    const [deliveryType, setDeliveryType] = React.useState(orderShippingType === "self-pickup" ? deliveryTypes[1] : deliveryTypes[0]);
     const [storeList, setStoreList] = React.useState([]);
     const [deliveryDetails, setDeliveryDetails] = React.useState({ country: shippingCountry, shippingType: deliveryTypes[0].value, storeId: null, shippingAddress: shippingAddress });
     const globalContext = useGlobalContext();
@@ -193,7 +195,7 @@ export default function DeliveryOrderItem({
                                 <RadioGroup
                                     row
                                     aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue="yes"
+                                    defaultValue={orderShippingType === "self-pickup" ? 'no' : 'yes'}
                                     name="radio-buttons-group"
                                     value={deliveryType.value}
                                 >
@@ -235,7 +237,7 @@ export default function DeliveryOrderItem({
                                 </Typography>
                             </div>}
 
-                            <p>{loading && <>Loading...</>}</p>
+                            <p>{loading && <><CircularProgress /></>}</p>
                         </ListItem>
                     </List>
                 </div>

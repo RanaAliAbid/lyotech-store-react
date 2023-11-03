@@ -451,11 +451,11 @@ export default function CoProducts({
                     viewport={{ once: true }}
                   >
                     <Typography variant="h1">
-                      <strong> xLFi 500 </strong>
+                      <strong> XL 500 Computer </strong>
                     </Typography>
 
                     <Typography variant="h3">
-                      Start the journey as a LFi Computer
+                      Start the journey as a XL Computer
                     </Typography>
 
                     {/* <Typography variant="h5">
@@ -495,10 +495,12 @@ export default function CoProducts({
                     </div>
 
                     <Button
+                      // onClick={(e) => router.push('/product/')}
                       variant="contained"
                       className={`${styles['btn']} ${styles['btn_primary']}`}
                     >
                       Coming Soon
+                      {/* Buy Now */}
                     </Button>
                   </motion.div>
                 </Grid>
@@ -562,7 +564,7 @@ export default function CoProducts({
                     viewport={{ once: true }}
                   >
                     <Typography variant="h1">
-                      <strong> xLFi 1000 </strong>
+                      <strong> XL 1000 Computer</strong>
                     </Typography>
 
                     <Typography variant="h3">
@@ -626,7 +628,7 @@ export default function CoProducts({
                     viewport={{ once: true }}
                   >
                     <Typography variant="h1">
-                      <strong>xLFi 5000 </strong>
+                      <strong>XL 5000 Computer</strong>
                     </Typography>
 
                     <Typography variant="h3">
@@ -733,7 +735,7 @@ export default function CoProducts({
                     viewport={{ once: true }}
                   >
                     <Typography variant="h1">
-                      <strong>xLFi 10000 </strong>
+                      <strong>XL 10000 Computer</strong>
                     </Typography>
 
                     <Typography variant="h3">
@@ -800,7 +802,7 @@ export default function CoProducts({
                     viewport={{ once: true }}
                   >
                     <Typography variant="h1">
-                      <strong>xLFi Validator</strong>
+                      <strong>XL Validator</strong>
                     </Typography>
 
                     <Typography variant="h3">
@@ -845,10 +847,12 @@ export default function CoProducts({
                     </div>
 
                     <Button
+                      // onClick={(e) => router.push('/product/')}
                       variant="contained"
                       className={`${styles['btn']} ${styles['btn_primary']}`}
                     >
                       Coming Soon
+                      {/* Buy Now */}
                     </Button>
                   </motion.div>
                 </Grid>
