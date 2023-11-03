@@ -59,7 +59,7 @@ export default function Presalepolicy() {
                                         </Typography>
 
                                         <Typography variant="h5">
-                                            These Terms and Conditions (‘Terms’) apply only when you place an order for the hardware such as L One Phone, XL Computer (1000 and 5000) (‘Device’) from the Lyotech Labs website [link] during the pre-sale period. By placing an order you agree to be bound by these Terms which will form a binding contract between Lyotech Labs (we, us or our) and you, the person purchasing the Device during the pre-sale (Purchaser, you or your). If you do not agree with any of these Terms, you should not proceed in purchasing the Device. Please keep a copy of these Terms for your records.
+                                            These Terms and Conditions (‘Terms’) apply only when you place an order for the hardware such as L One Phone, XL Computer (1000 and 5000) (‘Device’) from the Lyotech Labs website <a href='https://lyotechlabs.com/' target='_blank'>Link</a> during the pre-sale period. By placing an order you agree to be bound by these Terms which will form a binding contract between Lyotech Labs (we, us or our) and you, the person purchasing the Device during the pre-sale (Purchaser, you or your). If you do not agree with any of these Terms, you should not proceed in purchasing the Device. Please keep a copy of these Terms for your records.
                                         </Typography>
                                         <Typography variant="h5">
                                             A pre-sale is an offer to purchase Devices which are not yet available for general sale via Lyotech’s website.
@@ -71,7 +71,8 @@ export default function Presalepolicy() {
                                             These Terms may be made available in several languages; all versions are legally binding, but in the event of inconsistency between the English version and a translated version, the English version prevails.
                                         </Typography>
                                         <Typography variant="h5">
-                                            By purchasing the Device, you agree that you have read, understood and accepted these Terms as well as our General Terms and Conditions, Privacy & Cookie Policy, and Delivery Condition all available at the Lyotech Labs website here: [insert link to docs], which are deemed to be incorporated into these Terms by reference.
+                                            By purchasing the Device, you agree that you have read, understood and accepted these Terms as well as our General Terms and Conditions, Privacy & Cookie Policy, and Delivery Condition all available at the Lyotech Labs website here: 
+                                            <a href='https://docs.lyotechlabs.com/' target='_blank'>Docs</a>, which are deemed to be incorporated into these Terms by reference.
                                         </Typography>
 
                                         <div className={styles.termListItemText}>
@@ -91,7 +92,7 @@ export default function Presalepolicy() {
                                                             An Order shall constitute an offer by the Purchaser to purchase the specified Device(s) in accordance with these Terms.
                                                         </ListItem>
                                                         <ListItem>
-                                                            The offer constituted by an Order shall remain in effect and capable of being accepted by the Lyotech Labs until the Purchaser receives an order confirmation to the contact details provided at checkout, if the Purchaser does not receive an order confirmation within [insert time frame] after placing the order, these Terms shall automatically be void and not binding upon either us or you.
+                                                            The offer constituted by an Order shall remain in effect and capable of being accepted by the Lyotech Labs until the Purchaser receives an order confirmation to the contact details provided at checkout, if the Purchaser does not receive an order confirmation within 300 days after placing the order, these Terms shall automatically be void and not binding upon either us or you.
                                                         </ListItem>
 
                                                         <ListItem>
@@ -179,19 +180,19 @@ export default function Presalepolicy() {
                                                         </ListItem>
 
                                                         <ListItem>
-                                                            Purchasers may purchase additional warranty packages for their devices, including either the One Care Plan for the L One Phone or the XMiner Care Policy for the XL Computer (1,000 and 5,000) (Additional Warranty Plans).
+                                                            Purchasers may purchase additional warranty packages for their devices, including either the One Care Plan for the L One Phone or the XL Computer Care Policy for the XL Computer (1,000 and 5,000) (Additional Warranty Plans).
                                                         </ListItem>
 
                                                         <ListItem>
                                                             Additional Warranty Plans are valid for two years and subject to their own Terms and Conditions which you are solely responsible for reading and agreeing to when purchasing.
-                                                        </ListItem>
+                                                        </ListItem> 
                                                     </List>
                                                 </ListItem>
 
-                                                <ListItem> <strong> Risk </strong> 
+                                                <ListItem> <strong> Risk </strong>  
                                                     <List >
                                                         <ListItem>
-                                                            By purchasing the Device you acknowledge and accept that the capabilities of the Devices include engaging in activities utilising blockchain technology, cryptocurrency asset exchange trading, minting and more. These activities are of a risky and uncertain nature that may result in financial loss or other such losses.
+                                                            By purchasing the Device you acknowledge and accept that the capabilities of the Devices include engaging in activities utilising blockchain technology. These activities are of a risky and uncertain nature that may result in financial loss or other such losses.
                                                         </ListItem>
                                                         <ListItem>
                                                             We assume no liability or responsibility for any such risks mentioned or associated with clause 6.1. If you are not comfortable assuming these risks, you should not access or engage in transactions using blockchain-based technology.
@@ -212,14 +213,15 @@ export default function Presalepolicy() {
                                                         </ListItem>
 
                                                         <ListItem>
-                                                            There is a 4.5% advance fee for the Minting Activation (“Minting Activation Fee”) which is payable on all transactions.
+                                                            There is a 4.5% advance fee for the Member Activation (“Processing Fee”) which is payable on all transactions.
                                                         </ListItem>
 
                                                         <ListItem>
                                                             Additional charges may occur as follows:
                                                             <List >
                                                                 <ListItem>
-                                                                    a membership is required for the minting, if you do not already have a membership with our third-party partners, the annual fee for such membership is $29. If you are already a member this will automatically be detected at checkout and you will not be subject to this additional charge. Separate terms and conditions will apply for this membership, full details can be found at [insert];
+                                                                    a membership is required for the platform, if you do not already have a membership with our third-party partners, the annual fee for such membership is $29. If you are already a member this will automatically be detected at checkout and you will not be subject to this additional charge. Separate terms and conditions will apply for this membership, full details can be found at 
+                                                                    <a href='app.lfi.io' target='_blank'>app.lfi.io</a>
                                                                 </ListItem>
                                                                 <ListItem>
                                                                     shipment- additional shipping charges are determined automatically at checkout based on the country you are purchasing from, and subject to change based on geographical location and time of purchase;
@@ -250,7 +252,7 @@ export default function Presalepolicy() {
                                                 <ListItem> <strong>  Dispute resolution </strong>
                                                     <List >
                                                         <ListItem>
-                                                            If any dispute arises between the parties out of or in connection with these Terms, the matter shall be referred to Lyotech Labs Customer Support at:  <a href="mailto:support@lyotechlabs.com"> support@lyotechlabs.com. </a> .
+                                                            If any dispute arises between the parties out of or in connection with these Terms, the matter shall be referred to Lyotech Labs Customer Support at:  <a href="mailto:support@lyotechlabs.com"> support@lyotechlabs.com. </a>
                                                         </ListItem>
                                                         <ListItem>
                                                             If the dispute is not resolved within 30 days of the referral being made, the matter may be escalated as per clause 17.
