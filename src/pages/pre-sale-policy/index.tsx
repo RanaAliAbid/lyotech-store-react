@@ -59,7 +59,7 @@ export default function Presalepolicy() {
                                         </Typography>
 
                                         <Typography variant="h5">
-                                            These Terms and Conditions (‘Terms’) apply only when you place an order for the hardware such as Lfi Smartphone, XLfi Miners (1000 and 5000) (‘Device’) from the Lyotech Labs website [link] during the pre-sale period. By placing an order you agree to be bound by these Terms which will form a binding contract between Lyotech Labs (we, us or our) and you, the person purchasing the Device during the pre-sale (Purchaser, you or your). If you do not agree with any of these Terms, you should not proceed in purchasing the Device. Please keep a copy of these Terms for your records.
+                                            These Terms and Conditions (‘Terms’) apply only when you place an order for the hardware such as L One Phone, XL Computer (1000 and 5000) (‘Device’) from the Lyotech Labs website [link] during the pre-sale period. By placing an order you agree to be bound by these Terms which will form a binding contract between Lyotech Labs (we, us or our) and you, the person purchasing the Device during the pre-sale (Purchaser, you or your). If you do not agree with any of these Terms, you should not proceed in purchasing the Device. Please keep a copy of these Terms for your records.
                                         </Typography>
                                         <Typography variant="h5">
                                             A pre-sale is an offer to purchase Devices which are not yet available for general sale via Lyotech’s website.
@@ -119,7 +119,7 @@ export default function Presalepolicy() {
                                                             The allocation of shares will be as follows:
                                                             <List >
                                                                 <ListItem>
-                                                                    Purchasers of the LFi One Smartphone will receive one share.
+                                                                    Purchasers of the L One Phone will receive one share.
                                                                 </ListItem>
                                                                 <ListItem>
                                                                     Purchasers of the XLFiMiner 1000 will receive one share.
@@ -179,7 +179,7 @@ export default function Presalepolicy() {
                                                         </ListItem>
 
                                                         <ListItem>
-                                                            Purchasers may purchase additional warranty packages for their devices, including either the One Care Plan for the Lfi Smartphone or the XMiner Care Policy for the XLfi Miners (1,000 and 5,000) (Additional Warranty Plans).
+                                                            Purchasers may purchase additional warranty packages for their devices, including either the One Care Plan for the L One Phone or the XMiner Care Policy for the XL Computer (1,000 and 5,000) (Additional Warranty Plans).
                                                         </ListItem>
 
                                                         <ListItem>
