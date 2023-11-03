@@ -367,7 +367,7 @@ export default function Mintingtermscondition() {
                                                         The following additional fees may be borne by the User in relation to the Services:
                                                         <List >
                                                             <ListItem>
-                                                                4.5% Minting Activation Fee
+                                                                4.5% Processing Fee
                                                             </ListItem>
                                                             <ListItem>
                                                                 $29 Membership Fee (if User is not already a member)
