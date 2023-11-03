@@ -113,7 +113,8 @@ export default function Presalepolicy() {
                                                             LYOTECH LABS ELECTRONICS TRADING L.L.C. is offering a Bonus Program (Bonus Program) to Purchasers who have purchased the Devices during the pre-sale period.
                                                         </ListItem>
                                                         <ListItem>
-                                                            When an Order is placed, the Purchaser shall be entitled to receive free shares of LYOTECH LABS ELECTRONICS TRADING L.L.C.. These shares will be tokenized as non-fungible tokens (NFTs) and will be distributed to the Purchasers only after the pre-sale period has ended.
+                                                            When an Order is placed, the Purchaser shall be entitled to receive free shares of LYOTECH LABS ELECTRONICS TRADING L.L.C.. 
+
                                                         </ListItem>
 
                                                         <ListItem>
@@ -131,10 +132,7 @@ export default function Presalepolicy() {
                                                             </List>
                                                         </ListItem>
 
-                                                        <ListItem>
-                                                            Purchasers will be able to redeem their NFTs  in their portfolios in the event that LYOTECH LABS ELECTRONICS TRADING L.L.C. decides to go public in the future.
-                                                        </ListItem>
-                                                       
+                                                    
 
                                                         <ListItem>
                                                             We reserve the right to modify, extend, or cancel the Bonus Program at any time without prior notice to You. We also reserve the right to disqualify any Purchaser from the Bonus Program who breaches these Terms or engages in any fraudulent activity.
@@ -218,8 +216,7 @@ export default function Presalepolicy() {
                                                             Additional charges may occur as follows:
                                                             <List >
                                                                 <ListItem>
-                                                                    a membership is required for the platform, if you do not already have a membership with our third-party partners, the annual fee for such membership is $29. If you are already a member this will automatically be detected at checkout and you will not be subject to this additional charge. Separate terms and conditions will apply for this membership, full details can be found at 
-                                                                     <a href='app.lfi.io' target='_blank'> app.lfi.io</a>
+                                                                    a membership is required for the platform, if you do not already have a membership with our third-party partners, the annual fee for such membership is $29. If you are already a member this will automatically be detected at checkout and you will not be subject to this additional charge. 
                                                                 </ListItem>
                                                                 <ListItem>
                                                                     shipment- additional shipping charges are determined automatically at checkout based on the country you are purchasing from, and subject to change based on geographical location and time of purchase;
