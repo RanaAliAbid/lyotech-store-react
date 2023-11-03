@@ -333,7 +333,7 @@ export default function CoProducts({
             </div>
             {/* Services Section End */}
 
-            {/* LFi One Smartphone Section Start */}
+            {/* L One Phone Section Start */}
 
             <div
               className={`${styles['productItemWrap']} ${styles['LfiPhoneSpecs']}`}
@@ -356,14 +356,14 @@ export default function CoProducts({
                         transition={{ duration: 0.5, delay: 0.25 }}
                         viewport={{ once: true }}
                       >
-                        <img src={lfiPhone.src} alt="LFi Smartphone" />
+                        <img src={lfiPhone.src} alt="L One Phone" />
                       </motion.div>
                     </div>
                   </Grid>
 
                   <Grid item md={6} sm={12} className={styles.phoneInfo}>
                     <Typography variant="h2">
-                      <span>LFi ONE</span> Smartphone
+                      <span>L One</span> Phone
                     </Typography>
                     {/* <br /> */}
 
@@ -425,7 +425,7 @@ export default function CoProducts({
               </Container>
             </div>
 
-            {/* LFi One Smartphone Section End */}
+            {/* L One Phone Section End */}
 
             {/* LFi Hardware Section Start */}
 

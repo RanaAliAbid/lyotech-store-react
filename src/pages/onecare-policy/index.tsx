@@ -80,12 +80,12 @@ export default function Onecarepolicy() {
                                                             manufacturer's standard hardware warranty.
                                                         </ListItem>
                                                         <ListItem>
-                                                            The Plan covers the LFi One Smartphone listed on your Plan Confirmation (“Covered Device”). The Plan
+                                                            The Plan covers the L One Phone listed on your Plan Confirmation (“Covered Device”). The Plan
                                                             only applies to one device, therefore if you have multiple devices you wish to cover, you must
                                                             purchase a separate Plan for each device.
                                                         </ListItem>
                                                         <ListItem>
-                                                            This Plan does not cover the XLfi Miners (500, 1000 and 5000).
+                                                            This Plan does not cover the XL Computer (500, 1000 and 5000).
                                                         </ListItem>
                                                         <ListItem>
                                                             Covered Device includes any replacement product provided to you by LYOTECH LABS ELECTRONICS TRADING L.L.C under this Plan.

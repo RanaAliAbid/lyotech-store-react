@@ -74,60 +74,60 @@ export default function ProductDetails() {
                     thumbWidth={100}
                   >
                     <div>
-                      <Zoom
+                      {/* <Zoom
                         img={productImage01.src}
                         zoomScale={1.8}
                         width={600}
                         height={600}
-                      />
+                      /> */}
                       <img
                         className={styles.thumbImg}
                         src={productImage01.src}
                       />
                     </div>
                     <div>
-                      <Zoom
+                      {/* <Zoom
                         img={productImage02.src}
                         zoomScale={1.8}
                         width={600}
                         height={600}
-                      />
+                      /> */}
                       <img
                         className={styles.thumbImg}
                         src={productImage02.src}
                       />
                     </div>
                     <div>
-                      <Zoom
+                      {/* <Zoom
                         img={productImage03.src}
                         zoomScale={1.8}
                         width={600}
                         height={600}
-                      />
+                      /> */}
                       <img
                         className={styles.thumbImg}
                         src={productImage03.src}
                       />
                     </div>
                     <div>
-                      <Zoom
+                      {/* <Zoom
                         img={productImage04.src}
                         zoomScale={1.8}
                         width={600}
                         height={600}
-                      />
+                      /> */}
                       <img
                         className={styles.thumbImg}
                         src={productImage04.src}
                       />
                     </div>
                     <div>
-                      <Zoom
+                      {/* <Zoom
                         img={productImage05.src}
                         zoomScale={1.8}
                         width={600}
                         height={600}
-                      />
+                      /> */}
                       <img
                         className={styles.thumbImg}
                         src={productImage05.src}
@@ -139,11 +139,7 @@ export default function ProductDetails() {
                 <Grid item md={6} xs={12}>
                   <div className={styles.productDetails}>
                     <Typography variant="h2" className={styles.productName}>
-                      LFi ONE Smartphone
-                    </Typography>
-
-                    <Typography variant="subtitle1">
-                      Model Name: LFI ONE
+                      L One Phone
                     </Typography>
 
                     <Typography variant="h3" className={styles.productPrice}>
@@ -208,9 +204,6 @@ export default function ProductDetails() {
 
                       <div className={styles.text}>
                         <Typography variant="h5">Order Now !..</Typography>
-                        <Typography variant="h6">
-                          2-day Delivery Speedy and reliable parcel delivery!
-                        </Typography>
                       </div>
                     </div>
 
