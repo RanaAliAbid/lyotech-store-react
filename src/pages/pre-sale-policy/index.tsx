@@ -59,7 +59,7 @@ export default function Presalepolicy() {
                                         </Typography>
 
                                         <Typography variant="h5">
-                                            These Terms and Conditions (‘Terms’) apply only when you place an order for the hardware such as L One Phone, XL Computer (1000 and 5000) (‘Device’) from the Lyotech Labs website <a href='https://lyotechlabs.com/' target='_blank'>Link</a> during the pre-sale period. By placing an order you agree to be bound by these Terms which will form a binding contract between Lyotech Labs (we, us or our) and you, the person purchasing the Device during the pre-sale (Purchaser, you or your). If you do not agree with any of these Terms, you should not proceed in purchasing the Device. Please keep a copy of these Terms for your records.
+                                            These Terms and Conditions (‘Terms’) apply only when you place an order for the hardware such as L One Phone, XL Computer (1000 and 5000) (‘Device’) from the LYOTECH LABS ELECTRONICS TRADING L.L.C. website <a href='https://lyotechlabs.com/' target='_blank'>Link</a> during the pre-sale period. By placing an order you agree to be bound by these Terms which will form a binding contract between LYOTECH LABS ELECTRONICS TRADING L.L.C. (we, us or our) and you, the person purchasing the Device during the pre-sale (Purchaser, you or your). If you do not agree with any of these Terms, you should not proceed in purchasing the Device. Please keep a copy of these Terms for your records.
                                         </Typography>
                                         <Typography variant="h5">
                                             A pre-sale is an offer to purchase Devices which are not yet available for general sale via Lyotech’s website.
@@ -71,8 +71,8 @@ export default function Presalepolicy() {
                                             These Terms may be made available in several languages; all versions are legally binding, but in the event of inconsistency between the English version and a translated version, the English version prevails.
                                         </Typography>
                                         <Typography variant="h5">
-                                            By purchasing the Device, you agree that you have read, understood and accepted these Terms as well as our General Terms and Conditions, Privacy & Cookie Policy, and Delivery Condition all available at the Lyotech Labs website here: 
-                                            <a href='https://docs.lyotechlabs.com/' target='_blank'>Docs</a>, which are deemed to be incorporated into these Terms by reference.
+                                            By purchasing the Device, you agree that you have read, understood and accepted these Terms as well as our General Terms and Conditions, Privacy & Cookie Policy, and Delivery Condition all available at the LYOTECH LABS ELECTRONICS TRADING L.L.C. website  
+                                            <a href='https://docs.lyotechlabs.com/' target='_blank'> Docs</a>, which are deemed to be incorporated into these Terms by reference.
                                         </Typography>
 
                                         <div className={styles.termListItemText}>
@@ -92,28 +92,28 @@ export default function Presalepolicy() {
                                                             An Order shall constitute an offer by the Purchaser to purchase the specified Device(s) in accordance with these Terms.
                                                         </ListItem>
                                                         <ListItem>
-                                                            The offer constituted by an Order shall remain in effect and capable of being accepted by the Lyotech Labs until the Purchaser receives an order confirmation to the contact details provided at checkout, if the Purchaser does not receive an order confirmation within 300 days after placing the order, these Terms shall automatically be void and not binding upon either us or you.
+                                                            The offer constituted by an Order shall remain in effect and capable of being accepted by the LYOTECH LABS ELECTRONICS TRADING L.L.C. until the Purchaser receives an order confirmation to the contact details provided at checkout, if the Purchaser does not receive an order confirmation within 300 days after placing the order, these Terms shall automatically be void and not binding upon either us or you.
                                                         </ListItem>
 
                                                         <ListItem>
-                                                            The Lyotech Labs may accept or reject an Order at its discretion. An Order shall not be accepted, and no binding obligation to supply any Device(s) shall arise, until the Lyotech Labs’s written acceptance of the Order via order confirmation.
+                                                            The LYOTECH LABS ELECTRONICS TRADING L.L.C. may accept or reject an Order at its discretion. An Order shall not be accepted, and no binding obligation to supply any Device(s) shall arise, until the LYOTECH LABS ELECTRONICS TRADING L.L.C.’s written acceptance of the Order via order confirmation.
                                                         </ListItem>
 
                                                         <ListItem>
-                                                            Rejection by the Lyotech Labs of an Order, including any communication that may accompany such rejection, shall not constitute a counter-offer capable of acceptance by the Purchaser.
+                                                            Rejection by the LYOTECH LABS ELECTRONICS TRADING L.L.C. of an Order, including any communication that may accompany such rejection, shall not constitute a counter-offer capable of acceptance by the Purchaser.
                                                         </ListItem>
                                                         <ListItem>
-                                                            Marketing and other promotional material relating to the Device(s) are illustrative only and do not form part of these Terms. The Purchaser agrees that, in submitting an Order, it has not relied on any representations or statements by the Lyotech Labs other than those expressly set out in these Terms.
+                                                            Marketing and other promotional material relating to the Device(s) are illustrative only and do not form part of these Terms. The Purchaser agrees that, in submitting an Order, it has not relied on any representations or statements by the LYOTECH LABS ELECTRONICS TRADING L.L.C. other than those expressly set out in these Terms.
                                                         </ListItem>
                                                     </List>
                                                 </ListItem>
                                                 <ListItem> <strong> LFi Bonus Program Terms </strong> 
                                                     <List >
                                                         <ListItem>
-                                                            Lyotech Labs is offering a Bonus Program (Bonus Program) to Purchasers who have purchased the Devices during the pre-sale period.
+                                                            LYOTECH LABS ELECTRONICS TRADING L.L.C. is offering a Bonus Program (Bonus Program) to Purchasers who have purchased the Devices during the pre-sale period.
                                                         </ListItem>
                                                         <ListItem>
-                                                            When an Order is placed, the Purchaser shall be entitled to receive free shares of Lyotech Labs. These shares will be tokenized as non-fungible tokens (NFTs) and will be distributed to the Purchasers only after the pre-sale period has ended.
+                                                            When an Order is placed, the Purchaser shall be entitled to receive free shares of LYOTECH LABS ELECTRONICS TRADING L.L.C.. These shares will be tokenized as non-fungible tokens (NFTs) and will be distributed to the Purchasers only after the pre-sale period has ended.
                                                         </ListItem>
 
                                                         <ListItem>
@@ -123,27 +123,25 @@ export default function Presalepolicy() {
                                                                     Purchasers of the L One Phone will receive one share.
                                                                 </ListItem>
                                                                 <ListItem>
-                                                                    Purchasers of the XLFiMiner 1000 will receive one share.
+                                                                    Purchasers of the XL Computer 1000 will receive one share.
                                                                 </ListItem>
                                                                 <ListItem>
-                                                                    Purchasers of the XLFiMiner 5000 will receive five shares.
+                                                                    Purchasers of the XL Computer 5000 will receive five shares.
                                                                 </ListItem>
                                                             </List>
                                                         </ListItem>
 
                                                         <ListItem>
-                                                            Purchasers will be able to redeem their NFTs for shares in their portfolios in the event that Lyotech Labs decides to go public in the future. The NFTs cannot be sold or traded for any other asset or currency.
+                                                            Purchasers will be able to redeem their NFTs  in their portfolios in the event that LYOTECH LABS ELECTRONICS TRADING L.L.C. decides to go public in the future.
                                                         </ListItem>
-                                                        <ListItem>
-                                                            The NFTs do not entitle the holder to any rights, including voting rights or pre-emption rights. The NFTs also do not entitle the holder to any dividends or other similar distributions.
-                                                        </ListItem>
+                                                       
 
                                                         <ListItem>
                                                             We reserve the right to modify, extend, or cancel the Bonus Program at any time without prior notice to You. We also reserve the right to disqualify any Purchaser from the Bonus Program who breaches these Terms or engages in any fraudulent activity.
                                                         </ListItem>
 
                                                         <ListItem>
-                                                            We make no representations or warranties regarding the potential value of the shares or the success of Lyotech Labs. Purchasers are advised to conduct their own research and due diligence before participating in the Bonus Program.
+                                                            We make no representations or warranties regarding the potential value of the shares or the success of LYOTECH LABS ELECTRONICS TRADING L.L.C.. Purchasers are advised to conduct their own research and due diligence before participating in the Bonus Program.
                                                         </ListItem>
                                                     </List>
                                                 </ListItem>
@@ -161,11 +159,11 @@ export default function Presalepolicy() {
                                                         </ListItem>
 
                                                         <ListItem>
-                                                            Time of Delivery is not of the essence. The Lyotech Labs shall use its reasonable endeavours to meet Delivery dates but such dates are approximate only.
+                                                            Time of Delivery is not of the essence. The LYOTECH LABS ELECTRONICS TRADING L.L.C. shall use its reasonable endeavours to meet Delivery dates but such dates are approximate only.
                                                         </ListItem>
 
                                                         <ListItem>
-                                                            The Lyotech Labs shall not be liable for any delay in or failure of Delivery.
+                                                            The LYOTECH LABS ELECTRONICS TRADING L.L.C. shall not be liable for any delay in or failure of Delivery.
                                                         </ListItem>
                                                     </List>
                                                 </ListItem>
@@ -176,7 +174,7 @@ export default function Presalepolicy() {
                                                             All Devices include standard warranty for two years (the Warranty Period) provided by the manufacturer of the Device(s) (Manufacturer).
                                                         </ListItem>
                                                         <ListItem>
-                                                            Standard warranty is provided by third party manufacturers, not Lyotech Labs. Lyotech Labs bears no responsibility for the manufacturer’s warranty, and Purchasers are advised to read the terms of such warranty carefully before purchasing.
+                                                            Standard warranty is provided by third party manufacturers, not LYOTECH LABS. LYOTECH LABS ELECTRONICS TRADING L.L.C. bears no responsibility for the manufacturer’s warranty, and Purchasers are advised to read the terms of such warranty carefully before purchasing.
                                                         </ListItem>
 
                                                         <ListItem>
@@ -206,7 +204,7 @@ export default function Presalepolicy() {
                                                 <ListItem> <strong> Price </strong> 
                                                     <List >
                                                         <ListItem>
-                                                            The price of each device is variable, and subject to change at the sole discretion of Lyotech Labs. Once you make the payment and receive your order confirmation, the price cannot be changed.
+                                                            The price of each device is variable, and subject to change at the sole discretion of LYOTECH LABS ELECTRONICS TRADING L.L.C. Once you make the payment and receive your order confirmation, the price cannot be changed.
                                                         </ListItem>
                                                         <ListItem>
                                                             The full amount of the Device will be payable upfront when purchasing.
@@ -221,7 +219,7 @@ export default function Presalepolicy() {
                                                             <List >
                                                                 <ListItem>
                                                                     a membership is required for the platform, if you do not already have a membership with our third-party partners, the annual fee for such membership is $29. If you are already a member this will automatically be detected at checkout and you will not be subject to this additional charge. Separate terms and conditions will apply for this membership, full details can be found at 
-                                                                    <a href='app.lfi.io' target='_blank'>app.lfi.io</a>
+                                                                     <a href='app.lfi.io' target='_blank'> app.lfi.io</a>
                                                                 </ListItem>
                                                                 <ListItem>
                                                                     shipment- additional shipping charges are determined automatically at checkout based on the country you are purchasing from, and subject to change based on geographical location and time of purchase;
@@ -238,13 +236,11 @@ export default function Presalepolicy() {
                                                 <ListItem> <strong> Payment </strong>
                                                     <List >
                                                         <ListItem>
-                                                            The forms of payment accepted by Lyotech Labs are card payment and payment in cryptocurrency.
+                                                            The forms of payment accepted by LYOTECH LABS ELECTRONICS TRADING L.L.C. are card payment.
                                                         </ListItem>
+                                                       
                                                         <ListItem>
-                                                            Lyotech Labs only accepts cryptocurrency payments made in stable coins.
-                                                        </ListItem>
-                                                        <ListItem>
-                                                            Payments made by card are subject to additional fees which will be identified at checkout. There is no additional fee for payments made in cryptocurrency.
+                                                            Payments made by card are subject to additional fees which will be identified at checkout. 
                                                         </ListItem>
                                                     </List>
                                                 </ListItem>
@@ -252,7 +248,7 @@ export default function Presalepolicy() {
                                                 <ListItem> <strong>  Dispute resolution </strong>
                                                     <List >
                                                         <ListItem>
-                                                            If any dispute arises between the parties out of or in connection with these Terms, the matter shall be referred to Lyotech Labs Customer Support at:  <a href="mailto:support@lyotechlabs.com"> support@lyotechlabs.com. </a>
+                                                            If any dispute arises between the parties out of or in connection with these Terms, the matter shall be referred to LYOTECH LABS ELECTRONICS TRADING L.L.C. Customer Support at:  <a href="mailto:support@lyotechlabs.com"> support@lyotechlabs.com. </a>
                                                         </ListItem>
                                                         <ListItem>
                                                             If the dispute is not resolved within 30 days of the referral being made, the matter may be escalated as per clause 17.
@@ -271,7 +267,7 @@ export default function Presalepolicy() {
                                                 <ListItem> <strong>  Force majeure</strong>
                                                     <List >
                                                         <ListItem>
-                                                            Lyotech Labs shall have no liability under or be deemed to be in breach of these Terms for any delays or failures in performance of these Terms which result from Force Majeure. The party subject to the Force Majeure event shall promptly notify the other party in writing when such the event causes a delay or failure in performance and when it ceases to do so.
+                                                            LYOTECH LABS ELECTRONICS TRADING L.L.C. shall have no liability under or be deemed to be in breach of these Terms for any delays or failures in performance of these Terms which result from Force Majeure. The party subject to the Force Majeure event shall promptly notify the other party in writing when such the event causes a delay or failure in performance and when it ceases to do so.
                                                         </ListItem>
                                                     </List>
                                                 </ListItem>
@@ -309,7 +305,7 @@ export default function Presalepolicy() {
                                                             Subject to clause 15.2, no one other than a party to these Terms, shall have any right to enforce any of its provisions.
                                                         </ListItem>
                                                         <ListItem>
-                                                            The Affiliates of the Lyotech Labs shall have the right to enforce the provisions of these Terms.
+                                                            The Affiliates of the LYOTECH LABS ELECTRONICS TRADING L.L.C. shall have the right to enforce the provisions of these Terms.
                                                         </ListItem>
 
                                                     </List>
