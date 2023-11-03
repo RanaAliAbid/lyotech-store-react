@@ -53,7 +53,7 @@ export default function StoreListDropDown({
                         value={country}
                     >
                         {countryList?.map((item: any, index: number) =>
-                            <MenuItem value={item._id} key={index}> {item.name}</MenuItem>
+                            item.name.includes("United Arab Emirates") && <MenuItem value={item._id} key={index}> {item.name}</MenuItem>
                         )}
                     </Select>
 
