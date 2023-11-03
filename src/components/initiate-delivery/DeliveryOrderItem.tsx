@@ -225,7 +225,7 @@ export default function DeliveryOrderItem({
                                     Self-Pickup Fee: &nbsp;
                                 </Typography>
                                 <Typography variant="h5">
-                                    AED {selfPickupFee}
+                                    {(selfPickupFee * globalContext.conversionRate).toFixed(2)} {globalContext.currencySymbol}
                                 </Typography>
                             </div>}
                             {deliveryType.value === 'shipping' && <div className={styles.fees}>
@@ -233,7 +233,7 @@ export default function DeliveryOrderItem({
                                     Shipping Fee: &nbsp;
                                 </Typography>
                                 <Typography variant="h5">
-                                    AED {shippingFee}
+                                    {(shippingFee * globalContext.conversionRate).toFixed(2)} {globalContext.currencySymbol}
                                 </Typography>
                             </div>}
 

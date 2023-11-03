@@ -56,7 +56,6 @@ export default function StoreListDropDown({
                             item.name.includes("United Arab Emirates") && <MenuItem value={item._id} key={index}> {item.name}</MenuItem>
                         )}
                     </Select>
-
                 </FormControl>
             </div>
 

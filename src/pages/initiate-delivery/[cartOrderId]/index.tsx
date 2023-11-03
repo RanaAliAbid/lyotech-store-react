@@ -159,7 +159,7 @@ export default function InitiateDelivery() {
                                                                             Shipping Fee
                                                                         </Typography>
                                                                         <Typography variant="h6">
-                                                                            AED {cartOrder.totalShippingFee}
+                                                                            {(cartOrder.totalShippingFee * globalContext.conversionRate).toFixed(2)} {globalContext.currencySymbol}
                                                                         </Typography>
                                                                     </ListItem>
                                                                 )}
@@ -170,7 +170,7 @@ export default function InitiateDelivery() {
                                                                             Self-PickUp Fee
                                                                         </Typography>
                                                                         <Typography variant="h6">
-                                                                            AED {cartOrder.totalSelfPickupFee}
+                                                                            {(cartOrder.totalSelfPickupFee * globalContext.conversionRate).toFixed(2)} {globalContext.currencySymbol}
                                                                         </Typography>
                                                                     </ListItem>
                                                                 )}
@@ -179,7 +179,7 @@ export default function InitiateDelivery() {
                                                                     <ListItem>
                                                                         <Typography variant="h6">Tax</Typography>
                                                                         <Typography variant="h6">
-                                                                            AED {cartOrder.totalAppliedTax}
+                                                                            {(cartOrder.totalAppliedTax * globalContext.conversionRate).toFixed(2)} {globalContext.currencySymbol}
                                                                         </Typography>
                                                                     </ListItem>
                                                                 )}
@@ -188,7 +188,7 @@ export default function InitiateDelivery() {
                                                                     <Typography variant="h5"> Total </Typography>
                                                                     <Typography variant="h5">
                                                                         {' '}
-                                                                        AED {cartOrder.totalAmount}{' '}
+                                                                        {(cartOrder.totalAmount * globalContext.conversionRate).toFixed(2)}{' '} {globalContext.currencySymbol}
                                                                     </Typography>
                                                                 </ListItem>
                                                             </List>
