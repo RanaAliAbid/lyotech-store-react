@@ -243,7 +243,7 @@ export default function AllOrders() {
                                               </Typography>
 
                                               <Typography variant="body1">
-                                                Model Name: LFI ONE
+                                                Model Name: L ONE
                                               </Typography>
                                             </div>
                                           </div>

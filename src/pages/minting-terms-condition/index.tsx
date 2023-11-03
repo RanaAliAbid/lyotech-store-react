@@ -196,7 +196,7 @@ export default function Mintingtermscondition() {
                                             <ListItem> <strong> Using The Devices</strong>
                                                 <List >
                                                     <ListItem>
-                                                        The Minting hardware devices includes the LFi One Smartphone, XLFi Miners (1000 and 5000)
+                                                        The Minting hardware devices includes the L One Phone, XL Computer (1000 and 5000)
                                                         (‘Devices’) purchased from the Lyotech Labs website – <a href="https://lyotechlabs.com/">
                                                             lyotechlabs</a>.
                                                     </ListItem>
@@ -205,7 +205,7 @@ export default function Mintingtermscondition() {
                                                         <List>
                                                             <ListItem>
                                                                 In order to conduct Minting using the Devices, you must become a User either by: (i)
-                                                                Downloading our LFi App on the LFi One Smartphone and registering as a User; or (ii)
+                                                                Downloading our LFi App on the L One Phone and registering as a User; or (ii)
                                                                 Registering as a User and maintaining a account on our LFi website (‘User Account’).
                                                             </ListItem>
                                                             <ListItem>
@@ -307,7 +307,7 @@ export default function Mintingtermscondition() {
                                                                 as defined below:
                                                                 <List>
                                                                     <ListItem>
-                                                                        To start Minting with the LFi One Smartphone, the User needs to go to the Minting
+                                                                        To start Minting with the L One Phone, the User needs to go to the Minting
                                                                         Portal, scan a QR code and activate the Device to begin generating.
                                                                     </ListItem>
                                                                     <ListItem>
@@ -367,7 +367,7 @@ export default function Mintingtermscondition() {
                                                         The following additional fees may be borne by the User in relation to the Services:
                                                         <List >
                                                             <ListItem>
-                                                                4.5% Minting Activation Fee
+                                                                4.5% Processing Fee
                                                             </ListItem>
                                                             <ListItem>
                                                                 $29 Membership Fee (if User is not already a member)

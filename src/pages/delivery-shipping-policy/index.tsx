@@ -66,7 +66,7 @@ export default function Private() {
                                             </ListItem>
                                             <ListItem>
                                                 <Typography variant="h5">
-                                                    This Delivery Condition (“Terms”) governs the Delivery of LFi Hardware Products, included but not limited to: LFi Smartphone, XLFi Machine (500, 1000, 5000, 10000 and Validator) (“Hardware”), from Lyotech Labs (“Supplier”) to individuals/businesses purchasing the Hardware (“Purchaser”) sold on lyotechlabs.com (“Platform”).
+                                                    This Delivery Condition (“Terms”) governs the Delivery of LFi Hardware Products, included but not limited to: L One Phone, XLFi Machine (500, 1000, 5000, 10000 and Validator) (“Hardware”), from Lyotech Labs (“Supplier”) to individuals/businesses purchasing the Hardware (“Purchaser”) sold on lyotechlabs.com (“Platform”).
                                                 </Typography>
                                             </ListItem>
                                         </List>
@@ -390,7 +390,7 @@ export default function Private() {
 
                                                     <ListItem>
                                                         <Typography variant="h5">
-                                                        Purchasers may purchase additional warranty packages for their Hardware, including either the One Care Plan for the LFi Smartphone or the XLFi Minting Machine Care Policy for the XLFi Miners (1,000 and 5,000) (Additional Warranty Plans).
+                                                        Purchasers may purchase additional warranty packages for their Hardware, including either the One Care Plan for the L One Phone or the XLFi Minting Machine Care Policy for the XL Computer (1,000 and 5,000) (Additional Warranty Plans).
                                                         </Typography>
                                                     </ListItem>
 
