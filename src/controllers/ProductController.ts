@@ -50,7 +50,7 @@ export const removeFromWishList = async (
     try {
         let productId = req.query?.productId ?? "";
 
-        const result = await ApiService.PutRequest(API_HOST + '/v1/wishlist/remove/'+productId, {}, `Bearer ${req.cookies?.authToken}`);
+        const result = await ApiService.PutRequest(API_HOST + '/v1/wishlist/remove/' + productId, {}, `Bearer ${req.cookies?.authToken}`);
 
         res.status(200).json(ApiService.ApiResponseSuccess(result?.data, ''));
 
@@ -76,5 +76,33 @@ export const getWishList = async (
     } catch (error: any) {
         console.log('Catch error wishlist get ', error?.response?.data);
         res.status(400).json(ApiService.ApiResponseError(error));
+    }
+};
+
+export const getProduct = async (
+    req: NextApiRequest,
+    res: NextApiResponse<ApiData | ApiError>
+) => {
+    res.setHeader('Allow', 'GET');
+
+    try {
+        const { id } = req.query;
+
+        let result;
+
+        result = await ApiService.GetRequest(
+            API_HOST +
+            `/v1/product/${id}?special=false`,
+
+        );
+        return res
+            .status(200)
+            .json(ApiService.ApiResponseSuccess(result?.data?.data, ''));
+    } catch (error: any) {
+        console.log(
+            'Catch error get iproduct by id',
+            error?.response?.data
+        );
+        return res.status(400).json(ApiService.ApiResponseError(error));
     }
 };

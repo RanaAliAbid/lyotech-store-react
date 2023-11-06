@@ -640,7 +640,7 @@ export default function CartTotalComponent({
             </div>
           </ListItem>
 
-          <ListItem>
+          {/* <ListItem>
             <div className={styles.allCenter}>
               <Checkbox
                 checked={termsCheckbox.minting}
@@ -661,6 +661,33 @@ export default function CartTotalComponent({
                 >
                   <span className="text-primary cursor-pointer">
                     Hardware Minting Policy
+                  </span>
+                </Link>
+              </Typography>
+            </div>
+          </ListItem> */}
+
+<ListItem>
+            <div className={styles.allCenter}>
+              <Checkbox
+                checked={termsCheckbox.minting}
+                onChange={(e) =>
+                  setTermsCheckbox({
+                    ...termsCheckbox,
+                    minting: e.target.checked,
+                  })
+                }
+                size="small"
+              />
+              <Typography variant="h6" className="t-13">
+                I have read and Accept{' '}
+                <Link
+                  rel="noreferrer"
+                  target="_blank"
+                  href={`https://docs.lyotechlabs.com/legal-documents/terms-and-conditions`}
+                >
+                  <span className="text-primary cursor-pointer">
+                  Terms & Conditions
                   </span>
                 </Link>
               </Typography>

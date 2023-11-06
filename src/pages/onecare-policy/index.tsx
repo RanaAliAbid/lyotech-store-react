@@ -191,26 +191,26 @@ export default function Onecarepolicy() {
                                                                     <List >
                                                                         <ListItem>
                                                                             To protect against normal wear and tear, or to repair cosmetic damage not affecting
-                                                                            the functionality of the Covered Device;
+                                                                            the functionality of the Covered Device.
                                                                         </ListItem>
                                                                         <ListItem>
-                                                                            To conduct preventive maintenance;
+                                                                            To conduct preventive maintenance.
                                                                         </ListItem>
                                                                         <ListItem>
-                                                                            To replace Covered Device that is lost or stolen;
+                                                                            To replace Covered Device that is lost or stolen.
                                                                         </ListItem>
                                                                         <ListItem>
                                                                             To repair damage caused by reckless, abusive, willful or intentional conduct, or any
                                                                             use of the
-                                                                            Covered Device in a manner not normal or intended by LYOTECH LABS ELECTRONICS TRADING L.L.C;
+                                                                            Covered Device in a manner not normal or intended by LYOTECH LABS ELECTRONICS TRADING L.L.C.
                                                                         </ListItem>
                                                                         <ListItem>
-                                                                            To repair damage caused by a product that is not Covered Device;
+                                                                            To repair damage caused by a product that is not Covered Device.
                                                                         </ListItem>
                                                                         <ListItem>
                                                                             To repair any damage to Covered Device (regardless of the cause) if the Covered
                                                                             Device has been opened, serviced, modified, or altered by anyone other than Lyotech
-                                                                            Labs or an authorized representative of LYOTECH LABS ELECTRONICS TRADING L.L.C;
+                                                                            Labs or an authorized representative of LYOTECH LABS ELECTRONICS TRADING L.L.C.
                                                                         </ListItem>
                                                                         <ListItem>
                                                                             To repair pre-existing conditions of the Covered Device if you purchased the Plan
@@ -237,7 +237,7 @@ export default function Onecarepolicy() {
                                                         <ListItem>
                                                             Manufacturer's Warranty
                                                             <ListItem>
-                                                                Upon purchasing a device from LYOTECH LABS ELECTRONICS TRADING L.L.C, standard warranty is provided by the manufacturer for a
+                                                                Upon purchasing a device from LYOTECH LABS ELECTRONICS TRADING L.L.C, standard warranty is provided by the LYOTECH LABS ELECTRONICS TRADING L.L.C for a
                                                                 period of one (2) years.
                                                             </ListItem>
 
@@ -247,7 +247,8 @@ export default function Onecarepolicy() {
                                                             </ListItem>
 
                                                             <ListItem>
-                                                                Standard warranty is provided by third party manufacturers, not LYOTECH LABS ELECTRONICS TRADING L.L.C. LYOTECH LABS ELECTRONICS TRADING L.L.C bears no
+                                                                Standard warranty is provided by LYOTECH LABS ELECTRONICS TRADING L.L.C. 
+                                                                <br></br> LYOTECH LABS ELECTRONICS TRADING L.L.C bears 
                                                                 responsibility for the manufacturer’s warranty, and customers are advised to read the terms of
                                                                 warranty carefully before purchasing
                                                             </ListItem>

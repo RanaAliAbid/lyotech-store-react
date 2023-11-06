@@ -1,6 +1,7 @@
 import * as React from 'react';
-import Header from '../../../common/header';
-import Footer from '../../../common/footer';
+import Head from 'next/head';
+import Header from '../../common/header';
+import Footer from '../../common/footer';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -9,7 +10,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Button from '@mui/material/Button';
 import LinearProgress from '@mui/material/LinearProgress';
-// import Tabs from '@mui/material/Tabs';
+import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import TabPanel from '@mui/lab/TabPanel';
@@ -21,13 +22,14 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import StarRateIcon from '@mui/icons-material/StarRate';
-import truck from '../../../img/truck.png';
 
-import productImage01 from '../../../img/productImg/mobBigImg01.png';
-import productImage02 from '../../../img/productImg/mobBigImg02.png';
-import productImage03 from '../../../img/productImg/mobBigImg03.png';
-import productImage04 from '../../../img/productImg/mobBigImg04.png';
-import productImage05 from '../../../img/productImg/mobBigImg05.png';
+import truck from '../../img/truck.png';
+
+import productImage02 from '../../img/productImg/mobBigImg02.png';
+import productImage03 from '../../img/productImg/mobBigImg03.png';
+import productImage01 from '../../img/productImg/mobBigImg01.png';
+import productImage04 from '../../img/productImg/mobBigImg04.png';
+import productImage05 from '../../img/productImg/mobBigImg05.png';
 
 import Zoom from 'react-image-zoom';
 
@@ -53,13 +55,11 @@ export default function ProductDetails() {
     setValue(newValue);
   };
 
-  const [productName, setProductName] = React.useState<string | null>('Phone');
-
   return (
     <>
       <ThemeProvider theme={theme}>
         <main className={styles.main}>
-          <Header title={`Product || ${productName}`} />
+          <Header title="Products" />
           <div className={styles.paddingTB60}>
             <Container className={styles.containerBox}>
               <Grid container spacing={3}>
@@ -74,35 +74,34 @@ export default function ProductDetails() {
                     thumbWidth={100}
                   >
                     <div>
-               
                       <img
                         className={styles.thumbImg}
                         src={productImage01.src}
                       />
                     </div>
                     <div>
-                  
+
                       <img
                         className={styles.thumbImg}
                         src={productImage02.src}
                       />
                     </div>
                     <div>
-                   
+
                       <img
                         className={styles.thumbImg}
                         src={productImage03.src}
                       />
                     </div>
                     <div>
-                  
+
                       <img
                         className={styles.thumbImg}
                         src={productImage04.src}
                       />
                     </div>
                     <div>
-                    
+
                       <img
                         className={styles.thumbImg}
                         src={productImage05.src}
@@ -116,8 +115,6 @@ export default function ProductDetails() {
                     <Typography variant="h2" className={styles.productName}>
                       L One Phone
                     </Typography>
-
-                 
 
                     <Typography variant="h3" className={styles.productPrice}>
                       $160.00 - <span> $260.00 </span>

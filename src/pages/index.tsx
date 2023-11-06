@@ -534,13 +534,13 @@ export default function Home({
                           transition={{ duration: 0.5, delay: 0.25 }}
                           viewport={{ once: true }}
                         >
-                          <img src={lfiPhone.src} alt="LFi Smartphone" />
+                          <img src={lfiPhone.src} alt="L One Phone" />
                         </motion.div>
                       </div>
                     </Grid>
                     <Grid item md={6} sm={12}>
                       <Typography variant="h2">
-                        <span>LFi</span> ONE {t('product-item1-header')}
+                        <span>L ONE</span>  {t('product-item1-header')}
                       </Typography>
 
                       <br />
