@@ -81,7 +81,7 @@ export default function DeliveryOrderItem({
                 // deliveryDetails.shippingAddress?.postalCode?.length > 1 &&
                 (deliveryDetails.shippingAddress?.country || shippingCountry)) {
                 //
-                data.shippingAddress.country = countryList?.find((x: any) => x._id === (deliveryDetails?.country ?? shippingCountry))?.name
+                // data.shippingAddress.country = countryList?.find((x: any) => x._id === (deliveryDetails?.country ?? shippingCountry))?.name
 
                 setDataLoading(true);
 

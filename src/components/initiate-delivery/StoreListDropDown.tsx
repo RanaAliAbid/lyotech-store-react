@@ -50,7 +50,7 @@ export default function StoreListDropDown({
                         required={true}
                         inputProps={{ 'aria-label': 'Without label' }}
                         onChange={(e) => { setCountry(e.target.value) }}
-                        value={country}
+                        value={country ?? countryList[0]}
                     >
                         {countryList?.map((item: any, index: number) =>
                             item.name.includes("United Arab Emirates") && <MenuItem value={item._id} key={index}> {item.name}</MenuItem>

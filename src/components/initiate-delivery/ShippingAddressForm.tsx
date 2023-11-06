@@ -99,7 +99,7 @@ export default function ShippingAddressForm({
                             inputProps={{ 'aria-label': 'Without label' }}
                             required={true}
                             onChange={handleChange}
-                            value={country}
+                            value={country ?? countryList[0]}
                         >
                             {countryList?.map((item: any, index: number) =>
                                 <MenuItem value={item} key={index}> {item.name}</MenuItem>
