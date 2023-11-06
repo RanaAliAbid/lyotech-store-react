@@ -80,12 +80,12 @@ export default function Onecarepolicy() {
                                                             manufacturer's standard hardware warranty.
                                                         </ListItem>
                                                         <ListItem>
-                                                            The Plan covers the LFi One Smartphone listed on your Plan Confirmation (“Covered Device”). The Plan
+                                                            The Plan covers the L ONE Phone listed on your Plan Confirmation (“Covered Device”). The Plan
                                                             only applies to one device, therefore if you have multiple devices you wish to cover, you must
                                                             purchase a separate Plan for each device.
                                                         </ListItem>
                                                         <ListItem>
-                                                            This Plan does not cover the XLfi Miners (500, 1000 and 5000).
+                                                            This Plan does not cover the XL Computer (500, 1000 and 5000).
                                                         </ListItem>
                                                         <ListItem>
                                                             Covered Device includes any replacement product provided to you by LYOTECH LABS ELECTRONICS TRADING L.L.C under this Plan.
@@ -114,16 +114,14 @@ export default function Onecarepolicy() {
                                                         </ListItem>
 
                                                         <ListItem>
-                                                            Payment shall be made by either card or cryptocurrency, with the choice of payment method at the
-                                                            sole discretion of the purchaser.
+                                                            Payment shall be made by card.
                                                         </ListItem>
 
                                                         <ListItem>
-                                                            LYOTECH LABS ELECTRONICS TRADING L.L.C only accepts cryptocurrency payments made in stablecoins.
+                                                            LYOTECH LABS ELECTRONICS TRADING L.L.C only accepts card payments made in stablecoins.
                                                         </ListItem>
                                                         <ListItem>
-                                                            If the payment is made via card, Lyotech will charge a 5% fee. If the payment is made in
-                                                            cryptocurrency, Lyotech will not charge any fees.
+                                                            If the payment is made via card, Lyotech will charge a 5% fee. 
                                                         </ListItem>
                                                     </List>
                                                 </ListItem>
