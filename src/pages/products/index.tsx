@@ -139,11 +139,11 @@ export default function ProductDetails() {
                                 <Grid item md={6} xs={12}>
                                     <div className={styles.productDetails}>
                                         <Typography variant="h2" className={styles.productName}>
-                                            LFi ONE Smartphone
+                                        L ONE Phone
                                         </Typography>
 
                                         <Typography variant="subtitle1">
-                                            Model Name: LFI ONE
+                                            Model Name: L ONE 
                                         </Typography>
 
                                         <Typography variant="h3" className={styles.productPrice}>

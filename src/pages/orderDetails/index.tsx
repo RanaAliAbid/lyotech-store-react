@@ -176,11 +176,11 @@ export default function OrderDetails() {
 																		variant="h5"
 																		className={styles.productitle}
 																	>
-																		LFi ONE Smartphone
+																		L ONE Phone
 																	</Typography>
 
 																	<Typography variant="body1">
-																		Model Name: LFI ONE
+																		Model Name: L ONE 
 																	</Typography>
 																</div>
 															</div>
@@ -188,7 +188,7 @@ export default function OrderDetails() {
 
 														<div>
 															<Typography variant="body1">
-																Category: Minter
+																Category: Phone
 															</Typography>
 														</div>
 
@@ -290,11 +290,11 @@ export default function OrderDetails() {
 																			variant="h5"
 																			className={styles.productitle}
 																		>
-																			LFi ONE Smartphone
+																			L ONE Phone
 																		</Typography>
 
 																		<Typography variant="body1">
-																			Model Name: LFI ONE
+																			Model Name: L ONE 
 																		</Typography>
 																		<div className={styles.status}>
 																			<Chip className={styles.chip} label="Shipping" />
@@ -305,7 +305,7 @@ export default function OrderDetails() {
 
 															<div>
 																<Typography variant="body1">
-																	Category: Minter
+																	Category: Phone
 																</Typography>
 															</div>
 
@@ -421,11 +421,11 @@ export default function OrderDetails() {
 																			variant="h5"
 																			className={styles.productitle}
 																		>
-																			LFi ONE Smartphone
+																			L ONE Phone
 																		</Typography>
 
 																		<Typography variant="body1">
-																			Model Name: LFI ONE
+																			Model Name: L ONE 
 																		</Typography>
 
 																		<div className={styles.status}>
@@ -437,7 +437,7 @@ export default function OrderDetails() {
 
 															<div>
 																<Typography variant="body1">
-																	Category: Minter
+																	Category: Phone
 																</Typography>
 															</div>
 
@@ -554,11 +554,11 @@ export default function OrderDetails() {
 																			variant="h5"
 																			className={styles.productitle}
 																		>
-																			LFi ONE Smartphone
+																			L ONE Phone
 																		</Typography>
 
 																		<Typography variant="body1">
-																			Model Name: LFI ONE
+																			Model Name: L ONE 
 																		</Typography>
 																		<div className={styles.status}>
 																			<Chip className={styles.chip} label="Shipping" />
@@ -569,7 +569,7 @@ export default function OrderDetails() {
 
 															<div>
 																<Typography variant="body1">
-																	Category: Minter
+																	Category: Phone
 																</Typography>
 															</div>
 
