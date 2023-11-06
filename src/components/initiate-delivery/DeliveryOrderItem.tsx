@@ -72,12 +72,13 @@ export default function DeliveryOrderItem({
             }
 
         } else {
-            if (deliveryDetails.shippingAddress?.firstName?.length > 1 &&
-                deliveryDetails.shippingAddress?.lastName?.length > 1 &&
-                deliveryDetails.shippingAddress?.city?.length > 1 &&
-                deliveryDetails.shippingAddress?.state?.length > 1 &&
-                deliveryDetails.shippingAddress?.phone?.length > 1 &&
-                deliveryDetails.shippingAddress?.postalCode?.length > 1 &&
+            if (
+                // deliveryDetails.shippingAddress?.firstName?.length > 1 &&
+                // deliveryDetails.shippingAddress?.lastName?.length > 1 &&
+                // deliveryDetails.shippingAddress?.city?.length > 1 &&
+                // deliveryDetails.shippingAddress?.state?.length > 1 &&
+                // deliveryDetails.shippingAddress?.phone?.length > 1 &&
+                // deliveryDetails.shippingAddress?.postalCode?.length > 1 &&
                 (deliveryDetails.shippingAddress?.country || shippingCountry)) {
                 //
                 data.shippingAddress.country = countryList?.find((x: any) => x._id === (deliveryDetails?.country ?? shippingCountry))?.name
