@@ -97,7 +97,7 @@ export default function InitiateDelivery() {
     return (
         <>
             <ThemeProvider theme={theme}>
-                {cartOrder ? (
+                {cartOrder && countryList?.length > 0 ? (
                     <main className={styles.main}>
                         <Header title={`Cart Items)`} />
                         <div className={styles.paddingTB60}>
