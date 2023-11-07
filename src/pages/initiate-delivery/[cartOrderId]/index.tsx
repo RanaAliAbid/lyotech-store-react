@@ -183,7 +183,7 @@ export default function InitiateDelivery() {
 
                                                                 {cartOrder.totalAppliedTax > 0 && (
                                                                     <ListItem>
-                                                                        <Typography variant="h6">Tax</Typography>
+                                                                        <Typography variant="h6">VAT</Typography>
                                                                         <Typography variant="h6">
                                                                             {(cartOrder.totalAppliedTax * globalContext.conversionRate).toFixed(2)} {globalContext.currencySymbol}
                                                                         </Typography>
