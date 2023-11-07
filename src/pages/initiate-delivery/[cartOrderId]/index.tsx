@@ -18,6 +18,7 @@ import {
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { getCountry } from '@/services/country/country.service';
 import MastercardCheckoutComponent from '@/components/checkout/paymentMethods/mastercardCheckout.component';
+import Link from 'next/link';
 
 export default function InitiateDelivery() {
     //
@@ -104,7 +105,7 @@ export default function InitiateDelivery() {
                                 <Grid container spacing={3}>
                                     <Grid item xs={12}>
                                         <div className={styles.wrapTitle}>
-                                            <Typography variant="h4"> Initiate delivery </Typography>
+                                            <Typography variant="h4"><Link style={{ color: 'red' }} href={`${process.env.CLOUDX_URL}/orders`}>Cancel</Link>&nbsp; Initiate delivery </Typography>
 
                                             <div className={`${styles['orderIDdetails']} `}>
                                                 <Typography variant="h5">
@@ -146,9 +147,14 @@ export default function InitiateDelivery() {
                                                                 getCartOrder={getCartOrder}
                                                                 setDataLoading={setLoading}
                                                                 orderShippingType={order.shippingType}
+                                                                billingAddress={cartOrder?.cartOrder?.billingAddress}
                                                             />
                                                         ))}
                                                 </List>
+
+                                                <br />
+                                                <hr style={{ opacity: 0.3 }} />
+                                                <br />
                                                 <Grid container spacing={3} justifyContent="flex-end">
                                                     <Grid item md={4} sm={6} xs={12}>
                                                         <div className={`${styles.summaryDetails}`}>

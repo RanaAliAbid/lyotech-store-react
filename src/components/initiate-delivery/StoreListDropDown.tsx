@@ -15,7 +15,6 @@ export default function StoreListDropDown({
     shippingCountry: any,
     onChange: Function,
     handleDeliveryAddress: any
-
 }) {
 
     const [country, setCountry] = React.useState(shippingCountry?._id ?? shippingCountry);
@@ -50,7 +49,7 @@ export default function StoreListDropDown({
                         required={true}
                         inputProps={{ 'aria-label': 'Without label' }}
                         onChange={(e) => { setCountry(e.target.value) }}
-                        value={country ?? countryList[0]}
+                        value={country ?? countryList?.find((c: any) => c.name == "United Arab Emirates")}
                     >
                         {countryList?.map((item: any, index: number) =>
                             item.name.includes("United Arab Emirates") && <MenuItem value={item._id} key={index}> {item.name}</MenuItem>

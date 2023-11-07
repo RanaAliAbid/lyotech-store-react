@@ -29,7 +29,8 @@ export default function DeliveryOrderItem({
     shippingId,
     getCartOrder,
     setDataLoading,
-    orderShippingType
+    orderShippingType,
+    billingAddress
 }: {
     productName: string;
     productImage: string;
@@ -43,7 +44,8 @@ export default function DeliveryOrderItem({
     shippingId: string;
     getCartOrder: Function;
     setDataLoading: any;
-    orderShippingType: string
+    orderShippingType: string;
+    billingAddress: any
 }) {
 
     const [deliveryType, setDeliveryType] = React.useState(orderShippingType === "self-pickup" ? deliveryTypes[1] : deliveryTypes[0]);
@@ -73,15 +75,8 @@ export default function DeliveryOrderItem({
 
         } else {
             if (
-                // deliveryDetails.shippingAddress?.firstName?.length > 1 &&
-                // deliveryDetails.shippingAddress?.lastName?.length > 1 &&
-                // deliveryDetails.shippingAddress?.city?.length > 1 &&
-                // deliveryDetails.shippingAddress?.state?.length > 1 &&
-                // deliveryDetails.shippingAddress?.phone?.length > 1 &&
-                // deliveryDetails.shippingAddress?.postalCode?.length > 1 &&
                 (deliveryDetails.shippingAddress?.country || shippingCountry)) {
                 //
-                // data.shippingAddress.country = countryList?.find((x: any) => x._id === (deliveryDetails?.country ?? shippingCountry))?.name
 
                 setDataLoading(true);
 
@@ -215,6 +210,7 @@ export default function DeliveryOrderItem({
                                 onChange={handleChangePickUpStore}
                                 handleDeliveryAddress={handleDeliveryAddress} />}
                             {deliveryType.value === 'shipping' && <ShippingAddressForm
+                                billingAddress={billingAddress}
                                 countryList={countryList}
                                 shippingCountry={countryList.find((item: any) => item._id == deliveryDetails.country)}
                                 address={shippingAddress}
