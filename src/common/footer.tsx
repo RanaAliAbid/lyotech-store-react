@@ -75,6 +75,16 @@ export default function Footer() {
                 <ListItem className={styles.item}>
                     <Link href="https://docs.lyotechlabs.com/introduction/what-is-lyotech-labs">About Us</Link>
                   </ListItem>
+
+
+                  <ListItem className={styles.item}>
+                    <Link href="/pre-sale-policy" target='_blank'>
+                      Pre-Sale Policy and Terms
+                    </Link>
+                  </ListItem>
+
+
+
                   <ListItem className={styles.item}>
                     <Link href="https://docs.lyotechlabs.com/legal-documents/privacy-and-cookies-policy" target='_blank'>
                       {t('footer-section2-item1')}
@@ -103,11 +113,11 @@ export default function Footer() {
                     </Link>
                   </ListItem>
 
-                  <ListItem className={styles.item}>
+                  {/* <ListItem className={styles.item}>
                     <Link className={styles.docBtn} href="https://docs.lyotechlabs.com" target='_blank'>
                     Docs and Guides
                     </Link>
-                  </ListItem>
+                  </ListItem> */}
 
                   
 

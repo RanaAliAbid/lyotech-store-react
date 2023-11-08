@@ -880,7 +880,7 @@ export default function Home({
                         transition={{ duration: 0.3, delay: 0.25 }}
                         viewport={{ once: true }}
                       >
-                        <Typography variant="h4">
+                        {/* <Typography variant="h4">
                           {t('product-item2-subheader2')}
                         </Typography>
 
@@ -894,7 +894,7 @@ export default function Home({
                               {t('product-item2-carac4')}
                             </Typography>
                           </Grid>
-                        </Grid>
+                        </Grid> */}
 
                         <motion.div
                           initial={{
