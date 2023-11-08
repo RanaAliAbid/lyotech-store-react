@@ -49,7 +49,7 @@ export default function Payments() {
                   <div
                     className={`${styles['wrapBox']} ${styles['paymentSection']}`}
                   >
-                    <div className={styles.boxInfo}>
+                    {/* <div className={styles.boxInfo}>
                       <div className={styles.wrapSubTitle}>
                         <Typography variant="h4">{t('subheader1')}</Typography>
 
@@ -71,7 +71,7 @@ export default function Payments() {
                           <ListItem>{t('details5')}</ListItem>
                         </List>
                       </div>
-                    </div>
+                    </div> */}
 
                     <div className={styles.boxInfo}>
                       <div className={styles.wrapSubTitle}>
