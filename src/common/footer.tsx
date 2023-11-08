@@ -113,11 +113,11 @@ export default function Footer() {
                     </Link>
                   </ListItem>
 
-                  <ListItem className={styles.item}>
+                  {/* <ListItem className={styles.item}>
                     <Link className={styles.docBtn} href="https://docs.lyotechlabs.com" target='_blank'>
                     Docs and Guides
                     </Link>
-                  </ListItem>
+                  </ListItem> */}
 
                   
 
