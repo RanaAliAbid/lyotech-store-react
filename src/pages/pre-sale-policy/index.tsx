@@ -327,7 +327,7 @@ shall have exclusive jurisdiction to settle any dispute or claim arising out of,
 
                       <br />
 
-                      <Typography variant="h5"> <strong> Last Updated on 10-August-2023 </strong></Typography>
+                      <Typography variant="h5">  Last Updated on 10-August-2023</Typography>
                     </div>
                   </Grid>
                 </Grid>
