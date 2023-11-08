@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { List, ListItem, Typography, RadioGroup, FormControl, FormControlLabel, Radio } from '@mui/material';
+import { List, ListItem, Typography, RadioGroup, FormControl, FormControlLabel, Radio, CircularProgress } from '@mui/material';
 
 import styles from '@/styles/Home.module.css';
 import ShippingAddressForm from './ShippingAddressForm';
@@ -28,7 +28,9 @@ export default function DeliveryOrderItem({
     shippingCountry,
     shippingId,
     getCartOrder,
-    setDataLoading
+    setDataLoading,
+    orderShippingType,
+    billingAddress
 }: {
     productName: string;
     productImage: string;
@@ -41,10 +43,12 @@ export default function DeliveryOrderItem({
     shippingAddress: any;
     shippingId: string;
     getCartOrder: Function;
-    setDataLoading: any
+    setDataLoading: any;
+    orderShippingType: string;
+    billingAddress: any
 }) {
 
-    const [deliveryType, setDeliveryType] = React.useState(deliveryTypes[0]);
+    const [deliveryType, setDeliveryType] = React.useState(orderShippingType === "self-pickup" ? deliveryTypes[1] : deliveryTypes[0]);
     const [storeList, setStoreList] = React.useState([]);
     const [deliveryDetails, setDeliveryDetails] = React.useState({ country: shippingCountry, shippingType: deliveryTypes[0].value, storeId: null, shippingAddress: shippingAddress });
     const globalContext = useGlobalContext();
@@ -70,15 +74,9 @@ export default function DeliveryOrderItem({
             }
 
         } else {
-            if (deliveryDetails.shippingAddress?.firstName?.length > 1 &&
-                deliveryDetails.shippingAddress?.lastName?.length > 1 &&
-                deliveryDetails.shippingAddress?.city?.length > 1 &&
-                deliveryDetails.shippingAddress?.state?.length > 1 &&
-                deliveryDetails.shippingAddress?.phone?.length > 1 &&
-                deliveryDetails.shippingAddress?.postalCode?.length > 1 &&
+            if (
                 (deliveryDetails.shippingAddress?.country || shippingCountry)) {
                 //
-                data.shippingAddress.country = countryList?.find((x: any) => x._id === (deliveryDetails?.country ?? shippingCountry))?.name
 
                 setDataLoading(true);
 
@@ -193,7 +191,7 @@ export default function DeliveryOrderItem({
                                 <RadioGroup
                                     row
                                     aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue="yes"
+                                    defaultValue={orderShippingType === "self-pickup" ? 'no' : 'yes'}
                                     name="radio-buttons-group"
                                     value={deliveryType.value}
                                 >
@@ -212,6 +210,7 @@ export default function DeliveryOrderItem({
                                 onChange={handleChangePickUpStore}
                                 handleDeliveryAddress={handleDeliveryAddress} />}
                             {deliveryType.value === 'shipping' && <ShippingAddressForm
+                                billingAddress={billingAddress}
                                 countryList={countryList}
                                 shippingCountry={countryList.find((item: any) => item._id == deliveryDetails.country)}
                                 address={shippingAddress}
@@ -223,7 +222,7 @@ export default function DeliveryOrderItem({
                                     Self-Pickup Fee: &nbsp;
                                 </Typography>
                                 <Typography variant="h5">
-                                    AED {selfPickupFee}
+                                    {(selfPickupFee * globalContext.conversionRate).toFixed(2)} {globalContext.currencySymbol}
                                 </Typography>
                             </div>}
                             {deliveryType.value === 'shipping' && <div className={styles.fees}>
@@ -231,11 +230,11 @@ export default function DeliveryOrderItem({
                                     Shipping Fee: &nbsp;
                                 </Typography>
                                 <Typography variant="h5">
-                                    AED {shippingFee}
+                                    {(shippingFee * globalContext.conversionRate).toFixed(2)} {globalContext.currencySymbol}
                                 </Typography>
                             </div>}
 
-                            <p>{loading && <>Loading...</>}</p>
+                            <p>{loading && <><CircularProgress /></>}</p>
                         </ListItem>
                     </List>
                 </div>

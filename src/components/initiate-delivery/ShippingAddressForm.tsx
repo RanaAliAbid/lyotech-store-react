@@ -8,19 +8,17 @@ export default function ShippingAddressForm({
     countryList,
     address,
     shippingCountry,
-    onChange
+    onChange,
+    billingAddress
 }: {
     countryList: any
     address: any
     shippingCountry: string
-    onChange: Function
+    onChange: Function;
+    billingAddress: any;
 }) {
     const [country, setCountry] = React.useState(shippingCountry);
-    const [shippingAddress, setShippingAddress] = React.useState(address);
-
-    // React.useEffect(() => {
-    //     onChange({ shippingAddress: shippingAddress });
-    // }, [shippingAddress])
+    const [shippingAddress, setShippingAddress] = React.useState(address ?? billingAddress);
 
     React.useEffect(() => {
         onChange({ shippingCountry: country, shippingAddress: shippingAddress });
@@ -34,7 +32,7 @@ export default function ShippingAddressForm({
                 country: event.target.value
             })
 
-            setShippingAddress({ 
+            setShippingAddress({
                 ...shippingAddress,
                 country: countryList?.find((x: any) => x._id === country)?.name
             })
@@ -103,7 +101,7 @@ export default function ShippingAddressForm({
                             inputProps={{ 'aria-label': 'Without label' }}
                             required={true}
                             onChange={handleChange}
-                            value={country}
+                            value={country ?? countryList?.find((c: any) => c.name == "United Arab Emirates")}
                         >
                             {countryList?.map((item: any, index: number) =>
                                 <MenuItem value={item} key={index}> {item.name}</MenuItem>
