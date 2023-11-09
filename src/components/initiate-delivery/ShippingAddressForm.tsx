@@ -9,16 +9,20 @@ export default function ShippingAddressForm({
     address,
     shippingCountry,
     onChange,
-    billingAddress
+    billingAddress,
+    shippingSameAsBilling,
+    setShippingSameAsBilling
 }: {
     countryList: any
     address: any
     shippingCountry: string
     onChange: Function;
     billingAddress: any;
+    shippingSameAsBilling: Boolean;
+    setShippingSameAsBilling: any;
 }) {
     const [country, setCountry] = React.useState(shippingCountry);
-    const [shippingAddress, setShippingAddress] = React.useState(address ?? billingAddress);
+    const [shippingAddress, setShippingAddress] = React.useState(address);
 
     React.useEffect(() => {
         onChange({ shippingCountry: country, shippingAddress: shippingAddress });
@@ -39,10 +43,31 @@ export default function ShippingAddressForm({
         }
     };
 
+    React.useEffect(() => {
+        if (shippingSameAsBilling || address?.address?.length == 0) {
+            setShippingAddress(billingAddress)
+            !shippingSameAsBilling && setShippingSameAsBilling(true);
+        }
+    }, [shippingSameAsBilling])
+
 
     return (
-        <>
 
+        (shippingSameAsBilling) ?
+            <div>
+                <div style={{ width: '100%' }}>
+                    <Typography variant="h4">
+                        {shippingAddress?.firstName} {shippingAddress?.lastName} <br />
+                    </Typography>
+                    <br />
+                    <Typography variant="h6">
+                        {shippingAddress?.email}, {shippingAddress?.phone} <br />
+                        {shippingAddress?.address}, {shippingAddress?.postalCode} <br />
+                        {shippingAddress?.city}, {shippingAddress?.country}
+                    </Typography>
+                </div>
+            </div>
+            :
             <div>
                 <div className={styles.inlineForm}>
                     <div className={styles.formControl}>
@@ -112,12 +137,12 @@ export default function ShippingAddressForm({
 
                     <div className={styles.formControl}>
                         <label className={styles.formLabel}>
-                            State / Region <span className="text-danger">*</span>
+                            State / Region
                         </label>
                         <Input
                             className={styles.formInput}
                             placeholder="State"
-                            required={true}
+                            required={false}
                             value={shippingAddress?.state}
                             onChange={(e) => setShippingAddress((prevState: any) => { return { ...prevState, state: e.target.value } })}
                         />
@@ -169,8 +194,5 @@ export default function ShippingAddressForm({
 
                 </div>
             </div>
-        </>
-
-
     );
 }
