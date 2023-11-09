@@ -63,6 +63,11 @@
 	text-align: right;
 }
 
+.dflex {
+	display: flex;
+	gap: 15px;
+}
+
 .btn_primary {
 	/* background: linear-gradient(94deg, #2880FD 5.76%, #11ADE7 93.9%); */
 	background: linear-gradient(180deg, #06b8fa -30.95%, #005bdb 138%);
@@ -2334,13 +2339,19 @@ ul.wishlists,
 }
 
 
+.trackOrder .summaryDetails ul {
+	margin: 0;
+}
+
 
 .wrapTitle {
 	justify-content: space-between;
 }
+
 .orderIDdetails {
 	text-align: right;
 }
+
 .orderIDdetails h5 {
 	font-weight: 500;
 }
@@ -2349,473 +2360,45 @@ ul.wishlists,
 	margin: 0;
 }
 
-
-
-@media (max-width: 767px) {
-	.main h1 {
-		font-size: 26px;
-		line-height: 36px;
-	}
-
-	.main h2 {
-		font-size: 24px;
-		line-height: 34px;
-	}
-
-	.main h3 {
-		font-size: 22px;
-		line-height: 32px;
-	}
-
-	.main h4 {
-		font-size: 18px;
-		line-height: 28px;
-	}
-
-	.main h5 {
-		font-size: 15px;
-		line-height: 26px;
-	}
-
-	.header .logo {
-		flex-grow: 1;
-	}
-
-	.myCartMenu .productsList li {
-		display: flex;
-	}
-
-	.specificationTable table tr td,
-	.main h6 {
-		font-size: 14px;
-		line-height: 22px;
-		font-weight: 400;
-	}
-
-	.loginBox {
-		padding: 20px;
-	}
-
-	.loginBox p {
-		width: 100%;
-	}
-
-	.sidebarGrid {
-		display: none;
-	}
-
-	.productDetails .productSummary {
-		margin: 15px 0;
-	}
-
-	.headMenu {
-		display: none;
-	}
-
-	.productDetails {
-		padding: 0px;
-	}
-
-	.tabInfo .tablist button {
-		padding: 10px 25px;
-	}
-
-	.tabPanel {
-		padding: 15px 0px;
-	}
-
-	.tabInfo h5 {
-		font-size: 14px;
-		line-height: 24px;
-	}
-
-	.productWrapSec {
-		display: block;
-	}
-
-	.productWrapSec li {
-		display: flex;
-		align-items: center;
-		padding: 8px 0;
-	}
-
-	.productWrapSec li:nth-child(2),
-	.productWrapSec li:nth-child(3) {
-		display: inline-block;
-		width: 49%;
-	}
-
-	.productWrapSec li:nth-child(1) h5 {
-		margin: 0;
-	}
-
-	.productWrapSec li:nth-child(3) {
-		text-align: right;
-	}
-
-	.reviewItem {
-		gap: 12px;
-	}
-
-	.reviewTab .reviewTabSpace {
-		padding: 25px 0 25px 25px;
-	}
-
-	.productQty {
-		margin-left: 15px;
-	}
-
-	.productQty .formControl input {
-		padding: 5px 0 5px;
-	}
-
-	.productItem {
-		display: block;
-		padding: 15px;
-	}
-
-	.productItem ul li:nth-child(1) {
-		display: flex;
-	}
-
-	.productItem .productImg.forMobile {
-		width: 30%;
-		vertical-align: top;
-	}
-
-	.productItem .productImg img {
-		width: 100%;
-	}
-
-	.productItem .productDetails {
-		display: inline-block;
-		width: auto;
-		vertical-align: top;
-	}
-
-	.productItem .productName {
-		justify-content: start;
-		gap: 15px;
-	}
-
-	.productDetails .productHead {
-		display: block;
-	}
-
-	.productDetails h3.Home_productPrice {
-		font-size: 20px;
-		line-height: 30px;
-	}
-
-	.productItem .forMobile {
-		display: inherit;
-	}
-
-	.productItem .forDesktop {
-		display: none;
-	}
-
-	.wrapBox .flexBox .formControl {
-		width: 100%;
-		margin: 0;
-	}
-
-	.addressBox {
-		display: block;
-	}
-
-	.addressBox span {
-		font-size: 14px;
-	}
-
-	.addressBox h6 a {
-		display: block;
-		font-size: 14px;
-		font-weight: 400;
-		margin: 10px 25px;
-	}
-
-	.wrapBox {
-		margin-bottom: 25px;
-		padding: 15px;
-	}
-
-	.wrapBox.paymentBox,
-	.wrapBox.addressSection,
-	.wrapBox.paymentSection,
-	.wrapBox.profileSec {
-		padding: 0px;
-		box-shadow: none;
-	}
-
-	.wrapBox .payInfoBox .note {
-		padding: 10px;
-	}
-
-	.wrapBox .payInfoBox {
-		padding: 5px 0;
-	}
-
-	.wrapBox .payInfoBox h5 {
-		font-size: 12px;
-		line-height: 20px;
-	}
-
-	.formControl {
-		margin-bottom: 10px;
-	}
-
-	.ordersList .orderBody ul {
-		gap: 20px 0px;
-	}
-
-	.ordersList .orderBody ul li.productItem {
-		width: 50%;
-	}
-
-	.wishlists li.productItem {
-		width: 48%;
-	}
-
-	.wishlists .actionBtn {
-		padding: 10px 5px;
-	}
-
-	.wishlists li.productItem h5 {
-		font-size: 14px;
-		line-height: 20px;
-	}
-
-	.wishlists li.productItem p {
-		font-size: 10px;
-		line-height: 18px;
-	}
-
-	.wishlists li.productItem .productReview {
-		display: block;
-		margin: 5px 0;
-	}
-
-	.wishlists li.productItem .productReview h6 {
-		font-size: 12px;
-	}
-
-	.wishlists li.productItem .productReview .reviewStars svg {
-		font-size: 16px;
-		line-height: 18px;
-	}
-
-	.wishlists li.productItem h3 {
-		font-size: 18px;
-		margin: 0;
-	}
-
-	.addressSection ul li {
-		width: 100%;
-	}
-
-	.paymentSection .wrapSubTitle {
-		display: block;
-	}
-
-	.paymentSection .wrapSubTitle h4 {
-		margin-bottom: 10px;
-	}
-
-	.paymentSection .wrapSubTitle img {
-		margin-left: 0px;
-	}
-
-	.profileSec .boxInfoBody {
-		padding: 15px;
-	}
-
-	.profileSec .inline {
-		display: block;
-	}
-
-	.profileSec .inline .formControl {
-		width: 100%;
-	}
-
-	.drawerSideBar div:nth-child(3) {
-		width: 80%;
-	}
-
-	.orderHeadStatus {
-		display: block;
-	}
-
-	.orderHeadStatus .invoiceLinks {
-		margin-top: 15px;
-		text-align: right;
-	}
-
-	.ordersPlaceSec .productDetails {
-		margin-left: 15px;
-	}
-
-	.main .initiateDeliveryBox img {
-		width: 100% !important;
-	}
-
-
-
-	.initiateDeliveryBox .shipmentpWrapSec li {		
-		width: 100% !important;
-		padding: 0 0 10px 0;
-	}
-
-	.initiateDeliveryBox {
-		padding: 15px;
-	}
-	
-
-	
-	
+.status .chip {
+	background-color: rgb(31 93 180 / 20%);
+	color: var(--primary);
+	font-weight: 500;
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
 
-
-	
-
-	.wrapTitle {
-		justify-content: space-between;
-	}
-
-	
-
-
-	.wishlists li.productItem {
-		width: 31.3%;
-		gap: 10px;
-	}
-
-	.wishlists .actionBtn {
-		padding: 10px;
-	}
-
-	.wishlists li.productItem h5 {
-		font-size: 16px;
-		line-height: 20px;
-	}
-
-	.wishlists li.productItem p {
-		font-size: 12px;
-		line-height: 18px;
-	}
-
-	.wishlists li.productItem .productReview {
-		margin: 0;
-	}
-
-	.wishlists li.productItem .productReview h6 {
-		font-size: 14px;
-	}
-
-	.wishlists li.productItem .productReview .reviewStars svg {
-		font-size: 18px;
-		line-height: 18px;
-	}
-
-	.wishlists li.productItem h3 {
-		font-size: 20px;
-		margin: 0;
-	}
-
-	.drawerSideBar div:nth-child(3) {
-		width: 40%;
-	}
-
-
-	.initiateDeliveryBox .shipmentpWrapSec li:nth-child(1) {		
-		width: 25%;
-	}
-	
-	.initiateDeliveryBox .shipmentpWrapSec li:nth-child(2) {
-		width: 75%;
-	}
-	
-	.initiateDeliveryBox .shipmentpWrapSec li:nth-child(3) {		
-		width: 100%;
-		text-align: right;
-		padding: 0 15px;
-	}
-
-	
-
-
+.trackOrder .wrapSubTitle {
+	border: none;
+	margin-bottom: 25px;
+	padding: 10px 0;
 }
 
-@media (max-width: 991px) {
-	.loginBox .btn {
-		font-size: 14px;
-		line-height: 24px;
-		padding: 10px 20px;
-	}
-
-	.header .myAccount h5 {
-		display: none;
-	}
-
-	.header .myAccount {
-		min-width: auto;
-	}
-
-	.header .myAccount,
-	.header .myAccount svg {
-		margin: 0;
-	}
-
-	.sidebarGrid {
-		display: none;
-	}
-
-	.reviewTab .customerReviewsBox {
-		border: none;
-	}
-
-	ul.wishlists {
-		gap: 15px;
-	}
-
-	.wishlistSection {
-		box-shadow: none;
-		padding: 0;
-	}
-
-	.wishlists .actionBtn .btn {
-		font-size: 12px;
-		line-height: 18px;
-		padding: 8px 10px;
-	}
-
-	.drawerSideBar .sideBar {
-		box-shadow: none;
-	}
-
-	.sideBar .listTitle {
-		font-size: 16px;
-	}
-
-	.sideBar ul li a {
-		padding: 15px 20px;
-	}
-
-	.drawerMenu {
-		min-width: auto;
-		padding: 0 15px 0 0;
-	}
-
-	.drawerMenu svg {
-		color: var(--white);
-	}
-
-	.drawerMenu {
-		display: inherit;
-	}
+.trackStepper {
+	margin-bottom: 35px;
 }
+
+.trackStepper p {
+	text-align: center;
+}
+
+.trackStepper .MuiStepper-alternativeLabel .MuiStep-root:nth-child(1) {
+	text-align: left;
+}
+
+.trackOrder .orderBody {
+	padding: 15px 25px;
+}
+
+.trackBtnLink {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 25px;
+	padding: 25px 0;
+}
+
+
+
 
 
 /* Co Products Css Start */
@@ -3172,4 +2755,582 @@ ul.wishlists,
 
 .homeServicesWrap .serviceLink {
 	color: var(--black200);
+}
+
+.initiateDeliveryBox .productsList {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: 1px solid var(--border-color);
+}
+
+.trackOrder  .btn {
+	padding: 10px 20px;
+}
+
+.initiateDeliveryBox .productsList .product {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 15px;
+}
+
+.initiateDeliveryBox .productsList .product img {
+	width: 70px !important;
+}
+
+.initiateDeliveryBox .productsList .product h5 {
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.initiateDeliveryBox .productsList .product p {
+	color: var(--gray100);
+}
+
+.initiateDeliveryBox .productsList li + li {
+	justify-content: end;
+}
+
+
+
+.main .accordionSummary {
+	min-height: auto;
+	padding: 0;
+	gap: 15px;
+}
+
+.main .accordionSummary > div {
+	margin: 0;
+}
+
+.grayBox .productsList {
+	border: none;
+}
+
+.grayBox .trackBtnLink {
+	padding-bottom: 0;
+}
+
+.grayBox .productsList .wrapBox {
+	padding: 0;
+}
+
+.wrapBox .initiateDeliveryBox {
+	box-shadow: none;
+	padding: 0;
+}
+
+.wrapBox .initiateDeliveryBox .grayBox {
+	padding: 20px;
+	background-color: #FDFDFD;
+	border: 1px solid var(--border-color);
+	border-radius: 10px;
+}
+
+.grayBox .accordion {
+	box-shadow: none;
+	max-height: none !important;
+}
+
+.grayBox .accordion .productsList {
+	width: 100%;
+	margin: 0;
+}
+
+.grayBox .accordion .trackStepper {
+	margin-top: 25px;
+}
+.grayBox .accordion .accordionDetails {
+	padding: 0;	
+}
+
+.grayBox + .grayBox {
+	margin-top: 20px;
+}
+
+.grayBox .accordion .chip {
+	font-size: 12px;
+	line-height: 18px;
+	padding: 0;
+}
+
+
+
+
+
+@media (max-width: 767px) {
+	.main h1 {
+		font-size: 26px;
+		line-height: 36px;
+	}
+
+	.main h2 {
+		font-size: 24px;
+		line-height: 34px;
+	}
+
+	.main h3 {
+		font-size: 22px;
+		line-height: 32px;
+	}
+
+	.main h4 {
+		font-size: 18px;
+		line-height: 28px;
+	}
+
+	.main h5 {
+		font-size: 15px;
+		line-height: 26px;
+	}
+
+	.header .logo {
+		flex-grow: 1;
+	}
+
+	.myCartMenu .productsList li {
+		display: flex;
+	}
+
+	.specificationTable table tr td,
+	.main h6 {
+		font-size: 14px;
+		line-height: 22px;
+		font-weight: 400;
+	}
+
+	.loginBox {
+		padding: 20px;
+	}
+
+	.loginBox p {
+		width: 100%;
+	}
+
+	.sidebarGrid {
+		display: none;
+	}
+
+	.productDetails .productSummary {
+		margin: 15px 0;
+	}
+
+	.headMenu {
+		display: none;
+	}
+
+	.productDetails {
+		padding: 0px;
+	}
+
+	.tabInfo .tablist button {
+		padding: 10px 25px;
+	}
+
+	.tabPanel {
+		padding: 15px 0px;
+	}
+
+	.tabInfo h5 {
+		font-size: 14px;
+		line-height: 24px;
+	}
+
+	.productWrapSec {
+		display: block;
+	}
+
+	.productWrapSec li {
+		display: flex;
+		align-items: center;
+		padding: 8px 0;
+	}
+
+	.productWrapSec li:nth-child(2),
+	.productWrapSec li:nth-child(3) {
+		display: inline-block;
+		width: 49%;
+	}
+
+	.productWrapSec li:nth-child(1) h5 {
+		margin: 0;
+	}
+
+	.productWrapSec li:nth-child(3) {
+		text-align: right;
+	}
+
+	.reviewItem {
+		gap: 12px;
+	}
+
+	.reviewTab .reviewTabSpace {
+		padding: 25px 0 25px 25px;
+	}
+
+	.productQty {
+		margin-left: 15px;
+	}
+
+	.productQty .formControl input {
+		padding: 5px 0 5px;
+	}
+
+	.productItem {
+		display: block;
+		padding: 15px;
+	}
+
+	.productItem ul li:nth-child(1) {
+		display: flex;
+	}
+
+	.productItem .productImg.forMobile {
+		width: 30%;
+		vertical-align: top;
+	}
+
+	.productItem .productImg img {
+		width: 100%;
+	}
+
+	.productItem .productDetails {
+		display: inline-block;
+		width: auto;
+		vertical-align: top;
+	}
+
+	.productItem .productName {
+		justify-content: start;
+		gap: 15px;
+	}
+
+	.productDetails .productHead {
+		display: block;
+	}
+
+	.productDetails h3.Home_productPrice {
+		font-size: 20px;
+		line-height: 30px;
+	}
+
+	.productItem .forMobile {
+		display: inherit;
+	}
+
+	.productItem .forDesktop {
+		display: none;
+	}
+
+	.wrapBox .flexBox .formControl {
+		width: 100%;
+		margin: 0;
+	}
+
+	.addressBox {
+		display: block;
+	}
+
+	.addressBox span {
+		font-size: 14px;
+	}
+
+	.addressBox h6 a {
+		display: block;
+		font-size: 14px;
+		font-weight: 400;
+		margin: 10px 25px;
+	}
+
+	.wrapBox {
+		margin-bottom: 25px;
+		padding: 15px;
+	}
+
+	.wrapBox.paymentBox,
+	.wrapBox.addressSection,
+	.wrapBox.paymentSection,
+	.wrapBox.profileSec {
+		padding: 0px;
+		box-shadow: none;
+	}
+
+	.wrapBox .payInfoBox .note {
+		padding: 10px;
+	}
+
+	.wrapBox .payInfoBox {
+		padding: 5px 0;
+	}
+
+	.wrapBox .payInfoBox h5 {
+		font-size: 12px;
+		line-height: 20px;
+	}
+
+	.formControl {
+		margin-bottom: 10px;
+	}
+
+	.ordersList .orderBody ul {
+		gap: 20px 0px;
+	}
+
+	.ordersList .orderBody ul li.productItem {
+		width: 50%;
+	}
+
+	.wishlists li.productItem {
+		width: 48%;
+	}
+
+	.wishlists .actionBtn {
+		padding: 10px 5px;
+	}
+
+	.wishlists li.productItem h5 {
+		font-size: 14px;
+		line-height: 20px;
+	}
+
+	.wishlists li.productItem p {
+		font-size: 10px;
+		line-height: 18px;
+	}
+
+	.wishlists li.productItem .productReview {
+		display: block;
+		margin: 5px 0;
+	}
+
+	.wishlists li.productItem .productReview h6 {
+		font-size: 12px;
+	}
+
+	.wishlists li.productItem .productReview .reviewStars svg {
+		font-size: 16px;
+		line-height: 18px;
+	}
+
+	.wishlists li.productItem h3 {
+		font-size: 18px;
+		margin: 0;
+	}
+
+	.addressSection ul li {
+		width: 100%;
+	}
+
+	.paymentSection .wrapSubTitle {
+		display: block;
+	}
+
+	.paymentSection .wrapSubTitle h4 {
+		margin-bottom: 10px;
+	}
+
+	.paymentSection .wrapSubTitle img {
+		margin-left: 0px;
+	}
+
+	.profileSec .boxInfoBody {
+		padding: 15px;
+	}
+
+	.profileSec .inline {
+		display: block;
+	}
+
+	.profileSec .inline .formControl {
+		width: 100%;
+	}
+
+	.drawerSideBar div:nth-child(3) {
+		width: 80%;
+	}
+
+	.orderHeadStatus {
+		display: block;
+	}
+
+	.orderHeadStatus .invoiceLinks {
+		margin-top: 15px;
+		text-align: right;
+	}
+
+	.ordersPlaceSec .productDetails {
+		margin-left: 15px;
+	}
+
+	.main .initiateDeliveryBox img {
+		width: 100% !important;
+	}
+
+
+
+	.initiateDeliveryBox .shipmentpWrapSec li {
+		width: 100% !important;
+		padding: 0 0 10px 0;
+	}
+
+	.initiateDeliveryBox {
+		padding: 15px;
+	}
+
+
+	.grayBox .productsList {
+		display: block;
+	}
+
+	.trackBtnLink {
+		display: block;
+	}
+
+	.wrapBox .initiateDeliveryBox .grayBox {
+		padding: 10px;
+	}
+
+	.grayBox .productsList .wrapBox {
+		margin: 0 0 10px 0;
+	} 
+
+
+
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+	.wrapTitle {
+		justify-content: space-between;
+	}
+
+	.wishlists li.productItem {
+		width: 31.3%;
+		gap: 10px;
+	}
+
+	.wishlists .actionBtn {
+		padding: 10px;
+	}
+
+	.wishlists li.productItem h5 {
+		font-size: 16px;
+		line-height: 20px;
+	}
+
+	.wishlists li.productItem p {
+		font-size: 12px;
+		line-height: 18px;
+	}
+
+	.wishlists li.productItem .productReview {
+		margin: 0;
+	}
+
+	.wishlists li.productItem .productReview h6 {
+		font-size: 14px;
+	}
+
+	.wishlists li.productItem .productReview .reviewStars svg {
+		font-size: 18px;
+		line-height: 18px;
+	}
+
+	.wishlists li.productItem h3 {
+		font-size: 20px;
+		margin: 0;
+	}
+
+	.drawerSideBar div:nth-child(3) {
+		width: 40%;
+	}
+
+
+	.initiateDeliveryBox .shipmentpWrapSec li:nth-child(1) {
+		width: 25%;
+	}
+
+	.initiateDeliveryBox .shipmentpWrapSec li:nth-child(2) {
+		width: 75%;
+	}
+
+	.initiateDeliveryBox .shipmentpWrapSec li:nth-child(3) {
+		width: 100%;
+		text-align: right;
+		padding: 0 15px;
+	}
+
+
+
+
+}
+
+@media (max-width: 991px) {
+	.loginBox .btn {
+		font-size: 14px;
+		line-height: 24px;
+		padding: 10px 20px;
+	}
+
+	.header .myAccount h5 {
+		display: none;
+	}
+
+	.header .myAccount {
+		min-width: auto;
+	}
+
+	.header .myAccount,
+	.header .myAccount svg {
+		margin: 0;
+	}
+
+	.sidebarGrid {
+		display: none;
+	}
+
+	.reviewTab .customerReviewsBox {
+		border: none;
+	}
+
+	ul.wishlists {
+		gap: 15px;
+	}
+
+	.wishlistSection {
+		box-shadow: none;
+		padding: 0;
+	}
+
+	.wishlists .actionBtn .btn {
+		font-size: 12px;
+		line-height: 18px;
+		padding: 8px 10px;
+	}
+
+	.drawerSideBar .sideBar {
+		box-shadow: none;
+	}
+
+	.sideBar .listTitle {
+		font-size: 16px;
+	}
+
+	.sideBar ul li a {
+		padding: 15px 20px;
+	}
+
+	.drawerMenu {
+		min-width: auto;
+		padding: 0 15px 0 0;
+	}
+
+	.drawerMenu svg {
+		color: var(--white);
+	}
+
+	.drawerMenu {
+		display: inherit;
+	}
 }

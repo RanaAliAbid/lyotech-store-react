@@ -289,7 +289,10 @@ export default function Private() {
 
                                                             <ListItem>
                                                                 <Typography variant="h5">
-                                                                Standard warranty is provided by third party manufacturers, not LYOTECH LABS ELECTRONICS TRADING L.L.C. LYOTECH LABS ELECTRONICS TRADING L.L.C bears no responsibility for the manufacturer’s warranty, and Customers are advised to read the terms of such warranty carefully before purchasing.
+                                                                Standard warranty is provided by LYOTECH LABS ELECTRONICS TRADING L.L.C. 
+                                                                <br></br> LYOTECH LABS ELECTRONICS TRADING L.L.C bears 
+                                                                responsibility for the manufacturer’s warranty, and customers are advised to read the terms of
+                                                                warranty carefully before purchasing
                                                                 </Typography>
                                                             </ListItem>
 
