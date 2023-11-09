@@ -101,7 +101,7 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
                                                             </Typography>
 
                                                             <Typography variant="h6">
-                                                                Created on {order?.details?.createdAt && moment(order.details.createdAt).format("DD MMM YYYY")}
+                                                                Created on {order?.createdAt && moment(order.createdAt).format("DD MMM YYYY")}
                                                             </Typography>
                                                         </div>
                                                     </>
@@ -117,7 +117,7 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
                                                             </Typography>
 
                                                             <Typography variant="h6">
-                                                                Created on {order?.details?.createdAt && moment(order.details.createdAt).format("DD MMM YYYY")}
+                                                                Created on {order?.createdAt && moment(order.createdAt).format("DD MMM YYYY")}
                                                             </Typography>
                                                         </div>
                                                     </>
@@ -137,7 +137,7 @@ export default function PaymentSuccessComponent({ order }: InferGetServerSidePro
                                                             </Typography>
 
                                                             <Typography variant="h6">
-                                                                Placed on {order?.details?.createdAt && moment(order.details.createdAt).format("DD MMM YYYY")}
+                                                                Placed on {order?.createdAt && moment(order.createdAt).format("DD MMM YYYY")}
                                                             </Typography>
                                                         </div>
                                                     </>

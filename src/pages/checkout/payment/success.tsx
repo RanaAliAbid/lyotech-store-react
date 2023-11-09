@@ -79,8 +79,8 @@ export default function PaymentSuccessComponent({
 
                           <Typography variant="h6">
                             Placed on{' '}
-                            {order?.details?.createdAt &&
-                              moment(order.details.createdAt).format(
+                            {order?.createdAt &&
+                              moment(order.createdAt).format(
                                 'DD MMM YYYY'
                               )}
                           </Typography>
@@ -117,8 +117,8 @@ export default function PaymentSuccessComponent({
 
                           <Typography variant="h6">
                             Placed on{' '}
-                            {order?.details?.createdAt &&
-                              moment(order.details.createdAt).format(
+                            {order?.createdAt &&
+                              moment(order.createdAt).format(
                                 'DD MMM YYYY'
                               )}
                           </Typography>
