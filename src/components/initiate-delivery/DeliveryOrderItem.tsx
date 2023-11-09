@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { List, ListItem, Typography, RadioGroup, FormControl, FormControlLabel, Radio, CircularProgress } from '@mui/material';
+import { List, ListItem, Typography, RadioGroup, FormControl, FormControlLabel, Radio, CircularProgress, Checkbox } from '@mui/material';
 
 import styles from '@/styles/Home.module.css';
 import ShippingAddressForm from './ShippingAddressForm';
@@ -7,16 +7,22 @@ import StoreListDropDown from './StoreListDropDown';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { getPickUpStores, updateDeliveryCartOrder } from '@/services/orders/order.service';
 import { debounce } from '@/utils/app.utils';
+
 const deliveryTypes = [
     {
+        value: 'no',
+        label: 'Hold for now'
+    },
+    {
         value: 'shipping',
-        label: 'Yes'
+        label: 'Ship on address'
     },
     {
         value: 'pickup',
-        label: 'No'
+        label: 'Self Pickup'
     },
 ]
+
 export default function DeliveryOrderItem({
     productName,
     productImage,
@@ -30,7 +36,8 @@ export default function DeliveryOrderItem({
     getCartOrder,
     setDataLoading,
     orderShippingType,
-    billingAddress
+    billingAddress,
+    totalOrders
 }: {
     productName: string;
     productImage: string;
@@ -45,14 +52,16 @@ export default function DeliveryOrderItem({
     getCartOrder: Function;
     setDataLoading: any;
     orderShippingType: string;
-    billingAddress: any
+    billingAddress: any;
+    totalOrders: number
 }) {
 
-    const [deliveryType, setDeliveryType] = React.useState(orderShippingType === "self-pickup" ? deliveryTypes[1] : deliveryTypes[0]);
+    const [deliveryType, setDeliveryType] = React.useState(orderShippingType === "self-pickup" ? deliveryTypes[2] : orderShippingType == 'shipping' ? deliveryTypes[1] : deliveryTypes[0]);
     const [storeList, setStoreList] = React.useState([]);
     const [deliveryDetails, setDeliveryDetails] = React.useState({ country: shippingCountry, shippingType: deliveryTypes[0].value, storeId: null, shippingAddress: shippingAddress });
     const globalContext = useGlobalContext();
     const [loading, setLoading] = React.useState<boolean>(false);
+    const [shippingSameAsBilling, setShippingSameAsBilling] = React.useState<boolean>(false);
 
     React.useEffect(() => {
         let data = deliveryDetails
@@ -150,7 +159,7 @@ export default function DeliveryOrderItem({
 
     return (
         <>
-            <ListItem className={`${styles['wrapBox']} ${styles['productItem']}`}>
+            <ListItem className={`${styles['wrapBox']} ${styles['productItem']} ${styles.productBoxShadow}`}>
                 <div className={`${styles['productImg']} ${styles['forDesktop']}`}>
                     <img
                         src={productImage}
@@ -186,21 +195,26 @@ export default function DeliveryOrderItem({
                         <ListItem className={styles.item}>
                             <FormControl>
                                 <Typography variant="h5">
-                                    Shipping
+                                    Choose your shipping method
                                 </Typography>
                                 <RadioGroup
                                     row
                                     aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue={orderShippingType === "self-pickup" ? 'no' : 'yes'}
+                                    defaultValue={orderShippingType == "self-pickup" ? 'pickup' : (orderShippingType == 'shipping' ? 'shipping' : 'no')}
                                     name="radio-buttons-group"
                                     value={deliveryType.value}
                                 >
                                     {deliveryTypes.map((type, index) =>
-                                        <FormControlLabel key={`radio-d-type-${type.value}${index}`} value={type.value} control={<Radio />} label={type.label}
-                                            onChange={() => { handleChangeShippingType(type) }} />
+                                        (totalOrders > 1) ?
+                                            <FormControlLabel key={`radio-d-type-${type.value}${index}`} value={type.value} control={<Radio />} label={type.label}
+                                                onChange={() => { handleChangeShippingType(type) }} />
+                                            : type.value != 'no' && <FormControlLabel key={`radio-d-type-${type.value}${index}`} value={type.value} control={<Radio />} label={type.label}
+                                                onChange={() => { handleChangeShippingType(type) }} />
                                     )}
                                 </RadioGroup>
                             </FormControl>
+
+
                         </ListItem>
                         <ListItem className={styles.item}>
                             {deliveryType.value === 'pickup' && <StoreListDropDown
@@ -209,12 +223,24 @@ export default function DeliveryOrderItem({
                                 addressList={storeList}
                                 onChange={handleChangePickUpStore}
                                 handleDeliveryAddress={handleDeliveryAddress} />}
-                            {deliveryType.value === 'shipping' && <ShippingAddressForm
-                                billingAddress={billingAddress}
-                                countryList={countryList}
-                                shippingCountry={countryList.find((item: any) => item._id == deliveryDetails.country)}
-                                address={shippingAddress}
-                                onChange={handleDeliveryAddress} />}
+                            {deliveryType.value === 'shipping' &&
+                                <>
+
+                                    <FormControl>
+                                        <FormControlLabel control={<Checkbox defaultChecked={shippingSameAsBilling} onChange={(e) => setShippingSameAsBilling(e.target.checked)} />} label="Same as Billing" />
+                                    </FormControl>
+                                    <br />
+                                    <hr style={{ opacity: 0.1, marginTop: "10px" }} />
+                                    <br />
+                                    <ShippingAddressForm
+                                        billingAddress={billingAddress}
+                                        shippingSameAsBilling={shippingSameAsBilling}
+                                        setShippingSameAsBilling={setShippingSameAsBilling}
+                                        countryList={countryList}
+                                        shippingCountry={countryList.find((item: any) => item._id == deliveryDetails.country)}
+                                        address={shippingAddress}
+                                        onChange={handleDeliveryAddress} />
+                                </>}
                         </ListItem>
                         <ListItem className={styles.item}>
                             {deliveryType.value === 'pickup' && <div className={styles.fees}>

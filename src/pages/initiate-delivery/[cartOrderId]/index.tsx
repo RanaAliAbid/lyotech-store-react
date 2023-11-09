@@ -19,15 +19,15 @@ import { useGlobalContext } from '@/contexts/GlobalContext';
 import { getCountry } from '@/services/country/country.service';
 import MastercardCheckoutComponent from '@/components/checkout/paymentMethods/mastercardCheckout.component';
 import Link from 'next/link';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 export default function InitiateDelivery() {
     //
     const [cartOrder, setCartOrder] = React.useState<any>(null);
     const [countryList, setCountryList] = React.useState<any>([]);
     const [loading, setLoading] = React.useState<boolean>(false);
-    const [enablePlaceOrder, setEnablePlaceOrder] =
-        React.useState<boolean>(false);
     const [sessionId, setSessionId] = React.useState('');
+    const [enableProceedButton, setEnableProceedButton] = React.useState<Boolean>(false);
 
     const router = useRouter();
     const globalContext = useGlobalContext();
@@ -73,6 +73,8 @@ export default function InitiateDelivery() {
         try {
             e.preventDefault();
 
+            if (!enableProceedButton) return;
+
             globalContext.setGlobalLoading(true);
 
             const data = {
@@ -94,6 +96,16 @@ export default function InitiateDelivery() {
         }
     };
 
+    React.useEffect(() => {
+        setEnableProceedButton(false);
+        if (!cartOrder) return;
+        for (let order of cartOrder?.orders) {
+            if (order.shippingType != 'no') {
+                setEnableProceedButton(true);
+            }
+        }
+    }, [cartOrder])
+
     return (
         <>
             <ThemeProvider theme={theme}>
@@ -105,7 +117,7 @@ export default function InitiateDelivery() {
                                 <Grid container spacing={3}>
                                     <Grid item xs={12}>
                                         <div className={styles.wrapTitle}>
-                                            <Typography variant="h4"><Link style={{ color: 'red' }} href={`${process.env.CLOUDX_URL}/orders`}>Cancel</Link>&nbsp; Initiate delivery </Typography>
+                                            <Typography variant="h4"><Link style={{ color: 'red' }} href={`${process.env.CLOUDX_URL}/shop/orders`}><ArrowBackIosNewIcon style={{ float: 'left' }} /> <span style={{ float: 'left', marginBottom: '-15px' }}>Back</span></Link><br /> Initiate delivery </Typography>
 
                                             <div className={`${styles['orderIDdetails']} `}>
                                                 <Typography variant="h5">
@@ -142,6 +154,7 @@ export default function InitiateDelivery() {
                                                                 orderId={order.order._id}
                                                                 cartOrderId={cartOrder?.cartOrder?._id}
                                                                 shippingId={cartOrder?._id}
+                                                                totalOrders={cartOrder?.orders?.length ?? 0}
                                                                 shippingCountry={order.shippingCountry}
                                                                 shippingAddress={order.shippingAddress}
                                                                 getCartOrder={getCartOrder}
@@ -153,7 +166,7 @@ export default function InitiateDelivery() {
                                                 </List>
 
                                                 <br />
-                                                <hr style={{ opacity: 0.3 }} />
+                                                <hr style={{ opacity: 0.2 }} />
                                                 <br />
                                                 <Grid container spacing={3} justifyContent="flex-end">
                                                     <Grid item md={4} sm={6} xs={12}>
@@ -183,7 +196,7 @@ export default function InitiateDelivery() {
 
                                                                 {cartOrder.totalAppliedTax > 0 && (
                                                                     <ListItem>
-                                                                        <Typography variant="h6">Tax</Typography>
+                                                                        <Typography variant="h6">VAT</Typography>
                                                                         <Typography variant="h6">
                                                                             {(cartOrder.totalAppliedTax * globalContext.conversionRate).toFixed(2)} {globalContext.currencySymbol}
                                                                         </Typography>
@@ -206,7 +219,7 @@ export default function InitiateDelivery() {
                                                                     <LinearProgress />
                                                                 </>
                                                             ) : (
-                                                                <Button
+                                                                enableProceedButton && <Button
                                                                     variant="contained"
                                                                     fullWidth
                                                                     type="submit"
