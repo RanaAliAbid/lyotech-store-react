@@ -117,7 +117,7 @@ export default function InitiateDelivery() {
                                 <Grid container spacing={3}>
                                     <Grid item xs={12}>
                                         <div className={styles.wrapTitle}>
-                                            <Typography variant="h4"><Link style={{ color: 'red' }} href={`${process.env.CLOUDX_URL}/orders`}><ArrowBackIosNewIcon style={{ float: 'left' }} /> <span style={{ float: 'left', marginBottom: '-15px' }}>Back</span></Link><br /> Initiate delivery </Typography>
+                                            <Typography variant="h4"><Link style={{ color: 'red' }} href={`${process.env.CLOUDX_URL}/shop/orders`}><ArrowBackIosNewIcon style={{ float: 'left' }} /> <span style={{ float: 'left', marginBottom: '-15px' }}>Back</span></Link><br /> Initiate delivery </Typography>
 
                                             <div className={`${styles['orderIDdetails']} `}>
                                                 <Typography variant="h5">

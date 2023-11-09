@@ -11,15 +11,15 @@ import { debounce } from '@/utils/app.utils';
 const deliveryTypes = [
     {
         value: 'no',
-        label: 'No'
+        label: 'Hold for now'
     },
     {
         value: 'shipping',
-        label: 'Yes'
+        label: 'Ship on address'
     },
     {
         value: 'pickup',
-        label: 'Pickup'
+        label: 'Self Pickup'
     },
 ]
 
@@ -159,7 +159,7 @@ export default function DeliveryOrderItem({
 
     return (
         <>
-            <ListItem className={`${styles['wrapBox']} ${styles['productItem']}`}>
+            <ListItem className={`${styles['wrapBox']} ${styles['productItem']} ${styles.productBoxShadow}`}>
                 <div className={`${styles['productImg']} ${styles['forDesktop']}`}>
                     <img
                         src={productImage}
@@ -195,7 +195,7 @@ export default function DeliveryOrderItem({
                         <ListItem className={styles.item}>
                             <FormControl>
                                 <Typography variant="h5">
-                                    Shipping
+                                    Choose your shipping method
                                 </Typography>
                                 <RadioGroup
                                     row
@@ -214,15 +214,6 @@ export default function DeliveryOrderItem({
                                 </RadioGroup>
                             </FormControl>
 
-                            {
-                                deliveryType.value == "shipping" && <>
-                                    <hr style={{ opacity: 0.1, marginTop: "10px" }} />
-                                    <FormControl>
-                                        <FormControlLabel control={<Checkbox defaultChecked={shippingSameAsBilling} onChange={(e) => setShippingSameAsBilling(e.target.checked)} />} label="Same as Billing" />
-                                    </FormControl>
-                                </>
-                            }
-
 
                         </ListItem>
                         <ListItem className={styles.item}>
@@ -232,14 +223,24 @@ export default function DeliveryOrderItem({
                                 addressList={storeList}
                                 onChange={handleChangePickUpStore}
                                 handleDeliveryAddress={handleDeliveryAddress} />}
-                            {deliveryType.value === 'shipping' && <ShippingAddressForm
-                                billingAddress={billingAddress}
-                                shippingSameAsBilling={shippingSameAsBilling}
-                                setShippingSameAsBilling={setShippingSameAsBilling}
-                                countryList={countryList}
-                                shippingCountry={countryList.find((item: any) => item._id == deliveryDetails.country)}
-                                address={shippingAddress}
-                                onChange={handleDeliveryAddress} />}
+                            {deliveryType.value === 'shipping' &&
+                                <>
+
+                                    <FormControl>
+                                        <FormControlLabel control={<Checkbox defaultChecked={shippingSameAsBilling} onChange={(e) => setShippingSameAsBilling(e.target.checked)} />} label="Same as Billing" />
+                                    </FormControl>
+                                    <br />
+                                    <hr style={{ opacity: 0.1, marginTop: "10px" }} />
+                                    <br />
+                                    <ShippingAddressForm
+                                        billingAddress={billingAddress}
+                                        shippingSameAsBilling={shippingSameAsBilling}
+                                        setShippingSameAsBilling={setShippingSameAsBilling}
+                                        countryList={countryList}
+                                        shippingCountry={countryList.find((item: any) => item._id == deliveryDetails.country)}
+                                        address={shippingAddress}
+                                        onChange={handleDeliveryAddress} />
+                                </>}
                         </ListItem>
                         <ListItem className={styles.item}>
                             {deliveryType.value === 'pickup' && <div className={styles.fees}>

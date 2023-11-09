@@ -2231,9 +2231,9 @@ ul.wishlists,
 	font-weight: 600;
 }
 
-.initiateDeliveryBox {
-	box-shadow: 0px 3px 6px rgba(179, 179, 179, 0.25);
-}
+/* .initiateDeliveryBox, .productBoxShadow {
+	box-shadow: 0px 3px 6px rgba(179, 179, 179, 0.25); */
+/* } */
 
 .initiateDeliveryBox .wrapBox {
 	box-shadow: none;
@@ -3334,4 +3334,10 @@ ul.wishlists,
 	.drawerMenu {
 		display: inherit;
 	}
+}
+
+.productBoxShadow {
+	box-shadow: 0px 3px 6px rgba(179, 179, 179, 0.25) !important;
+	padding: 12px !important;
+	margin-top: 20px;
 }
