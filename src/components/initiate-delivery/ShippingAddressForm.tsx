@@ -21,7 +21,7 @@ export default function ShippingAddressForm({
     shippingSameAsBilling: Boolean;
     setShippingSameAsBilling: any;
 }) {
-    const [country, setCountry] = React.useState(shippingCountry);
+    const [country, setCountry] = React.useState<any>(shippingCountry);
     const [shippingAddress, setShippingAddress] = React.useState(address);
 
     React.useEffect(() => {
@@ -126,7 +126,7 @@ export default function ShippingAddressForm({
                             inputProps={{ 'aria-label': 'Without label' }}
                             required={true}
                             onChange={handleChange}
-                            value={country ?? countryList?.find((c: any) => c.name == "United Arab Emirates")}
+                            value={country?.name ? country : countryList?.find((c: any) => c.name == country ?? "United Arab Emirates")}
                         >
                             {countryList?.map((item: any, index: number) =>
                                 <MenuItem value={item} key={index}> {item.name}</MenuItem>
