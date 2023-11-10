@@ -419,7 +419,7 @@ export default function Checkout({
                           Billing Address
                         </Typography>
 
-                        {userAddressList?.address?.defaultAddress && (
+                        {/* {userAddressList?.address?.defaultAddress && (
                           <Typography variant="h6">
                             <Link
                               href="#"
@@ -428,7 +428,7 @@ export default function Checkout({
                               Use Default Address{' '}
                             </Link>
                           </Typography>
-                        )}
+                        )} */}
                       </div>
 
                       <div className={styles.wrapBox}>
