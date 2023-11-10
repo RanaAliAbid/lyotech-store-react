@@ -166,7 +166,6 @@ export default function InitiateDelivery() {
                                                 </List>
 
                                                 <br />
-                                                <hr style={{ opacity: 0.2 }} />
                                                 <br />
                                                 <Grid container spacing={3} justifyContent="flex-end">
                                                     <Grid item md={4} sm={6} xs={12}>

@@ -159,114 +159,114 @@ export default function DeliveryOrderItem({
 
     return (
         <>
-            <ListItem className={`${styles['wrapBox']} ${styles['productItem']} ${styles.productBoxShadow}`}>
-                <div className={`${styles['productImg']} ${styles['forDesktop']}`}>
-                    <img
-                        src={productImage}
-                        alt="logo"
-                        className="product_cart_image"
-                    />
-                </div>
-                <div className={styles.productDetails}>
-                    <div className={styles.productName}>
-                        <div className={`${styles['productImg']} ${styles['forMobile']}`}>
-                            <img
-                                src={productImage}
-                                alt="logo"
-                                className="product_cart_image"
-                            />
-                        </div>
-                        <div className={styles.productHead}>
-                            <div>
-                                <Typography
-                                    variant="h4"
-                                    className={styles.productitle}
-                                >
-                                    {productName}
-                                </Typography>
+            <div className={`${styles.productBoxShadow}`}>
+                <ListItem className={`${styles['wrapBox']} ${styles['productItem']} `}>
+                    <div className={`${styles['productImg']} ${styles['forDesktop']}`}>
+                        <img
+                            src={productImage}
+                            alt="logo"
+                            className="product_cart_image"
+                        />
+                    </div>
+                    <div className={styles.productDetails}>
+                        <div className={styles.productName}>
+                            <div className={`${styles['productImg']} ${styles['forMobile']}`}>
+                                <img
+                                    src={productImage}
+                                    alt="logo"
+                                    className="product_cart_image"
+                                />
+                            </div>
+                            <div className={styles.productHead}>
+                                <div>
+                                    <Typography
+                                        variant="h4"
+                                        className={styles.productitle}
+                                    >
+                                        {productName}
+                                    </Typography>
 
-                                <Typography variant="body1">
-                                    Model Name: {productName}
-                                </Typography>
+                                    <Typography variant="body1">
+                                        Model Name: {productName}
+                                    </Typography>
+                                </div>
                             </div>
                         </div>
+                        <List className={styles.shipmentpWrapSec}>
+                            <ListItem className={styles.item}>
+                                <FormControl>
+                                    <Typography variant="h5">
+                                        Choose your shipping method
+                                    </Typography>
+                                    <RadioGroup
+                                        row
+                                        aria-labelledby="demo-radio-buttons-group-label"
+                                        defaultValue={orderShippingType == "self-pickup" ? 'pickup' : (orderShippingType == 'shipping' ? 'shipping' : 'no')}
+                                        name="radio-buttons-group"
+                                        value={deliveryType.value}
+                                    >
+                                        {deliveryTypes.map((type, index) =>
+                                            (totalOrders > 1) ?
+                                                <FormControlLabel key={`radio-d-type-${type.value}${index}`} value={type.value} control={<Radio />} label={type.label}
+                                                    onChange={() => { handleChangeShippingType(type) }} />
+                                                : type.value != 'no' && <FormControlLabel key={`radio-d-type-${type.value}${index}`} value={type.value} control={<Radio />} label={type.label}
+                                                    onChange={() => { handleChangeShippingType(type) }} />
+                                        )}
+                                    </RadioGroup>
+                                </FormControl>
+
+
+                            </ListItem>
+                            <ListItem className={styles.item}>
+                                {deliveryType.value === 'pickup' && <StoreListDropDown
+                                    countryList={countryList}
+                                    shippingCountry={countryList.find((item: any) => item._id == deliveryDetails.country)}
+                                    addressList={storeList}
+                                    onChange={handleChangePickUpStore}
+                                    handleDeliveryAddress={handleDeliveryAddress} />}
+                                {deliveryType.value === 'shipping' &&
+                                    <>
+
+                                        <FormControl>
+                                            <FormControlLabel control={<Checkbox defaultChecked={shippingSameAsBilling} onChange={(e) => setShippingSameAsBilling(e.target.checked)} />} label="Same as Billing" />
+                                        </FormControl>
+                                        <br />
+                                        <hr style={{ opacity: 0.1, marginTop: "10px" }} />
+                                        <br />
+                                        <ShippingAddressForm
+                                            billingAddress={billingAddress}
+                                            shippingSameAsBilling={shippingSameAsBilling}
+                                            setShippingSameAsBilling={setShippingSameAsBilling}
+                                            countryList={countryList}
+                                            shippingCountry={countryList.find((item: any) => item._id == deliveryDetails.country)}
+                                            address={shippingAddress}
+                                            onChange={handleDeliveryAddress} />
+                                    </>}
+                            </ListItem>
+                            <ListItem className={styles.item}>
+                                {deliveryType.value === 'pickup' && <div className={styles.fees}>
+                                    <Typography variant="body1">
+                                        Self-Pickup Fee: &nbsp;
+                                    </Typography>
+                                    <Typography variant="h5">
+                                        {(selfPickupFee * globalContext.conversionRate).toFixed(2)} {globalContext.currencySymbol}
+                                    </Typography>
+                                </div>}
+                                {deliveryType.value === 'shipping' && <div className={styles.fees}>
+                                    <Typography variant="body1">
+                                        Shipping Fee: &nbsp;
+                                    </Typography>
+                                    <Typography variant="h5">
+                                        {(shippingFee * globalContext.conversionRate).toFixed(2)} {globalContext.currencySymbol}
+                                    </Typography>
+                                </div>}
+
+                                <p>{loading && <><CircularProgress /></>}</p>
+                            </ListItem>
+                        </List>
                     </div>
-                    <List className={styles.shipmentpWrapSec}>
-                        <ListItem className={styles.item}>
-                            <FormControl>
-                                <Typography variant="h5">
-                                    Choose your shipping method
-                                </Typography>
-                                <RadioGroup
-                                    row
-                                    aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue={orderShippingType == "self-pickup" ? 'pickup' : (orderShippingType == 'shipping' ? 'shipping' : 'no')}
-                                    name="radio-buttons-group"
-                                    value={deliveryType.value}
-                                >
-                                    {deliveryTypes.map((type, index) =>
-                                        (totalOrders > 1) ?
-                                            <FormControlLabel key={`radio-d-type-${type.value}${index}`} value={type.value} control={<Radio />} label={type.label}
-                                                onChange={() => { handleChangeShippingType(type) }} />
-                                            : type.value != 'no' && <FormControlLabel key={`radio-d-type-${type.value}${index}`} value={type.value} control={<Radio />} label={type.label}
-                                                onChange={() => { handleChangeShippingType(type) }} />
-                                    )}
-                                </RadioGroup>
-                            </FormControl>
-
-
-                        </ListItem>
-                        <ListItem className={styles.item}>
-                            {deliveryType.value === 'pickup' && <StoreListDropDown
-                                countryList={countryList}
-                                shippingCountry={countryList.find((item: any) => item._id == deliveryDetails.country)}
-                                addressList={storeList}
-                                onChange={handleChangePickUpStore}
-                                handleDeliveryAddress={handleDeliveryAddress} />}
-                            {deliveryType.value === 'shipping' &&
-                                <>
-
-                                    <FormControl>
-                                        <FormControlLabel control={<Checkbox defaultChecked={shippingSameAsBilling} onChange={(e) => setShippingSameAsBilling(e.target.checked)} />} label="Same as Billing" />
-                                    </FormControl>
-                                    <br />
-                                    <hr style={{ opacity: 0.1, marginTop: "10px" }} />
-                                    <br />
-                                    <ShippingAddressForm
-                                        billingAddress={billingAddress}
-                                        shippingSameAsBilling={shippingSameAsBilling}
-                                        setShippingSameAsBilling={setShippingSameAsBilling}
-                                        countryList={countryList}
-                                        shippingCountry={countryList.find((item: any) => item._id == deliveryDetails.country)}
-                                        address={shippingAddress}
-                                        onChange={handleDeliveryAddress} />
-                                </>}
-                        </ListItem>
-                        <ListItem className={styles.item}>
-                            {deliveryType.value === 'pickup' && <div className={styles.fees}>
-                                <Typography variant="body1">
-                                    Self-Pickup Fee: &nbsp;
-                                </Typography>
-                                <Typography variant="h5">
-                                    {(selfPickupFee * globalContext.conversionRate).toFixed(2)} {globalContext.currencySymbol}
-                                </Typography>
-                            </div>}
-                            {deliveryType.value === 'shipping' && <div className={styles.fees}>
-                                <Typography variant="body1">
-                                    Shipping Fee: &nbsp;
-                                </Typography>
-                                <Typography variant="h5">
-                                    {(shippingFee * globalContext.conversionRate).toFixed(2)} {globalContext.currencySymbol}
-                                </Typography>
-                            </div>}
-
-                            <p>{loading && <><CircularProgress /></>}</p>
-                        </ListItem>
-                    </List>
-                </div>
-            </ListItem>
+                </ListItem >
+            </div>
         </>
-
-
     );
 }
