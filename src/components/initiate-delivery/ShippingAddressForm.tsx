@@ -126,7 +126,7 @@ export default function ShippingAddressForm({
                             inputProps={{ 'aria-label': 'Without label' }}
                             required={true}
                             onChange={handleChange}
-                            value={country?.name ? country : countryList?.find((c: any) => c.name == country ?? "United Arab Emirates")}
+                            value={!shippingSameAsBilling ? country : countryList?.find((c: any) => c.name == billingAddress?.country ?? "United Arab Emirates")}
                         >
                             {countryList?.map((item: any, index: number) =>
                                 <MenuItem value={item} key={index}> {item.name}</MenuItem>
