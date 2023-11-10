@@ -134,6 +134,7 @@ export default function DeliveryOrderItem({
     }
 
     const handleChangeShippingType = (type: any) => {
+        globalContext.setGlobalLoading(true);
         setDeliveryType(type)
         setDeliveryDetails(prevState => { return { ...prevState, shippingType: type.value } })
     }

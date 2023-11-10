@@ -30,6 +30,7 @@ export const formCheckEmptyFields = (
             country: true,
             state: true, // optional
             type: true, //optional
+            postalCode: true,
         },
         billingAddress: {
             firstName: true,
@@ -52,6 +53,7 @@ export const formCheckEmptyFields = (
     dataValidate.shippingAddress.city = replaceSpecialChar(data.shippingAddress.city) == '' ? false : true;
     dataValidate.shippingAddress.country = replaceSpecialChar(data.shippingAddress.country) == '' ? false : true;
     dataValidate.shippingAddress.state = replaceSpecialChar(data.shippingAddress.state) == '' ? false : true;
+    dataValidate.shippingAddress.postalCode = replaceSpecialChar(data.shippingAddress.postalCode) == '' ? false : true;
 
     return dataValidate;
 };

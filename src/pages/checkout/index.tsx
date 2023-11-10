@@ -90,7 +90,7 @@ export default function Checkout({
         setChangeAddress(true);
       }
 
-      // setUserAddressList(result?.data?.data);
+      setUserAddressList(result?.data?.data);
 
       globalContext.setGlobalLoading(false);
     } catch (error) {
@@ -142,7 +142,8 @@ export default function Checkout({
       !checkForm.shippingAddress.phone ||
       !checkForm.shippingAddress.firstName ||
       !checkForm.shippingAddress.lastName ||
-      !checkForm.shippingAddress.email
+      !checkForm.shippingAddress.email ||
+      !checkForm.shippingAddress.postalCode
     ) {
       setEnablePlaceOrder(false);
     } else {
@@ -211,6 +212,10 @@ export default function Checkout({
           '',
         address2: userAddressList?.address?.defaultAddress?.address2 ?? '',
         type: userAddressList?.address?.defaultAddress?.type ?? 'Other',
+        postalCode:
+          userAddressList?.address?.defaultAddress?.postalCode ??
+          _localAddress?.shippingAddress?.postalCode ??
+          '',
       },
       billingAddress: {
         firstName:
@@ -248,6 +253,10 @@ export default function Checkout({
           _localAddress?.shippingAddress?.state ??
           '',
         address2: userAddressList?.address?.defaultAddress?.address2 ?? '',
+        postalCode:
+          userAddressList?.address?.defaultAddress?.postalCode ??
+          _localAddress?.shippingAddress?.postalCode ??
+          '',
       },
       notes: '',
     };
@@ -257,7 +266,7 @@ export default function Checkout({
     }
 
     setFormAddress(addresses);
-  }, [changeAddress]);
+  }, [changeAddress, userAddressList]);
 
   React.useEffect(() => {
     if (
@@ -340,6 +349,9 @@ export default function Checkout({
         shippingAddress: {
           ...formAddress.shippingAddress,
           country: '-',
+          address: '-',
+          city: '-',
+          postalCode: '-'
         },
         billingAddress: shippingSameBilling
           ? formAddress.shippingAddress

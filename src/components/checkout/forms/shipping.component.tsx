@@ -429,6 +429,7 @@ export default function ShippingFormComponent({
               />
             </div> */}
 
+
             <div className={styles.formControl}>
               <label className={styles.formLabel}>
                 {' '}
@@ -452,7 +453,37 @@ export default function ShippingFormComponent({
           </>
           {/* // )} */}
 
-          <div className={styles.formControl} style={{ width: "100%" }}>
+          <div className={styles.formControl}>
+            <label className={styles.formLabel}> Postal Code <span className="text-danger">*</span>{' '}</label>
+            <Input
+              className={styles.formInput}
+              value={formAddress?.shippingAddress?.postalCode}
+              required
+              onChange={(e: any) =>
+                setFormAddress({
+                  ...formAddress,
+                  shippingAddress: {
+                    ...formAddress.shippingAddress,
+                    postalCode: e.target.value,
+                  },
+                })
+              }
+              placeholder="Postal Code"
+            />
+          </div>
+          <div className={styles.formControl}>
+            <label className={styles.formLabel}> Order notes </label>
+            <Input
+              className={styles.formInput}
+              value={formAddress?.notes ?? ''}
+              placeholder="Order notes (optional)"
+              onChange={(e: any) =>
+                setFormAddress({ ...formAddress, notes: e.target.value })
+              }
+            />
+          </div>
+
+          {/* <div className={styles.formControl} style={{ width: "100%" }}>
             <label className={styles.formLabel}> Order notes </label>
             <Input
               className={styles.formInput}
@@ -462,7 +493,7 @@ export default function ShippingFormComponent({
                 setFormAddress({ ...formAddress, notes: e.target.value })
               }
             />
-          </div>
+          </div> */}
         </div>
       </>
       : <></>
