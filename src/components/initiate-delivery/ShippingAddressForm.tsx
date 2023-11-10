@@ -15,7 +15,7 @@ export default function ShippingAddressForm({
 }: {
     countryList: any
     address: any
-    shippingCountry: string
+    shippingCountry: any
     onChange: Function;
     billingAddress: any;
     shippingSameAsBilling: Boolean;
@@ -31,10 +31,10 @@ export default function ShippingAddressForm({
     const handleChange = (event: SelectChangeEvent) => {
         setCountry(event.target.value);
         if (event.target.value) {
-            setShippingAddress({
-                ...shippingAddress,
-                country: event.target.value
-            })
+            // setShippingAddress({
+            //     ...shippingAddress,
+            //     country: event.target.value
+            // })
 
             setShippingAddress({
                 ...shippingAddress,
@@ -47,7 +47,7 @@ export default function ShippingAddressForm({
         if (shippingSameAsBilling || address?.address?.length == 0) {
             setShippingAddress({
                 ...billingAddress,
-                country: countryList?.find((c: any) => c.name == billingAddress?.country ?? "United Arab Emirates")
+                country: countryList?.find((c: any) => c.name == billingAddress?.country ?? "United Arab Emirates")?.name
             })
             !shippingSameAsBilling && setShippingSameAsBilling(true);
         }
