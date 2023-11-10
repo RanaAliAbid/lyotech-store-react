@@ -45,7 +45,10 @@ export default function ShippingAddressForm({
 
     React.useEffect(() => {
         if (shippingSameAsBilling || address?.address?.length == 0) {
-            setShippingAddress(billingAddress)
+            setShippingAddress({
+                ...billingAddress,
+                country: countryList?.find((c: any) => c.name == billingAddress?.country ?? "United Arab Emirates")
+            })
             !shippingSameAsBilling && setShippingSameAsBilling(true);
         }
     }, [shippingSameAsBilling])
@@ -120,6 +123,8 @@ export default function ShippingAddressForm({
                         <label className={styles.formLabel}>
                             Country <span className="text-danger">*</span>
                         </label>
+
+
                         <Select
                             className={styles.selectForm}
                             displayEmpty
@@ -132,6 +137,8 @@ export default function ShippingAddressForm({
                                 <MenuItem value={item} key={index}> {item.name}</MenuItem>
                             )}
                         </Select>
+
+
 
                     </FormControl>
 
@@ -193,6 +200,6 @@ export default function ShippingAddressForm({
                     </div>
 
                 </div>
-            </div>
+            </div >
     );
 }
