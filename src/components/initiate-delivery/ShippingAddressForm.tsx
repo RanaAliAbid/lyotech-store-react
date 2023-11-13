@@ -31,24 +31,24 @@ export default function ShippingAddressForm({
     const handleChange = (event: SelectChangeEvent) => {
         setCountry(event.target.value);
         if (event.target.value) {
-            // setShippingAddress({
-            //     ...shippingAddress,
-            //     country: event.target.value
-            // })
-
             setShippingAddress({
                 ...shippingAddress,
-                country: countryList?.find((x: any) => x._id === country)?.name
+                country: event.target.value
             })
         }
     };
 
     React.useEffect(() => {
         if (shippingSameAsBilling || address?.address?.length == 0) {
-            setShippingAddress({
+
+            const newShippingAddress = {
                 ...billingAddress,
                 country: countryList?.find((c: any) => c.name == billingAddress?.country ?? "United Arab Emirates")?.name
-            })
+            }
+            setCountry(countryList?.find((c: any) => c.name == billingAddress?.country ?? "United Arab Emirates"))
+
+            setShippingAddress(newShippingAddress)
+
             !shippingSameAsBilling && setShippingSameAsBilling(true);
         }
     }, [shippingSameAsBilling])
