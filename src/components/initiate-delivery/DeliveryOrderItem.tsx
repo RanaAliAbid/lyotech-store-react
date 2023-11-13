@@ -229,7 +229,7 @@ export default function DeliveryOrderItem({
                                     <>
 
                                         <FormControl>
-                                            <FormControlLabel control={<Checkbox defaultChecked={shippingSameAsBilling} onChange={(e) => setShippingSameAsBilling(e.target.checked)} />} label="Same as Billing" />
+                                            <FormControlLabel control={<Checkbox checked={shippingSameAsBilling} onChange={(e) => setShippingSameAsBilling(e.target.checked)} />} label="Same as Billing" />
                                         </FormControl>
                                         <br />
                                         <hr style={{ opacity: 0.1, marginTop: "10px" }} />
