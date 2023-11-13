@@ -44,9 +44,9 @@ export default function Footer() {
                 </Typography>
 
                 <Typography variant="h5">
-                  Office 701, Emaar Square Building 1,
-                  00000 Downtown, Dubai U.A.E.
-                  {/* Whp2-block-T Commercial <br />Saih Shuaib 3, Dubai, U.A.E. */}
+                  {/* Office 701, Emaar Square Building 1,
+                  00000 Downtown, Dubai U.A.E. */}
+                  Whp2-block-T Commercial <br />Saih Shuaib 3, Dubai, U.A.E.
                 </Typography>
 
                 <Typography variant="h4">
