@@ -107,7 +107,6 @@ export default function DeliveryOrderItem({
         } else {
             if (deliveryDetails.shippingAddress?.country || shippingCountry) {
                 //
-
                 setDataLoading(true);
 
                 debounce(updateDeliveryDetails, 2000, {

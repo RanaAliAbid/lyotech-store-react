@@ -36,20 +36,20 @@ export default function ShippingAddressForm({
                         (c: any) =>
                             c.name == billingAddress?.country ??
                             'United Arab Emirates'
-                    )
+                    )?.name
                 }
             });
         }
     }, [country, shippingAddress]);
 
-    const handleChange = (event: SelectChangeEvent) => {
+    const handleChange = (event: any | SelectChangeEvent) => {
         setCountry(event.target.value);
-        // if (event.target.value) {
-        setShippingAddress({
-            ...shippingAddress,
-            country: event.target.value,
-        });
-        // }
+        if (event.target.value) {
+            setShippingAddress({
+                ...shippingAddress,
+                country: event.target.value?.name,
+            });
+        }
     };
 
     React.useEffect(() => {
