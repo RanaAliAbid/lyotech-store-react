@@ -83,7 +83,7 @@ export default function InitiateDelivery() {
 
             const result = await createShippingPaymentLink(data);
 
-            if (result?.data?.data?.data) {
+            if (result?.data?.data?.data?.sessionId) {
                 console.log('open checkout page', result?.data?.data?.data?.sessionId);
                 setSessionId(result?.data?.data?.data?.sessionId);
             } else if (result?.data?.data?.data?.paymentLink) {
