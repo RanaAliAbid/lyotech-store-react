@@ -67,10 +67,10 @@ export const getDeliveryCartOrder = async ({
   }
 };
 
-export const getPickUpStores = async ({ country }: { country: string }) => {
+export const getPickUpStores = async ({ country, shippingId }: { country: string, shippingId: string }) => {
   try {
     const result = await ProxyService.GetRequest(
-      PROXY_HOST + `/api/v1/get-pickup-store?country=${country}`
+      PROXY_HOST + `/api/v1/get-pickup-store?country=${country}&shippingId=${shippingId}`
     );
     return result?.data?.data;
   } catch (error: any) {

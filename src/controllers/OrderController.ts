@@ -265,12 +265,12 @@ export const getPickUpStoreByCountry = async (
   res.setHeader('Allow', 'GET');
 
   try {
-    const { country } = req.query;
+    const { country, shippingId } = req.query;
     const token = req.cookies?.authToken ?? null;
     let result;
     if (token) {
       result = await ApiService.GetRequest(
-        API_HOST + `/v1/user/user-partner/order/${country}/pickup-stores`,
+        API_HOST + `/v1/user/user-partner/order/${country}/pickup-stores/${shippingId}`,
         `Bearer ${token}`
       );
     }

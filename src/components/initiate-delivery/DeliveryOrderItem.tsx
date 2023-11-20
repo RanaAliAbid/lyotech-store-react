@@ -140,6 +140,7 @@ export default function DeliveryOrderItem({
         globalContext.setGlobalLoading(true);
         const result = await getPickUpStores({
             country: country,
+            shippingId: shippingId
         });
         setStoreList(result);
         globalContext.setGlobalLoading(false);

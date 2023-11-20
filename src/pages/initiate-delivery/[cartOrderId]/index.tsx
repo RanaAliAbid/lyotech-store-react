@@ -88,6 +88,8 @@ export default function InitiateDelivery() {
                 setSessionId(result?.data?.data?.data?.sessionId);
             } else if (result?.data?.data?.data?.paymentLink) {
                 window.location.href = result?.data?.data?.data?.paymentLink;
+            } else if (result?.data?.data?.data?.redirectUrl) {
+                window.location.href = result?.data?.data?.data?.redirectUrl;
             } else {
                 globalContext.setGlobalLoading(false);
             }
