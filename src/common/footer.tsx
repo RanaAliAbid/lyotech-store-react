@@ -113,6 +113,12 @@ export default function Footer() {
                     </Link>
                   </ListItem>
 
+                  <ListItem className={styles.item}>
+                    <Link href="/troubleshooting" target='_blank'>
+                    Troubleshooting
+                    </Link>
+                  </ListItem>
+
                   {/* <ListItem className={styles.item}>
                     <Link className={styles.docBtn} href="https://docs.lyotechlabs.com" target='_blank'>
                     Docs and Guides
