@@ -222,9 +222,14 @@ export default function Header({ title = 'Home' }: { title: string }) {
               <ListItem>
                 <Link href={'/co-products'}> {t('Co-Products')} </Link>
               </ListItem>
-              <ListItem>
+              {/* <ListItem>
                 <Link href={'/about'}> {t('About Us')} </Link>
+              </ListItem> */}
+              <ListItem>
+                <Link href={'https://docs.lyotechlabs.com/introduction/what-is-lyotech-labs'} target='_blank'> {t('About Us')} </Link>
               </ListItem>
+
+             
             </List>
 
             <div>
