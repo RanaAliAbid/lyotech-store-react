@@ -42,6 +42,7 @@ const tabsData = [
   'Browser',
   'GPS, Maps and Navigation',
   'Software',
+  'Hard Reset',
 ];
 
 interface TabPanelProps {
@@ -5760,6 +5761,46 @@ export default function Troubleshooting() {
                             </List>
                           </div>
                         </TabPanel>
+
+
+
+                        <TabPanel value={value} index={24}>
+                          <div className={styles.troubleshootPanelsInfo}>
+                            <Typography variant="h3">
+                            How to hard reset the phone?
+                            </Typography>
+
+                            <List className={styles.orderedListDecimal}>
+                              <ListItem>
+                                <Typography variant="h5">
+                                Go <strong> setting </strong>
+                                </Typography>
+                              </ListItem>
+                              <ListItem>
+                                <Typography variant="h5">
+                                System
+                                </Typography>
+                              </ListItem>
+
+                              <ListItem>
+                                <Typography variant="h5">
+                                Reset Option
+                                </Typography>
+                              </ListItem>
+
+                              <ListItem>
+                                <Typography variant="h5">
+                               Tab <strong> Factory Reset </strong>
+                                </Typography>
+                              </ListItem>
+
+                            </List>
+
+                          </div>
+                        </TabPanel>
+
+
+
                       </div>
                     </div>
                   </div>
