@@ -276,7 +276,7 @@ export default function Troubleshooting() {
                               </ListItem>
                               <ListItem>
                                 <Typography variant="h5">
-                                  Tap Power Tap <strong> Off/Restart </strong>
+                                  Tap Power  <strong> Off/Restart </strong>
                                 </Typography>
                               </ListItem>
 
@@ -326,7 +326,7 @@ export default function Troubleshooting() {
                             </List>
 
                             <Typography variant="h3">
-                              Select ring tone 
+                              Select ring tone
                             </Typography>
 
                             <List
@@ -349,13 +349,13 @@ export default function Troubleshooting() {
 
                               <ListItem>
                                 <Typography variant="h5">
-                                  Tap Sound and vibration
+                                  Tap <strong>Sound and vibration</strong>
                                 </Typography>
                               </ListItem>
 
                               <ListItem>
                                 <Typography variant="h5">
-                                  Tap Phone ringtone
+                                  Tap <strong>Phone ringtone</strong>
                                 </Typography>
                               </ListItem>
 
@@ -395,17 +395,17 @@ export default function Troubleshooting() {
 
                               <ListItem>
                                 <Typography variant="h5">
-                                  In Default settings, tap Incoming messages
+                                  In <strong>Default settings</strong>, tap <strong>Incoming messages </strong>
                                 </Typography>
                               </ListItem>
 
                               <ListItem>
-                                <Typography variant="h5">Tap Sound</Typography>
+                                <Typography variant="h5">Tap <strong>Sound</strong></Typography>
                               </ListItem>
 
                               <ListItem>
                                 <Typography variant="h5">
-                                  Select your preferred message tone and Tap{' '}
+                                  Select your preferred message tone and Tap 
                                   <strong> OK </strong>
                                 </Typography>
                               </ListItem>
@@ -457,7 +457,7 @@ export default function Troubleshooting() {
                             <List className={styles.orderedListDecimal}>
                               <ListItem>
                                 <Typography variant="h5">
-                                  What is the Wi-Fi issue?
+                                  What is the<strong>   Wi-Fi    </strong>issue?
                                 </Typography>
                               </ListItem>
                               <ListItem>
@@ -469,14 +469,14 @@ export default function Troubleshooting() {
 
                               <ListItem>
                                 <Typography variant="h5">
-                                  The phone can't find a Wi-Fi network - Go to
+                                  The phone can't find a<strong>   Wi-Fi    </strong>network - Go to
                                   step 16
                                 </Typography>
                               </ListItem>
 
                               <ListItem>
                                 <Typography variant="h5">
-                                  The Wi-Fi network rejects the connection - Go
+                                  The<strong>   Wi-Fi    </strong>network rejects the connection - Go
                                   to step 32
                                 </Typography>
                               </ListItem>
@@ -512,12 +512,12 @@ export default function Troubleshooting() {
                               </ListItem>
 
                               <ListItem>
-                                <Typography variant="h5">Tap Wi-Fi</Typography>
+                                <Typography variant="h5">Tap <strong>Wi-Fi</strong></Typography>
                               </ListItem>
 
                               <ListItem>
                                 <Typography variant="h5">
-                                  Switch Wi-Fi On
+                                  Switch<strong>   Wi-Fi    </strong>On
                                 </Typography>
                               </ListItem>
 
@@ -604,12 +604,12 @@ export default function Troubleshooting() {
                               </ListItem>
 
                               <ListItem>
-                                <Typography variant="h5">Tap Wi-Fi</Typography>
+                                <Typography variant="h5">Tap <strong>Wi-Fi</strong></Typography>
                               </ListItem>
 
                               <ListItem>
                                 <Typography variant="h5">
-                                  Switch Wi-Fi On
+                                  Switch<strong>   Wi-Fi    </strong>On
                                 </Typography>
                               </ListItem>
 
@@ -633,7 +633,7 @@ export default function Troubleshooting() {
                               </ListItem>
 
                               <ListItem>
-                                <Typography variant="h5">Tap SAVE</Typography>
+                                <Typography variant="h5">Tap <strong> SAVE</strong></Typography>
                               </ListItem>
 
                               <ListItem>
@@ -644,7 +644,7 @@ export default function Troubleshooting() {
 
                               <ListItem>
                                 <Typography variant="h5">
-                                  Tap CONNECT
+                                  Tap <strong>CONNECT</strong>
                                 </Typography>
                               </ListItem>
 
@@ -708,7 +708,7 @@ export default function Troubleshooting() {
                             </List>
 
                             <Typography variant="h3">
-                              The phone is connected to a Wi-Fi network, but
+                              The phone is connected to a<strong>   Wi-Fi    </strong>network, but
                               you're not logged on
                             </Typography>
 
@@ -3555,7 +3555,7 @@ export default function Troubleshooting() {
 
                               <ListItem>
                                 <Typography variant="h5">
-                                  Tap Wi-Fi hotspot
+                                  Tap<strong>   Wi-Fi    </strong>hotspot
                                 </Typography>
                               </ListItem>
 
@@ -3609,7 +3609,7 @@ export default function Troubleshooting() {
 
                               <ListItem>
                                 <Typography variant="h5">
-                                  Switch Use Wi-Fi hotspot on
+                                  Switch Use<strong>   Wi-Fi    </strong>hotspot on
                                 </Typography>
                               </ListItem>
 
@@ -3635,7 +3635,7 @@ export default function Troubleshooting() {
 
                               <ListItem>
                                 <Typography variant="h5">
-                                  Key in the password for your Wi-Fi hotspot and
+                                  Key in the password for your<strong>   Wi-Fi    </strong>hotspot and
                                   establish the connection
                                 </Typography>
                               </ListItem>
