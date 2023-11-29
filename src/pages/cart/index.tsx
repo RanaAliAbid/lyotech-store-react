@@ -34,6 +34,8 @@ import { useAuthContext } from '@/contexts/AuthContext';
 import { addUserWishList } from '@/services/wishlist/wishlist.service';
 import Image from 'next/image';
 import CartTotalComponent from '@/components/cart/cart-total.component';
+import { createShippingPaymentLink } from '@/services/orders/order.service';
+import { getShippingPaymentSession } from '@/controllers/OrderController';
 
 export default function Cart({
   userJwt,
@@ -452,12 +454,11 @@ export const getServerSideProps: GetServerSideProps<{
     if (checkout_token?.length > 0 || shipping_token?.length > 0) {
       let destination = ''
       let token = ''
+
       if (checkout_token?.length > 0) {
         destination = '/checkout';
         token = checkout_token;
-      }
-      if (shipping_token?.length > 0 && cart_id) {
-        destination = `/initiate-delivery/${cart_id}`;
+      } else {
         token = shipping_token;
       }
 
@@ -465,6 +466,8 @@ export const getServerSideProps: GetServerSideProps<{
         token: token,
         payment: true,
       });
+
+      // console.log("🚀 ~ file: index.tsx:464 ~ result:", result)
 
       if (!result?.data || result?.data?.length < 9) {
         return {
@@ -482,6 +485,25 @@ export const getServerSideProps: GetServerSideProps<{
           `otpToken=deleted; HttpOnly; Max-Age=0;`,
           `token=deleted; HttpOnly; Max-Age=0;`,
         ]);
+
+        if (shipping_token?.length > 0 && cart_id) {
+
+          const paymentSession = await getShippingPaymentSession(cart_id, result.data);
+
+          // console.log("🚀 ~ file: index.tsx:488 ~ result:", paymentSession)
+
+          if (!paymentSession?.data?.sessionId) {
+            return {
+              redirect: {
+                destination: `/?error=${btoa(paymentSession?.message)}`,
+                permanent: false,
+              },
+            };
+          }
+
+
+          destination = `/checkout?s=${paymentSession?.data?.sessionId}`;
+        }
 
         return {
           redirect: {

@@ -372,6 +372,11 @@ export function GlobalWrapper({
     const sessionId = urlParams.get('s')?.toString() ?? null;
 
     if (sessionId) {
+
+      if (window.location.href.includes('#__hc-action-cancel')) {
+        window.open(`${process.env.CLOUDX_URL}/shop/orders`, '_self');
+      }
+
       setPaymentSessionFound(true);
       setLoadComponents(true);
       return;

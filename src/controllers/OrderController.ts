@@ -314,3 +314,21 @@ export const updateShippingDetails = async (
     return res.status(400).json(ApiService.ApiResponseError(error));
   }
 };
+
+
+export const getShippingPaymentSession = async (id: string, token: string) => {
+  try {
+    const shippingId = id;
+
+      const result = await ApiService.GetRequest(
+        API_HOST + '/v1/user/user-partner/order/initiate-shipping-payment/' + shippingId,
+        `Bearer ${token}`
+      );
+
+    return result?.data;
+
+  } catch (error: any) {
+    console.log('Catch error get shipping pay link ', error?.response?.data);
+    return null;
+  }
+};
