@@ -373,6 +373,8 @@ export function GlobalWrapper({
 
     if (sessionId) {
 
+      alert(window.location.href);
+
       if (window.location.href.includes('cancel')) {
         window.open(`${process.env.CLOUDX_URL}/shop/orders`, '_self');
         return;
