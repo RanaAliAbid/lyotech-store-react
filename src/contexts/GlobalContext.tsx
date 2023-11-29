@@ -373,9 +373,9 @@ export function GlobalWrapper({
 
     if (sessionId) {
 
-      alert(window.location.href);
+      // alert(document.referrer);
 
-      if (window.location.href.includes('cancel')) {
+      if (document.referrer.includes('ap-gateway.mastercard.com/')) {
         window.open(`${process.env.CLOUDX_URL}/shop/orders`, '_self');
         return;
       }
