@@ -334,12 +334,12 @@ body > div,
   bottom: 0;
   left: 0;
   right: 0;
-  height: 40vh;
+  height: 90vh;
   z-index: 9999;
   text-align: center;
   background: #030e1d;
   color: #fff;
-  padding-top: 100px;
+  padding-top: 300px;
 }
 
 .paymentSessionIdBackDrop p{
