@@ -349,7 +349,21 @@ export default function Checkout({
 
       const data = {
         cartId: globalContext.cart?.cart?._id,
-        shippingAddress: {
+       
+        shippingAddress:  globalContext?.cart?.cart?.partner ? 
+          {
+            ...formAddress.shippingAddress,
+            phone: "",
+            address: "",
+            city: "",
+            country: "",
+            state: "",
+            address2: "",
+            type: "Other",
+            postalCode: "",
+            countryCode: ""
+        
+        } :{
           ...formAddress.shippingAddress,
           country: '-',
           address: '-',
