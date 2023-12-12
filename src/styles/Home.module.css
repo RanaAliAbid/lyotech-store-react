@@ -2569,6 +2569,15 @@ ul.wishlists,
 	font-weight: 600;
 }
 
+.countryCode{
+	display: flex;
+	gap: 5px;
+}
+
+ .countryDigit{
+	width: 100px !important;
+}
+
 @media (max-width: 899px) {
 	.DeviceInfoWrap {
 		flex-direction: column-reverse;

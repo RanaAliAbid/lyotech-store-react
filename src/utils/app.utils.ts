@@ -191,3 +191,13 @@ export const debounce = (func: Function, delay: number, args?: any) => {
 		clearTimeout(debounceTimer);
 	}, delay);
 };
+
+export const countrieCodesList = () => {
+	try {
+		const countriesCodes = countriesCode.data;
+
+		return countriesCodes;
+	} catch {
+		return [];
+	}
+};
