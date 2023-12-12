@@ -487,6 +487,7 @@ export default function ShippingFormComponent({
                 className={styles.formInput}
                 placeholder="Address Street, Area, ..."
                 value={formAddress?.shippingAddress?.address}
+                inputProps={{ maxLength: 100 }}
                 onChange={(e: any) =>
                   setFormAddress({
                     ...formAddress,
