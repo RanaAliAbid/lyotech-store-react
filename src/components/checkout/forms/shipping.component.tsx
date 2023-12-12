@@ -14,6 +14,7 @@ import {
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
 import useTranslation from 'next-translate/useTranslation';
+import { countrieCodesList } from '@/utils/app.utils';
 
 export default function ShippingFormComponent({
   localAddress,
@@ -35,6 +36,7 @@ export default function ShippingFormComponent({
   const [countryCodeName, setCountryCodeName] = React.useState<string>('');
   const [stateList, setStateList] = React.useState<any>([]);
   const [hideStateList, setHideStateList] = React.useState<boolean>(false);
+  const [countriesCodes, setCountriesCodes] = React.useState<any>(countrieCodesList())
 
   const globalContext = useGlobalContext();
   const authContext = useAuthContext();
@@ -130,7 +132,14 @@ export default function ShippingFormComponent({
 
   React.useEffect(() => {
     getCountryList();
+
   }, []);
+
+  React.useEffect(() => {
+
+    console.log("🚀 ~ file: shipping.component.tsx:140 ~ React.useEffect ~  formAddress?.shippingAddress:", formAddress?.shippingAddress)
+
+  }, [formAddress]);
 
   React.useEffect(() => {
 
@@ -230,24 +239,63 @@ export default function ShippingFormComponent({
           </div>
 
           <div className={styles.formControl}>
-            <label className={styles.formLabel}>
-              {' '}
-              Phone <span className="text-danger">*</span>
-            </label>
-            <Input
-              className={styles.formInput}
-              placeholder="Phone Number"
-              value={formAddress?.shippingAddress?.phone ?? ""}
-              onChange={(e: any) =>
-                setFormAddress({
-                  ...formAddress,
-                  shippingAddress: {
-                    ...formAddress.shippingAddress,
-                    phone: e.target.value,
-                  },
-                })
-              }
-            />
+           
+              <label className={styles.formLabel}>
+                {' '}
+                Phone <span className="text-danger">*</span>
+              </label>
+              <div  className={styles.countryCode}>
+              {countriesCodes && countriesCodes.length > 0 && (
+                <Select
+                  label="Country Code"
+                  className={`${styles.formTextField} ${styles.countryDigit} formSelect `}
+                  value={formAddress?.shippingAddress?.countryCode ?? ''}
+                  size="small"
+                  renderValue={(p) => {
+                    return p
+                  }}
+                >
+                  <MenuItem
+                    value={formAddress?.shippingAddress?.countryCode ?? ''}
+                    disabled
+                  >
+                    Select a Country Code
+                  </MenuItem>
+                  {countriesCodes.map((country: any, index: any) => (
+                    <MenuItem
+                      key={index}
+                      value={country.dial_code}
+                      onClick={async (e) => {
+                        setFormAddress({
+                          ...formAddress,
+                          shippingAddress: {
+                            ...formAddress.shippingAddress,
+                            countryCode: country.dial_code,
+                          },
+                        })
+                      }}
+                    >
+                      {country.name}  ({country.dial_code})
+                    </MenuItem>
+                  ))}
+                </Select>
+              )}
+              <Input
+                className={styles.formInput}
+                placeholder="Phone Number"
+                value={formAddress?.shippingAddress?.phone ?? ""}
+                onChange={(e: any) =>
+                  setFormAddress({
+                    ...formAddress,
+                    shippingAddress: {
+                      ...formAddress.shippingAddress,
+                      phone: e.target.value,
+                    },
+                  })
+                }
+              />
+            </div>
+
           </div>
 
           <div className={styles.formControl}>

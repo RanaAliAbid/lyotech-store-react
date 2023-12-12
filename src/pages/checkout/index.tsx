@@ -216,6 +216,9 @@ export default function Checkout({
           userAddressList?.address?.defaultAddress?.postalCode ??
           _localAddress?.shippingAddress?.postalCode ??
           '',
+          countryCode :  userAddressList?.address?.defaultAddress?.countryCode ??
+          _localAddress?.shippingAddress?.countryCode ??
+          '',
       },
       billingAddress: {
         firstName:
