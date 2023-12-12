@@ -2578,6 +2578,84 @@ ul.wishlists,
 	width: 100px !important;
 }
 
+
+.troubleshootTabsWrap{
+	display: flex;
+	margin-top: 10px;
+	margin-bottom: 40px;
+}
+.troubleshootTabs > div{
+	border: none;
+}
+.troubleshootTabs button{
+	text-align: left;
+    align-items: baseline;
+    border-radius: 10px;
+    border: 1px solid #EDEDED;
+    background: #FFF;
+    box-shadow: 0px 1px 3px 0px rgba(178, 178, 178, 0.25);
+    margin: 2px 0;
+    width: 300px;
+	background: url(../img/tabArrow.svg) 95% center no-repeat;
+	background-size: 18px !important;
+	text-transform: capitalize;
+}
+
+.troubleshootTabs button.activeTab{
+	color: var(--primary) !important;
+	border: 1px solid var(--primary) !important;
+	font-weight: 600;
+	background: url(../img/tabArrowActive.svg) 95% center no-repeat !important;
+	background-size: 18px !important;
+}
+.troubleshootSec h1{
+	font-weight: 600;
+	margin: 40px 0 10px;
+	font-size: 28px;
+}
+
+.troubleshootSec h1 span{
+	color: var(--primary) !important;
+}
+
+.troubleshootPanels{
+	border: 1px solid #EDEDED;
+	width: 100%;
+    margin-left: 30px;
+	height: 100%;
+}
+.troubleshootPanels h3{
+	color: var(--Black-100);
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 24px; 
+	background: #EDF5FF;
+	background: #EDF5FF;
+    padding: 10px 20px;
+}
+.troubleshootPanels p{
+	padding: 0;
+}
+.troubleshootPanels > div > div{
+	padding: 0;
+}
+
+.troubleshootPanelsInfo .orderedListDecimal{
+	margin-left: 40px;
+	margin-bottom: 20px;
+}
+.troubleshootPanelsInfo .orderedListDecimal li{
+	padding-bottom: 0px;
+}
+.troubleshootPanelsInfo .orderedListDecimal li h5{
+	font-size: 15px;
+}
+.mobileSelectDrop{
+	width: 100%;
+	display: none !important;
+}
+
+
 @media (max-width: 899px) {
 	.DeviceInfoWrap {
 		flex-direction: column-reverse;
@@ -2592,6 +2670,20 @@ ul.wishlists,
 }
 
 @media (max-width: 768px) {
+	.troubleshootSec h1{
+		font-size: 24px !important;
+		text-align: center;
+	}
+	
+	.mobileSelectDrop{
+		display: block !important;
+	}
+	.troubleshootTabs{
+		display: none;
+	}
+	.troubleshootPanels{
+		margin-left: 0;
+	}
 
 	.bgShape01,
 	.bgShape02 {

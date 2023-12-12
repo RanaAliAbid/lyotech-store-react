@@ -58,6 +58,8 @@ export default function HomePrivate({
   const [accessPassword, setAccessPassword] = React.useState<string>('');
   const [validPassword, setValidPassword] = React.useState<boolean>(false);
   const [customAmount, setCustomAmount] = React.useState<any>('');
+  const [customName, setCustomName] = React.useState<any>('');
+  const [customEmail, setCustomEmail] = React.useState<any>('');
   const [customId, setCustomId] = React.useState<string>('');
   const [session, setSession] = React.useState<string>('');
   const [paymentType, setPaymentType] = React.useState<string>('');
@@ -66,6 +68,7 @@ export default function HomePrivate({
   const paymentTypeOptions: string[] = [
     'Phone Shipment',
     'Shipping Cost',
+    'Additional Shipping Cost',
     'Deposit For Phones',
     'Deposit for hardware',
     'Other',
@@ -113,6 +116,8 @@ export default function HomePrivate({
         paymentType.length == 0 ||
         customId.length == 0 ||
         isNaN(customAmount) ||
+        customName.length == 0 ||
+        customEmail.length == 0 ||
         parseFloat(customAmount ?? '0') == 0
       ) {
         return;
@@ -123,6 +128,8 @@ export default function HomePrivate({
       const result = await createCustomPayment({
         id: customId,
         amount: parseFloat(customAmount ?? '0'),
+        customerName: customName,
+        customerEmail: customEmail,
         paymentType: paymentType,
       });
 
@@ -180,7 +187,7 @@ export default function HomePrivate({
 
         router.push('/');
       }
-    } catch (error) {}
+    } catch (error) { }
   }, []);
 
   return validPassword ? (
@@ -722,6 +729,34 @@ export default function HomePrivate({
                           </MenuItem>
                         ))}
                       </Select>
+                      <br />
+                      <br />
+                      <Typography>{'Customer Name '}</Typography>
+                      <div className={styles.inline}>
+                        <Input
+                          onChange={(e: any) =>
+                            setCustomName(parseFloat(e.target.value ?? ''))
+                          }
+                          type="text"
+                          className={`${styles.formInput} w-100`}
+                          placeholder={t('Customer Name')}
+                          value={customName}
+                        />
+                      </div>
+                      <br />
+                      <br />
+                      <Typography>{'Customer Email '}</Typography>
+                      <div className={styles.inline}>
+                        <Input
+                          onChange={(e: any) =>
+                            setCustomEmail(parseFloat(e.target.value ?? ''))
+                          }
+                          type="email"
+                          className={`${styles.formInput} w-100`}
+                          placeholder={t('Customer Email ')}
+                          value={customEmail}
+                        />
+                      </div>
                       <br />
                       <br />
                       <Typography>{'Amount in euro '}</Typography>
