@@ -2569,6 +2569,15 @@ ul.wishlists,
 	font-weight: 600;
 }
 
+.countryCode{
+	display: flex;
+	gap: 5px;
+}
+
+ .countryDigit{
+	width: 100px !important;
+}
+
 
 .troubleshootTabsWrap{
 	display: flex;
@@ -3431,5 +3440,6 @@ ul.wishlists,
 .productBoxShadow {
 	box-shadow: 0px 3px 6px rgba(179, 179, 179, 0.25) !important;
 	padding: 12px !important;
-	margin-top: 20px;
+	margin-bottom: 20px;
+	border-radius: 12px;
 }

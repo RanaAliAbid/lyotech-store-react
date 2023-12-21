@@ -372,6 +372,14 @@ export function GlobalWrapper({
     const sessionId = urlParams.get('s')?.toString() ?? null;
 
     if (sessionId) {
+
+      // alert(document.referrer);
+
+      if (document.referrer.includes('ap-gateway.mastercard.com/')) {
+        window.open(`${process.env.CLOUDX_URL}/shop/orders`, '_self');
+        return;
+      }
+
       setPaymentSessionFound(true);
       setLoadComponents(true);
       return;

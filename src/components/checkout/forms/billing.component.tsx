@@ -302,6 +302,7 @@ export default function BillingFormComponent({ formAddress, setFormAddress }: { 
                         className={styles.formInput}
                         placeholder="Address Street, Area, ..."
                         value={formAddress?.billingAddress?.address}
+                        inputProps={{ maxLength: 100 }}
                         onChange={(e: any) => setFormAddress({ ...formAddress, billingAddress: { ...formAddress.billingAddress, address: e.target.value } })} />
                 </div>
 

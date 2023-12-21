@@ -45,6 +45,7 @@ export const verifyUserCheckoutToken = async ({
     const result = await ApiService.GetRequest(
       `${API_HOST}/v1/user/user-partner/checkout/${atob(token)}`
     );
+    // console.log("🚀 ~ file: auth.service.ts:48 ~ result:", result)
 
     return {
       success: true,

@@ -88,7 +88,7 @@ export default function Home({
   const router = useRouter();
 
   const addProductToCart = async (id: string) => {
-    return;
+    // return;
     try {
       if (!id) {
         globalContext.setAlertProps({
@@ -151,7 +151,7 @@ export default function Home({
 
         router.push('/');
       }
-    } catch (error) {}
+    } catch (error) { }
   }, []);
 
   return (
@@ -235,7 +235,7 @@ export default function Home({
             <div className={styles.homeServicesWrap} id="serviceSection">
               <Container className={styles.containerBox}>
                 <Grid container spacing={3}>
-                <Grid item md={4} sm={6} xs={12}>
+                  <Grid item md={4} sm={6} xs={12}>
                     <motion.div
                       initial={{
                         opacity: 0,
@@ -253,10 +253,10 @@ export default function Home({
                           <img src={hardwareSoftware.src} alt="Icon" />
                         </div>
                         <Typography variant="h5">
-                        Hardware & Software Solutions
+                          Hardware & Software Solutions
                         </Typography>
                         <Typography variant="h6">
-                        We Build Devices for Our Partners and Ship to 150+ Countries
+                          We Build Devices for Our Partners and Ship to 150+ Countries
                         </Typography>
                       </div>
                     </motion.div>
@@ -333,27 +333,27 @@ export default function Home({
                       viewport={{ once: true }}
                     >
 
-                    <a href="#certification" className={styles.serviceLink}>
-                      <div
-                        className={`${styles['wrapBox']} ${styles['servicesItem']}`}
-                      >
-                        <div className={`${styles['servicesIcon']}`}>
-                          <img src={testedIcon.src} alt="Icon" />
+                      <a href="#certification" className={styles.serviceLink}>
+                        <div
+                          className={`${styles['wrapBox']} ${styles['servicesItem']}`}
+                        >
+                          <div className={`${styles['servicesIcon']}`}>
+                            <img src={testedIcon.src} alt="Icon" />
+                          </div>
+                          <Typography variant="h5">
+                            {/* {t('service-header3')} */}
+                            Certified Hardware
+                          </Typography>
+                          <Typography variant="h6">
+                            {/* {t('service-desc3')} */}
+                            Products rigorously tested and certified for quality.
+                          </Typography>
                         </div>
-                        <Typography variant="h5">
-                          {/* {t('service-header3')} */}
-                          Certified Hardware
-                        </Typography>
-                        <Typography variant="h6">
-                          {/* {t('service-desc3')} */}
-                          Products rigorously tested and certified for quality.
-                        </Typography>
-                      </div>
                       </a>
                     </motion.div>
                   </Grid>
 
-               
+
 
                   <Grid item md={4} sm={6} xs={12}>
                     <motion.div
@@ -912,7 +912,7 @@ export default function Home({
                         >
                           <Button
                             onClick={
-                              (e) => {}
+                              (e) => { }
                               // addProductToCart(
                               //   globalContext?.homeProduct?.LYO_Watch
                               // )
@@ -1131,7 +1131,7 @@ export default function Home({
                       >
                         <Button
                           onClick={
-                            (e) => {}
+                            (e) => { }
                             // addProductToCart(
                             //   globalContext?.homeProduct?.LYO_Tab
                             // )

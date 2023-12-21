@@ -265,12 +265,12 @@ export const getPickUpStoreByCountry = async (
   res.setHeader('Allow', 'GET');
 
   try {
-    const { country } = req.query;
+    const { country, shippingId } = req.query;
     const token = req.cookies?.authToken ?? null;
     let result;
     if (token) {
       result = await ApiService.GetRequest(
-        API_HOST + `/v1/user/user-partner/order/${country}/pickup-stores`,
+        API_HOST + `/v1/user/user-partner/order/${country}/pickup-stores/${shippingId}`,
         `Bearer ${token}`
       );
     }
@@ -312,5 +312,23 @@ export const updateShippingDetails = async (
     console.log('🚀 ~ file: OrderController.ts:258 ~ error:', error);
     console.log('Catch error add to cart ', error?.response?.data);
     return res.status(400).json(ApiService.ApiResponseError(error));
+  }
+};
+
+
+export const getShippingPaymentSession = async (id: string, token: string) => {
+  try {
+    const shippingId = id;
+
+      const result = await ApiService.GetRequest(
+        API_HOST + '/v1/user/user-partner/order/initiate-shipping-payment/' + shippingId,
+        `Bearer ${token}`
+      );
+
+    return result?.data;
+
+  } catch (error: any) {
+    console.log('Catch error get shipping pay link ', error?.response?.data);
+    return null;
   }
 };

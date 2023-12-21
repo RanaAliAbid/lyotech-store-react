@@ -83,11 +83,13 @@ export default function InitiateDelivery() {
 
             const result = await createShippingPaymentLink(data);
 
-            if (result?.data?.data?.data) {
+            if (result?.data?.data?.data?.sessionId) {
                 console.log('open checkout page', result?.data?.data?.data?.sessionId);
                 setSessionId(result?.data?.data?.data?.sessionId);
             } else if (result?.data?.data?.data?.paymentLink) {
                 window.location.href = result?.data?.data?.data?.paymentLink;
+            } else if (result?.data?.data?.data?.redirectUrl) {
+                window.location.href = result?.data?.data?.data?.redirectUrl;
             } else {
                 globalContext.setGlobalLoading(false);
             }
@@ -166,7 +168,6 @@ export default function InitiateDelivery() {
                                                 </List>
 
                                                 <br />
-                                                <hr style={{ opacity: 0.2 }} />
                                                 <br />
                                                 <Grid container spacing={3} justifyContent="flex-end">
                                                     <Grid item md={4} sm={6} xs={12}>
