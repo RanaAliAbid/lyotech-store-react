@@ -145,7 +145,7 @@ export default function Presalepolicy() {
 
 
                                 <ListItem>
-                                All Devices include standard warranty for two years (the Warranty Period) provided by the manufacturer of the Device(s) (Manufacturer).
+                                All Devices include standard warranty for one year (the Warranty Period) provided by the manufacturer of the Device(s) (Manufacturer).
                                 </ListItem>
 
                                 <ListItem>
@@ -158,7 +158,7 @@ export default function Presalepolicy() {
                                 </ListItem>
 
                                 <ListItem>
-                                Additional Warranty Plans are valid for two years and subject to their own Terms and Conditions which you are solely responsible for reading and agreeing to when purchasing.
+                                Additional Warranty Plans are valid for one year and subject to their own Terms and Conditions which you are solely responsible for reading and agreeing to when purchasing.
                                 </ListItem>
                               </List>
                             </ListItem>
