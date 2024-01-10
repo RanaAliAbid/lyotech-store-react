@@ -23,7 +23,7 @@ import { useRouter } from 'next/router';
 import { ProfileDataValidator } from '@/services/profile/profile.types';
 import { validatePassword } from '@/validators/auth.validator';
 import { updateUserProfile } from '@/services/profile/profile.service';
-import { appLanguages, countryCodeByCountryName, formatCountryCode, phoneNumberLenght, sortCountries } from '@/utils/app.utils';
+import { appLanguages, countryCodeByCountryName, formatCountryCode, getCountryNameByCountryCode, phoneNumberLenght, sortCountries } from '@/utils/app.utils';
 import { useGlobalContext } from '@/contexts/GlobalContext';
 import { useAuthContext } from '@/contexts/AuthContext';
 import countries from '../../../data/countries.json';
@@ -107,7 +107,7 @@ export default function Profile() {
         postData[9].value != postData[10].value ? false : true;
     }
 
-    if (postData[5].value.length != phoneLength) {
+    if (postData[5].value.length < phoneLength) {
       dataValidate.mobileNumber = false;
     }
 
@@ -182,7 +182,7 @@ export default function Profile() {
     const code: string = countryCodeByCountryName(value) ?? "+971";
     setCountryCode(code);
 
-    const pLenght = phoneNumberLenght(value) ?? 9;
+    const pLenght = phoneNumberLenght(value) ?? 8;
     setPhoneLength(pLenght);
   }
 
@@ -301,7 +301,7 @@ export default function Profile() {
                                 className={styles.formTextField}
                                 id="filled-select-country-code"
                                 select
-                                defaultValue={"United Arab Emirates"}
+                                defaultValue={getCountryNameByCountryCode(authContext.connectedUser?.countryCode ?? "") ?? "United Arab Emirates"}
                                 variant="outlined"
                                 onChange={(e) => {
                                   getCountryCode(e.target.value);
@@ -359,7 +359,7 @@ export default function Profile() {
                               <span className="alert-field">
                                 {validator && !validator.mobileNumber && (
                                   <Alert severity="error">
-                                    {t('required-field-error')} (Lenght: {phoneLength})
+                                    {t('required-field-error')} (Min Lenght: {phoneLength})
                                   </Alert>
                                 )}
                               </span>

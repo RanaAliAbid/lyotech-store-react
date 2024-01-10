@@ -64,6 +64,17 @@ export const countryCodeByCountryName = (country: any) => {
   }
 };
 
+export const getCountryNameByCountryCode = (code: string) => {
+  try {
+    let country = countriesCode.data.find(
+      (x: any) => x.dial_code == code
+    )?.name;
+    return country;
+  }catch(error: any) {
+    return null;
+  }
+}
+
 export const sortCountries = (countries: any) => {
   return countries.sort((a: any, b: any) =>
     b?.name?.common?.toLowerCase() < a?.name?.common?.toLowerCase()
