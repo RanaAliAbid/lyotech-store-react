@@ -309,7 +309,6 @@ export const updateShippingDetails = async (
       .status(200)
       .json(ApiService.ApiResponseSuccess(result?.data?.data, ''));
   } catch (error: any) {
-    console.log('🚀 ~ file: OrderController.ts:258 ~ error:', error);
     console.log('Catch error add to cart ', error?.response?.data);
     return res.status(400).json(ApiService.ApiResponseError(error));
   }
@@ -330,5 +329,29 @@ export const getShippingPaymentSession = async (id: string, token: string) => {
   } catch (error: any) {
     console.log('Catch error get shipping pay link ', error?.response?.data);
     return null;
+  }
+};
+
+export const getTrackingDetails = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiData | ApiError>
+  ) => {
+  try {
+    let data = req.body;
+    const token = req.cookies?.authToken ?? null;
+
+      const result = await ApiService.PostRequest(
+        API_HOST + '/v1/order/track',
+        data,
+        `Bearer ${token}`
+      );
+
+    return res
+      .status(200)
+      .json(ApiService.ApiResponseSuccess(result?.data?.data, ''));
+
+  } catch (error: any) {
+    console.log('Catch error get order tracking ', error?.response?.data);
+    return res.status(400).json(ApiService.ApiResponseError(error));
   }
 };

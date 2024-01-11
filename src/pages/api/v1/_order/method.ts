@@ -11,7 +11,8 @@ import {
   getInitiateShipping,
   updateShippingDetails,
   getPickUpStoreByCountry,
-  getShippingPaymentLink
+  getShippingPaymentLink,
+  getTrackingDetails
 } from '@/controllers/OrderController';
 
 export default async function OrderHandler(
@@ -46,5 +47,7 @@ export default async function OrderHandler(
       return updateShippingDetails(req, res);
     case 'get-pickup-store':
       return getPickUpStoreByCountry(req, res);
+    case 'track-order':
+      return getTrackingDetails(req, res);
   }
 }
