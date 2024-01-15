@@ -80,7 +80,7 @@ export default function Footer() {
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="/pre-sale-policy" target="_blank">
+                    <Link href="https://docs.lyotechlabs.com/legal-documents/pre-sale-policy" target="_blank">
                       Pre-Sale Policy and Terms
                     </Link>
                   </ListItem>
