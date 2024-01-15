@@ -144,3 +144,26 @@ export const getPartnerRediectionLink = async (id: string) => {
     return null;
   }
 };
+
+export const getTrackingDetails = async (formData: {
+  orderid: string,
+  email: string
+}) => {
+  try {
+
+    const body = await ProxyService.generateHashKey(JSON.stringify(formData));
+
+    const result = await ApiService.PostRequest(
+      `${PROXY_HOST}/api/v1/track-order`,
+      body
+    );
+
+    return result?.data;
+  } catch (error: any) {
+    console.log(
+      '🚀 ~ file: order.service.ts:26 ~ getTrackingDetails ~ error:',
+      error
+    );
+    return null;
+  }
+};
