@@ -607,7 +607,7 @@ export default function CartTotalComponent({
                 <Link
                   rel="noreferrer"
                   target="_blank"
-                  href={`/pre-sale-policy`}
+                  href={`https://docs.lyotechlabs.com/legal-documents/pre-sale-policy`}
                 >
                   <span className="text-primary cursor-pointer">
                     Presale Policy

@@ -59,6 +59,11 @@ const nextConfig = nextTranslate({
         destination: '/co-products',
         permanent: false,
       },
+      {
+        source: '/pre-sale-policy',
+        destination: 'https://docs.lyotechlabs.com/legal-documents/pre-sale-policy',
+        permanent: false,
+      },
     ];
   },
 });
