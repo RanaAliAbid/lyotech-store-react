@@ -17,7 +17,7 @@
   "required-field-error": "This field is required",
   "email-error": "Please provide a valid email",
   "password-error1": "Please provide a valid password",
-  "password-error2": "Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character. E.g AlphaBeta(@$!%*?&)",
+  "password-error2": "Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character. E.g Alpha2Beta(@$!%*?&)",
   "confirm-password-error": "Confirmation Password should be same with the password",
 
   "": ""

@@ -5,7 +5,7 @@
   "email-error": "Please provide a valid email",
   "password": "Password",
   "password-error1": "Please provide a valid password",
-  "password-error2": "Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character. E.g AlphaBeta(@$!%*?&)",
+  "password-error2": "Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one number, and one special character. E.g Alpha2Beta(@$!%*?&)",
   "forgot-password": "Forgot Password?",
   "sign-in": "Sign in",
   "not-registered": "Not yet registered?",
