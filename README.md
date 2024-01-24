@@ -9,15 +9,19 @@ LyotechLabs client store aims to provide the smooth UI and functionalities to th
 
 First, download/clone the project and configure:
 
-````bash
+```sh
+
+
 
 git clone https://github.com/VAI-MANAGEMENT/lyotechlabs_client_store.git
+
+```
 
 ## Configuration
 
 create a new file .env
 
-```bash
+```sh
 
 cd lyotechlabs_client_store
 
@@ -29,7 +33,8 @@ Windows => touch .env
 
 open the new file created ".env" and apply the following settings (update each values accordingly to your environment):
 
-```bash
+```js
+
 
 APP_DEV_HOST="http://127.0.0.1:4000"
 APP_SANDBOX_HOST=""
@@ -58,13 +63,13 @@ NEXT_PUBLIC_SECURE_LOCAL_STORAGE_PREFIX="LYOTECHLabs"
 #Cloud_x_link
 CLOUDX_URL="http://127.0.0.1:4003"
 
-````
+```
 
 ## Launching
 
 Run the development server:
 
-```bash
+```sh
 
 npm i
 
@@ -85,8 +90,12 @@ start using the dev web application by opening the web browser link http://127.0
 
 run the production server
 
+```sh
+
 npm build
 
 npm start
+
+```
 
 start using the prod web application by opening the web browser link http://127.0.0.1:xxxx
