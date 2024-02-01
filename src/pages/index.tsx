@@ -93,7 +93,7 @@ export default function Home({
       if (!id) {
         globalContext.setAlertProps({
           show: true,
-          title: `Coming Soon...`,
+          title: `Out of stock`,
           text: '',
           toast: true,
           showConfirmButton: false,
@@ -918,10 +918,11 @@ export default function Home({
                               // )
                             }
                             variant="contained"
-                            className={`${styles['btn']} ${styles['btn_primary']}`}
+                            className={`${styles['btn']}`}
+                            disabled
                           >
                             {/* {t('product-btn2-shop')} */}
-                            Coming Soon...
+                            Out of stock
                           </Button>
                         </motion.div>
                       </motion.div>
@@ -1137,10 +1138,11 @@ export default function Home({
                             // )
                           }
                           variant="contained"
-                          className={`${styles['btn']} ${styles['btn_primary']}`}
+                          className={`${styles['btn']}`}
+                          disabled
                         >
                           {/* {t('product-btn3-shop')} */}
-                          Coming Soon...
+                          Out of stock
                         </Button>
                       </motion.div>
                     </Grid>

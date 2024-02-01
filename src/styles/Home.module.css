@@ -74,6 +74,11 @@
 	/* box-shadow: none; */
 }
 
+
+.productItemWrap button.Mui-disabled  {
+	background: linear-gradient(180deg, #037097 -30.95%, #002c69 138%);
+}
+
 .btn_secondary {
 	background-color: #c4e3ff;
 	border: 1px solid #c4e3ff;
