@@ -632,7 +632,7 @@ export default function CoProducts({
                     </Typography>
 
                     <Typography variant="h3">
-                      You chose to be a protagonist in the LFi Projects
+                      You chose to be a protagonist in the LayerK Projects
                     </Typography>
                     {/* 
                     <Typography variant="h5">
@@ -739,7 +739,7 @@ export default function CoProducts({
                     </Typography>
 
                     <Typography variant="h3">
-                      Bring the game to another level and raise your LFi power.
+                      Bring the game to another level and raise your LayerK power.
                     </Typography>
 
                     {/* <Typography variant="h5">
@@ -806,7 +806,7 @@ export default function CoProducts({
                     </Typography>
 
                     <Typography variant="h3">
-                      When power it's not enough and you want to rule the LFi
+                      When power it's not enough and you want to rule the LayerK
                       Game: be a validator.
                     </Typography>
 
