@@ -60,7 +60,7 @@ export const verifyOrderMembershipDetails = async ({ id }: { id: any }) => {
     
     console.log("🚀 ~ verifyOrderMembershipDetails ~ result:", result)
 
-    return result?.data?.data;
+    return result?.data?.data ?? result?.data;
   } catch (error: any) {
     console.log(
       '🚀 ~ file: order.service.ts:64 ~ verifyOrderMembershipDetails ~ error:',
