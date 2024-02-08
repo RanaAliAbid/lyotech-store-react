@@ -55,12 +55,10 @@ export const verifyOrderShippingDetails = async ({ id }: { id: any }) => {
 export const verifyOrderMembershipDetails = async ({ id }: { id: any }) => {
   try {
     const result = await ApiService.GetRequest(
-      `${API_HOST}/v1/user-partner/membership/payment-details/${id}`
+      `${API_HOST}/v1/user/user-partner/membership/payment-details/${id}`
     );
-    
-    console.log("🚀 ~ verifyOrderMembershipDetails ~ result:", result)
 
-    return result?.data?.data ?? result?.data;
+    return result?.data?.data;
   } catch (error: any) {
     console.log(
       '🚀 ~ file: order.service.ts:64 ~ verifyOrderMembershipDetails ~ error:',
