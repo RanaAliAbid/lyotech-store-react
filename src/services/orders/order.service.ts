@@ -57,6 +57,8 @@ export const verifyOrderMembershipDetails = async ({ id }: { id: any }) => {
     const result = await ApiService.GetRequest(
       `${API_HOST}/v1/user-partner/membership/payment-details/${id}`
     );
+    
+    console.log("🚀 ~ verifyOrderMembershipDetails ~ result:", result)
 
     return result?.data?.data;
   } catch (error: any) {
