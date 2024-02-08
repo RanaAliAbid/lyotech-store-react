@@ -366,7 +366,6 @@ export function GlobalWrapper({
   }, [router]);
 
   const cartFirstLoad = async () => {
-    const data: any = await getCart();
 
     const urlParams = new URLSearchParams(window.location.search);
     const sessionId = urlParams.get('s')?.toString() ?? null;
@@ -384,6 +383,8 @@ export function GlobalWrapper({
       setLoadComponents(true);
       return;
     }
+
+    const data: any = await getCart();
 
     if (
       (!data?.cart?.products || data?.cart?.products?.length == 0) &&

@@ -29,6 +29,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import {
   getPartnerRediectionLink,
   verifyOrderDetails,
+  verifyOrderMembershipDetails,
   verifyOrderShippingDetails
 } from '@/services/orders/order.service';
 import moment from 'moment';
@@ -333,6 +334,21 @@ export const getServerSideProps: GetServerSideProps<{ order: any }> = async ({
           return {
             redirect: rs.redirect,
           };
+        } else {
+
+          const subscription = await verifyOrderMembershipDetails({ id: orderid });
+
+          if (subscription) {
+            const rs = await validatePartnerAndRediredct({
+              id: subscription.partner,
+              subscriptionid: subscription.membershipId,
+              success: true,
+            });
+            return {
+              redirect: rs.redirect,
+            };
+          }
+          //
         }
       }
 
@@ -401,10 +417,12 @@ export const validatePartnerAndRediredct = async ({
   id,
   success = false,
   orderid,
+  subscriptionid,
 }: {
   id: string;
   success: boolean;
-  orderid: string;
+  orderid?: string;
+  subscriptionid?: string
 }) => {
   try {
     const partnerDetails = await getPartnerRediectionLink(id);
@@ -413,6 +431,21 @@ export const validatePartnerAndRediredct = async ({
       return {
         redirect: {
           destination: `/`,
+          permanent: false,
+        },
+      };
+    }
+
+    if (subscriptionid != null) {
+      return {
+        redirect: {
+          destination: `${success
+            ? `${process.env.APP_ENV_TYPE === 'dev'
+              ? `${process.env.CLOUDX_URL}/profile`
+              : `${process.env.CLOUDX_URL}/profile`
+            }?order=${orderid}`
+            : `${process.env.CLOUDX_URL}/profile?m=failed`
+            }`,
           permanent: false,
         },
       };

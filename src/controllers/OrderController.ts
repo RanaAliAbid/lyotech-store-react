@@ -332,6 +332,23 @@ export const getShippingPaymentSession = async (id: string, token: string) => {
   }
 };
 
+export const getSubscriptionPaymentSession = async (id: string, token: string) => {
+  try {
+    const shippingId = id;
+
+      const result = await ApiService.GetRequest(
+        API_HOST + '/v1/user/user-partner/membership/initiate-membership-payment/' + shippingId,
+        `Bearer ${token}`
+      );
+
+    return result?.data;
+
+  } catch (error: any) {
+    console.log('Catch error get membership pay link ', error?.response?.data);
+    return null;
+  }
+}
+
 export const getTrackingDetails = async (
   req: NextApiRequest,
   res: NextApiResponse<ApiData | ApiError>

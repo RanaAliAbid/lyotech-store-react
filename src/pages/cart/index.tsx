@@ -35,7 +35,7 @@ import { addUserWishList } from '@/services/wishlist/wishlist.service';
 import Image from 'next/image';
 import CartTotalComponent from '@/components/cart/cart-total.component';
 import { createShippingPaymentLink } from '@/services/orders/order.service';
-import { getShippingPaymentSession } from '@/controllers/OrderController';
+import { getShippingPaymentSession, getSubscriptionPaymentSession } from '@/controllers/OrderController';
 
 export default function Cart({
   userJwt,
@@ -417,6 +417,8 @@ export const getServerSideProps: GetServerSideProps<{
     const checkout_token = urlParams.get('checkout_token') ?? '';
     const shipping_token = urlParams.get('shipping_token') ?? '';
     const cart_id = urlParams.get('id') ?? null;
+    const subscription_token = urlParams.get('s_token') ?? '';
+    const subscription_id = urlParams.get('s_id') ?? null;
 
     if (product_id?.length >= 1 && user_handover?.length >= 1) {
       result = await verifyUserHandover({
@@ -451,15 +453,19 @@ export const getServerSideProps: GetServerSideProps<{
       }
     }
 
-    if (checkout_token?.length > 0 || shipping_token?.length > 0) {
+    if (checkout_token?.length > 0 || shipping_token?.length > 0 || subscription_token?.length > 0) {
       let destination = ''
       let token = ''
 
       if (checkout_token?.length > 0) {
         destination = '/checkout';
         token = checkout_token;
-      } else {
+        //
+      } else if (shipping_token?.length > 0) {
         token = shipping_token;
+        //
+      } else {
+        token = subscription_token;
       }
 
       result = await verifyUserCheckoutToken({
@@ -489,6 +495,25 @@ export const getServerSideProps: GetServerSideProps<{
         if (shipping_token?.length > 0 && cart_id) {
 
           const paymentSession = await getShippingPaymentSession(cart_id, result.data);
+
+          // console.log("🚀 ~ file: index.tsx:488 ~ result:", paymentSession)
+
+          if (!paymentSession?.data?.sessionId) {
+            return {
+              redirect: {
+                destination: `/?error=${btoa(paymentSession?.message)}`,
+                permanent: false,
+              },
+            };
+          }
+
+
+          destination = `/checkout?s=${paymentSession?.data?.sessionId}`;
+
+          //
+        } else if (subscription_token?.length > 0 && subscription_id) {
+
+          const paymentSession = await getSubscriptionPaymentSession(subscription_id, result.data);
 
           // console.log("🚀 ~ file: index.tsx:488 ~ result:", paymentSession)
 
