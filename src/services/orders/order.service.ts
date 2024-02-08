@@ -30,7 +30,7 @@ export const verifyOrderDetails = async ({ id }: { id: any }) => {
   } catch (error: any) {
     console.log(
       '🚀 ~ file: order.service.ts:26 ~ verifyOrderDetails ~ error:',
-      error
+      error?.data ?? error?.response?.data
     );
     return null;
   }
@@ -46,7 +46,7 @@ export const verifyOrderShippingDetails = async ({ id }: { id: any }) => {
   } catch (error: any) {
     console.log(
       '🚀 ~ file: order.service.ts:48 ~ verifyOrderShippingDetails ~ error:',
-      error
+      error?.data ?? error?.response?.data
     );
     return null;
   }
@@ -62,7 +62,7 @@ export const verifyOrderMembershipDetails = async ({ id }: { id: any }) => {
   } catch (error: any) {
     console.log(
       '🚀 ~ file: order.service.ts:64 ~ verifyOrderMembershipDetails ~ error:',
-      error
+      error?.data ?? error?.response?.data
     );
     return null;
   }

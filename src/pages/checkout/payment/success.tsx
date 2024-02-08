@@ -338,6 +338,8 @@ export const getServerSideProps: GetServerSideProps<{ order: any }> = async ({
 
           const subscription = await verifyOrderMembershipDetails({ id: orderid });
 
+          console.log("🚀 ~ subscription:", subscription)
+
           if (subscription) {
             const rs = await validatePartnerAndRediredct({
               id: subscription.partner,
