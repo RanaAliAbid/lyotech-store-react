@@ -443,7 +443,7 @@ export const validatePartnerAndRediredct = async ({
             ? `${process.env.APP_ENV_TYPE === 'dev'
               ? `${process.env.CLOUDX_URL}/profile`
               : `${process.env.CLOUDX_URL}/profile`
-            }?order=${orderid}`
+            }`
             : `${process.env.CLOUDX_URL}/profile?m=failed`
             }`,
           permanent: false,
