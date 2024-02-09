@@ -376,7 +376,11 @@ export function GlobalWrapper({
 
       const currentPath = document.referrer;
 
-      if (currentPath.includes('ap-gateway.mastercard.com/') || currentPath.includes("hc-action-cancel")) {
+      if (
+          currentPath.includes('ap-gateway.mastercard.com/') || 
+          currentPath.includes("hc-action-cancel") ||
+          currentPath.includes("lyotechlabs.com/#__hc-action-cancel")
+        ) {
         window.open(`${process.env.CLOUDX_URL}/shop/orders`, '_self');
         return;
       }
