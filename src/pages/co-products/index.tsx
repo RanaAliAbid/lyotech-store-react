@@ -19,7 +19,7 @@ import supportIcon from '../../img/supportIcon.png';
 import serversIcon from '../../img/serversIcon.png';
 import testedIcon from '../../img/testedIcon.png';
 import securityIcon from '../../img/securityIcon.png';
-import lfiPhone from '../../img/lfiPhone.png';
+import LKPhone from '../../img/lk-phone.png';
 
 import certificate01 from '../../img/certification-logo/certificat01.png';
 import certificate02 from '../../img/certification-logo/certificat02.png';
@@ -356,14 +356,14 @@ export default function CoProducts({
                         transition={{ duration: 0.5, delay: 0.25 }}
                         viewport={{ once: true }}
                       >
-                        <img src={lfiPhone.src} alt="L One Phone" />
+                        <img src={LKPhone.src} alt="LK One Phone" />
                       </motion.div>
                     </div>
                   </Grid>
 
                   <Grid item md={6} sm={12} className={styles.phoneInfo}>
                     <Typography variant="h2">
-                      <span>L One</span> Phone
+                      <span>LK One</span> Phone
                     </Typography>
                     {/* <br /> */}
 
@@ -451,11 +451,11 @@ export default function CoProducts({
                     viewport={{ once: true }}
                   >
                     <Typography variant="h1">
-                      <strong> XL 500 Computer </strong>
+                      <strong> XK  500 Computer </strong>
                     </Typography>
 
                     <Typography variant="h3">
-                      Start the journey as a XL Computer
+                      Start the journey as a XK  Computer
                     </Typography>
 
                     {/* <Typography variant="h5">
@@ -564,7 +564,7 @@ export default function CoProducts({
                     viewport={{ once: true }}
                   >
                     <Typography variant="h1">
-                      <strong> XL 1000 Computer</strong>
+                      <strong> XK  1000 Computer</strong>
                     </Typography>
 
                     <Typography variant="h3">
@@ -628,11 +628,11 @@ export default function CoProducts({
                     viewport={{ once: true }}
                   >
                     <Typography variant="h1">
-                      <strong>XL 5000 Computer</strong>
+                      <strong>XK  5000 Computer</strong>
                     </Typography>
 
                     <Typography variant="h3">
-                      You chose to be a protagonist in the LFi Projects
+                      You chose to be a protagonist in the LayerK Projects
                     </Typography>
                     {/* 
                     <Typography variant="h5">
@@ -735,11 +735,11 @@ export default function CoProducts({
                     viewport={{ once: true }}
                   >
                     <Typography variant="h1">
-                      <strong>XL 10000 Computer</strong>
+                      <strong>XK  10000 Computer</strong>
                     </Typography>
 
                     <Typography variant="h3">
-                      Bring the game to another level and raise your LFi power.
+                      Bring the game to another level and raise your LayerK power.
                     </Typography>
 
                     {/* <Typography variant="h5">
@@ -802,11 +802,11 @@ export default function CoProducts({
                     viewport={{ once: true }}
                   >
                     <Typography variant="h1">
-                      <strong>XL Validator</strong>
+                      <strong>XK  Validator</strong>
                     </Typography>
 
                     <Typography variant="h3">
-                      When power it's not enough and you want to rule the LFi
+                      When power it's not enough and you want to rule the LayerK
                       Game: be a validator.
                     </Typography>
 
