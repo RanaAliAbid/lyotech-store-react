@@ -15,7 +15,7 @@ import supportIcon from '../img/supportIcon.png';
 import serversIcon from '../img/serversIcon.png';
 import testedIcon from '../img/testedIcon.png';
 import securityIcon from '../img/securityIcon.png';
-import lfiPhone from '../img/lfiPhone.png';
+import LKPhone from '../img/lk-phone.png';
 import lyoTabImg from '../img/lyoTabImg.png';
 import lyoWatchImg from '../img/lyoWatchImg.png';
 import OctaCoreIcon from '../img/octaCoreIcon.svg';
@@ -26,6 +26,13 @@ import ZoomIcon from '../img/zoomIcon.svg';
 import RamIcon from '../img/ramIcon.svg';
 import HealthIcon from '../img/healthIcon.svg';
 import CalenderIcon from '../img/calenderIcon.svg';
+import PremiumIcon from '../img/premium.svg';
+import UsersIcon from '../img/users.svg';
+import EventIcon from '../img/event.svg';
+import UnlimitedIcon from '../img/unlimited.svg';
+import RocketIcon from '../img/rocket.svg';
+import DiscountIcon from '../img/discount.svg';
+import Membership from '../img/membershipScreen.png';
 import certificate01 from '../img/certification-logo/certificat01.png';
 import certificate02 from '../img/certification-logo/certificat02.png';
 import certificate03 from '../img/certification-logo/certificat03.png';
@@ -534,13 +541,13 @@ export default function Home({
                           transition={{ duration: 0.5, delay: 0.25 }}
                           viewport={{ once: true }}
                         >
-                          <img src={lfiPhone.src} alt="L One Phone" />
+                          <img src={LKPhone.src} alt="LK One Phone" />
                         </motion.div>
                       </div>
                     </Grid>
                     <Grid item md={6} sm={12}>
                       <Typography variant="h2">
-                        <span>L ONE</span>  {t('product-item1-header')}
+                        <span>LK ONE</span>  {t('product-item1-header')}
                       </Typography>
 
                       <br />
@@ -936,6 +943,27 @@ export default function Home({
               >
                 <Container className={styles.containerBox}>
                   <Grid container spacing={3} className={styles.lyoTabMain}>
+                  <Grid item md={6} sm={12}>
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          x: '-100%',
+                          visibility: 'hidden',
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          x: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 0.3, delay: 0.25 }}
+                        viewport={{ once: true }}
+                      >
+                        <div className={styles.productItemImg}>
+                          <img src={lyoTabImg.src} alt="LYO Tab" />
+                        </div>
+                      </motion.div>
+                    </Grid>
+                    
                     <Grid item md={6} sm={12}>
                       <Typography variant="h2">
                         <span>LYO</span> TAB
@@ -956,7 +984,7 @@ export default function Home({
                           <motion.div
                             initial={{
                               opacity: 0,
-                              x: '-100%',
+                              x: '100%',
                               visibility: 'hidden',
                               display: 'flex',
                               justifyContent: 'flex-start',
@@ -983,7 +1011,7 @@ export default function Home({
                           <motion.div
                             initial={{
                               opacity: 0,
-                              x: '-100%',
+                              x: '100%',
                               visibility: 'hidden',
                               display: 'flex',
                               justifyContent: 'flex-start',
@@ -1011,7 +1039,7 @@ export default function Home({
                           <motion.div
                             initial={{
                               opacity: 0,
-                              x: '-100%',
+                              x: '100%',
                               visibility: 'hidden',
                               display: 'flex',
                               justifyContent: 'flex-start',
@@ -1037,7 +1065,7 @@ export default function Home({
                           <motion.div
                             initial={{
                               opacity: 0,
-                              x: '-100%',
+                              x: '100%',
                               visibility: 'hidden',
                               display: 'flex',
                               justifyContent: 'flex-start',
@@ -1065,7 +1093,7 @@ export default function Home({
                           <motion.div
                             initial={{
                               opacity: 0,
-                              x: '-100%',
+                              x: '100%',
                               visibility: 'hidden',
                               display: 'flex',
                               justifyContent: 'flex-start',
@@ -1093,7 +1121,7 @@ export default function Home({
                           <motion.div
                             initial={{
                               opacity: 0,
-                              x: '-100%',
+                              x: '100%',
                               visibility: 'hidden',
                               display: 'flex',
                               justifyContent: 'flex-start',
@@ -1119,7 +1147,7 @@ export default function Home({
                       <motion.div
                         initial={{
                           opacity: 0,
-                          x: '-100%',
+                          x: '100%',
                           visibility: 'hidden',
                         }}
                         whileInView={{
@@ -1147,6 +1175,253 @@ export default function Home({
                       </motion.div>
                     </Grid>
 
+                   
+                  </Grid>
+                </Container>
+              </div>
+
+
+              <div
+                className={`${styles['productItemWrap']} ${styles['memberShip']}`}
+              >
+                <Container className={styles.containerBox}>
+                  <Grid container spacing={3}>
+                    <Grid item md={6} sm={12}>
+                      <Typography variant="h2">
+                        <span>Platform </span> Membership
+                      </Typography>
+
+                      <Typography variant="h6">
+                      Unlock a world of possibilities and elevate your experience with Platform Membership. Whether you're a seasoned enthusiast, a professional seeking cutting-edge insights, or someone simply passionate, our membership program is designed to cater to your unique needs and interests.
+                      </Typography>
+
+                      <Typography variant="h4">Why Platform Membership?</Typography>
+
+                      <Grid
+                        container
+                        spacing={3}
+                        className={styles.productSpec}
+                      >
+                        <Grid item md={12}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'flex-start',
+                              marginTop: '20px',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <PremiumIcon />
+                            </span>
+                            <Typography variant="h6">
+                                <strong> Premium Features </strong> <br />
+                                Upgrade your  experience with premium features that set you apart. From enhanced customization options to priority customer support, our membership ensures you receive the VIP treatment you deserve.
+
+                            </Typography>
+                          </motion.div>
+                        </Grid>
+
+
+                    
+                      </Grid>
+
+
+                      <Grid
+                        container
+                        spacing={3}
+                        className={styles.productSpec}
+                      >
+                        <Grid item md={12}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'flex-start',
+                              marginTop: '20px',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <UsersIcon />
+                            </span>
+                            <Typography variant="h6">
+                                <strong> Community Connection</strong> <br />
+                                Join a thriving community of like-minded individuals who share your passion. Engage in lively discussions, connect with experts, and expand your network within the  community.
+                            </Typography>
+                          </motion.div>
+                        </Grid>
+                      </Grid>
+
+
+
+                      <Grid
+                        container
+                        spacing={3}
+                        className={styles.productSpec}
+                      >
+                        <Grid item md={12}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'flex-start',
+                              marginTop: '20px',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <EventIcon />
+                            </span>
+                            <Typography variant="h6">
+                                <strong>Members-Only Events</strong> <br />
+                                Immerse yourself in a world of exclusive events and webinars. Gain insights from thought leaders, participate in live Q&A sessions, and be part of unique experiences tailored just for our members.
+                            </Typography>
+                          </motion.div>
+                        </Grid>
+                      </Grid>
+
+
+                      <Grid
+                        container
+                        spacing={3}
+                        className={styles.productSpec}
+                      >
+                        <Grid item md={12}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'flex-start',
+                              marginTop: '20px',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <UnlimitedIcon />
+                            </span>
+                            <Typography variant="h6">
+                                <strong>Unlimited Access</strong> <br />
+                                Enjoy unrestricted access to our extensive library of resources. From comprehensive guides to exclusive research,  Membership opens the door to a wealth of knowledge at your fingertips.
+                            </Typography>
+                          </motion.div>
+                        </Grid>
+                      </Grid>
+
+
+                      <Typography variant="h4">Membership Benefits</Typography>
+
+
+                      <Grid
+                        container
+                        spacing={3}
+                        className={styles.productSpec}
+                      >
+                        <Grid item md={12}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'flex-start',
+                              marginTop: '20px',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <RocketIcon />
+                            </span>
+                            <Typography variant="h6">
+                                <strong>Early Access</strong> <br />
+                                Stay ahead of the curve by gaining early access to the latest features, updates, and platform enhancements.
+                            </Typography>
+                          </motion.div>
+                        </Grid>
+                      </Grid>
+
+
+                      <Grid
+                        container
+                        spacing={3}
+                        className={styles.productSpec}
+                      >
+                        <Grid item md={12}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'flex-start',
+                              marginTop: '20px',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            <span>
+                              <DiscountIcon  />
+                            </span>
+                            <Typography variant="h6">
+                                <strong>Product Discounts</strong> <br />
+                                Enjoy exclusive member-only discounts on products. Save big while indulging in the best the platform has to offer.
+                            </Typography>
+                          </motion.div>
+                        </Grid>
+                      </Grid>
+
+                    </Grid>
+
                     <Grid item md={6} sm={12}>
                       <motion.div
                         initial={{
@@ -1163,13 +1438,23 @@ export default function Home({
                         viewport={{ once: true }}
                       >
                         <div className={styles.productItemImg}>
-                          <img src={lyoTabImg.src} alt="LYO Tab" />
+                          <img src={Membership.src} alt="Membership" />
                         </div>
                       </motion.div>
                     </Grid>
                   </Grid>
                 </Container>
               </div>
+
+
+
+
+
+
+
+
+
+
             </div>
 
             {/* Content Section End */}

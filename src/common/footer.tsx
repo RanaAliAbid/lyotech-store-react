@@ -85,6 +85,16 @@ export default function Footer() {
                     </Link>
                   </ListItem>
 
+
+                  {/* <ListItem className={styles.item}>
+                    <Link href="/pre-sale-policy">
+                      Pre-Sale Policy and Terms
+                    </Link>
+                  </ListItem> */}
+
+
+                  
+
                   <ListItem className={styles.item}>
                     <Link
                       href="https://docs.lyotechlabs.com/legal-documents/privacy-and-cookies-policy"

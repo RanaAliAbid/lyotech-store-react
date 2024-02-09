@@ -3448,3 +3448,34 @@ ul.wishlists,
 	margin-bottom: 20px;
 	border-radius: 12px;
 }
+.memberShip .productItemImg{
+	position: relative;
+	margin-top: 50px;
+}
+.memberShip .productItemImg img{
+	max-width: 90% !important;
+	padding-top: 50px;
+}
+
+.memberShip .productItemImg:before{
+	content:"";
+	width: 300px;
+    height: 300px;
+	background: #f0f2f9;
+	position: absolute;
+	z-index: -9;
+	border-radius: 100%;
+	top: 0;
+}
+
+.memberShip .productItemImg:after{
+	content:"";
+	width: 150px;
+    height: 150px;
+	background: #3360ed;
+	position: absolute;
+	z-index: -9;
+	border-radius: 100%;
+	top: 80%;
+	right: 0;
+}
