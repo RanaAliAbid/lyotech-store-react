@@ -85,6 +85,18 @@ export default function Footer() {
                     </Link>
                   </ListItem>
 
+                  <ListItem className={styles.item}>
+                    <Link href="/membership-terms-conditions">
+                    Membership Terms & Conditions
+                    </Link>
+                  </ListItem>
+
+                  <ListItem className={styles.item}>
+                    <Link href="/membership-privacy-policy" >
+                    Membership Privacy Policy
+                    </Link>
+                  </ListItem>
+
 
                   {/* <ListItem className={styles.item}>
                     <Link href="/pre-sale-policy">

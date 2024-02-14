@@ -1186,17 +1186,17 @@ export default function Home({
               >
                 <Container className={styles.containerBox}>
                   <Grid container spacing={3}>
-                    <Grid item md={6} sm={12}>
+                    <Grid item md={7} sm={12}>
                       <Typography variant="h2">
-                        <span>Platform </span> Membership
+                        <span>DigitalEdge   </span> Alliance
                       </Typography>
 
-                      <Typography variant="h6">
+                      {/* <Typography variant="h6">
                       Unlock a world of possibilities and elevate your experience with Platform Membership. Whether you're a seasoned enthusiast, a professional seeking cutting-edge insights, or someone simply passionate, our membership program is designed to cater to your unique needs and interests.
-                      </Typography>
+                      </Typography> */}
 
-                      <Typography variant="h4">Why Platform Membership?</Typography>
-
+                      <Typography variant="h4">Membership Benefits</Typography>
+{/* 
                       <Grid
                         container
                         spacing={3}
@@ -1234,7 +1234,7 @@ export default function Home({
 
 
                     
-                      </Grid>
+                      </Grid> */}
 
 
                       <Grid
@@ -1251,7 +1251,7 @@ export default function Home({
                               display: 'flex',
                               justifyContent: 'flex-start',
                               alignItems: 'flex-start',
-                              marginTop: '20px',
+                              marginTop: '10px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -1261,12 +1261,10 @@ export default function Home({
                             transition={{ duration: 0.2, delay: 0.15 }}
                             viewport={{ once: true }}
                           >
-                            <span>
-                              <UsersIcon />
-                            </span>
+                            
                             <Typography variant="h6">
-                                <strong> Community Connection</strong> <br />
-                                Join a thriving community of like-minded individuals who share your passion. Engage in lively discussions, connect with experts, and expand your network within the  community.
+                                <strong> Membership Name: </strong> 
+                                DigitalEdge Alliance Annual Membership 
                             </Typography>
                           </motion.div>
                         </Grid>
@@ -1288,7 +1286,7 @@ export default function Home({
                               display: 'flex',
                               justifyContent: 'flex-start',
                               alignItems: 'flex-start',
-                              marginTop: '20px',
+                              marginTop: '10px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -1298,12 +1296,9 @@ export default function Home({
                             transition={{ duration: 0.2, delay: 0.15 }}
                             viewport={{ once: true }}
                           >
-                            <span>
-                              <EventIcon />
-                            </span>
+                           
                             <Typography variant="h6">
-                                <strong>Members-Only Events</strong> <br />
-                                Immerse yourself in a world of exclusive events and webinars. Gain insights from thought leaders, participate in live Q&A sessions, and be part of unique experiences tailored just for our members.
+                                <strong>Fee:</strong>  39 euro VAT Included
                             </Typography>
                           </motion.div>
                         </Grid>
@@ -1324,7 +1319,7 @@ export default function Home({
                               display: 'flex',
                               justifyContent: 'flex-start',
                               alignItems: 'flex-start',
-                              marginTop: '20px',
+                              marginTop: '10px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -1334,20 +1329,14 @@ export default function Home({
                             transition={{ duration: 0.2, delay: 0.15 }}
                             viewport={{ once: true }}
                           >
-                            <span>
-                              <UnlimitedIcon />
-                            </span>
+                            
                             <Typography variant="h6">
-                                <strong>Unlimited Access</strong> <br />
-                                Enjoy unrestricted access to our extensive library of resources. From comprehensive guides to exclusive research,  Membership opens the door to a wealth of knowledge at your fingertips.
+                                <strong>Membership Duration: </strong> 
+                                Valid for one year from the date of payment, renewable annually.
                             </Typography>
                           </motion.div>
                         </Grid>
                       </Grid>
-
-
-                      <Typography variant="h4">Membership Benefits</Typography>
-
 
                       <Grid
                         container
@@ -1363,7 +1352,7 @@ export default function Home({
                               display: 'flex',
                               justifyContent: 'flex-start',
                               alignItems: 'flex-start',
-                              marginTop: '20px',
+                              marginTop: '10px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -1373,12 +1362,10 @@ export default function Home({
                             transition={{ duration: 0.2, delay: 0.15 }}
                             viewport={{ once: true }}
                           >
-                            <span>
-                              <RocketIcon />
-                            </span>
+                            
                             <Typography variant="h6">
-                                <strong>Early Access</strong> <br />
-                                Stay ahead of the curve by gaining early access to the latest features, updates, and platform enhancements.
+                                <strong>Access to Exclusive Discounts: </strong>   
+                                 Enjoy significant discounts on a wide range of LYOTECH LABS electronic products, accessories, and services.
                             </Typography>
                           </motion.div>
                         </Grid>
@@ -1399,7 +1386,7 @@ export default function Home({
                               display: 'flex',
                               justifyContent: 'flex-start',
                               alignItems: 'flex-start',
-                              marginTop: '20px',
+                              marginTop: '10px',
                             }}
                             whileInView={{
                               opacity: 1,
@@ -1409,12 +1396,208 @@ export default function Home({
                             transition={{ duration: 0.2, delay: 0.15 }}
                             viewport={{ once: true }}
                           >
-                            <span>
-                              <DiscountIcon  />
-                            </span>
+                            
                             <Typography variant="h6">
-                                <strong>Product Discounts</strong> <br />
-                                Enjoy exclusive member-only discounts on products. Save big while indulging in the best the platform has to offer.
+                                <strong>Coupons: </strong> 
+                                Receive special coupons and promotional codes that can be redeemed for additional savings on LYOTECH LABS products and services.
+                            </Typography>
+                          </motion.div>
+                        </Grid>
+                      </Grid>
+
+                      <Grid
+                        container
+                        spacing={3}
+                        className={styles.productSpec}
+                      >
+                        <Grid item md={12}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'flex-start',
+                              marginTop: '10px',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            
+                            <Typography variant="h6">
+                                <strong>Participation in Special Events: </strong> 
+                                Gain exclusive access to LYOTECH LABS special events, including product launches, hands-on workshops, and thought-provoking tech seminars.
+                            </Typography>
+                          </motion.div>
+                        </Grid>
+                      </Grid>
+
+
+                      <Grid
+                        container
+                        spacing={3}
+                        className={styles.productSpec}
+                      >
+                        <Grid item md={12}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'flex-start',
+                              marginTop: '10px',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            
+                            <Typography variant="h6">
+                                <strong>Newsletter Subscription: </strong> 
+                                Stay informed about the latest tech news, product updates, and exclusive member offers through our monthly newsletter.
+                            </Typography>
+                          </motion.div>
+                        </Grid>
+                      </Grid>
+
+                      <Grid
+                        container
+                        spacing={3}
+                        className={styles.productSpec}
+                      >
+                        <Grid item md={12}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'flex-start',
+                              marginTop: '10px',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            <Typography variant="h6">
+                                <strong>Community and Networking: </strong> 
+                                Connect with like-minded tech enthusiasts, professionals, and experts through DigitalEdge Alliance Membership online community forums, discussion boards, and networking events.
+                            </Typography>
+                          </motion.div>
+                        </Grid>
+                      </Grid>
+
+                      <Grid
+                        container
+                        spacing={3}
+                        className={styles.productSpec}
+                      >
+                        <Grid item md={12}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'flex-start',
+                              marginTop: '10px',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            
+                            <Typography variant="h6">
+                                <strong>Tech News and Updates: </strong> 
+                                Access curated news articles and in-depth analysis on emerging technologies, trends, and breakthroughs in the tech industry.
+                            </Typography>
+                          </motion.div>
+                        </Grid>
+                      </Grid>
+
+                      <Grid
+                        container
+                        spacing={3}
+                        className={styles.productSpec}
+                      >
+                        <Grid item md={12}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'flex-start',
+                              marginTop: '10px',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            
+                            <Typography variant="h6">
+                                <strong>Deep Understanding of New Technologies: </strong> 
+                                Benefit from educational resources, whitepapers, and exclusive content that provides in-depth insights into cutting-edge technologies.
+                            </Typography>
+                          </motion.div>
+                        </Grid>
+                      </Grid>
+
+                      <Grid
+                        container
+                        spacing={3}
+                        className={styles.productSpec}
+                      >
+                        <Grid item md={12}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              x: '-100%',
+                              visibility: 'hidden',
+                              display: 'flex',
+                              justifyContent: 'flex-start',
+                              alignItems: 'flex-start',
+                              marginTop: '10px',
+                            }}
+                            whileInView={{
+                              opacity: 1,
+                              x: 0,
+                              visibility: 'visible',
+                            }}
+                            transition={{ duration: 0.2, delay: 0.15 }}
+                            viewport={{ once: true }}
+                          >
+                            
+                            <Typography variant="h6">
+                                <strong>Free Webinars: </strong> 
+                                Participate in free webinars hosted by LYOTECH LABS experts, industry leaders, and innovators. These webinars cover a wide range of tech topics and provide opportunities for Q&A sessions.
                             </Typography>
                           </motion.div>
                         </Grid>
@@ -1422,7 +1605,7 @@ export default function Home({
 
                     </Grid>
 
-                    <Grid item md={6} sm={12}>
+                    <Grid item md={5} sm={12}>
                       <motion.div
                         initial={{
                           opacity: 0,
