@@ -34,7 +34,7 @@ export default function Private() {
                   <Grid container spacing={3} className={styles.bannerWrap}>
                     <Grid item md={12} xs={12}>
                       <Typography variant="h1" className={styles.bannerHD}>
-                      Membership Terms & Conditions
+                      DigitalEdge Alliance Membership <br /> Terms and Conditions
                       </Typography>
 
                       {/* <Typography variant="h4" className={styles.bannerTxt}>
@@ -53,9 +53,9 @@ export default function Private() {
               <Container className={styles.containerBox}>
                 <Grid container spacing={3}>
                   <Grid item md={12} xs={12}>
-                  <Typography variant="h4">
+                  {/* <Typography variant="h4">
                           <strong> DigitalEdge Alliance Membership Terms and Conditions </strong>
-                        </Typography>
+                        </Typography> */}
                     <List className={styles.UnorderedListDecimal}>
                       <ListItem>
                         <Typography variant="h5">

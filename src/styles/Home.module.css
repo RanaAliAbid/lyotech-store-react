@@ -2750,7 +2750,7 @@ ul.wishlists,
 }
 
 .privacyPolicy {
-	background: url(../img/privacy-policy.png) no-repeat center -200px;
+	background: url(../img/privacy-policy.png) no-repeat center center;
 	background-size: cover;
 }
 
