@@ -1188,7 +1188,7 @@ export default function Home({
                   <Grid container spacing={3}>
                     <Grid item md={7} sm={12}>
                       <Typography variant="h2">
-                        <span>DigitalEdge Alliance  </span> Membership
+                        <span>DigitalEdge   </span> Alliance
                       </Typography>
 
                       {/* <Typography variant="h6">
