@@ -85,37 +85,29 @@ export default function Private() {
                                                             The Supplier’s General Terms and Conditions shall apply in conjunction with these Terms, along with the Privacy and Cookie Policy which are incorporated by reference, along with all other Terms, Policies and Agreements you have agreed to in purchasing the Hardware.
                                                         </Typography>
                                                     </ListItem>
+
+                                                
                                                 </List>
                                             </ListItem>
 
                                             <ListItem>
                                                 <Typography variant="h4">
-                                                    <strong>Shipping Method </strong>
+                                                    <strong>Our selected logistic </strong>
                                                 </Typography>
                                                 <List>
-                                                    <ListItem>
+                                                <ListItem>
                                                         <Typography variant="h5">
-                                                            Our courier partner is UPS Gulf LLC (Dubai Branch), 25th Floor, Al Moosa Tower 2, Sheikh Zayed road, Dubai, UAE (“Courier”). The Courier will provide the Delivery Service for the fulfillment of your purchase and is able to ship to the physical address within the given locations upon checkout.
+                                                           Our selected
+logistics partner will manage the transportation and delivery of your purchase
+to the address you provide. This delivery service provider will ensure
+fulfillment of orders and ship to locations within the designated regions as
+indicated during the checkout process
+
                                                         </Typography>
                                                     </ListItem>
 
-                                                    <ListItem>
-                                                        <Typography variant="h5">
-                                                            Electronic products can only be shipped within UAE and Gulf Countries only.
-                                                        </Typography>
-                                                    </ListItem>
 
-                                                    <ListItem>
-                                                        <Typography variant="h5">
-                                                            Purchaser is aware our courier partner may vary based on delivery location.
-                                                        </Typography>
-                                                    </ListItem>
 
-                                                    <ListItem>
-                                                        <Typography variant="h5">
-                                                            Supplier shall update Purchaser upon dispatch of their Hardware.
-                                                        </Typography>
-                                                    </ListItem>
                                                 </List>
                                             </ListItem>
 
@@ -134,7 +126,7 @@ export default function Private() {
 
                                                     <ListItem>
                                                         <Typography variant="h5">
-                                                            Deliveries can be expected within ninety (90) working days (Monday-Friday), from the end of pre-sale.
+                                                            Deliveries can be expected within ninety (90) working days (Monday-Friday), from the payment of the shipping fee.
                                                         </Typography>
                                                     </ListItem>
 
@@ -167,7 +159,7 @@ export default function Private() {
                                                                 </Typography>
                                                             </ListItem>
 
-                                                            <ListItem>
+                                                            {/* <ListItem>
                                                                 <Typography variant="h5">
                                                                     Shipping and delivery details:
                                                                 </Typography>
@@ -198,7 +190,7 @@ export default function Private() {
                                                                         </Typography>
                                                                     </ListItem>
                                                                 </List>
-                                                            </ListItem>
+                                                            </ListItem> */}
                                                         </List>
                                                     </ListItem>
 
