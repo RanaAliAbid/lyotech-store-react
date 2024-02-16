@@ -66,7 +66,7 @@ export default function Private() {
                                             </ListItem>
                                             <ListItem>
                                                 <Typography variant="h5">
-                                                    This Delivery Condition (“Terms”) governs the Delivery of LFi Hardware Products, included but not limited to: L One Phone, XLFi Machine (500, 1000, 5000, 10000 and Validator) (“Hardware”), from Lyotech Labs (“Supplier”) to individuals/businesses purchasing the Hardware (“Purchaser”) sold on lyotechlabs.com (“Platform”).
+                                                    This Delivery Condition (“Terms”) governs the Delivery of LFi Hardware Products, included but not limited to: One Phone, XK Machine (500, 1000, 5000, 10000 and Validator) (“Hardware”), from Lyotech Labs (“Supplier”) to individuals/businesses purchasing the Hardware (“Purchaser”) sold on lyotechlabs.com (“Platform”).
                                                 </Typography>
                                             </ListItem>
                                         </List>
