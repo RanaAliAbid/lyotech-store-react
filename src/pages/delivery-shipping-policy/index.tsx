@@ -285,7 +285,7 @@ export default function Private() {
 
                                                     <ListItem>
                                                         <Typography variant="h5">
-                                                        If you wish to change your delivery details, you can contact our Customer Services at: [email], and if it is before dispatch they may be able to assist in the delivery details change.
+                                                        If you wish to change your delivery details, you can contact our Customer Services at: support@lyotechlabs.com, and if it is before dispatch they may be able to assist in the delivery details change.
                                                         </Typography>
                                                     </ListItem>
 
@@ -327,7 +327,7 @@ export default function Private() {
                                                 <List className={styles.orderedListRoman}>
                                                     <ListItem>
                                                         <Typography variant="h5">
-                                                        Price at checkout includes all customs, duties and taxes. Any additional fees outside of those included will be charged directly to the Purchaser. Should these additional fees not be paid and the Hardware returned to the Supplier, the Supplier shall not be responsible for issuing a refund and Purchaser will be required to pay the consequential Delivery Fees and any additional fees required for re-shipment.
+                                                        Price at checkout not includes all customs, duties and taxes. Any additional fees outside of those included will be charged directly to the Purchaser. Should these additional fees not be paid and the Hardware returned to the Supplier, the Supplier shall not be responsible for issuing a refund and Purchaser will be required to pay the consequential Delivery Fees and any additional fees required for re-shipment.
                                                         </Typography>
                                                     </ListItem>
                                                 </List>
@@ -390,7 +390,7 @@ export default function Private() {
 
                                                     <ListItem>
                                                         <Typography variant="h5">
-                                                        Purchasers may purchase additional warranty packages for their Hardware, including either the One Care Plan for the L One Phone or the XLFi Minting Machine Care Policy for the XL Computer (1,000 and 5,000) (Additional Warranty Plans).
+                                                        Purchasers may purchase additional warranty packages for their Hardware, including either the One Care Plan for the One Phone or the XK Minting Machine Care Policy for the XL Computer (1,000 and 5,000) (Additional Warranty Plans).
                                                         </Typography>
                                                     </ListItem>
 

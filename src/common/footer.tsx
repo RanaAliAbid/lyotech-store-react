@@ -80,7 +80,10 @@ export default function Footer() {
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href="https://docs.lyotechlabs.com/legal-documents/pre-sale-policy" target="_blank">
+                    <Link 
+                      href="https://docs.lyotechlabs.com/legal-documents/pre-sale-policy" 
+                      target="_blank"
+                    >
                       Pre-Sale Policy and Terms
                     </Link>
                   </ListItem>
@@ -118,7 +121,8 @@ export default function Footer() {
 
                   <ListItem className={styles.item}>
                     <Link
-                      href="https://docs.lyotechlabs.com/legal-documents/terms-and-conditions"
+                      // href="https://docs.lyotechlabs.com/legal-documents/terms-and-conditions"
+                      href="/terms"
                       target="_blank"
                     >
                       Terms & Conditions
@@ -127,7 +131,8 @@ export default function Footer() {
 
                   <ListItem className={styles.item}>
                     <Link
-                      href="https://docs.lyotechlabs.com/help-center/shipping-and-delivery"
+                      // href="https://docs.lyotechlabs.com/help-center/shipping-and-delivery"
+                      href="/delivery-shipping-policy"
                       target="_blank"
                     >
                       Delivery & Shipping Policy
