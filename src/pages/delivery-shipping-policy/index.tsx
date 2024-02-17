@@ -61,13 +61,13 @@ export default function Private() {
                       </ListItem>
                       <ListItem>
                         <Typography variant="h5">
-                          This Delivery Condition (â€œTermsâ€) governs the Delivery
+                          This Delivery Condition (Terms) governs the Delivery
                           of Hardware Products, included but not limited to:
                           One Phone, XK Machine (500, 1000, 5000, 10000 and
-                          Validator) (â€œHardwareâ€), from Lyotech Labs
-                          (â€œSupplierâ€) to individuals/businesses purchasing the
-                          Hardware (â€œPurchaserâ€) sold on lyotechlabs.com
-                          (â€œPlatformâ€).
+                          Validator) (Hardware), from Lyotech Labs
+                          (Supplier) to individuals/businesses purchasing the
+                          Hardware (Purchaser) sold on lyotechlabs.com
+                          (Platform).
                         </Typography>
                       </ListItem>
                     </List>
@@ -81,7 +81,7 @@ export default function Private() {
                         <List>
                           <ListItem>
                             <Typography variant="h5">
-                              The Supplierâ€™s General Terms and Conditions shall
+                              The Supplier's General Terms and Conditions shall
                               apply in conjunction with these Terms, along with
                               the Privacy and Cookie Policy which are
                               incorporated by reference, along with all other
@@ -124,7 +124,7 @@ export default function Private() {
                               Purchases of any Hardware are delivered by courier
                               only, there is no alternate method of receiving
                               the Hardware. Therefore, all such purchases are
-                              subject to transportation fees (â€œDelivery Feesâ€).
+                              subject to transportation fees (Delivery Fees).
                             </Typography>
                           </ListItem>
 
@@ -180,7 +180,7 @@ export default function Private() {
                                                                 <List>
                                                                     <ListItem>
                                                                         <Typography variant="h5">
-                                                                            For Purchaser purchasing from the USA, shipping will be managed by LYOTECH LABS LLC 8 The Green, Suite Rin the Cityof Dover, Zip code â€“ 19901
+                                                                            For Purchaser purchasing from the USA, shipping will be managed by LYOTECH LABS LLC 8 The Green, Suite Rin the Cityof Dover, Zip code “ 19901
                                                                         </Typography>
                                                                     </ListItem>
 
@@ -199,7 +199,7 @@ export default function Private() {
 
                                                                     <ListItem>
                                                                         <Typography variant="h5">
-                                                                            For Purchaser purchasing from any other country, shipping will be managed by LYOTECH LABS Limited Room 1104, Crawford House, 70 Queenâ€™s Rd. Centra, Central, Hong Kong.
+                                                                            For Purchaser purchasing from any other country, shipping will be managed by LYOTECH LABS Limited Room 1104, Crawford House, 70 Queen's Rd. Centra, Central, Hong Kong.
                                                                         </Typography>
                                                                     </ListItem>
                                                                 </List>
@@ -219,7 +219,7 @@ export default function Private() {
                               South Sudan, Somalia, Venezuela, Cuba, Myanmar
                               (Burma), Zimbabwe, Afghanistan, Eritrea, Iraq,
                               Balkans, Belarus, Central African Republic, Congo,
-                              Ethiopia, Nicaragua, Mali, Lebanon, CÃ´te dâ€™Ivoire
+                              Ethiopia, Nicaragua, Mali, Lebanon, CÃ´te d'Ivoire
                               (IvoryCoast), Liberia, Barbados, Panama, Haiti,
                               and Ukraine.
                             </Typography>
@@ -230,7 +230,7 @@ export default function Private() {
                               This list is subject to change at the sole
                               discretion of the Supplier, for any reason
                               including but not limited to internal policy
-                              decisions, Courierâ€™s policies, and international
+                              decisions, Courier's policies, and international
                               sanctions or restrictions.
                             </Typography>
                           </ListItem>
@@ -284,7 +284,7 @@ export default function Private() {
                               Should it be permitted by the selected Courier
                               delivering to your destination, you may receive
                               regular updates of your order status through the
-                              given Courierâ€™s tracking services.
+                              given Courier's tracking services.
                             </Typography>
                           </ListItem>
 
@@ -394,7 +394,7 @@ export default function Private() {
                             <Typography variant="h5">
                               Once the payment is made, the confirmation notice
                               will be sent to the client via email within 24
-                              hours of receipt. It is the Purchaserâ€™s
+                              hours of receipt. It is the Purchaser's
                               responsibility to provide an updated email address
                               or phone number to receive the payment
                               confirmation.
@@ -445,7 +445,7 @@ export default function Private() {
                             <Typography variant="h5">
                               Standard warranty is provided by third party
                               manufacturers, not the Supplier. Supplier bears no
-                              responsibility for the manufacturerâ€™s warranty,
+                              responsibility for the manufacturer's warranty,
                               and Purchasers are advised to read the terms of
                               such warranty carefully before purchasing.
                             </Typography>
@@ -493,7 +493,7 @@ export default function Private() {
                               supplier and its employees and agents will under
                               no circumstances be liable to you or any
                               subsequent owner of the hardware for any indirect
-                              or consequential damages resulting from supplierâ€™
+                              or consequential damages resulting from supplier'
                               obligations under this delivery condition.
                               Supplier specifically does not warrant that (I) it
                               will be able to replace the hardware due to any
