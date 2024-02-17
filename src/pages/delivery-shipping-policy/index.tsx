@@ -62,7 +62,7 @@ export default function Private() {
                       <ListItem>
                         <Typography variant="h5">
                           This Delivery Condition (â€œTermsâ€) governs the Delivery
-                          of LFi Hardware Products, included but not limited to:
+                          of Hardware Products, included but not limited to:
                           One Phone, XK Machine (500, 1000, 5000, 10000 and
                           Validator) (â€œHardwareâ€), from Lyotech Labs
                           (â€œSupplierâ€) to individuals/businesses purchasing the
