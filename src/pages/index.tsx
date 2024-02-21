@@ -54,7 +54,7 @@ import we04 from '../img/we-are/we04.png';
 import we05 from '../img/we-are/we05.png';
 
 import partner01 from '../img/partners-logo/partner01.png';
-import partner02 from '../img/partners-logo/partner02.png';
+import partner03 from '../img/partners-logo/partner03.png';
 
 import styles from '@/styles/Home.module.css';
 import { Work_Sans } from 'next/font/google';
@@ -1728,7 +1728,7 @@ export default function Home({
                     >
                       <div className={styles.partnersImg03}>
                         {/* <img src={partner01.src} alt="Partner Logo" /> */}
-                        <img src={partner02.src} alt="Partner Logo" />
+                        <img src={partner03.src} alt="Partner Logo" />
                       </div>
                     </motion.div>
                   </Grid>
