@@ -212,6 +212,8 @@ export default function Home({
                           opacity: 0,
                           x: '100%',
                           visibility: 'hidden',
+                          position: 'relative',
+                          zIndex: '9',
                         }}
                         whileInView={{
                           opacity: 1,
@@ -237,163 +239,212 @@ export default function Home({
               </div>
             </div>
             {/* Banner Section End */}
+            <div className={styles.mainContentWrap}>
+              <div className={styles.purpleBG}></div>
+              <div className={styles.redBG}></div>
+              <div className={styles.darkOrangeBG}></div>
+              <div className={styles.orangeBG}></div>
+              <div className={styles.yellowOrangeBG}></div>
 
-            {/* Services Section Start */}
-            <div className={styles.homeServicesWrap} id="serviceSection">
-              <Container className={styles.containerBox}>
-                <Grid container spacing={3}>
-                  <Grid item md={4} sm={6} xs={12}>
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                        y: '100%',
-                        visibility: 'hidden',
-                      }}
-                      whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
-                      transition={{ duration: 0.2, delay: 0.5 }}
-                      viewport={{ once: true }}
-                    >
-                      <div
-                        className={`${styles['wrapBox']} ${styles['servicesItem']}`}
+              {/* Services Section Start */}
+              <div className={styles.homeServicesWrap} id="serviceSection">
+                <Container className={styles.containerBox}>
+                  <Grid container spacing={3}>
+                    <Grid item md={4} sm={6} xs={12}>
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          y: '100%',
+                          visibility: 'hidden',
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          y: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 0.2, delay: 0.5 }}
+                        viewport={{ once: true }}
                       >
                         <div className={`${styles['servicesIcon']}`}>
                           <img src={hardwareSoftware.src} alt="Icon" />
                         </div>
-                        <Typography variant="h5">
-                          Hardware & Software Solutions
-                        </Typography>
-                        <Typography variant="h6">
-                          We Build Devices for Our Partners and Ship to 150+ Countries
-                        </Typography>
-                      </div>
-                    </motion.div>
-                  </Grid>
+                        <div
+                          className={`${styles['wrapBox']} ${styles['servicesItem']}`}
+                        >
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
 
+                          <Typography variant="h5">
+                            Hardware & Software Solutions
+                          </Typography>
+                          <Typography variant="h6">
+                            We Build Devices for Our Partners and Ship to 150+
+                            Countries
+                          </Typography>
+                        </div>
+                      </motion.div>
+                    </Grid>
 
-
-                  <Grid item md={4} sm={6} xs={12}>
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                        y: '100%',
-                        visibility: 'hidden',
-                      }}
-                      whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
-                      transition={{ duration: 0.2, delay: 0.5 }}
-                      viewport={{ once: true }}
-                    >
-                      <div
-                        className={`${styles['wrapBox']} ${styles['servicesItem']}`}
+                    <Grid item md={4} sm={6} xs={12}>
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          y: '100%',
+                          visibility: 'hidden',
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          y: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 0.2, delay: 0.5 }}
+                        viewport={{ once: true }}
                       >
                         <div className={`${styles['servicesIcon']}`}>
                           <img src={supportIcon.src} alt="Icon" />
                         </div>
-                        <Typography variant="h5">
-                          {t('service-header1')}
-                        </Typography>
-                        <Typography variant="h6">
-                          {t('service-desc1')}
-                        </Typography>
-                      </div>
-                    </motion.div>
-                  </Grid>
+                        <div
+                          className={`${styles['wrapBox']} ${styles['servicesItem']}`}
+                        >
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
 
-                  <Grid item md={4} sm={6} xs={12}>
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                        y: '100%',
-                        visibility: 'hidden',
-                      }}
-                      whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
-                      transition={{ duration: 0.3, delay: 0.6 }}
-                      viewport={{ once: true }}
-                    >
-                      <div
-                        className={`${styles['wrapBox']} ${styles['servicesItem']}`}
+                          <Typography variant="h5">
+                            {t('service-header1')}
+                          </Typography>
+                          <Typography variant="h6">
+                            {t('service-desc1')}
+                          </Typography>
+                        </div>
+                      </motion.div>
+                    </Grid>
+
+                    <Grid item md={4} sm={6} xs={12}>
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          y: '100%',
+                          visibility: 'hidden',
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          y: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 0.3, delay: 0.6 }}
+                        viewport={{ once: true }}
                       >
                         <div className={styles.servicesIcon}>
                           <img src={serversIcon.src} alt="Icon" />
                         </div>
-                        <Typography variant="h5">
-                          {/* {t('service-header2')} */}
-                          Server Management
-                        </Typography>
-                        <Typography variant="h6">
-                          {/* {t('service-desc2')} */}
-                          We handle server maintenance, so you don't have to.
-                        </Typography>
-                      </div>
-                    </motion.div>
-                  </Grid>
-                  <Grid item md={2} sm={6} xs={12}></Grid>
-
-                  <Grid item md={4} sm={6} xs={12}>
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                        y: '100%',
-                        visibility: 'hidden',
-                      }}
-                      whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
-                      transition={{ duration: 0.4, delay: 0.7 }}
-                      viewport={{ once: true }}
-                    >
-
-                      <a href="#certification" className={styles.serviceLink}>
                         <div
                           className={`${styles['wrapBox']} ${styles['servicesItem']}`}
                         >
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+
+                          <Typography variant="h5">
+                            {/* {t('service-header2')} */}
+                            Server Management
+                          </Typography>
+                          <Typography variant="h6">
+                            {/* {t('service-desc2')} */}
+                            We handle server maintenance, so you don't have to.
+                          </Typography>
+                        </div>
+                      </motion.div>
+                    </Grid>
+                    <Grid item md={2} sm={6} xs={12}></Grid>
+
+                    <Grid item md={4} sm={6} xs={12}>
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          y: '100%',
+                          visibility: 'hidden',
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          y: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 0.4, delay: 0.7 }}
+                        viewport={{ once: true }}
+                      >
+                        <a href="#certification" className={styles.serviceLink}>
                           <div className={`${styles['servicesIcon']}`}>
                             <img src={testedIcon.src} alt="Icon" />
                           </div>
-                          <Typography variant="h5">
-                            {/* {t('service-header3')} */}
-                            Certified Hardware
-                          </Typography>
-                          <Typography variant="h6">
-                            {/* {t('service-desc3')} */}
-                            Products rigorously tested and certified for quality.
-                          </Typography>
-                        </div>
-                      </a>
-                    </motion.div>
-                  </Grid>
+                          <div
+                            className={`${styles['wrapBox']} ${styles['servicesItem']}`}
+                          >
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
 
+                            <Typography variant="h5">
+                              {/* {t('service-header3')} */}
+                              Certified Hardware
+                            </Typography>
+                            <Typography variant="h6">
+                              {/* {t('service-desc3')} */}
+                              Products rigorously tested and certified for
+                              quality.
+                            </Typography>
+                          </div>
+                        </a>
+                      </motion.div>
+                    </Grid>
 
-
-                  <Grid item md={4} sm={6} xs={12}>
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                        y: '100%',
-                        visibility: 'hidden',
-                      }}
-                      whileInView={{ opacity: 1, y: 0, visibility: 'visible' }}
-                      transition={{ duration: 0.5, delay: 0.8 }}
-                      viewport={{ once: true }}
-                    >
-                      <div
-                        className={`${styles['wrapBox']} ${styles['servicesItem']}`}
+                    <Grid item md={4} sm={6} xs={12}>
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          y: '100%',
+                          visibility: 'hidden',
+                        }}
+                        whileInView={{
+                          opacity: 1,
+                          y: 0,
+                          visibility: 'visible',
+                        }}
+                        transition={{ duration: 0.5, delay: 0.8 }}
+                        viewport={{ once: true }}
                       >
                         <div className={`${styles['servicesIcon']}`}>
                           <img src={securityIcon.src} alt="Icon" />
                         </div>
-                        <Typography variant="h5">
-                          {/* {t('service-header4')} */}
-                          Top-Tier Data Security
-                        </Typography>
-                        <Typography variant="h6">
-                          {/* {t('service-desc4')} */}
-                          Data centers compliant with ISO 27001, PCI DDS3, and GDPR standards.
-                        </Typography>
-                      </div>
-                    </motion.div>
+                        <div
+                          className={`${styles['wrapBox']} ${styles['servicesItem']}`}
+                        >
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                          <span></span>
+
+                          <Typography variant="h5">
+                            {/* {t('service-header4')} */}
+                            Top-Tier Data Security
+                          </Typography>
+                          <Typography variant="h6">
+                            {/* {t('service-desc4')} */}
+                            Data centers compliant with ISO 27001, PCI DDS3, and
+                            GDPR standards.
+                          </Typography>
+                        </div>
+                      </motion.div>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </Container>
-            </div>
-            {/* Services Section End */}
+                </Container>
+              </div>
+              {/* Services Section End */}
 
             {/* Servers Section Start */}
             <div className={`${styles['paddingTB60']} ${styles['serverWrap']}`}>
@@ -564,7 +615,7 @@ export default function Home({
 
                       <Typography variant="h6">
                         {/* {t('product-item1-desc')} */}
-                        LYOTECH LABS ELECTRONICS TRADING L.L.C.
+                        HORYS Technologies
                       </Typography>
 
                       <Typography variant="h4">
@@ -1365,7 +1416,7 @@ export default function Home({
                             
                             <Typography variant="h6">
                                 <strong>Access to Exclusive Discounts: </strong>   
-                                 Enjoy significant discounts on a wide range of LYOTECH LABS electronic products, accessories, and services.
+                                 Enjoy significant discounts on a wide range of HORYS Technologies electronic products, accessories, and services.
                             </Typography>
                           </motion.div>
                         </Grid>
@@ -1399,7 +1450,7 @@ export default function Home({
                             
                             <Typography variant="h6">
                                 <strong>Coupons: </strong> 
-                                Receive special coupons and promotional codes that can be redeemed for additional savings on LYOTECH LABS products and services.
+                                Receive special coupons and promotional codes that can be redeemed for additional savings on HORYS Technologies products and services.
                             </Typography>
                           </motion.div>
                         </Grid>
@@ -1432,7 +1483,7 @@ export default function Home({
                             
                             <Typography variant="h6">
                                 <strong>Participation in Special Events: </strong> 
-                                Gain exclusive access to LYOTECH LABS special events, including product launches, hands-on workshops, and thought-provoking tech seminars.
+                                Gain exclusive access to HORYS Technologies special events, including product launches, hands-on workshops, and thought-provoking tech seminars.
                             </Typography>
                           </motion.div>
                         </Grid>
@@ -1597,7 +1648,7 @@ export default function Home({
                             
                             <Typography variant="h6">
                                 <strong>Free Webinars: </strong> 
-                                Participate in free webinars hosted by LYOTECH LABS experts, industry leaders, and innovators. These webinars cover a wide range of tech topics and provide opportunities for Q&A sessions.
+                                Participate in free webinars hosted by HORYS Technologies experts, industry leaders, and innovators. These webinars cover a wide range of tech topics and provide opportunities for Q&A sessions.
                             </Typography>
                           </motion.div>
                         </Grid>
@@ -1735,8 +1786,8 @@ export default function Home({
                 </Grid>
               </Container>
             </div>
-
             {/* Partners Section End */}
+            </div>
             <Footer />
           </main>
         </ThemeProvider>

@@ -12,7 +12,7 @@ import Menu from '@mui/material/Menu';
 import Button from '@mui/material/Button'; ``
 import MenuItem from '@mui/material/MenuItem';
 import CloseIcon from '@mui/icons-material/Close';
-import logo from '../img/lyotech-logo.png';
+import logo from '../img/horystech-logo.png';
 import OrderIcon from '../img/orderIcon.svg';
 import WishlistIcon from '../img/wishlistIcon.svg';
 import MapIcon from '../img/mapIcon.svg';
@@ -164,33 +164,33 @@ export default function Header({ title = 'Home' }: { title: string }) {
   }
 
   const siteDescription =
-    'LYOTECH LABS is an R&D company that works on the development of software and hardware products including mobile phones, tablets, laptops and smart watches. Our goal is giving best our customers in technologys';
+    'HORYS Technologies is an R&D company that works on the development of software and hardware products including mobile phones, tablets, laptops and smart watches. Our goal is giving best our customers in technologys';
 
   return (
     <>
       <Head>
-        <title>{`LYOTECH Labs | ${title ?? 'Home'}`}</title>
+        <title>{`HORYS Technologies | ${title ?? 'Home'}`}</title>
         <meta name="description" content={siteDescription} />
         <meta name="description" content={siteDescription} />
         <meta property="og:image" content={bannerProduct.src} />
         <meta property="og:image:secure_url" content={bannerProduct.src} />
         <meta
           property="og:title"
-          content={`LYOTECH Labs | ${title ?? 'Home'}`}
+          content={`HORYS Technologies | ${title ?? 'Home'}`}
         />
         <meta property="og:description" content={siteDescription} />
         <meta
           name="twitter:title"
-          content={`LYOTECH Labs | ${title ?? 'Home'}`}
+          content={`HORYS Technologies | ${title ?? 'Home'}`}
         />
         <meta name="twitter:description" content={siteDescription} />
         <meta name="twitter:image" content={bannerProduct.src} />
         <meta
           name="keywords"
-          content="LYOTECH LABS, Phone, SmartPhone, Tablet, VPS, Cloud, Hardware"
+          content="HORYS Technologies, Phone, SmartPhone, Tablet, VPS, Cloud, Hardware"
         />
-        <meta property="og:site_name" content="LYOTECH LABS" />
-        <meta name="twitter:site" content="LYOTECH LABS" />
+        <meta property="og:site_name" content="HORYS Technologies" />
+        <meta name="twitter:site" content="HORYS Technologies" />
         <meta property="og:url" content="https://lyotechlabs.com" />
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

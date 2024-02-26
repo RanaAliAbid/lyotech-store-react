@@ -71,7 +71,7 @@ export default function Private() {
                               personal information, including your name, email
                               address, and payment details, solely for the
                               purpose of processing your membership fee and
-                              providing you with LYOTECH Membership benefits.
+                              providing you with HORYS Technologies Membership benefits.
                             </Typography>
                           </ListItem>
                         </List>
@@ -99,7 +99,7 @@ export default function Private() {
                             <Typography variant="h5">
                               Payment Information: Payment information is
                               securely processed by our trusted payment
-                              provider. LYOTECH LABS ELECTRONICS TRADING L.L.C.
+                              provider. HORYS Technologies
                               does not store or retain your payment
                               details.fits.
                             </Typography>
@@ -117,7 +117,7 @@ export default function Private() {
                         >
                           <ListItem>
                             <Typography variant="h5">
-                            LYOTECH LABS ELECTRONICS TRADING L.L.C. is committed to ensuring the security and protection of your personal information. We employ industry-standard security measures to safeguard your data from unauthorized access, loss, or theft.
+                            HORYS Technologies is committed to ensuring the security and protection of your personal information. We employ industry-standard security measures to safeguard your data from unauthorized access, loss, or theft.
                             </Typography>
                           </ListItem>
 
@@ -171,7 +171,7 @@ export default function Private() {
                         >
                           <ListItem>
                             <Typography variant="h5">
-                            LYOTECH LABS ELECTRONICS TRADING L.L.C. may periodically update this Privacy Policy to reflect changes in data protection regulations or our practices. Any modifications will be promptly posted on our website, and it is your responsibility to review and agree to the updated terms.
+                            HORYS Technologies may periodically update this Privacy Policy to reflect changes in data protection regulations or our practices. Any modifications will be promptly posted on our website, and it is your responsibility to review and agree to the updated terms.
                             </Typography>
                           </ListItem>
                         </List>
@@ -190,7 +190,7 @@ export default function Private() {
                   <br />
 
                   <Typography variant="h5">
-                  If you have any questions or concerns regarding your membership or our privacy practices, please do not hesitate to contact us at <a href='mailto:support@lyotechlabs.com'>support@lyotechlabs.com</a>.
+                  If you have any questions or concerns regarding your membership or our privacy practices, please do not hesitate to contact us at <a href='mailto:support@horystech.com'>support@horystech.com</a>.
 Thank you for choosing DigitalEdge Alliance Membership as your tech community, and we look forward to serving you as a valued member!
 
                   </Typography>

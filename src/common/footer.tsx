@@ -34,9 +34,9 @@ export default function Footer() {
           <Grid container spacing={1}>
             <Grid item md={3} xs={12}>
               <div className={`${styles['footBox']} ${styles['footerInfo']}`}>
-                <img src={darkLogo.src} alt="logo" />
+                <img src={darkLogo.src} className={styles.footerLogo} alt="logo" />
                 <Typography variant="h5" className="semiBold">
-                  <strong> LYOTECH LABS ELECTRONICS TRADING L.L.C. </strong>
+                  <strong> HORYS Technologies </strong>
                 </Typography>
 
                 <Typography variant="h5" className={styles.noMarginBottom}>
@@ -50,7 +50,7 @@ export default function Footer() {
                 </Typography>
 
                 <Typography variant="h4">
-                  <a href="https://support.lyotechlabs.com" target="_blank">
+                  <a href="https://support.horystechnologies.com" target="_blank">
                     <b> Help & Support</b>
                   </a>
                 </Typography>
@@ -202,13 +202,13 @@ export default function Footer() {
                 <Typography variant="h4">Global Offices</Typography>
 
                 <Typography className={styles.doverAddress} variant="h5">
-                  <span> LYOTECH LABS LLC </span>
+                  <span> HORYS Technologies </span>
                   8 The green Suite R, <br />
                   19901 Dover DE, U.S.A.
                 </Typography>
 
                 <Typography className={styles.hongKongAddress} variant="h5">
-                  <span> LYOTECH LABS Limited</span>
+                  <span> HORYS Technologies</span>
                   {/* 1104 Crawford House,<br />
                   70 Queens Road Central, H.K. */}
                   Office 705, 73 Chai Wan Kok St, <br />
@@ -233,7 +233,7 @@ export default function Footer() {
           <Grid container>
             <Grid item xs={12} className={styles.copyright}>
               <Typography variant="h5">
-                © Copyright {YEAR}. All Rights Reserved by LYOTECH
+                © Copyright {YEAR}. All Rights Reserved by HORYS Technologies
               </Typography>
             </Grid>
           </Grid>
