@@ -760,7 +760,7 @@ export default function Home({
                         transition={{ duration: 0.2, delay: 0.25 }}
                         viewport={{ once: true }}
                       >
-                        <Button
+                        {/* <Button
                           onClick={(e) =>
                             addProductToCart(
                               globalContext?.homeProduct?.LFI_ONE_Smartphone
@@ -769,9 +769,23 @@ export default function Home({
                           variant="contained"
                           className={`${styles['btn']} ${styles['btn_primary']}`}
                         >
-                          {/* Available Soon... */}
                           {t('product-btn1-shop')}
-                        </Button>
+                        </Button> */}
+
+                        <Button
+                            onClick={
+                              (e) => { }
+                              // addProductToCart(
+                              //   globalContext?.homeProduct?.LYO_Watch
+                              // )
+                            }
+                            variant="contained"
+                            className={`${styles['btn']}`}
+                            disabled
+                          >
+                            {/* {t('product-btn2-shop')} */}
+                            Out of stock
+                          </Button>
                       </motion.div>
                     </Grid>
                   </Grid>
