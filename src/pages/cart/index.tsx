@@ -512,12 +512,8 @@ export const getServerSideProps: GetServerSideProps<{
 
           //
         } else if (subscription_token?.length > 0 && subscription_id) {
-          
-          console.log("🚀 ~ subscription_id: ================= ============== : ============== ", subscription_id);
 
           const paymentSession = await getSubscriptionPaymentSession(subscription_id, result.data);
-
-          // console.log("🚀 ~ file: index.tsx:488 ~ result:", paymentSession)
 
           if (!paymentSession?.data?.sessionId) {
             return {

@@ -334,8 +334,6 @@ export const getShippingPaymentSession = async (id: string, token: string) => {
 
 export const getSubscriptionPaymentSession = async (id: string, token: string) => {
 
-  console.log("🚀 ~ getSubscriptionPaymentSession ~ shippingId:", id, token)
-
   try {
     const shippingId = id;
 
