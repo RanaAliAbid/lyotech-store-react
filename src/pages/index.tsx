@@ -829,7 +829,7 @@ export default function Home({
                 </Container>
               </div>
 
-              <div
+              {/* <div
                 className={`${styles['productItemWrap']} ${styles['bgShape02']}`}
               >
                 <Container className={styles.containerBox}>
@@ -938,21 +938,7 @@ export default function Home({
                         transition={{ duration: 0.3, delay: 0.25 }}
                         viewport={{ once: true }}
                       >
-                        {/* <Typography variant="h4">
-                          {t('product-item2-subheader2')}
-                        </Typography>
-
-                        <Grid
-                          container
-                          spacing={3}
-                          className={styles.productSpec}
-                        >
-                          <Grid item md={12} xs={12}>
-                            <Typography variant="h6">
-                              {t('product-item2-carac4')}
-                            </Typography>
-                          </Grid>
-                        </Grid> */}
+                        
 
                         <motion.div
                           initial={{
@@ -980,6 +966,7 @@ export default function Home({
                             disabled
                           >
                             {/* {t('product-btn2-shop')} */}
+                            {/*
                             Out of stock
                           </Button>
                         </motion.div>
@@ -987,9 +974,9 @@ export default function Home({
                     </Grid>
                   </Grid>
                 </Container>
-              </div>
+              </div> */}
 
-              <div
+              {/* <div
                 className={`${styles['productItemWrap']} ${styles['bgShape01']}`}
               >
                 <Container className={styles.containerBox}>
@@ -1221,6 +1208,9 @@ export default function Home({
                           disabled
                         >
                           {/* {t('product-btn3-shop')} */}
+
+                          {/*
+
                           Out of stock
                         </Button>
                       </motion.div>
@@ -1229,7 +1219,7 @@ export default function Home({
                    
                   </Grid>
                 </Container>
-              </div>
+              </div> */}
 
 
               <div

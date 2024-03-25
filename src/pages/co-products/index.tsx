@@ -213,7 +213,7 @@ export default function CoProducts({
             {/* Banner Section End */}
 
             {/* Services Section Start */}
-            <div className={styles.homeServicesWrap}>
+            <div className={styles.homeServicesWrap} id="serviceSection">
               <Container className={styles.containerBox}>
                 <Grid container spacing={3}>
                   <Grid item md={4} sm={6} xs={12}>
@@ -342,7 +342,7 @@ export default function CoProducts({
 
             {/* L One Phone Section Start */}
 
-            <div
+            <div id="deviceSection"
               className={`${styles['productItemWrap']} ${styles['LfiPhoneSpecs']}`}
             >
               <Container className={styles.containerBox}>
