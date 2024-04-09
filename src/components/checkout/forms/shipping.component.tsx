@@ -152,9 +152,9 @@ export default function ShippingFormComponent({
           'united arab emirates'
       )?._id;
       // && !globalContext.cart?.cart?.partner
-      if (countryId?.length > 5) {
-        handleChangeCountryType(countryId);
-      }
+      // if (countryId?.length > 5) {
+      //   handleChangeCountryType(countryId);
+      // }
 
       const tmpCountry = countryList?.find(
         (x: any) => x._id === globalContext?.cart?.cart?.country ?? 'United Arab Emirates'
