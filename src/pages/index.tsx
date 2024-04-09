@@ -16,6 +16,7 @@ import serversIcon from '../img/serversIcon.png';
 import testedIcon from '../img/testedIcon.png';
 import securityIcon from '../img/securityIcon.png';
 import LKPhone from '../img/lk-phone.png';
+import LFiPhone from '../img/lfi-one-phone.png';
 import lyoTabImg from '../img/lyoTabImg.png';
 import lyoWatchImg from '../img/lyoWatchImg.png';
 import OctaCoreIcon from '../img/octaCoreIcon.svg';
@@ -541,13 +542,13 @@ export default function Home({
                           transition={{ duration: 0.5, delay: 0.25 }}
                           viewport={{ once: true }}
                         >
-                          <img src={LKPhone.src} alt="LK One Phone" />
+                          <img src={LFiPhone.src} alt="LFi One Phone" />
                         </motion.div>
                       </div>
                     </Grid>
                     <Grid item md={6} sm={12}>
                       <Typography variant="h2">
-                        <span>LK ONE</span>  {t('product-item1-header')}
+                        <span>LFi One</span>  {t('product-item1-header')}
                       </Typography>
 
                       <br />
