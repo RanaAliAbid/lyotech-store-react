@@ -90,8 +90,8 @@ export default function CartTotalComponent({
     setCartFees(globalContext?.cart?.cart?.fees ?? []);
     setCartVat(
       globalContext?.cart?.appliedTax ??
-        globalContext?.cart?.cart?.appliedTax ??
-        null
+      globalContext?.cart?.cart?.appliedTax ??
+      null
     );
   }, [globalContext.cart]);
 
@@ -299,60 +299,63 @@ export default function CartTotalComponent({
                 )
               )}
 
-            <ListItem>
-              <Typography variant="h6">
-                <b>{t('Shipping Methods')}</b>
-              </Typography>
-              {/* <Typography variant="h6">
+            {globalContext?.cart?.cart?.shippingType === 'shipping' &&
+              <ListItem>
+                <Typography variant="h6">
+                  <b>{t('Shipping Methods')}</b>
+                </Typography>
+                {/* <Typography variant="h6">
                                 <Link>Details</Link>
                             </Typography> */}
-            </ListItem>
+              </ListItem>
+            }
           </List>
 
-          <List className={styles.shippingType}>
-            <RadioGroup
-              name="controlled-radio-buttons-group"
-              value={shippingType}
-              onChange={handleChangeShippingType}
-            >
-              {shippingMethods && shippingMethods.length > 0 ? (
-                shippingMethods?.map((method: any, index: any) => (
-                  <ListItem
-                    onClick={(e) => {
-                      shippingType !== method?.shippingMethod?._id
-                        ? handleClickShippingType(method?.shippingMethod?._id)
-                        : '';
-                    }}
-                    key={index}
-                    className={`${
-                      shippingType === method?.shippingMethod?._id
+          {globalContext?.cart?.cart?.shippingType === 'shipping' &&
+            <List className={styles.shippingType}>
+              <RadioGroup
+                name="controlled-radio-buttons-group"
+                value={shippingType}
+                onChange={handleChangeShippingType}
+              >
+                {shippingMethods && shippingMethods.length > 0 ? (
+                  shippingMethods?.map((method: any, index: any) => (
+                    <ListItem
+                      onClick={(e) => {
+                        shippingType !== method?.shippingMethod?._id
+                          ? handleClickShippingType(method?.shippingMethod?._id)
+                          : '';
+                      }}
+                      key={index}
+                      className={`${shippingType === method?.shippingMethod?._id
                         ? styles.active
                         : ''
-                    } cursor-pointer`}
-                  >
-                    <FormControlLabel
-                      value={method?.shippingMethod?._id}
-                      control={
-                        <Radio
-                          size="small"
-                          checked={shippingType === method?.shippingMethod?._id}
-                        />
-                      }
-                      label={method.name}
-                    />
-                    <Typography variant="h6">
-                      {(method?.amount * globalContext.conversionRate)?.toFixed(
-                        2
-                      )}{' '}
-                      {globalContext.currencySymbol}
-                    </Typography>
-                  </ListItem>
-                ))
-              ) : (
-                <></>
-              )}
-            </RadioGroup>
-          </List>
+                        } cursor-pointer`}
+                    >
+                      <FormControlLabel
+                        value={method?.shippingMethod?._id}
+                        control={
+                          <Radio
+                            size="small"
+                            checked={shippingType === method?.shippingMethod?._id}
+                          />
+                        }
+                        label={method.name}
+                      />
+                      <Typography variant="h6">
+                        {(method?.amount * globalContext.conversionRate)?.toFixed(
+                          2
+                        )}{' '}
+                        {globalContext.currencySymbol}
+                      </Typography>
+                    </ListItem>
+                  ))
+                ) : (
+                  <></>
+                )}
+              </RadioGroup>
+            </List>
+          }
 
           <List>
             {cartFees?.length > 0 &&
@@ -555,7 +558,7 @@ export default function CartTotalComponent({
                   updateCartOneCarePolicy(
                     false,
                     globalContext?.cart?.cart?.products[0]?.productId?._id ??
-                      '',
+                    '',
                     true
                   );
                 }}
@@ -667,7 +670,7 @@ export default function CartTotalComponent({
             </div>
           </ListItem> */}
 
-<ListItem>
+          <ListItem>
             <div className={styles.allCenter}>
               <Checkbox
                 checked={termsCheckbox.minting}
@@ -687,7 +690,7 @@ export default function CartTotalComponent({
                   href={`https://docs.lyotechlabs.com/legal-documents/terms-and-conditions`}
                 >
                   <span className="text-primary cursor-pointer">
-                  Terms & Conditions
+                    Terms & Conditions
                   </span>
                 </Link>
               </Typography>
