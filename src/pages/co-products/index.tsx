@@ -20,6 +20,7 @@ import serversIcon from '../../img/serversIcon.png';
 import testedIcon from '../../img/testedIcon.png';
 import securityIcon from '../../img/securityIcon.png';
 import LKPhone from '../../img/lk-phone.png';
+import LFiPhone from '../../img/lfiPhone.png';
 
 import certificate01 from '../../img/certification-logo/certificat01.png';
 import certificate02 from '../../img/certification-logo/certificat02.png';
@@ -356,14 +357,14 @@ export default function CoProducts({
                         transition={{ duration: 0.5, delay: 0.25 }}
                         viewport={{ once: true }}
                       >
-                        <img src={LKPhone.src} alt="LK One Phone" />
+                        <img src={LFiPhone.src} alt="LFi One Phone" />
                       </motion.div>
                     </div>
                   </Grid>
 
                   <Grid item md={6} sm={12} className={styles.phoneInfo}>
                     <Typography variant="h2">
-                      <span>LK One</span> Phone
+                      <span>LFi One</span> Phone
                     </Typography>
                     {/* <br /> */}
 
