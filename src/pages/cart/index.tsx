@@ -515,8 +515,6 @@ export const getServerSideProps: GetServerSideProps<{
 
           const paymentSession = await getSubscriptionPaymentSession(subscription_id, result.data);
 
-          // console.log("🚀 ~ file: index.tsx:488 ~ result:", paymentSession)
-
           if (!paymentSession?.data?.sessionId) {
             return {
               redirect: {

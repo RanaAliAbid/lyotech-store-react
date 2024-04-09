@@ -125,7 +125,7 @@ export default function Checkout({
     } else {
       setPartnerCheckout(false);
     }
-  }, [globalContext.cart]);
+  }, [globalContext.cart, authContext.userConnected]);
 
   React.useEffect(() => {
     if (!formAddress) return;
