@@ -172,7 +172,7 @@ export default function HomeBis({
 
                       <Typography variant="h6">
                         {/* {t('product-item1-desc')} */}
-                        LYOTECH LABS ELECTRONICS TRADING L.L.C.
+                        HORYS Technologies
                       </Typography>
 
                       <Typography variant="h4">

@@ -55,29 +55,29 @@ export default function Home() {
                                             <ListItem>
 
                                                 <Typography variant="h5">
-                                                    <strong> LYOTECH LABS </strong> is a dynamic R&D company that specializes in the development of software and hardware products, creating a benchmark in the world of innovative technology and is revolutionizing the FinTech landscape with its cutting-edge solutions.
+                                                    <strong> HORYS Technologies </strong> is a dynamic R&D company that specializes in the development of software and hardware products, creating a benchmark in the world of innovative technology and is revolutionizing the FinTech landscape with its cutting-edge solutions.
                                                 </Typography>
 
                                             </ListItem>
                                             <ListItem>
 
                                                 <Typography variant="h5">
-                                                    <strong> LYOTECH LABS </strong> <br />
+                                                    <strong> HORYS Technologies </strong> <br />
                                                     aims to develop and deliver innovative, secure, and user-friendly fintech solutions that create an ever-lasting impact.
-                                                    In addition to its hardware products, LYOTECH LABS also provides Linux Virtual Private Server (VPS) hosting solutions that cater to all business needs and are scalable to accommodate growth. The company offers a wide selection of Linux distributions to choose from, allowing clients to select the operating system that best suits their requirements.
+                                                    In addition to its hardware products, HORYS Technologies also provides Linux Virtual Private Server (VPS) hosting solutions that cater to all business needs and are scalable to accommodate growth. The company offers a wide selection of Linux distributions to choose from, allowing clients to select the operating system that best suits their requirements.
                                                 </Typography>
                                             </ListItem>
                                             <ListItem>
 
 
                                                 <Typography variant="h5">
-                                                    <strong>  LYOTECH LABS </strong> builds its servers with top-quality hardware and components that have been thoroughly tested and approved by their experts. This ensures that clients’ server infrastructure is reliable and performs efficiently.
+                                                    <strong>  HORYS Technologies </strong> builds its servers with top-quality hardware and components that have been thoroughly tested and approved by their experts. This ensures that clients’ server infrastructure is reliable and performs efficiently.
                                                 </Typography>
 
                                             </ListItem>
                                             <ListItem>
                                                 <Typography variant="h5">
-                                                    <strong>  LYOTECH LABS </strong> products are designed to make a positive impact on people’s lives. Whether it’s through their smartphones or smartwatches, the company’s products help people stay connected with the world around them, along with integrating innovation and state-of-the-art elements of technology. With their VPS hosting solutions, LYOTECH LABS provides businesses with a reliable and scalable infrastructure to support their growth.
+                                                    <strong>  HORYS Technologies </strong> products are designed to make a positive impact on people’s lives. Whether it’s through their smartphones or smartwatches, the company’s products help people stay connected with the world around them, along with integrating innovation and state-of-the-art elements of technology. With their VPS hosting solutions, HORYS Technologies provides businesses with a reliable and scalable infrastructure to support their growth.
                                                 </Typography>
                                             </ListItem>
                                         </List>

@@ -197,8 +197,8 @@ export default function Mintingtermscondition() {
                                                 <List >
                                                     <ListItem>
                                                         The Minting hardware devices includes the L One Phone, XL Computer (1000 and 5000)
-                                                        (‘Devices’) purchased from the Lyotech Labs website – <a href="https://lyotechlabs.com/">
-                                                            lyotechlabs</a>.
+                                                        (‘Devices’) purchased from the HORYS Technologies website – <a href="https://horystech.com/">
+                                                        HORYS Technologies</a>.
                                                     </ListItem>
                                                     <ListItem>
                                                         User Registration

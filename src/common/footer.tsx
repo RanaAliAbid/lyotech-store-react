@@ -34,9 +34,9 @@ export default function Footer() {
           <Grid container spacing={1}>
             <Grid item md={3} xs={12}>
               <div className={`${styles['footBox']} ${styles['footerInfo']}`}>
-                <img src={darkLogo.src} alt="logo" />
+                <img src={darkLogo.src} className={styles.footerLogo} alt="logo" />
                 <Typography variant="h5" className="semiBold">
-                  <strong> LYOTECH LABS ELECTRONICS TRADING L.L.C. </strong>
+                  <strong> HORYS GLOBAL ELECTRONICS TRADING L.L.C - UAE </strong>
                 </Typography>
 
                 <Typography variant="h5" className={styles.noMarginBottom}>
@@ -50,7 +50,7 @@ export default function Footer() {
                 </Typography>
 
                 <Typography variant="h4">
-                  <a href="https://support.lyotechlabs.com" target="_blank">
+                  <a href="https://support.horystechnologies.com" target="_blank">
                     <b> Help & Support</b>
                   </a>
                 </Typography>
@@ -74,29 +74,32 @@ export default function Footer() {
 
                 <List>
                   <ListItem className={styles.item}>
-                    <Link href="https://docs.lyotechlabs.com/introduction/what-is-lyotech-labs">
+                    {/* <Link href="https://docs.lyotechlabs.com/introduction/what-is-lyotech-labs"> */}
+                    <Link href="javascript:void(0)">
                       About Us
                     </Link>
                   </ListItem>
 
-                  <ListItem className={styles.item}>
-                    <Link 
-                      href="https://docs.lyotechlabs.com/legal-documents/pre-sale-policy" 
+                   <ListItem className={styles.item}>
+                  {/*  <Link
+                      href="https://docs.lyotechlabs.com/legal-documents/pre-sale-policy"
                       target="_blank"
-                    >
+                    > */}
+                    <Link href="javascript:void(0)">
+
                       Pre-Sale Policy and Terms
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
                     <Link href="/membership-terms-conditions">
-                    Membership Terms & Conditions
+                      Membership Terms & Conditions
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
                     <Link href="/membership-privacy-policy" >
-                    Membership Privacy Policy
+                      Membership Privacy Policy
                     </Link>
                   </ListItem>
 
@@ -108,58 +111,65 @@ export default function Footer() {
                   </ListItem> */}
 
 
-                  
+
 
                   <ListItem className={styles.item}>
-                    <Link
+                    {/* <Link
                       href="https://docs.lyotechlabs.com/legal-documents/privacy-and-cookies-policy"
                       target="_blank"
-                    >
+                    > */}
+                    <Link href="javascript:void(0)">
+
                       {t('footer-section2-item1')}
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link
-                      // href="https://docs.lyotechlabs.com/legal-documents/terms-and-conditions"
+                    {/* <Link
+                      href="https://docs.lyotechlabs.com/legal-documents/terms-and-conditions"
                       href="/terms"
                       target="_blank"
-                    >
+                    > */}
+                    <Link href="javascript:void(0)">
+
                       Terms & Conditions
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link
-                      // href="https://docs.lyotechlabs.com/help-center/shipping-and-delivery"
+                    {/* <Link
+                      href="https://docs.lyotechlabs.com/help-center/shipping-and-delivery"
                       href="/delivery-shipping-policy"
                       target="_blank"
-                    >
+                    > */}
+                    <Link href="javascript:void(0)">            
                       Delivery & Shipping Policy
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link
+                    {/* <Link
                       href="https://docs.lyotechlabs.com/legal-documents/return-and-refund-policy"
                       target="_blank"
-                    >
+                    > */}
+                    <Link href="javascript:void(0)">
                       Refund/Return Policy
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link
+                    {/* <Link
                       href="https://docs.lyotechlabs.com/legal-documents/cancellation-and-replacement-policy"
                       target="_blank"
-                    >
+                    > */}
+                    <Link href="javascript:void(0)">
                       Cancellation & Replacement Policy
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
                     <Link href="/troubleshooting" target='_blank'>
-                    Troubleshooting
+                      Troubleshooting
                     </Link>
                   </ListItem>
 
@@ -181,11 +191,11 @@ export default function Footer() {
 
                 <List>
                   <ListItem className={styles.item}>
-                    <Link href={`${APP_HOST}#serviceSection`}>Services</Link>
+                    <Link href={`#serviceSection`}>Services</Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    <Link href={`${APP_HOST}#deviceSection`}>Devices</Link>
+                    <Link href={`#deviceSection`}>Devices</Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
@@ -202,13 +212,15 @@ export default function Footer() {
                 <Typography variant="h4">Global Offices</Typography>
 
                 <Typography className={styles.doverAddress} variant="h5">
-                  <span> LYOTECH LABS LLC </span>
+                  <span> HORYS TECHNOLOGIES LLC - Delaware
+ </span>
                   8 The green Suite R, <br />
                   19901 Dover DE, U.S.A.
                 </Typography>
 
                 <Typography className={styles.hongKongAddress} variant="h5">
-                  <span> LYOTECH LABS Limited</span>
+                  <span> HORYS TECHNOLOGIES Limited - Hong Kong
+</span>
                   {/* 1104 Crawford House,<br />
                   70 Queens Road Central, H.K. */}
                   Office 705, 73 Chai Wan Kok St, <br />
@@ -233,7 +245,7 @@ export default function Footer() {
           <Grid container>
             <Grid item xs={12} className={styles.copyright}>
               <Typography variant="h5">
-                © Copyright {YEAR}. All Rights Reserved by LYOTECH
+                © Copyright {YEAR}. All Rights Reserved by HORYS Technologies
               </Typography>
             </Grid>
           </Grid>

@@ -214,10 +214,10 @@ export default function CoProducts({
             {/* Banner Section End */}
 
             {/* Services Section Start */}
-            <div className={styles.homeServicesWrap}>
+            <div className={styles.homeServicesWrap} id="serviceSection">
               <Container className={styles.containerBox}>
                 <Grid container spacing={3}>
-                  <Grid item md={3} sm={6} xs={12}>
+                  <Grid item md={4} sm={6} xs={12}>
                     <motion.div
                       initial={{
                         opacity: 0,
@@ -228,13 +228,13 @@ export default function CoProducts({
                       transition={{ duration: 0.2, delay: 0.5 }}
                       viewport={{ once: true }}
                     >
+                      <div className={`${styles['servicesIcon']}`}>
+                        <img src={supportIcon.src} alt="Icon" />
+                      </div>
                       <div
                         id="deviceSection"
                         className={`${styles['wrapBox']} ${styles['servicesItem']}`}
                       >
-                        <div className={`${styles['servicesIcon']}`}>
-                          <img src={supportIcon.src} alt="Icon" />
-                        </div>
                         <Typography variant="h5">
                           Technical support 24/7
                         </Typography>
@@ -246,7 +246,7 @@ export default function CoProducts({
                     </motion.div>
                   </Grid>
 
-                  <Grid item md={3} sm={6} xs={12}>
+                  <Grid item md={4} sm={6} xs={12}>
                     <motion.div
                       initial={{
                         opacity: 0,
@@ -257,12 +257,12 @@ export default function CoProducts({
                       transition={{ duration: 0.3, delay: 0.6 }}
                       viewport={{ once: true }}
                     >
+                      <div className={styles.servicesIcon}>
+                        <img src={serversIcon.src} alt="Icon" />
+                      </div>
                       <div
                         className={`${styles['wrapBox']} ${styles['servicesItem']}`}
                       >
-                        <div className={styles.servicesIcon}>
-                          <img src={serversIcon.src} alt="Icon" />
-                        </div>
                         <Typography variant="h5">
                           Fully managed servers
                         </Typography>
@@ -274,7 +274,7 @@ export default function CoProducts({
                     </motion.div>
                   </Grid>
 
-                  <Grid item md={3} sm={6} xs={12}>
+                  <Grid item md={4} sm={6} xs={12}>
                     <motion.div
                       initial={{
                         opacity: 0,
@@ -285,12 +285,12 @@ export default function CoProducts({
                       transition={{ duration: 0.4, delay: 0.7 }}
                       viewport={{ once: true }}
                     >
+                      <div className={`${styles['servicesIcon']}`}>
+                        <img src={testedIcon.src} alt="Icon" />
+                      </div>
                       <div
                         className={`${styles['wrapBox']} ${styles['servicesItem']}`}
                       >
-                        <div className={`${styles['servicesIcon']}`}>
-                          <img src={testedIcon.src} alt="Icon" />
-                        </div>
                         <Typography variant="h5">
                           Hardware & components tested and certified
                         </Typography>
@@ -301,8 +301,15 @@ export default function CoProducts({
                       </div>
                     </motion.div>
                   </Grid>
+                  <Grid
+                    item
+                    md={4}
+                    sx={{
+                      display: { sm: 'none', md:"block" },
+                    }}
+                  ></Grid>
 
-                  <Grid item md={3} sm={6} xs={12}>
+                  <Grid item md={4} sm={6} xs={12}>
                     <motion.div
                       initial={{
                         opacity: 0,
@@ -313,12 +320,12 @@ export default function CoProducts({
                       transition={{ duration: 0.5, delay: 0.8 }}
                       viewport={{ once: true }}
                     >
+                      <div className={`${styles['servicesIcon']}`}>
+                        <img src={securityIcon.src} alt="Icon" />
+                      </div>
                       <div
                         className={`${styles['wrapBox']} ${styles['servicesItem']}`}
                       >
-                        <div className={`${styles['servicesIcon']}`}>
-                          <img src={securityIcon.src} alt="Icon" />
-                        </div>
                         <Typography variant="h5">
                           Technical security & redundancy
                         </Typography>
@@ -336,7 +343,7 @@ export default function CoProducts({
 
             {/* L One Phone Section Start */}
 
-            <div
+            <div id="deviceSection"
               className={`${styles['productItemWrap']} ${styles['LfiPhoneSpecs']}`}
             >
               <Container className={styles.containerBox}>
@@ -452,11 +459,11 @@ export default function CoProducts({
                     viewport={{ once: true }}
                   >
                     <Typography variant="h1">
-                      <strong> XK  500 Computer </strong>
+                      <strong> XK 500 Computer </strong>
                     </Typography>
 
                     <Typography variant="h3">
-                      Start the journey as a XK  Computer
+                      Start the journey as a XK Computer
                     </Typography>
 
                     {/* <Typography variant="h5">
@@ -565,7 +572,7 @@ export default function CoProducts({
                     viewport={{ once: true }}
                   >
                     <Typography variant="h1">
-                      <strong> XK  1000 Computer</strong>
+                      <strong> XK 1000 Computer</strong>
                     </Typography>
 
                     <Typography variant="h3">
@@ -629,7 +636,7 @@ export default function CoProducts({
                     viewport={{ once: true }}
                   >
                     <Typography variant="h1">
-                      <strong>XK  5000 Computer</strong>
+                      <strong>XK 5000 Computer</strong>
                     </Typography>
 
                     <Typography variant="h3">
@@ -736,11 +743,12 @@ export default function CoProducts({
                     viewport={{ once: true }}
                   >
                     <Typography variant="h1">
-                      <strong>XK  10000 Computer</strong>
+                      <strong>XK 10000 Computer</strong>
                     </Typography>
 
                     <Typography variant="h3">
-                      Bring the game to another level and raise your LayerK power.
+                      Bring the game to another level and raise your LayerK
+                      power.
                     </Typography>
 
                     {/* <Typography variant="h5">
@@ -803,7 +811,7 @@ export default function CoProducts({
                     viewport={{ once: true }}
                   >
                     <Typography variant="h1">
-                      <strong>XK  Validator</strong>
+                      <strong>XK Validator</strong>
                     </Typography>
 
                     <Typography variant="h3">

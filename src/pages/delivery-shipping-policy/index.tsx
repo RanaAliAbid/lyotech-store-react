@@ -64,9 +64,9 @@ export default function Private() {
                           This Delivery Condition (Terms) governs the Delivery
                           of Hardware Products, included but not limited to:
                           One Phone, XK Machine (500, 1000, 5000, 10000 and
-                          Validator) (Hardware), from Lyotech Labs
+                          Validator) (Hardware), from HORYS Technologies
                           (Supplier) to individuals/businesses purchasing the
-                          Hardware (Purchaser) sold on lyotechlabs.com
+                          Hardware (Purchaser) sold on horystechnologies.com
                           (Platform).
                         </Typography>
                       </ListItem>
@@ -171,39 +171,6 @@ export default function Private() {
                                   the checkout process.
                                 </Typography>
                               </ListItem>
-
-                              {/* <ListItem>
-                                                                <Typography variant="h5">
-                                                                    Shipping and delivery details:
-                                                                </Typography>
-
-                                                                <List>
-                                                                    <ListItem>
-                                                                        <Typography variant="h5">
-                                                                            For Purchaser purchasing from the USA, shipping will be managed by LYOTECH LABS LLC 8 The Green, Suite Rin the Cityof Dover, Zip code “ 19901
-                                                                        </Typography>
-                                                                    </ListItem>
-
-                                                                    <ListItem>
-                                                                        <Typography variant="h5">
-                                                                            For Purchaser purchasing from EU, shipping will be managed by LYOTECH LABS LIMITED 33 NEWMAN STREET 2ND FLOORLONDON ENGLAND W1T 1PYCompany Number 14694218;
-                                                                        </Typography>
-                                                                    </ListItem>
-
-
-                                                                    <ListItem>
-                                                                        <Typography variant="h5">
-                                                                            For Purchaser purchasing from MENA, shipping will be managed by LYOTECH LABS LLC WHP2-BLOCK-T COMMERCIAL Area: Saih Shuaib 3, Dubai, UAE;
-                                                                        </Typography>
-                                                                    </ListItem>
-
-                                                                    <ListItem>
-                                                                        <Typography variant="h5">
-                                                                            For Purchaser purchasing from any other country, shipping will be managed by LYOTECH LABS Limited Room 1104, Crawford House, 70 Queen's Rd. Centra, Central, Hong Kong.
-                                                                        </Typography>
-                                                                    </ListItem>
-                                                                </List>
-                                                            </ListItem> */}
                             </List>
                           </ListItem>
 
@@ -315,7 +282,7 @@ export default function Private() {
                           <ListItem>
                             <Typography variant="h5">
                               If you wish to change your delivery details, you
-                              can contact our Customer Services at: support@lyotechlabs.com, and
+                              can contact our Customer Services at: support@horystech.com, and
                               if it is before dispatch they may be able to
                               assist in the delivery details change.
                             </Typography>
@@ -640,9 +607,9 @@ export default function Private() {
                               team will be happy to assist you with any matters
                               concerned with these Terms, you can contact us via
                               email at:{' '}
-                              <a href="mailto:support@lyotechlabs.com">
+                              <a href="mailto:support@horystech.com">
                                 {' '}
-                                support@lyotechlabs.com{' '}
+                                support@horystech.com{' '}
                               </a>
                             </Typography>
                           </ListItem>

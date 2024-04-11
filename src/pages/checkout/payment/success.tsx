@@ -275,7 +275,7 @@ export default function PaymentSuccessComponent({
                                   className="cursor-pointer text-primary"
                                   onClick={() => {
                                     window.open(
-                                      `https://support.lyotechlabs.com/`,
+                                      `https://support.horystechnologies.com/`,
                                       '_blank'
                                     );
                                   }}
