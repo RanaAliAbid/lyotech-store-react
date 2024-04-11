@@ -74,19 +74,16 @@ export default function Footer() {
 
                 <List>
                   <ListItem className={styles.item}>
-                    {/* <Link href="https://docs.lyotechlabs.com/introduction/what-is-lyotech-labs"> */}
-                    <Link href="javascript:void(0)">
+                    <Link href="https://docs.horystech.com/" target='_blank'>
                       About Us
                     </Link>
                   </ListItem>
 
-                   <ListItem className={styles.item}>
-                  {/*  <Link
-                      href="https://docs.lyotechlabs.com/legal-documents/pre-sale-policy"
+                  <ListItem className={styles.item}>
+                    <Link
+                      href="https://docs.horystech.com/legal-documents/pre-sale-policy"
                       target="_blank"
-                    > */}
-                    <Link href="javascript:void(0)">
-
+                    >
                       Pre-Sale Policy and Terms
                     </Link>
                   </ListItem>
@@ -114,55 +111,47 @@ export default function Footer() {
 
 
                   <ListItem className={styles.item}>
-                    {/* <Link
-                      href="https://docs.lyotechlabs.com/legal-documents/privacy-and-cookies-policy"
+                    <Link
+                      href="https://docs.horystech.com/legal-documents/privacy-and-cookies-policy"
                       target="_blank"
-                    > */}
-                    <Link href="javascript:void(0)">
+                    >
 
                       {t('footer-section2-item1')}
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    {/* <Link
-                      href="https://docs.lyotechlabs.com/legal-documents/terms-and-conditions"
-                      href="/terms"
+                    <Link
+                      href="https://docs.horystech.com/legal-documents/terms-and-conditions"
                       target="_blank"
-                    > */}
-                    <Link href="javascript:void(0)">
-
+                    >
                       Terms & Conditions
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    {/* <Link
-                      href="https://docs.lyotechlabs.com/help-center/shipping-and-delivery"
-                      href="/delivery-shipping-policy"
+                    <Link
+                      href="https://docs.horystech.com/help-center/shipping-and-delivery"
                       target="_blank"
-                    > */}
-                    <Link href="javascript:void(0)">            
-                      Delivery & Shipping Policy
+                    >
+                      Shipping & Delivery Policy
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    {/* <Link
-                      href="https://docs.lyotechlabs.com/legal-documents/return-and-refund-policy"
+                    <Link
+                      href="https://docs.horystech.com/legal-documents/return-and-refund-policy"
                       target="_blank"
-                    > */}
-                    <Link href="javascript:void(0)">
-                      Refund/Return Policy
+                    >
+                      Return & Refund Policy
                     </Link>
                   </ListItem>
 
                   <ListItem className={styles.item}>
-                    {/* <Link
-                      href="https://docs.lyotechlabs.com/legal-documents/cancellation-and-replacement-policy"
+                    <Link
+                      href="https://docs.horystech.com/legal-documents/cancellation-and-replacement-policy"
                       target="_blank"
-                    > */}
-                    <Link href="javascript:void(0)">
+                    >
                       Cancellation & Replacement Policy
                     </Link>
                   </ListItem>
@@ -213,14 +202,14 @@ export default function Footer() {
 
                 <Typography className={styles.doverAddress} variant="h5">
                   <span> HORYS TECHNOLOGIES LLC - Delaware
- </span>
+                  </span>
                   8 The green Suite R, <br />
                   19901 Dover DE, U.S.A.
                 </Typography>
 
                 <Typography className={styles.hongKongAddress} variant="h5">
                   <span> HORYS TECHNOLOGIES Limited - Hong Kong
-</span>
+                  </span>
                   {/* 1104 Crawford House,<br />
                   70 Queens Road Central, H.K. */}
                   Office 705, 73 Chai Wan Kok St, <br />
