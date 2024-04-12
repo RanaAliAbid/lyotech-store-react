@@ -36,7 +36,7 @@ export default function Footer() {
               <div className={`${styles['footBox']} ${styles['footerInfo']}`}>
                 <img src={darkLogo.src} className={styles.footerLogo} alt="logo" />
                 <Typography variant="h5" className="semiBold">
-                  <strong> HORYS GLOBAL ELECTRONICS TRADING L.L.C - UAE </strong>
+                  <strong> HORYS TECHNOLOGIES </strong>
                 </Typography>
 
                 <Typography variant="h5" className={styles.noMarginBottom}>
@@ -46,7 +46,7 @@ export default function Footer() {
                 <Typography variant="h5">
                   {/* Office 701, Emaar Square Building 1,
                   00000 Downtown, Dubai U.A.E. */}
-                  Whp2-block-T Commercial <br />Saih Shuaib 3, Dubai, U.A.E.
+                  Burj Khalifa, <br/> Plot Number 162-0, Dubai, U.A.E.
                 </Typography>
 
                 <Typography variant="h4">
