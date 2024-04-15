@@ -50,7 +50,7 @@ export default function Footer() {
                 </Typography>
 
                 <Typography variant="h4">
-                  <a href="https://support.horystechnologies.com" target="_blank">
+                  <a href="https://support.horystech.com/" target="_blank">
                     <b> Help & Support</b>
                   </a>
                 </Typography>
