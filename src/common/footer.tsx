@@ -40,7 +40,7 @@ export default function Footer() {
                 </Typography>
 
                 <Typography variant="h5" className={styles.noMarginBottom}>
-                  TLN: <span> 1150530 </span>
+                  License No: <span> 1150530 </span>
                 </Typography>
 
                 <Typography variant="h5">
