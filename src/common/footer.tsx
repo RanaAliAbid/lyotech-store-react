@@ -39,14 +39,15 @@ export default function Footer() {
                   <strong> HORYS TECHNOLOGIES </strong>
                 </Typography>
 
-                <Typography variant="h5" className={styles.noMarginBottom}>
-                  License No: <span> 1150530 </span>
-                </Typography>
 
                 <Typography variant="h5">
                   {/* Office 701, Emaar Square Building 1,
                   00000 Downtown, Dubai U.A.E. */}
-                  Burj Khalifa, <br/> Plot Number 162-0, Dubai, U.A.E.
+                  701D, BLDG-1, Emaar Square, <br/> Dubai,UAE.
+                </Typography>
+
+                <Typography variant="h5">
+                  License No: <span> 1150530 </span>
                 </Typography>
 
                 <Typography variant="h4">
