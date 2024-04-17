@@ -20,7 +20,7 @@ import serversIcon from '../../img/serversIcon.png';
 import testedIcon from '../../img/testedIcon.png';
 import securityIcon from '../../img/securityIcon.png';
 import LKPhone from '../../img/lk-phone.png';
-import LFiPhone from '../../img/lfiPhone.png';
+import LFiPhone from '../../img/lk-phone.png';
 
 import certificate01 from '../../img/certification-logo/certificat01.png';
 import certificate02 from '../../img/certification-logo/certificat02.png';
@@ -371,7 +371,7 @@ export default function CoProducts({
 
                   <Grid item md={6} sm={12} className={styles.phoneInfo}>
                     <Typography variant="h2">
-                      <span>LFi One</span> Phone
+                      <span>LK One</span> Phone
                     </Typography>
                     {/* <br /> */}
 

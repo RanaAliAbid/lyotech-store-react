@@ -16,7 +16,7 @@ import serversIcon from '../img/serversIcon.png';
 import testedIcon from '../img/testedIcon.png';
 import securityIcon from '../img/securityIcon.png';
 import LKPhone from '../img/lk-phone.png';
-import LFiPhone from '../img/lfi-one-phone.png';
+import LFiPhone from '../img/lk-phone.png';
 import lyoTabImg from '../img/lyoTabImg.png';
 import lyoWatchImg from '../img/lyoWatchImg.png';
 import OctaCoreIcon from '../img/octaCoreIcon.svg';
@@ -599,7 +599,7 @@ export default function Home({
                     </Grid>
                     <Grid item md={6} sm={12}>
                       <Typography variant="h2">
-                        <span>LFi One</span>  {t('product-item1-header')}
+                        <span>LK One</span>  {t('product-item1-header')}
                       </Typography>
 
                       <br />
