@@ -3551,11 +3551,11 @@ ul.wishlists,
   
   .orangeBG {
 	position: absolute;
-    filter: blur(260px);
+    filter: blur(360px);
     width: 235px;
     height: 350px;
     background: #FA2715;
-    right: -73px;
+    right: 0px;
     top: 600px;
   }
 
